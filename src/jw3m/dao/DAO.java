@@ -151,7 +151,9 @@ public class DAO
 			
 	        try
 	        {
-	        	rs = sqlstat.executeQuery("Select * from users where firstName = " + firstName);
+	        	ps = con.prepareStatement("Select * from users where firstName = ?");
+	        	ps.setString(1, firstName);
+	        	rs = ps.executeQuery();
 	        
 	        	while(rs.next())
 	        	{
