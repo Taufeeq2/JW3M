@@ -8,3 +8,13 @@ INFO	2018-01-15 13:48:16,177	9080	jw3m.server.Server	[Thread-1]	server got Bob
 INFO	2018-01-15 13:48:16,178	4	jw3m.client.gui.Client	[main]	client recieved Send Password
 INFO	2018-01-15 13:48:16,178	9081	jw3m.server.Server	[Thread-1]	server got 123
 INFO	2018-01-15 13:48:16,178	9081	jw3m.server.Server	[Thread-1]	good logon
+INFO	2018-01-16 13:28:04,623	0	jw3m.server.Server	[main]	Skills server: Welcome
+INFO	2018-01-16 13:28:45,429	0	jw3m.client.gui.Client	[main]	client requesting logon
+INFO	2018-01-16 13:28:45,431	40808	jw3m.server.Server	[main]	Skills server: Welcome
+INFO	2018-01-16 13:28:45,433	40810	jw3m.server.Server	[Thread-1]	receieved : request logon
+INFO	2018-01-16 13:28:45,433	40810	jw3m.server.Server	[Thread-1]	server logon method started
+INFO	2018-01-16 13:28:45,434	5	jw3m.client.gui.Client	[main]	client recieved Send Username
+INFO	2018-01-16 13:28:45,435	40812	jw3m.server.Server	[Thread-1]	server got Bob
+INFO	2018-01-16 13:28:45,435	6	jw3m.client.gui.Client	[main]	client recieved Send Password
+INFO	2018-01-16 13:28:45,436	40813	jw3m.server.Server	[Thread-1]	server got 123
+INFO	2018-01-16 13:28:45,437	40814	jw3m.server.Server	[Thread-1]	good logon
