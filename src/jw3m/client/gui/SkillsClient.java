@@ -319,7 +319,7 @@ public class SkillsClient extends JFrame implements ActionListener
 			
 			
 			logger.info("Graceful exit - requested");
-			logger.info("Program halted!!!");
+			logger.info("Program halted!!!! ");
 //			System.out.println("All DAO threads finished");
 //			System.out.println("Program halted!!!");
 			System.exit(0);
