@@ -1,6 +1,11 @@
 package Warren;
 
+import javax.swing.JOptionPane;
+
 public class BlankClassDocument
 {
-	// main for example
+	public static void main(String[] args)
+	{
+		System.out.println("Hello World");
+	}
 }
