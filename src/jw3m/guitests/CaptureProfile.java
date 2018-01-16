@@ -1,4 +1,4 @@
-package jw3m.gui;
+package jw3m.guitests;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
