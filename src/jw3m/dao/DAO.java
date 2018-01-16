@@ -134,7 +134,7 @@ public class DAO
 				ps.setBoolean(8, mentor);
 				
 				ps.executeUpdate();
-				
+				System.out.println();
 				
 			} catch (SQLException e)
 			{
