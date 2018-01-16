@@ -1,0 +1,10 @@
+INFO	2018-01-15 13:48:07,097	0	jw3m.server.Server	[main]	Skills server: Welcome
+INFO	2018-01-15 13:48:16,172	9075	jw3m.server.Server	[main]	Skills server: Welcome
+INFO	2018-01-15 13:48:16,174	0	jw3m.client.gui.Client	[main]	client requesting logon
+INFO	2018-01-15 13:48:16,176	9079	jw3m.server.Server	[Thread-1]	receieved : request logon
+INFO	2018-01-15 13:48:16,176	9079	jw3m.server.Server	[Thread-1]	server logon method started
+INFO	2018-01-15 13:48:16,177	3	jw3m.client.gui.Client	[main]	client recieved Send Username
+INFO	2018-01-15 13:48:16,177	9080	jw3m.server.Server	[Thread-1]	server got Bob
+INFO	2018-01-15 13:48:16,178	4	jw3m.client.gui.Client	[main]	client recieved Send Password
+INFO	2018-01-15 13:48:16,178	9081	jw3m.server.Server	[Thread-1]	server got 123
+INFO	2018-01-15 13:48:16,178	9081	jw3m.server.Server	[Thread-1]	good logon
