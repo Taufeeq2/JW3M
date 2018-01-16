@@ -49,7 +49,7 @@ public class DAO
 		    }
 			this.getUserList();
 			//this.getUser(fn);
-			
+			System.out.println("");
 		}	
 		
 		public boolean saveUser(String sql)
