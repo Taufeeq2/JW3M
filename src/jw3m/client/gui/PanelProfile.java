@@ -3,6 +3,7 @@ package jw3m.client.gui;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
+import javax.swing.JRadioButton;
 
 public class PanelProfile extends JPanel 
 {
@@ -11,6 +12,15 @@ public class PanelProfile extends JPanel
 	private JLabel lblDisplayUserid;
 	private JLabel lblName;
 	private JLabel lblSurname;
+	private JLabel lblDisplayName;
+	private JLabel lblDisplaySurname;
+	private JLabel lblEmail;
+	private JLabel lblMobile;
+	private JLabel lblMentor;
+	private JLabel label;
+	private JLabel label_1;
+	private JRadioButton rdbtnYes;
+	private JRadioButton rdbtnNo;
 	public PanelProfile() {
 		setLayout(null);
 		
@@ -34,5 +44,41 @@ public class PanelProfile extends JPanel
 		lblSurname = new JLabel("Surname");
 		lblSurname.setBounds(39, 188, 56, 16);
 		add(lblSurname);
+		
+		lblDisplayName = new JLabel("display name");
+		lblDisplayName.setBounds(126, 137, 102, 16);
+		add(lblDisplayName);
+		
+		lblDisplaySurname = new JLabel("display surname");
+		lblDisplaySurname.setBounds(126, 188, 102, 16);
+		add(lblDisplaySurname);
+		
+		lblEmail = new JLabel("Email");
+		lblEmail.setBounds(39, 229, 56, 16);
+		add(lblEmail);
+		
+		lblMobile = new JLabel("Mobile");
+		lblMobile.setBounds(39, 272, 56, 16);
+		add(lblMobile);
+		
+		lblMentor = new JLabel("Mentor");
+		lblMentor.setBounds(39, 315, 56, 16);
+		add(lblMentor);
+		
+		label = new JLabel("display surname");
+		label.setBounds(126, 229, 102, 16);
+		add(label);
+		
+		label_1 = new JLabel("display surname");
+		label_1.setBounds(126, 272, 102, 16);
+		add(label_1);
+		
+		rdbtnYes = new JRadioButton("Yes");
+		rdbtnYes.setBounds(125, 311, 56, 25);
+		add(rdbtnYes);
+		
+		rdbtnNo = new JRadioButton("No");
+		rdbtnNo.setBounds(194, 311, 56, 25);
+		add(rdbtnNo);
 	}
 }
