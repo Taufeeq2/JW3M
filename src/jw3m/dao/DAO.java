@@ -7,6 +7,7 @@ public class DAO
 {	
 		private Connection con  = null;
 		private Statement sqlstat = null;
+		private PreparedStatement ps = null;
 		private String url = "jdbc:mysql://localhost:3306/jw3m_project";
 		private String user = "root";
 		private String psw = "root";
@@ -106,7 +107,43 @@ public class DAO
 			}
 
 			return userVect;
+		}
+		
+		public boolean addUserList(User inUser)
+		{
+			String userName = inUser.getUserName();
+			String password = inUser.getPassword();
+			String firstName = inUser.getFirstName();
+			String surname = inUser.getSurname();
+			String alias = inUser.getAlias();
+			String email = inUser.getEmailAddress();
+			int mobile = inUser.getMobile();
+			boolean mentor = inUser.isMentor();
 			
+			try
+			{
+				ps = con.prepareStatement("INSERT INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
+				
+				ps.setString(1, userName);
+				ps.setString(2, password);
+				ps.setString(3, firstName);
+				ps.setString(4, surname);
+				ps.setString(5, alias);
+				ps.setString(6, email);
+				ps.setInt(7, mobile);
+				ps.setBoolean(8, mentor);
+				
+				ps.executeUpdate();
+				
+				
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			return true;
 		}
 		
 		public String getUser(String firstName)
