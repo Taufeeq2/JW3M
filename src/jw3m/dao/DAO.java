@@ -47,8 +47,8 @@ public class DAO
 		    {
 			    sqlstat.executeUpdate("insert into users values('', '', '', '', '', '', '')");
 		    }
-			//this.getUserList();
-			this.getUser(fn);
+			this.getUserList();
+			//this.getUser(fn);
 			
 		}	
 		
