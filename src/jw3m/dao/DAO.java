@@ -168,7 +168,7 @@ public class DAO
 			
 	        try
 	        {
-	        	ps = con.prepareStatement("Select * from users where firstName = ?");
+	        	ps = con.prepareStatement("Select * from users where userID = ?");
 	        	ps.setString(1, inUserName);
 	        	rs = ps.executeQuery();
 	        
