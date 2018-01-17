@@ -12,6 +12,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
+import jw3m.beans.User;
 import jw3m.dao.DAO;
 
 import javax.swing.JScrollPane;
@@ -130,12 +131,17 @@ public class PanelProfile extends JPanel implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		Object source = e.getSource();
+		DAO skillDAO;
+		User inUser = new User();
+		
 		
 		if(source == btnShowSkills)
 		{
 			try
 			{
-				DAO skillDAO = new DAO();
+				skillDAO = new DAO();
+				
+//				textArea.getText(skillDAO.getUserSkills(inUser));
 			} 
 			catch (Exception e1)
 			{
