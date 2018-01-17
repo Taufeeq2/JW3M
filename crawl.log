@@ -1,40 +1,31 @@
-INFO	2018-01-15 13:48:07,097	0	jw3m.server.Server	[main]	Skills server: Welcome
-INFO	2018-01-15 13:48:16,172	9075	jw3m.server.Server	[main]	Skills server: Welcome
-INFO	2018-01-15 13:48:16,174	0	jw3m.client.gui.Client	[main]	client requesting logon
-INFO	2018-01-15 13:48:16,176	9079	jw3m.server.Server	[Thread-1]	receieved : request logon
-INFO	2018-01-15 13:48:16,176	9079	jw3m.server.Server	[Thread-1]	server logon method started
-INFO	2018-01-15 13:48:16,177	3	jw3m.client.gui.Client	[main]	client recieved Send Username
-INFO	2018-01-15 13:48:16,177	9080	jw3m.server.Server	[Thread-1]	server got Bob
-INFO	2018-01-15 13:48:16,178	4	jw3m.client.gui.Client	[main]	client recieved Send Password
-INFO	2018-01-15 13:48:16,178	9081	jw3m.server.Server	[Thread-1]	server got 123
-INFO	2018-01-15 13:48:16,178	9081	jw3m.server.Server	[Thread-1]	good logon
-INFO	2018-01-16 13:28:04,623	0	jw3m.server.Server	[main]	Skills server: Welcome
-INFO	2018-01-16 13:28:45,429	0	jw3m.client.gui.Client	[main]	client requesting logon
-INFO	2018-01-16 13:28:45,431	40808	jw3m.server.Server	[main]	Skills server: Welcome
-INFO	2018-01-16 13:28:45,433	40810	jw3m.server.Server	[Thread-1]	receieved : request logon
-INFO	2018-01-16 13:28:45,433	40810	jw3m.server.Server	[Thread-1]	server logon method started
-INFO	2018-01-16 13:28:45,434	5	jw3m.client.gui.Client	[main]	client recieved Send Username
-INFO	2018-01-16 13:28:45,435	40812	jw3m.server.Server	[Thread-1]	server got Bob
-INFO	2018-01-16 13:28:45,435	6	jw3m.client.gui.Client	[main]	client recieved Send Password
-INFO	2018-01-16 13:28:45,436	40813	jw3m.server.Server	[Thread-1]	server got 123
-INFO	2018-01-16 13:28:45,437	40814	jw3m.server.Server	[Thread-1]	good logon
-INFO	2018-01-17 09:40:20,645	0	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Graceful exit - requested
-INFO	2018-01-17 09:40:20,645	0	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Program halted!!!! 
-INFO	2018-01-17 09:57:01,709	0	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Graceful exit - requested
-INFO	2018-01-17 09:57:01,716	7	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Program halted!!!! 
-INFO	2018-01-17 10:26:47,914	0	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Graceful exit - requested
-INFO	2018-01-17 10:26:47,921	7	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Program halted!!!! 
-INFO	2018-01-17 10:27:17,735	0	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Graceful exit - requested
-INFO	2018-01-17 10:27:17,737	2	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Program halted!!!! 
-INFO	2018-01-17 10:52:56,190	1	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Graceful exit - requested
-INFO	2018-01-17 10:52:56,192	3	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Program halted!!!! 
-INFO	2018-01-17 10:54:34,553	0	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Graceful exit - requested
-INFO	2018-01-17 10:54:34,555	2	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Program halted!!!! 
-INFO	2018-01-17 10:55:19,223	0	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Graceful exit - requested
-INFO	2018-01-17 10:55:19,225	2	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Program halted!!!! 
-INFO	2018-01-17 11:17:17,332	0	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Graceful exit - requested
-INFO	2018-01-17 11:17:17,334	2	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Program halted!!!! 
-INFO	2018-01-17 12:46:13,464	0	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Graceful exit - requested
-INFO	2018-01-17 12:46:13,467	3	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Program halted!!!! 
-INFO	2018-01-17 12:47:30,136	0	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Graceful exit - requested
-INFO	2018-01-17 12:47:30,139	3	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Program halted!!!! 
+INFO	2018-01-17 13:24:22,038	0	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Graceful exit - requested
+INFO	2018-01-17 13:24:22,038	0	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Program halted!!!! 
+INFO	2018-01-17 13:25:34,514	0	jw3m.client.gui.PanelLogin	[AWT-EventQueue-0]	loggon submit clicked
+INFO	2018-01-17 13:25:41,999	7485	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Graceful exit - requested
+INFO	2018-01-17 13:25:41,999	7485	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Program halted!!!! 
+INFO	2018-01-17 13:26:55,497	0	jw3m.client.gui.PanelLogin	[AWT-EventQueue-0]	loggon submit clicked
+INFO	2018-01-17 13:27:03,694	8197	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Graceful exit - requested
+INFO	2018-01-17 13:27:03,694	8197	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Program halted!!!! 
+INFO	2018-01-17 13:27:11,093	0	jw3m.client.gui.PanelLogin	[AWT-EventQueue-0]	loggon submit clicked
+INFO	2018-01-17 13:27:11,141	48	jw3m.client.gui.PanelLogin	[AWT-EventQueue-0]	Found user a205128
+INFO	2018-01-17 13:27:15,792	4699	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Graceful exit - requested
+INFO	2018-01-17 13:27:15,792	4699	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Program halted!!!! 
+INFO	2018-01-17 13:28:12,723	0	jw3m.client.gui.PanelLogin	[AWT-EventQueue-0]	loggon submit clicked
+INFO	2018-01-17 13:28:12,765	42	jw3m.client.gui.PanelLogin	[AWT-EventQueue-0]	Found user a205128
+INFO	2018-01-17 13:28:18,078	5355	jw3m.client.gui.PanelLogin	[AWT-EventQueue-0]	loggon submit clicked
+INFO	2018-01-17 13:28:20,696	7973	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Graceful exit - requested
+INFO	2018-01-17 13:28:20,696	7973	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Program halted!!!! 
+INFO	2018-01-17 13:31:00,687	0	jw3m.client.gui.PanelLogin	[AWT-EventQueue-0]	loggon submit clicked
+INFO	2018-01-17 13:31:00,718	31	jw3m.client.gui.PanelLogin	[AWT-EventQueue-0]	Found user a205128
+INFO	2018-01-17 13:31:00,734	47	jw3m.client.gui.PanelLogin	[AWT-EventQueue-0]	Passwords match a205128
+INFO	2018-01-17 13:31:11,765	11078	jw3m.client.gui.PanelLogin	[AWT-EventQueue-0]	loggon submit clicked
+INFO	2018-01-17 13:31:11,780	11093	jw3m.client.gui.PanelLogin	[AWT-EventQueue-0]	Found user a205128
+INFO	2018-01-17 13:31:56,280	55593	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Graceful exit - requested
+INFO	2018-01-17 13:31:56,280	55593	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Program halted!!!! 
+INFO	2018-01-17 13:32:00,191	0	jw3m.client.gui.PanelLogin	[AWT-EventQueue-0]	loggon submit clicked
+INFO	2018-01-17 13:32:00,238	47	jw3m.client.gui.PanelLogin	[AWT-EventQueue-0]	Found user a205128
+INFO	2018-01-17 13:32:03,300	3109	jw3m.client.gui.PanelLogin	[AWT-EventQueue-0]	loggon submit clicked
+INFO	2018-01-17 13:32:03,308	3117	jw3m.client.gui.PanelLogin	[AWT-EventQueue-0]	Found user a205128
+INFO	2018-01-17 13:32:03,308	3117	jw3m.client.gui.PanelLogin	[AWT-EventQueue-0]	Passwords match a205128
+INFO	2018-01-17 13:32:12,015	11824	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Graceful exit - requested
+INFO	2018-01-17 13:32:12,015	11824	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Program halted!!!! 

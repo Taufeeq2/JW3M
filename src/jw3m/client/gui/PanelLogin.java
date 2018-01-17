@@ -10,12 +10,18 @@ import java.awt.Font;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import org.apache.log4j.PropertyConfigurator;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 public class PanelLogin extends JPanel implements ActionListener
 {
+	final static Logger logger = Logger.getLogger(PanelLogin.class);
+	
 	private JLabel labelUserID;
 	private JTextField textFieldUserID;
 	private JPasswordField passwordField;
@@ -35,6 +41,7 @@ public class PanelLogin extends JPanel implements ActionListener
 	 */
 	public PanelLogin(SkillsClient frame)
 	{
+		PropertyConfigurator.configure("log4j.properties");
 		this.baseFrame = frame;
 		
 		try
@@ -136,25 +143,41 @@ public class PanelLogin extends JPanel implements ActionListener
 		
 		if (source == buttonSubmit)
 		{
+			logger.info("loggon submit clicked");
+			Boolean logonSuccess= false;
+			// add logic to validate user
 			
-//			Boolean logonSuccess= false;
-//			// add logic to validate user
-//			
-//			String passwordString = new String (passwordField.getPassword() );
-//			
-//			if ( mainFrame.getUserCatalog().userExists(textFieldUserID.getText())  )
-//			{
-//				 logonSuccess = mainFrame.getUserCatalog().logonUser(textFieldUserID.getText(), passwordString);
-//				 
-//			}
-
+			String passwordString = new String (passwordField.getPassword() );
+			
+			String userName = new String (textFieldUserID.getText());
+			
+			if (baseFrame.dao.getUser(userName) != null)
+			{
+				logger.info("Found user " + userName);
+				
+				if (baseFrame.dao.getUser(userName).getPassword().equals(passwordString))
+				{
+					// clearly bad logic here were the client has the user object with password but ya for now.
+					logger.info("Passwords match " + userName);
+					
 					baseFrame.setupMenuBar();
 					baseFrame.setupSouthPanel();
 					baseFrame.setupTabs();
 					baseFrame.changeToTabbedPane();
+					
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(this, "Bad password");
+				//	textFieldUserID.setText("");
+					passwordField.setText("");
+				}
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(this, "No such user!");
+			}
 
-
-			
 			
 			
 		}
@@ -168,7 +191,16 @@ public class PanelLogin extends JPanel implements ActionListener
 		
 		if (source == buttonChangePassword)
 		{
-			String username = JOptionPane.showInputDialog(this,"Username");
+//			String userName = JOptionPane.showInputDialog(this,"Username");
+//			
+//			if (baseFrame.dao.getUser(userName) != null)
+//			{
+//				logger.info("Found user " + userName);
+//			}
+//			else
+//			{
+//				JOptionPane.showConfirmDialog(this, "No such user!");
+//			}
 			
 //			if (mainFrame.getUserCatalog().userExists(username) )
 //			{
