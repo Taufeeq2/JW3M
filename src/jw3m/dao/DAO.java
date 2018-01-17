@@ -172,7 +172,8 @@ public class DAO
 	        	ps.setString(1, inUserName);
 	        	rs = ps.executeQuery();
 	        
-	        	
+	        	if(!rs.isBeforeFirst())
+	        	{
 	        		id = rs.getString("userID");
 					psw1 = rs.getString("password");
 					fn = rs.getString("firstName");
@@ -193,7 +194,11 @@ public class DAO
 					tempUser.setMentor(men);
 					
 					return tempUser;
-	        	
+	        	}
+	        	else
+	        	{
+	        		return null;
+	        	}
 	        	
 
 	        	
@@ -290,6 +295,13 @@ public class DAO
 			}
 			return true;
 		}
+		
+		
+		
+		
+		
+		
+		
 		
 		public void closeDB()
 		{
