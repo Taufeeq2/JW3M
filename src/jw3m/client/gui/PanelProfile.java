@@ -1,12 +1,16 @@
 package jw3m.client.gui;
-
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JRadioButton;
 
+
+
+import javax.swing.JButton;
+
 public class PanelProfile extends JPanel 
 {
+	private SkillsClient baseFrame;
 	private JLabel lblMyProfile;
 	private JLabel lblUserId;
 	private JLabel lblDisplayUserid;
@@ -21,7 +25,8 @@ public class PanelProfile extends JPanel
 	private JLabel label_1;
 	private JRadioButton rdbtnYes;
 	private JRadioButton rdbtnNo;
-	public PanelProfile() {
+	
+	public PanelProfile(SkillsClient frame) {
 		setLayout(null);
 		
 		lblMyProfile = new JLabel("My Profile");
@@ -81,4 +86,11 @@ public class PanelProfile extends JPanel
 		rdbtnNo.setBounds(194, 311, 56, 25);
 		add(rdbtnNo);
 	}
+
+	
+	
+	
+
+	
+
 }

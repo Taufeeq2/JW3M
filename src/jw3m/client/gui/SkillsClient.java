@@ -7,6 +7,10 @@ import java.util.Set;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
+
 //import jw3m.client.gui.PanelLogin;
 //import jw3m.client.gui.PanelMediaCatalog;
 //import jw3m.client.gui.PanelMediaMaintenance;
@@ -15,7 +19,7 @@ import javax.swing.border.EmptyBorder;
 
 public class SkillsClient extends JFrame implements ActionListener
 {
-	
+	final static Logger logger = Logger.getLogger(SkillsClient.class);
 
 	/**
 	 * 
@@ -111,9 +115,12 @@ public class SkillsClient extends JFrame implements ActionListener
 	{
 		// This creates everything we need for the tabs
 		
+		profileP = new PanelProfile(this);
+		
+	//	userMaintenanceP = new PanelUserMaintenance(this);
 		
 		tabbedPane = new JTabbedPane();
-		tabbedPane.add("Profile", profileP);
+		tabbedPane.add("Profile XXXX", profileP);
 		tabbedPane.add("Edit", editP);
 		tabbedPane.add("Notification", notificationP);
 		tabbedPane.add("Rate Someone", rateSomeoneP);
@@ -282,43 +289,46 @@ public class SkillsClient extends JFrame implements ActionListener
 		
 			boolean DAO_Open = true;
 			
-			while (DAO_Open == true)
-			{
-				threadSet = Thread.getAllStackTraces().keySet();
-				threadArray = threadSet.toArray(new Thread[threadSet.size()]);
-				
-				// System.out.println(threadSet.toString());
-				
-				
-				DAO_Open = false; // as soon as we find one instance of either thread we set to true and the loop will go on
-				
-				// fix to any threads
-				for (int i = 0 ; i < threadArray.length   ; i ++)
-				{
-					if (threadArray[i].getName().contains("UserFileSave") || threadArray[i].getName().contains("MediaFileSave")  )
-					{
-						DAO_Open = true;
-						System.out.println("Threads still open... waiting 1 second...");
-						
-						
-						try
-						{
-							Thread.sleep(1000);
-						} catch (InterruptedException ie)
-						{
-							// TODO Auto-generated catch block
-							ie.printStackTrace();
-						}
-
-					} // end if 
-				} // end for
-			} //  end while
+//			while (DAO_Open == true)
+//			{
+//				threadSet = Thread.getAllStackTraces().keySet();
+//				threadArray = threadSet.toArray(new Thread[threadSet.size()]);
+//				
+//				// System.out.println(threadSet.toString());
+//				
+//				// if we use threads we can then add the names to below
+//				DAO_Open = false; // as soon as we find one instance of either thread we set to true and the loop will go on
+//				
+//				// fix to any threads
+//				for (int i = 0 ; i < threadArray.length   ; i ++)
+//				{
+//					if (threadArray[i].getName().contains("UserFileSave") || threadArray[i].getName().contains("MediaFileSave")  )
+//					{
+//						DAO_Open = true;
+//						System.out.println("Threads still open... waiting 1 second...");
+//						
+//						
+//						try
+//						{
+//							Thread.sleep(1000);
+//						} catch (InterruptedException ie)
+//						{
+//							// TODO Auto-generated catch block
+//							ie.printStackTrace();
+//						}
+//
+//					} // end if 
+//				} // end for
+//			} //  end while
 			
-			System.out.println("All DAO threads finished");
-			System.out.println("Program halted!!!");
+			
+			logger.info("Graceful exit - requested");
+			logger.info("Program halted!!!! ");
+//			System.out.println("All DAO threads finished");
+//			System.out.println("Program halted!!!");
 			System.exit(0);
 			
-			
+			// test
 			
 		}
 		
