@@ -16,6 +16,7 @@ public class DAO
 		private Vector<User> userVect = null;
 		private Vector<UserSkill> userSkillVect = null;
 		private Vector<Hobby> hobbyVect = null;
+		private Vector<UserHobby> userHobbyVect = null;
 	//	private User user1 = null;
 		private String id, fn, s, psw1, al, em;
 		private int mob = 0;
@@ -50,7 +51,7 @@ public class DAO
 		    {
 			    sqlstat.executeUpdate("insert into users values('', '', '', '', '', '', '')");
 		    }
-//			this.getUserList();
+//			this.getUser("a126318");
 
 
 		}	
@@ -169,50 +170,54 @@ public class DAO
 		
 		public User getUser(String inUserName)
 		{
-			
-	        try
-	        {
-	        	ps = con.prepareStatement("Select * from users where userID = ?");
-	        	ps.setString(1, inUserName);
-	        	rs = ps.executeQuery();
-	        
-	        	if(!rs.isBeforeFirst())
-	        	{
-	        		id = rs.getString("userID");
-					psw1 = rs.getString("password");
-					fn = rs.getString("firstName");
-					s = rs.getString("surname");
-					al = rs.getString("alias");
-					em = rs.getString("email");
-					mob = rs.getInt("mobile");
-					men = rs.getBoolean("mentor");
-					
-					User tempUser = new User();
-					tempUser.setUserName(id);
-					tempUser.setPassword(psw1);
-					tempUser.setFirstName(fn);
-					tempUser.setSurname(s);
-					tempUser.setAlias(al);
-					tempUser.setEmailAddress(em);
-					tempUser.setMobile(mob);
-					tempUser.setMentor(men);
-					
-					return tempUser;
-	        	}
-	        	else
-	        	{
-	        		return null;
-	        	}
-	        	
+			User tempUser = new User();
+			try
+			{
+				ps = con.prepareStatement("Select * from users where userID = ?");
+				ps.setString(1, inUserName);
+				rs = ps.executeQuery();
 
-	        	
-	        } 
-	        catch (SQLException e)
-	        {
-	        	e.printStackTrace();
-	        	return null;
-	        }
-	       
+				if(rs.isBeforeFirst())
+				{
+					while(rs.next())
+					{
+
+						id = rs.getString("userID");
+						psw1 = rs.getString("password");
+						fn = rs.getString("firstName");
+						s = rs.getString("surname");
+						al = rs.getString("alias");
+						em = rs.getString("email");
+						mob = rs.getInt("mobile");
+						men = rs.getBoolean("mentor");
+
+
+						tempUser.setUserName(id);
+						tempUser.setPassword(psw1);
+						tempUser.setFirstName(fn);
+						tempUser.setSurname(s);
+						tempUser.setAlias(al);
+						tempUser.setEmailAddress(em);
+						tempUser.setMobile(mob);
+						tempUser.setMentor(men);
+
+						System.out.println(tempUser.getFirstName());
+		        	}
+						return tempUser;
+					
+				}
+				else
+				{
+					System.out.println("Null");
+					return null;
+				}
+			} 
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+				return null;
+			}
+
 		}
 		
 		//USER SKILLS METHODS
@@ -379,24 +384,26 @@ public class DAO
 		
 		//USER HOBBY Methods
 		
-		public Vector<Hobby> getUserHobby()
+		public Vector<UserHobby> getUserHobby(User inUser)
 		{
+			String userName = inUser.getUserName();
 			try
 			{
-				ps = con.prepareStatement("SELECT * FROM hobby");
-								
+				ps = con.prepareStatement("SELECT * FROM userHobbies WHERE userID = ?");
+				ps.setString(1, userName);
+				
 				rs = ps.executeQuery();
 				
 				while (rs.next())
 				{
+					String userID = rs.getString("userID");
 					int hobbyID = rs.getInt("hobbyID");
-					String hobbyName = rs.getString("hobbyName");
 										
-					Hobby tempHobby = new Hobby();
-					tempHobby.setHobbyID(hobbyID);
-					tempHobby.setHobbyName(hobbyName);
+					UserHobby tempUserHobby = new UserHobby();
+					tempUserHobby.setUserID(userID);
+					tempUserHobby.setHobbyID(hobbyID);
 					
-					hobbyVect.add(tempHobby);
+					userHobbyVect.add(tempUserHobby);
 				}
 							
 								
@@ -406,7 +413,47 @@ public class DAO
 				e.printStackTrace();
 			}
 			
-			return hobbyVect;
+			return userHobbyVect;
+		}
+		
+		public Vector<User> getUserHobby(Hobby inHobby)
+		{
+			int inHobbyID = inHobby.getHobbyID();
+			try
+			{
+				ps = con.prepareStatement("SELECT * FROM userHobbies WHERE hobbyID = ?");
+				ps.setInt(1, inHobbyID);
+				
+				rs = ps.executeQuery();
+				
+				while (rs.next())
+				{
+					String userID = rs.getString("userID");
+					int hobbyID = rs.getInt("hobbyID");
+										
+					userVect = new Vector<User>();			
+					User tempUser = new User();
+					
+					tempUser.setUserName(id);
+					tempUser.setPassword(psw1);
+					tempUser.setFirstName(fn);
+					tempUser.setSurname(s);
+					tempUser.setAlias(al);
+					tempUser.setEmailAddress(em);
+					tempUser.setMobile(mob);
+					tempUser.setMentor(men);
+					
+					userVect.add(tempUser);
+				}
+							
+								
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return userVect;
 		}
 		
 		public boolean addHo1bby(Hobby inHobby)
@@ -468,15 +515,16 @@ public class DAO
 		
 
 		
-		public static void main(String[] args)
-		{
-			try
-			{
-				new DAO();
-			} catch (Exception e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+//		public static void main(String[] args)
+//		{
+//			try
+//			{
+//				new DAO();
+//				
+//			} catch (Exception e)
+//			{
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
 }

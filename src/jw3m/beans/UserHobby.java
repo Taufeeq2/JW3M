@@ -9,7 +9,7 @@ public class UserHobby implements Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Integer userID;
+	private String userID;
 	private Integer hobbyID;
 	
 	public UserHobby()
@@ -17,12 +17,12 @@ public class UserHobby implements Serializable
 		//BEAN
 	}
 
-	public Integer getUserID()
+	public String getUserID()
 	{
 		return userID;
 	}
 
-	public void setUserID(Integer userID)
+	public void setUserID(String userID)
 	{
 		this.userID = userID;
 	}
