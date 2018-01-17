@@ -7,6 +7,8 @@ import javax.swing.JRadioButton;
 
 
 import javax.swing.JButton;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 
 public class PanelProfile extends JPanel 
 {
@@ -27,6 +29,9 @@ public class PanelProfile extends JPanel
 	private JRadioButton rdbtnNo;
 	private JPanel panel;
 	private JPanel panel_1;
+	private JLabel lblMySkills;
+	private JScrollPane scrollPane;
+	private JTextArea textArea;
 	
 	public PanelProfile(SkillsClient frame) {
 		setLayout(null);
@@ -91,6 +96,19 @@ public class PanelProfile extends JPanel
 		panel = new JPanel();
 		panel.setBounds(0, 344, 882, 315);
 		add(panel);
+		panel.setLayout(null);
+		
+		lblMySkills = new JLabel("My Skills");
+		lblMySkills.setBounds(309, 13, 94, 27);
+		lblMySkills.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
+		panel.add(lblMySkills);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(48, 53, 796, 230);
+		panel.add(scrollPane);
+		
+		textArea = new JTextArea();
+		scrollPane.setViewportView(textArea);
 		
 		panel_1 = new JPanel();
 		panel_1.setBounds(0, 0, 882, 346);
