@@ -93,7 +93,7 @@ public class PanelEdit extends JPanel implements ActionListener
 		
 		if(source == btnUpdateProfile)
 		{
-			JOptionPane.showMessageDialog(this, "Well done on updating your profile");
+			JOptionPane.showMessageDialog(this, "Well done on updating your profile"); 
 		}
 		
 	}
