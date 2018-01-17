@@ -54,7 +54,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	
 	public SkillsClient()
 	{
-		
+		PropertyConfigurator.configure("log4j.properties");
 		//Now lets do the graphics
 		this.setTitle("Skills Client");
 //		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
