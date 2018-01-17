@@ -431,8 +431,7 @@ public class DAO
 				ps.setInt(1, inHobbyID);
 				
 				rs = ps.executeQuery();
-//				rs.last();
-//				System.out.println("Resultset - " + rs.getRow());
+
 				while (rs.next())
 				{
 					System.out.println("Resultset - " + rs.getRow());
