@@ -121,7 +121,7 @@ public class PanelProfile extends JPanel implements ActionListener
 		scrollPane.setViewportView(textArea);
 		
 		btnShowSkills = new JButton("Show Skills");
-		btnShowSkills.setBounds(371, 306, 97, 25);
+		btnShowSkills.setBounds(371, 306, 127, 25);
 		panel.add(btnShowSkills);
 		btnShowSkills.addActionListener(this);
 		
