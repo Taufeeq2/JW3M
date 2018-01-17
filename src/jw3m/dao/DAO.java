@@ -163,17 +163,16 @@ public class DAO
 			return true;
 		}
 		
-		public String getUser(String firstName)
+		public User getUser(String inUserName)
 		{
 			
 	        try
 	        {
 	        	ps = con.prepareStatement("Select * from users where firstName = ?");
-	        	ps.setString(1, firstName);
+	        	ps.setString(1, inUserName);
 	        	rs = ps.executeQuery();
 	        
-	        	while(rs.next())
-	        	{
+	        	
 	        		id = rs.getString("userID");
 					psw1 = rs.getString("password");
 					fn = rs.getString("firstName");
@@ -183,8 +182,18 @@ public class DAO
 					mob = rs.getInt("mobile");
 					men = rs.getBoolean("mentor");
 					
-					msg += (id + " " + psw1 + " " + fn + " " + s + " " + al + " " + em + " " + mob + " " + men + "\n");
-	        	}
+					User tempUser = new User();
+					tempUser.setUserName(id);
+					tempUser.setPassword(psw1);
+					tempUser.setFirstName(fn);
+					tempUser.setSurname(s);
+					tempUser.setAlias(al);
+					tempUser.setEmailAddress(em);
+					tempUser.setMobile(mob);
+					tempUser.setMentor(men);
+					
+					return tempUser;
+	        	
 	        	
 
 	        	
@@ -192,8 +201,9 @@ public class DAO
 	        catch (SQLException e)
 	        {
 	        	e.printStackTrace();
+	        	return null;
 	        }
-	        return msg;
+	       
 		}
 			  
 		public Vector<UserSkill> getUserSkills(User inUser)
