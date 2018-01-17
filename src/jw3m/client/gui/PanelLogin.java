@@ -11,7 +11,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import org.apache.log4j.PropertyConfigurator;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -186,6 +185,8 @@ public class PanelLogin extends JPanel implements ActionListener
 		{
 			textFieldUserID.setText("");
 			passwordField.setText("");
+			
+			logger.debug("Login cancelled");
 			
 		}
 		
