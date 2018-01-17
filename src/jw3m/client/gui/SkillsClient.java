@@ -136,6 +136,9 @@ public class SkillsClient extends JFrame implements ActionListener
 		// This creates everything we need for the tabs
 		
 		profileP = new PanelProfile(this);
+		rateSomeoneP = new PanelRateSomeone(this);
+		notificationP = new PanelNotifications(this);
+		editP = new PanelEdit(this);
 		
 	//	userMaintenanceP = new PanelUserMaintenance(this);
 		
