@@ -147,32 +147,12 @@ public class PanelLogin extends JPanel implements ActionListener
 //				 logonSuccess = mainFrame.getUserCatalog().logonUser(textFieldUserID.getText(), passwordString);
 //				 
 //			}
-//	
-//			
-//			
-//			if (logonSuccess)
-//			{
-//				if ( mainFrame.getUserCatalog().findUser(textFieldUserID.getText()).isAdmin() )
-//				{
+
 					baseFrame.setupMenuBar();
 					baseFrame.setupSouthPanel();
 					baseFrame.setupTabs();
 					baseFrame.changeToTabbedPane();
-//				}
-//				else
-//				{
-//					mainFrame.setupMenuBar();
-//					mainFrame.setupSouthPanel();
-//					mainFrame.setupTabs();
-//					mainFrame.changeToTabbedPane();
-//				}
-//			}
-//			else
-//			{
-//				// For security we don't want to show if the user name exists only but the combination
-//				JOptionPane.showMessageDialog (this, "Incorrect user name or password!");
-//				
-//			}
+
 
 			
 			
