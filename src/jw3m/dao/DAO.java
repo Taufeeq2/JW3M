@@ -439,16 +439,7 @@ public class DAO
 					int hobbyID = rs.getInt("hobbyID");
 										
 					User tempUser = this.getUser(userID);
-					
-//					tempUser.setUserName(id);
-//					tempUser.setPassword(psw1);
-//					tempUser.setFirstName(fn);
-//					tempUser.setSurname(s);
-//					tempUser.setAlias(al);
-//					tempUser.setEmailAddress(em);
-//					tempUser.setMobile(mob);
-//					tempUser.setMentor(men);
-					
+			
 					userVect.add(tempUser);
 					System.out.println("details" + tempUser.getFirstName());
 				}
