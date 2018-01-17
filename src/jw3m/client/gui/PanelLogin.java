@@ -159,6 +159,10 @@ public class PanelLogin extends JPanel implements ActionListener
 					// clearly bad logic here were the client has the user object with password but ya for now.
 					logger.info("Passwords match " + userName);
 					
+					// also bad to accesss the public object directly should be using business logic access methods
+					baseFrame.authenticatedUser = baseFrame.dao.getUser(userName);
+					
+					
 					baseFrame.setupMenuBar();
 					baseFrame.setupSouthPanel();
 					baseFrame.setupTabs();

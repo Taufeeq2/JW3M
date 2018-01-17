@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Set;
 
+import jw3m.beans.*;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -55,6 +57,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	
 	// DIRECT DAO ACCESS - MUST BE CHANGED LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	public DAO dao;
+	public User authenticatedUser;
 	
 	public SkillsClient()
 	{
@@ -198,28 +201,12 @@ public class SkillsClient extends JFrame implements ActionListener
 	public void setupSouthPanel()
 	{
 		
-//		Logged on as Warren (Warren Nieuwoudt) : Admin
-//		Logged on as Admin (Admin istrator) : Admin
-//		Logged on as Bob (Bob Hope) : User
-		
-		// Setup text for who logged in as what
 		String logonDetail = null;
-//		if (this.userCatalog.getAuthenticatedUser().isAdmin() )
-//		{
-//			logonDetail = "Logged on as '" + this.userCatalog.getAuthenticatedUser().getUserName() + "' (" 
-//					+ this.userCatalog.getAuthenticatedUser().getFirstName() + " "
-//					+ this.userCatalog.getAuthenticatedUser().getSurname() + ") with " +
-//					"Admin access";
-//		}
-//		else
-//		{
-//			logonDetail = "Logged on as '" + this.userCatalog.getAuthenticatedUser().getUserName() + "' (" 
-//					+ this.userCatalog.getAuthenticatedUser().getFirstName() + " "
-//					+ this.userCatalog.getAuthenticatedUser().getSurname() + ") with " +
-//					"User access";
-//		}
+
+		logonDetail = "Logged on as '" + this.authenticatedUser.getUserName() + "' ";
+
 		
-		logonDetail = "Logged on as fake - test user";
+		//logonDetail = "Logged on as fake - test user";
 		sPanelText = new JLabel( logonDetail );
 		
 		// South Panel setup
