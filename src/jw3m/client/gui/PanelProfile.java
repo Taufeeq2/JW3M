@@ -141,7 +141,7 @@ public class PanelProfile extends JPanel implements ActionListener
 			{
 				skillDAO = new DAO();
 				
-//				textArea.getText(skillDAO.getUserSkills(inUser));
+//				textArea.getText(skillDAO.getUserSkills(inUser)); 
 			} 
 			catch (Exception e1)
 			{
