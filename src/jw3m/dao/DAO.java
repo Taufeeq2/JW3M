@@ -423,7 +423,7 @@ public class DAO
 //		public Vector<User> getUserHobby(Hobby inHobby)
 		public Vector<User> getUserHobby(int inHobbyID)
 		{
-			userVect = new Vector<User>();
+			Vector<User>userVectLocal = new Vector<User>();
 //			int inHobbyID = inHobby.getHobbyID();
 			try
 			{
@@ -431,17 +431,36 @@ public class DAO
 				ps.setInt(1, inHobbyID);
 				
 				rs = ps.executeQuery();
-
+				
+				User tempUser = null;
+				
+		
 				while (rs.next())
 				{
-					System.out.println("Resultset - " + rs.getRow());
-					String userID = rs.getString("userID");
-					int hobbyID = rs.getInt("hobbyID");
-										
-					User tempUser = this.getUser(userID);
-			
-					userVect.add(tempUser);
-					System.out.println("details" + tempUser.getFirstName());
+					System.out.println("This is the row " + rs.getRow());
+					
+					String usrID = rs.getString("userID");
+					
+					System.out.println("bleh " + usrID);
+					
+				//	tempUser = this.getUser(usrID);
+				//	userVectLocal.add(tempUser);
+					
+					
+//					System.out.println("vector size : " + userVect.size());
+//			//		System.out.println("Resultset - " + rs.getRow());
+//					String userID = rs.getString("userID");
+//					int hobbyID = rs.getInt("hobbyID");
+//										
+//					tempUser = this.getUser(userID);
+//			
+//					userVect.add(tempUser);
+//					System.out.println("details " + tempUser.getFirstName());
+//					
+					
+					
+//					
+				
 				}
 							
 								
@@ -450,8 +469,8 @@ public class DAO
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			return userVect;
+			System.out.println(userVectLocal.toString());
+			return userVectLocal;
 		}
 		
 		public boolean addHo1bby(Hobby inHobby)
