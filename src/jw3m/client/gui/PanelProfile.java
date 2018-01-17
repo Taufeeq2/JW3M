@@ -4,6 +4,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.JRadioButton;
 
@@ -13,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 
 import jw3m.beans.User;
+import jw3m.beans.UserSkill;
 import jw3m.dao.DAO;
 
 import javax.swing.JScrollPane;
@@ -121,6 +123,7 @@ public class PanelProfile extends JPanel implements ActionListener
 		btnShowSkills = new JButton("Show Skills");
 		btnShowSkills.setBounds(371, 306, 97, 25);
 		panel.add(btnShowSkills);
+		btnShowSkills.addActionListener(this);
 		
 		panel_1 = new JPanel();
 		panel_1.setBounds(0, 0, 882, 346);
@@ -132,16 +135,19 @@ public class PanelProfile extends JPanel implements ActionListener
 	{
 		Object source = e.getSource();
 		DAO skillDAO;
-		User inUser = new User();
-		
+		User testUser = new User();
+//		String test = "Hello";
 		
 		if(source == btnShowSkills)
 		{
 			try
 			{
 				skillDAO = new DAO();
+				testUser.setUserName("a149936");
+				Vector<UserSkill> test = skillDAO.getUserSkills(testUser);
+				textArea.append("Hello" + "\n");
 				
-//				textArea.getText(skillDAO.getUserSkills(inUser)); 
+				 
 			} 
 			catch (Exception e1)
 			{
