@@ -120,7 +120,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	//	userMaintenanceP = new PanelUserMaintenance(this);
 		
 		tabbedPane = new JTabbedPane();
-		tabbedPane.add("Profile XXXX", profileP);
+		tabbedPane.add("My Profile", profileP);
 		tabbedPane.add("Edit", editP);
 		tabbedPane.add("Notification", notificationP);
 		tabbedPane.add("Rate Someone", rateSomeoneP);
