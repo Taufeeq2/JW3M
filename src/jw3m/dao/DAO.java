@@ -239,7 +239,7 @@ public class DAO
 			return userSkillVect;
 		}
 		
-		public boolean addUserSkill(String inUserID, int inSkillID)
+		public boolean addUserSkills(String inUserID, int inSkillID)
 		{
 			try
 			{
@@ -260,7 +260,7 @@ public class DAO
 			return true;
 		}
 		
-		public boolean removeUserSkill(String inUserID, int inSkillID)
+		public boolean removeUserSkills(String inUserID, int inSkillID)
 		{
 			try
 			{
