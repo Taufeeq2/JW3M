@@ -168,11 +168,12 @@ public class DAO
 			
 	        try
 	        {
-	        	ps = con.prepareStatement("Select * from users where firstName = ?");
+	        	ps = con.prepareStatement("Select * from users where userID = ?");
 	        	ps.setString(1, inUserName);
 	        	rs = ps.executeQuery();
 	        
-	        	
+	        	if(!rs.isBeforeFirst())
+	        	{
 	        		id = rs.getString("userID");
 					psw1 = rs.getString("password");
 					fn = rs.getString("firstName");
@@ -193,7 +194,11 @@ public class DAO
 					tempUser.setMentor(men);
 					
 					return tempUser;
-	        	
+	        	}
+	        	else
+	        	{
+	        		return null;
+	        	}
 	        	
 
 	        	
@@ -219,7 +224,7 @@ public class DAO
 			
 			try
 			{
-				ps = con.prepareStatement("SELECT * FROM userSkills where userID = ?)");
+				ps = con.prepareStatement("SELECT * FROM userSkills where userID = ?");
 				
 				ps.setString(1, userName);
 								
@@ -290,6 +295,46 @@ public class DAO
 			}
 			return true;
 		}
+		
+		//HOBBY Methods
+		
+		public Vector<Hobby> getHobby()
+		{
+//			try
+//			{
+//				ps = con.prepareStatement("SELECT * FROM hobby");
+//								
+//				rs = ps.executeQuery();
+//				
+//				while (rs.next())
+//				{
+//					int userSkillID = rs.getInt("userSkillID");
+//					String userID = rs.getString("userID");
+//					int skillID = rs.getInt("skillID");
+//					
+//					UserSkill tempUserSkill = new UserSkill();
+//					tempUserSkill.setSkillID(userSkillID);
+//					tempUserSkill.setUserID(userID);
+//					tempUserSkill.setSkillID(skillID);
+//					
+//					userSkillVect.add(tempUserSkill);
+//				}
+//							
+//								
+//			} catch (SQLException e)
+//			{
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//			return userSkillVect;
+			return null;
+		}
+		
+		
+		
+		
+		
 		
 		public void closeDB()
 		{
