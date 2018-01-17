@@ -25,6 +25,8 @@ public class PanelProfile extends JPanel
 	private JLabel label_1;
 	private JRadioButton rdbtnYes;
 	private JRadioButton rdbtnNo;
+	private JPanel panel;
+	private JPanel panel_1;
 	
 	public PanelProfile(SkillsClient frame) {
 		setLayout(null);
@@ -85,12 +87,13 @@ public class PanelProfile extends JPanel
 		rdbtnNo = new JRadioButton("No");
 		rdbtnNo.setBounds(194, 311, 56, 25);
 		add(rdbtnNo);
+		
+		panel = new JPanel();
+		panel.setBounds(0, 344, 882, 315);
+		add(panel);
+		
+		panel_1 = new JPanel();
+		panel_1.setBounds(0, 0, 882, 346);
+		add(panel_1);
 	}
-
-	
-	
-	
-
-	
-
 }
