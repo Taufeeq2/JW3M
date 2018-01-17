@@ -15,6 +15,7 @@ public class DAO
 		private String msg = "";
 		private Vector<User> userVect = null;
 		private Vector<UserSkill> userSkillVect = null;
+		private Vector<Hobby> hobbyVect = null;
 	//	private User user1 = null;
 		private String id, fn, s, psw1, al, em;
 		private int mob = 0;
@@ -66,6 +67,9 @@ public class DAO
 			}
 			return true;
 		}
+		
+		
+		// USERLIST Methods
 		
 		public Vector<User> getUserList()
 		{
@@ -210,7 +214,9 @@ public class DAO
 	        }
 	       
 		}
-			  
+		
+		//USER SKILLS METHODS
+		
 		public Vector<UserSkill> getUserSkills(User inUser)
 		{
 			String userName = inUser.getUserName();
@@ -300,37 +306,78 @@ public class DAO
 		
 		public Vector<Hobby> getHobby()
 		{
-//			try
-//			{
-//				ps = con.prepareStatement("SELECT * FROM hobby");
-//								
-//				rs = ps.executeQuery();
-//				
-//				while (rs.next())
-//				{
-//					int userSkillID = rs.getInt("userSkillID");
-//					String userID = rs.getString("userID");
-//					int skillID = rs.getInt("skillID");
-//					
-//					UserSkill tempUserSkill = new UserSkill();
-//					tempUserSkill.setSkillID(userSkillID);
-//					tempUserSkill.setUserID(userID);
-//					tempUserSkill.setSkillID(skillID);
-//					
-//					userSkillVect.add(tempUserSkill);
-//				}
-//							
-//								
-//			} catch (SQLException e)
-//			{
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			
-//			return userSkillVect;
-			return null;
+			try
+			{
+				ps = con.prepareStatement("SELECT * FROM hobby");
+								
+				rs = ps.executeQuery();
+				
+				while (rs.next())
+				{
+					int hobbyID = rs.getInt("hobbyID");
+					String hobbyName = rs.getString("hobbyName");
+										
+					Hobby tempHobby = new Hobby();
+					tempHobby.setHobbyID(hobbyID);
+					tempHobby.setHobbyName(hobbyName);
+					
+					hobbyVect.add(tempHobby);
+				}
+							
+								
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return hobbyVect;
 		}
 		
+		public boolean addHobby(Hobby inHobby)
+		{
+			int hobbyID = inHobby.getHobbyID();
+			String hobbyName = inHobby.getHobbyName();
+						
+			try
+			{
+				ps = con.prepareStatement("INSERT INTO hobby VALUES(?, ?)");
+				
+				ps.setInt(1, hobbyID);
+				ps.setString(2, hobbyName);
+								
+				ps.executeUpdate();
+				
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
+		}
+		
+		public boolean removeHobby(Hobby inHobby)
+		{
+			int hobbyID = inHobby.getHobbyID();
+						
+			try
+			{
+				ps = con.prepareStatement("DELETE FROM hobby WHERE hobbyID = ?");
+				
+				ps.setInt(1, hobbyID);
+							
+				ps.executeUpdate();
+				
+			} catch (SQLException e)
+			{
+				e.printStackTrace();
+				return false;
+			}
+			
+			return true;
+		}
+		
+		//USER HOBBY Methods
 		
 		
 		
