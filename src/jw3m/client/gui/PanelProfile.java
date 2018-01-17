@@ -145,7 +145,7 @@ public class PanelProfile extends JPanel implements ActionListener
 				skillDAO = new DAO();
 				testUser.setUserName("a149936");
 				Vector<UserSkill> test = skillDAO.getUserSkills(testUser);
-				textArea.append("Hello" + "\n");
+				textArea.append("Hello" + "\n"); 
 				
 				 
 			} 
