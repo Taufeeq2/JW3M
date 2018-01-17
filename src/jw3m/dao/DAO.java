@@ -14,6 +14,7 @@ public class DAO
 		private ResultSet rs = null;
 		private String msg = "";
 		private Vector<User> userVect = null;
+		private Vector<UserSkill> userSkillVect = null;
 	//	private User user1 = null;
 		private String id, fn, s, psw1, al, em;
 		private int mob = 0;
@@ -48,9 +49,9 @@ public class DAO
 		    {
 			    sqlstat.executeUpdate("insert into users values('', '', '', '', '', '', '')");
 		    }
-			this.getUserList();
-			//this.getUser(fn);
-			System.out.println("");
+//			this.getUserList();
+
+
 		}	
 		
 		public boolean saveUser(String sql)
@@ -96,8 +97,6 @@ public class DAO
 					tempUser.setMentor(men);
 					
 					userVect.add(tempUser);
-					
-					System.out.println("Name: " + userVect.get(0).getFirstName());
 				}
 			} 
 			catch (SQLException e)
@@ -197,7 +196,91 @@ public class DAO
 	        return msg;
 		}
 			  
+		public Vector<UserSkill> getUserSkills(User inUser)
+		{
+			String userName = inUser.getUserName();
+			String password = inUser.getPassword();
+			String firstName = inUser.getFirstName();
+			String surname = inUser.getSurname();
+			String alias = inUser.getAlias();
+			String email = inUser.getEmailAddress();
+			int mobile = inUser.getMobile();
+			boolean mentor = inUser.isMentor();
+			
+			try
+			{
+				ps = con.prepareStatement("SELECT * FROM userSkills where userID = ?)");
 				
+				ps.setString(1, userName);
+								
+				rs = ps.executeQuery();
+				
+				while (rs.next())
+				{
+					int userSkillID = rs.getInt("userSkillID");
+					String userID = rs.getString("userID");
+					int skillID = rs.getInt("skillID");
+					
+					UserSkill tempUserSkill = new UserSkill();
+					tempUserSkill.setSkillID(userSkillID);
+					tempUserSkill.setUserID(userID);
+					tempUserSkill.setSkillID(skillID);
+					
+					userSkillVect.add(tempUserSkill);
+				}
+							
+								
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return userSkillVect;
+		}
+		
+		public boolean addUserSkill(String inUserID, int inSkillID)
+		{
+			try
+			{
+				ps = con.prepareStatement("INSERT INTO userSkills VALUES(null, ?, ?)");
+				ps.setString(1, inUserID);
+				ps.setInt(1, inSkillID);
+				
+				ps.executeUpdate();
+				
+				
+				
+			} catch (SQLException e)
+			{
+				
+				e.printStackTrace();
+				return false;
+			}
+			return true;
+		}
+		
+		public boolean removeUserSkill(String inUserID, int inSkillID)
+		{
+			try
+			{
+				ps = con.prepareStatement("DELETE FROM userSkills WHERE userID = ? AND skillID = ?");
+				ps.setString(1, inUserID);
+				ps.setInt(1, inSkillID);
+				
+				ps.executeUpdate();
+				
+				
+				
+			} catch (SQLException e)
+			{
+				
+				e.printStackTrace();
+				return false;
+			}
+			return true;
+		}
+		
 		public void closeDB()
 		{
 			  try

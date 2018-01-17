@@ -10,7 +10,7 @@ public class UserSkill implements Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 	private Integer userSkillID;
-	private Integer userID;
+	private String userID;
 	private Integer skillID;
 	
 	public UserSkill()
@@ -28,12 +28,12 @@ public class UserSkill implements Serializable
 		this.userSkillID = userSkillID;
 	}
 
-	public Integer getUserID()
+	public String getUserID()
 	{
 		return userID;
 	}
 
-	public void setUserID(Integer userID)
+	public void setUserID(String userID)
 	{
 		this.userID = userID;
 	}
