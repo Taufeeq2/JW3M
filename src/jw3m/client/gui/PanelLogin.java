@@ -10,12 +10,18 @@ import java.awt.Font;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
 public class PanelLogin extends JPanel implements ActionListener
 {
+	final static Logger logger = Logger.getLogger(PanelLogin.class);
+	
 	private JLabel labelUserID;
 	private JTextField textFieldUserID;
 	private JPasswordField passwordField;
@@ -35,6 +41,7 @@ public class PanelLogin extends JPanel implements ActionListener
 	 */
 	public PanelLogin(SkillsClient frame)
 	{
+		PropertyConfigurator.configure("log4j.properties");
 		this.baseFrame = frame;
 		
 		try
@@ -163,6 +170,8 @@ public class PanelLogin extends JPanel implements ActionListener
 		{
 			textFieldUserID.setText("");
 			passwordField.setText("");
+			
+			logger.debug("Login cancelled");
 			
 		}
 		
