@@ -2,10 +2,16 @@ package jw3m.client.gui;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
+import javax.swing.JOptionPane;
 
-public class PanelEdit extends JPanel 
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JTextField;
+import javax.swing.JButton;
+
+public class PanelEdit extends JPanel implements ActionListener
 {
 	
 	private SkillsClient baseFrame;
@@ -20,6 +26,7 @@ public class PanelEdit extends JPanel
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
+	private JButton btnUpdateProfile;
 	
 	public PanelEdit(SkillsClient frame) {
 		setLayout(null);
@@ -73,5 +80,21 @@ public class PanelEdit extends JPanel
 		textField_4.setBounds(117, 272, 116, 22);
 		add(textField_4);
 		textField_4.setColumns(10);
+		
+		btnUpdateProfile = new JButton("Update Profile");
+		btnUpdateProfile.setBounds(119, 330, 114, 25);
+		add(btnUpdateProfile);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		Object source = e.getSource();
+		
+		if(source == btnUpdateProfile)
+		{
+			JOptionPane.showMessageDialog(this, "Well done on updating your profile"); 
+		}
+		
 	}
 }
