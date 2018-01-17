@@ -134,7 +134,6 @@ public class DAO
 				ps.setBoolean(8, mentor);
 				
 				ps.executeUpdate();
-				System.out.println();
 				
 			} catch (SQLException e)
 			{
@@ -142,6 +141,25 @@ public class DAO
 				e.printStackTrace();
 			}
 			
+			
+			return true;
+		}
+		
+		public boolean removeUserList(String inUserID)
+		{
+			try
+			{
+				ps = con.prepareStatement("DELETE FROM users WHERE userID = ?");
+				
+				ps.setString(1, inUserID);
+							
+				ps.executeUpdate();
+				
+			} catch (SQLException e)
+			{
+				e.printStackTrace();
+				return false;
+			}
 			
 			return true;
 		}
