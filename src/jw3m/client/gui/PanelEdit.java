@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.Color;
 
 public class PanelEdit extends JPanel implements ActionListener
 {
@@ -29,6 +30,8 @@ public class PanelEdit extends JPanel implements ActionListener
 	private JButton btnUpdateProfile;
 	
 	public PanelEdit(SkillsClient frame) {
+		setBackground(new Color(0, 153, 255));
+		setForeground(Color.LIGHT_GRAY);
 		setLayout(null);
 		
 		lblEditProfile = new JLabel("Edit Profile");
@@ -84,6 +87,7 @@ public class PanelEdit extends JPanel implements ActionListener
 		btnUpdateProfile = new JButton("Update Profile");
 		btnUpdateProfile.setBounds(119, 330, 114, 25);
 		add(btnUpdateProfile);
+		btnUpdateProfile.addActionListener(this);
 	}
 
 	@Override

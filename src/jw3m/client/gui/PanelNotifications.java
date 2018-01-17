@@ -3,6 +3,7 @@ package jw3m.client.gui;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Color;
 
 public class PanelNotifications extends JPanel 
 {
@@ -11,6 +12,7 @@ public class PanelNotifications extends JPanel
 	private JLabel lblNotifications;
 	
 	public PanelNotifications(SkillsClient frame) {
+		setBackground(new Color(0, 153, 255));
 		setLayout(null);
 		
 		lblNotifications = new JLabel("Notifications");
