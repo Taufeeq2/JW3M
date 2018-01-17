@@ -140,6 +140,7 @@ public class SkillsClient extends JFrame implements ActionListener
 		notificationP = new PanelNotifications(this);
 		editP = new PanelEdit(this);
 		
+		
 	//	userMaintenanceP = new PanelUserMaintenance(this);
 		
 		tabbedPane = new JTabbedPane();
