@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+
 //import jw3m.client.gui.PanelLogin;
 //import jw3m.client.gui.PanelMediaCatalog;
 //import jw3m.client.gui.PanelMediaMaintenance;
@@ -114,9 +115,12 @@ public class SkillsClient extends JFrame implements ActionListener
 	{
 		// This creates everything we need for the tabs
 		
+		profileP = new PanelProfile(this);
+		
+	//	userMaintenanceP = new PanelUserMaintenance(this);
 		
 		tabbedPane = new JTabbedPane();
-		tabbedPane.add("Profile", profileP);
+		tabbedPane.add("Profile XXXX", profileP);
 		tabbedPane.add("Edit", editP);
 		tabbedPane.add("Notification", notificationP);
 		tabbedPane.add("Rate Someone", rateSomeoneP);
