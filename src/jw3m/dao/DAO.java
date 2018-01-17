@@ -51,7 +51,12 @@ public class DAO
 		    {
 			    sqlstat.executeUpdate("insert into users values('', '', '', '', '', '', '')");
 		    }
-//			this.getUser("a126318");
+//			Vector<User> j = this.getUserList();
+//			System.out.println(j.size());
+//			for (int i = 0; i < j.size(); i++)
+//			{
+//				System.out.println(j.get(i).getFirstName());
+//			}
 
 
 		}	
@@ -74,6 +79,7 @@ public class DAO
 		
 		public Vector<User> getUserList()
 		{
+			userVect = new Vector<User>();
 			try
 			{
 				rs = sqlstat.executeQuery("Select * from users");
@@ -89,7 +95,7 @@ public class DAO
 					mob = rs.getInt("mobile");
 					men = rs.getBoolean("mentor");
 					
-					userVect = new Vector<User>();			
+								
 					User tempUser = new User();
 					
 					tempUser.setUserName(id);
@@ -201,14 +207,12 @@ public class DAO
 						tempUser.setMobile(mob);
 						tempUser.setMentor(men);
 
-						System.out.println(tempUser.getFirstName());
 		        	}
 						return tempUser;
 					
 				}
 				else
 				{
-					System.out.println("Null");
 					return null;
 				}
 			} 
@@ -416,45 +420,47 @@ public class DAO
 			return userHobbyVect;
 		}
 		
-		public Vector<User> getUserHobby(Hobby inHobby)
-		{
-			int inHobbyID = inHobby.getHobbyID();
-			try
-			{
-				ps = con.prepareStatement("SELECT * FROM userHobbies WHERE hobbyID = ?");
-				ps.setInt(1, inHobbyID);
-				
-				rs = ps.executeQuery();
-				
-				while (rs.next())
-				{
-					String userID = rs.getString("userID");
-					int hobbyID = rs.getInt("hobbyID");
-										
-					userVect = new Vector<User>();			
-					User tempUser = new User();
-					
-					tempUser.setUserName(id);
-					tempUser.setPassword(psw1);
-					tempUser.setFirstName(fn);
-					tempUser.setSurname(s);
-					tempUser.setAlias(al);
-					tempUser.setEmailAddress(em);
-					tempUser.setMobile(mob);
-					tempUser.setMentor(men);
-					
-					userVect.add(tempUser);
-				}
-							
-								
-			} catch (SQLException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			return userVect;
-		}
+//		public Vector<User> getUserHobby(Hobby inHobby)
+//		public Vector<User> getUserHobby(int inHobbyID)
+//		{
+////			int inHobbyID = inHobby.getHobbyID();
+//			try
+//			{
+//				ps = con.prepareStatement("SELECT * FROM userHobbies WHERE hobbyID = ?");
+//				ps.setInt(1, inHobbyID);
+//				
+//				rs = ps.executeQuery();
+//				
+//				while (rs.next())
+//				{
+//					String userID = rs.getString("userID");
+//					int hobbyID = rs.getInt("hobbyID");
+//										
+//					userVect = new Vector<User>();			
+//					User tempUser = new User();
+//					
+//					tempUser.setUserName(id);
+//					tempUser.setPassword(psw1);
+//					tempUser.setFirstName(fn);
+//					tempUser.setSurname(s);
+//					tempUser.setAlias(al);
+//					tempUser.setEmailAddress(em);
+//					tempUser.setMobile(mob);
+//					tempUser.setMentor(men);
+//					
+//					userVect.add(tempUser);
+//					System.out.println("details" + tempUser.getFirstName());
+//				}
+//							
+//								
+//			} catch (SQLException e)
+//			{
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//			return userVect;
+//		}
 		
 		public boolean addHo1bby(Hobby inHobby)
 		{
