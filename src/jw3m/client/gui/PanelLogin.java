@@ -24,7 +24,7 @@ public class PanelLogin extends JPanel implements ActionListener
 	private JButton buttonCancel;
 	private JButton buttonChangePassword;
 	private JPanel basePanel;
-	private SkillsClient mainFrame;
+	private SkillsClient baseFrame;
 	
 	private JPanel sPanel ;
 	private JLabel sPanelText;
@@ -35,12 +35,12 @@ public class PanelLogin extends JPanel implements ActionListener
 	 */
 	public PanelLogin(SkillsClient frame)
 	{
-		this.mainFrame = frame;
+		this.baseFrame = frame;
 		
 		try
 		{
-			mainFrame.removeMenuBar();
-			mainFrame.hideSouthPanel();
+			baseFrame.removeMenuBar();
+			baseFrame.hideSouthPanel();
 		}
 		catch (NullPointerException e)
 		{
@@ -154,10 +154,10 @@ public class PanelLogin extends JPanel implements ActionListener
 //			{
 //				if ( mainFrame.getUserCatalog().findUser(textFieldUserID.getText()).isAdmin() )
 //				{
-					mainFrame.setupMenuBar();
-					mainFrame.setupSouthPanel();
-					mainFrame.setupTabs();
-					mainFrame.changeToTabbedPane();
+					baseFrame.setupMenuBar();
+					baseFrame.setupSouthPanel();
+					baseFrame.setupTabs();
+					baseFrame.changeToTabbedPane();
 //				}
 //				else
 //				{

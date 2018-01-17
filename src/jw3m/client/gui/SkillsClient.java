@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+//DIRECT DAO ACCESS - MUST BE CHANGED LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+import jw3m.dao.DAO;
 
 //import jw3m.client.gui.PanelLogin;
 //import jw3m.client.gui.PanelMediaCatalog;
@@ -50,11 +52,29 @@ public class SkillsClient extends JFrame implements ActionListener
 	private PanelNotifications notificationP;
 	private PanelRateSomeone rateSomeoneP;
 	
-
+	
+	// DIRECT DAO ACCESS - MUST BE CHANGED LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	public DAO dao;
 	
 	public SkillsClient()
 	{
 		PropertyConfigurator.configure("log4j.properties");
+		
+		// DIRECT DAO ACCESS - MUST BE CHANGED LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		
+		try
+		{
+			dao = new DAO();
+		} catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
 		//Now lets do the graphics
 		this.setTitle("Skills Client");
 //		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -337,5 +357,8 @@ public class SkillsClient extends JFrame implements ActionListener
 				
 		
 	}
+	
+	
+	
 
 }
