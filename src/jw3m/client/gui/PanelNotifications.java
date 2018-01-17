@@ -2,6 +2,7 @@ package jw3m.client.gui;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import java.awt.Font;
 
 public class PanelNotifications extends JPanel 
 {
@@ -13,7 +14,8 @@ public class PanelNotifications extends JPanel
 		setLayout(null);
 		
 		lblNotifications = new JLabel("Notifications");
-		lblNotifications.setBounds(345, 23, 56, 16);
+		lblNotifications.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
+		lblNotifications.setBounds(345, 23, 155, 16);
 		add(lblNotifications);
 	} 
 	

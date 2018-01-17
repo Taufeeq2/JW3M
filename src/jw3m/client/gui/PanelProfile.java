@@ -18,6 +18,7 @@ import jw3m.beans.UserSkill;
 import jw3m.dao.DAO;
 
 import javax.swing.JScrollPane;
+import javax.swing.ButtonGroup;
 
 public class PanelProfile extends JPanel implements ActionListener
 {
@@ -42,6 +43,7 @@ public class PanelProfile extends JPanel implements ActionListener
 	private JScrollPane scrollPane;
 	private JTextArea textArea;
 	private JButton btnShowSkills;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
 	public PanelProfile(SkillsClient frame) {
 		setLayout(null);
@@ -96,10 +98,12 @@ public class PanelProfile extends JPanel implements ActionListener
 		add(label_1);
 		
 		rdbtnYes = new JRadioButton("Yes");
+		buttonGroup.add(rdbtnYes);
 		rdbtnYes.setBounds(125, 311, 56, 25);
 		add(rdbtnYes);
 		
 		rdbtnNo = new JRadioButton("No");
+		buttonGroup.add(rdbtnNo);
 		rdbtnNo.setBounds(194, 311, 56, 25);
 		add(rdbtnNo);
 		
