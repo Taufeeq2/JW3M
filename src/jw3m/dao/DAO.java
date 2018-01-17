@@ -379,7 +379,78 @@ public class DAO
 		
 		//USER HOBBY Methods
 		
+		public Vector<Hobby> getUserHobby()
+		{
+			try
+			{
+				ps = con.prepareStatement("SELECT * FROM hobby");
+								
+				rs = ps.executeQuery();
+				
+				while (rs.next())
+				{
+					int hobbyID = rs.getInt("hobbyID");
+					String hobbyName = rs.getString("hobbyName");
+										
+					Hobby tempHobby = new Hobby();
+					tempHobby.setHobbyID(hobbyID);
+					tempHobby.setHobbyName(hobbyName);
+					
+					hobbyVect.add(tempHobby);
+				}
+							
+								
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return hobbyVect;
+		}
 		
+		public boolean addHo1bby(Hobby inHobby)
+		{
+			int hobbyID = inHobby.getHobbyID();
+			String hobbyName = inHobby.getHobbyName();
+						
+			try
+			{
+				ps = con.prepareStatement("INSERT INTO hobby VALUES(?, ?)");
+				
+				ps.setInt(1, hobbyID);
+				ps.setString(2, hobbyName);
+								
+				ps.executeUpdate();
+				
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
+		}
+		
+		public boolean remove1Hobby(Hobby inHobby)
+		{
+			int hobbyID = inHobby.getHobbyID();
+						
+			try
+			{
+				ps = con.prepareStatement("DELETE FROM hobby WHERE hobbyID = ?");
+				
+				ps.setInt(1, hobbyID);
+							
+				ps.executeUpdate();
+				
+			} catch (SQLException e)
+			{
+				e.printStackTrace();
+				return false;
+			}
+			
+			return true;
+		}
 		
 		
 		
