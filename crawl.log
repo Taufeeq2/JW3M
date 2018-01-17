@@ -20,3 +20,5 @@ INFO	2018-01-16 13:28:45,436	40813	jw3m.server.Server	[Thread-1]	server got 123
 INFO	2018-01-16 13:28:45,437	40814	jw3m.server.Server	[Thread-1]	good logon
 INFO	2018-01-17 09:40:20,645	0	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Graceful exit - requested
 INFO	2018-01-17 09:40:20,645	0	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Program halted!!!! 
+INFO	2018-01-17 09:57:01,709	0	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Graceful exit - requested
+INFO	2018-01-17 09:57:01,716	7	jw3m.client.gui.SkillsClient	[AWT-EventQueue-0]	Program halted!!!! 

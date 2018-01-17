@@ -2,15 +2,21 @@ package jw3m.client.gui;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JRadioButton;
 
 
 
 import javax.swing.JButton;
 import javax.swing.JTextArea;
+
+import jw3m.dao.DAO;
+
 import javax.swing.JScrollPane;
 
-public class PanelProfile extends JPanel 
+public class PanelProfile extends JPanel implements ActionListener
 {
 	private SkillsClient baseFrame;
 	private JLabel lblMyProfile;
@@ -32,6 +38,7 @@ public class PanelProfile extends JPanel
 	private JLabel lblMySkills;
 	private JScrollPane scrollPane;
 	private JTextArea textArea;
+	private JButton btnShowSkills;
 	
 	public PanelProfile(SkillsClient frame) {
 		setLayout(null);
@@ -94,7 +101,7 @@ public class PanelProfile extends JPanel
 		add(rdbtnNo);
 		
 		panel = new JPanel();
-		panel.setBounds(0, 344, 882, 315);
+		panel.setBounds(0, 344, 882, 387);
 		add(panel);
 		panel.setLayout(null);
 		
@@ -110,8 +117,32 @@ public class PanelProfile extends JPanel
 		textArea = new JTextArea();
 		scrollPane.setViewportView(textArea);
 		
+		btnShowSkills = new JButton("Show Skills");
+		btnShowSkills.setBounds(371, 306, 97, 25);
+		panel.add(btnShowSkills);
+		
 		panel_1 = new JPanel();
 		panel_1.setBounds(0, 0, 882, 346);
 		add(panel_1);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		Object source = e.getSource();
+		
+		if(source == btnShowSkills)
+		{
+			try
+			{
+				DAO skillDAO = new DAO();
+			} 
+			catch (Exception e1)
+			{
+				e1.printStackTrace();
+			}
+			
+		}
+		
 	}
 }
