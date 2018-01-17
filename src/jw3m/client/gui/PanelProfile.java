@@ -133,28 +133,28 @@ public class PanelProfile extends JPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		Object source = e.getSource();
-		DAO skillDAO;
-		User testUser = new User();
+//		Object source = e.getSource();
+//		DAO skillDAO;
+//		User testUser = new User();
 //		String test = "Hello";
-		
-		if(source == btnShowSkills)
-		{
-			try
-			{
-				skillDAO = new DAO();
-				testUser.setUserName("a149936");
-				Vector<UserSkill> test = skillDAO.getUserSkills(testUser);
-				textArea.append("Hello" + "\n"); 
-				
-				 
-			} 
-			catch (Exception e1)
-			{
-				e1.printStackTrace();
-			}
-			
-		}
+//		
+//		if(source == btnShowSkills)
+//		{
+//			try
+//			{
+//				skillDAO = new DAO();
+//				testUser.setUserName("a149936");
+//				Vector<UserSkill> test = skillDAO.getUserSkills(testUser);
+//				textArea.append("Hello" + "\n"); 
+//				
+//				 
+//			} 
+//			catch (Exception e1)
+//			{
+//				e1.printStackTrace();
+//			}
+//			
+//		}
 		
 	}
 }
