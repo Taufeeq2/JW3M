@@ -10,6 +10,8 @@ public class PanelRateSomeone extends JPanel
 	private SkillsClient baseFrame;
 	private JLabel lblRateSomeone;
 	private JButton btnSubmit;
+	private JPanel panel;
+	private JPanel panel_1;
 	
 	public PanelRateSomeone(SkillsClient frame) {
 		setLayout(null);
@@ -22,6 +24,14 @@ public class PanelRateSomeone extends JPanel
 		btnSubmit = new JButton("Submit");
 		btnSubmit.setBounds(334, 541, 97, 25);
 		add(btnSubmit);
+		
+		panel = new JPanel();
+		panel.setBounds(0, 0, 820, 283);
+		add(panel);
+		
+		panel_1 = new JPanel();
+		panel_1.setBounds(0, 281, 820, 256);
+		add(panel_1);
 	}
 
 }
