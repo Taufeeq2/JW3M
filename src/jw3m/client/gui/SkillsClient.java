@@ -205,7 +205,7 @@ public class SkillsClient extends JFrame implements ActionListener
 
 		logonDetail = "Logged on as '" + this.authenticatedUser.getUserName() + "' ";
 
-		
+		//
 		//logonDetail = "Logged on as fake - test user";
 		sPanelText = new JLabel( logonDetail );
 		
