@@ -146,26 +146,29 @@ public class PanelProfile extends JPanel implements ActionListener
 			lblDisplayName.setText(baseFrame.authenticatedUser.getFirstName());
 			lblDisplaySurname.setText(baseFrame.authenticatedUser.getSurname());
 			lblDisplayEmail.setText(baseFrame.authenticatedUser.getEmailAddress());
-			lblDisplayMobile.setText(""+baseFrame.authenticatedUser.getMobile());
-//			buttonGroup.setSelected(m, b);
-						
+			if(baseFrame.authenticatedUser.isMentor())
+			{
+				rdbtnYes.setSelected(true);
+			}
+			else
+			{
+				rdbtnNo.setSelected(true);
+			}
 
-
-			
-		
-		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		Object source = e.getSource();
-//		DAO dao;
-//		Vector<UserSkill> skillVect = new Vector<UserSkill>();
 		
 		if(source == btnShowSkills)
 		{
-			textArea.setText(baseFrame.data_userSkills.toString());
+			for (int i = 0; i < baseFrame.data_userSkills.size(); i++)
+			{
+				textArea.append(baseFrame.data_userSkills.get(i).getSkillID().toString() + baseFrame.data_skillList.get(i).getSkillName().toString() + "\n");
+				
+			}
 			
 		}
 		

@@ -63,8 +63,9 @@ public class PanelLogin extends JPanel implements ActionListener
 			
 		}
 		
+		
 		labelUserID = new JLabel("User ID");
-		labelUserID.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		labelUserID.setFont(baseFrame.standardFont);
 		
 		textFieldUserID = new JTextField();
 		textFieldUserID.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -121,7 +122,7 @@ public class PanelLogin extends JPanel implements ActionListener
 							.addComponent(lblStandardBank))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(175)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(labelUserID, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
 									.addGap(78)
@@ -138,22 +139,25 @@ public class PanelLogin extends JPanel implements ActionListener
 									.addComponent(buttonChangePassword, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE))
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGap(134)
+									.addComponent(textFieldConnectStatus))))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(170)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(textFieldConnectStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 										.addGroup(groupLayout.createSequentialGroup()
+											.addGap(199)
 											.addComponent(labelPort)
 											.addGap(18)
-											.addComponent(textFieldPort, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-											.addGap(26)
-											.addComponent(buttonConnect))))))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(110)
-							.addComponent(labelServer)
-							.addGap(18)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(labelConnectStatus)
-								.addComponent(textFieldServer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-					.addContainerGap(203, Short.MAX_VALUE))
+											.addComponent(textFieldPort, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(labelServer)
+											.addGap(18)
+											.addComponent(textFieldServer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+									.addGap(12)
+									.addComponent(buttonConnect))
+								.addComponent(labelConnectStatus))))
+					.addContainerGap(231, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -172,13 +176,13 @@ public class PanelLogin extends JPanel implements ActionListener
 							.addGap(3)
 							.addComponent(labelPassword, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
 						.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-					.addGap(79)
+					.addGap(39)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 							.addComponent(buttonCancel)
 							.addComponent(buttonChangePassword))
 						.addComponent(buttonSubmit))
-					.addGap(57)
+					.addGap(97)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(labelServer)
 						.addComponent(textFieldServer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -189,7 +193,7 @@ public class PanelLogin extends JPanel implements ActionListener
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(labelConnectStatus)
 						.addComponent(textFieldConnectStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(39, Short.MAX_VALUE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
 
