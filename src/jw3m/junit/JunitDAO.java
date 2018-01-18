@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import jw3m.beans.Hobby;
 import jw3m.beans.User;
+import jw3m.beans.UserHobby;
 import jw3m.beans.UserSkill;
 import jw3m.dao.DAO;
 
@@ -20,9 +21,11 @@ public class JunitDAO
 	 private UserSkill userSkill = null;
 	 private Hobby hobby = null;
 	 private Hobby newHobby = null;
+	 private UserHobby userHobby = null;
 	 private Vector<UserSkill> userSkillList = null;
 	 private Vector<User> userList = null;
 	 private Vector<Hobby> hobbyList = null;
+	 private Vector<UserHobby> userHobbyList = null;
 
 	@Test
 	public void test()
@@ -170,6 +173,17 @@ public class JunitDAO
 			 System.out.println("Hobby ID = " + hobby.getHobbyID() + " Hobby Name = " + hobby.getHobbyName());
 		 }
 		 
+		 System.out.println("Testing method getUserHobby");
+		 user = dao.getUser("a126317");
+		 userHobbyList = dao.getUserHobby(user);
+		 numberOfHobbies = userHobbyList.size();
+		 System.out.println("Number of hobbies for user a126317 = " + numberOfHobbies);
+		 userHobby = new UserHobby();
+		 for (int x=0; x<numberOfHobbies; x++)
+		 {
+			 userHobby = userHobbyList.get(x);
+			 System.out.println("User ID = " + userHobby.getUserID() + " Hobby ID = " + userHobby.getHobbyID());
+		 }
 		 
 	}
 
