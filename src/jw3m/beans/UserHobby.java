@@ -36,5 +36,11 @@ public class UserHobby implements Serializable
 	{
 		this.hobbyID = hobbyID;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "UserHobby [userID=" + userID + ", hobbyID=" + hobbyID + "]";
+	}
 	
 }
