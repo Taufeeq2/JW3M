@@ -50,7 +50,12 @@ public class Skill implements Serializable
 	{
 		this.skillDescription = skillDescription;
 	}
-	
-	
+
+	@Override
+	public String toString()
+	{
+		return "Skill [skillID=" + skillID + ", skillName=" + skillName + ", skillVendor=" + skillVendor
+				+ ", skillDescription=" + skillDescription + "]";
+	}
 	
 }
