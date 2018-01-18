@@ -50,15 +50,19 @@ public class DAO
 			
 			// Testing methods area
 			
+			Vector<Skill> j = this.getSkillList();
 //			Vector<User> j = this.getUserHobby(1);
 //			Vector<UserHobby> j = this.getUserHobby("a126317");
 //			Vector<Rating> j = this.getRatings("a205128");
-//			System.out.println(j.size());
+			System.out.println(j.size());
 //			for (int i = 0; i < j.size(); i++)
 //			{
 //			System.out.println(this.getLevel(3));
 //			}
-
+			for (int i = 0; i < j.size(); i++)
+			{
+				System.out.println(j.get(i).getSkillName());
+			}
 
 		}	
 		
@@ -212,6 +216,42 @@ public class DAO
 
 		}
 		
+		//SKILLS METHODS
+		public Vector<Skill> getSkillList()
+		{
+			Vector<Skill> skillVect = new Vector<Skill>();
+			
+			
+			try
+			{
+				ps = con.prepareStatement("SELECT * FROM skills");
+				rs = ps.executeQuery();
+				
+				while (rs.next())
+				{
+					Skill tempSkill = new Skill();
+					tempSkill.setSkillID(rs.getInt("skillID"));
+					tempSkill.setSkillName(rs.getString("skillName"));
+					tempSkill.setSkillVendor(rs.getString("skillVendor"));
+					tempSkill.setSkillDescription(rs.getString("skillDescription"));
+					
+					skillVect.add(tempSkill);					
+				}
+				
+				return skillVect;
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
+			}
+			
+			
+		}
+		
+		
+		
+		
 		//USER SKILLS METHODS
 		
 		public Vector<UserSkill> getUserSkills(User inUser)
@@ -298,7 +338,7 @@ public class DAO
 		public Vector<Hobby> getHobbyList()
 		{
 			hobbyVect = new Vector<Hobby>();
-			Hobby tempHobby = new Hobby();
+			
 			try
 			{
 				ps = con.prepareStatement("SELECT * FROM hobby");
@@ -307,6 +347,7 @@ public class DAO
 				
 				while (rs.next())
 				{
+					Hobby tempHobby = new Hobby();
 					int hobbyID = rs.getInt("hobbyID");
 					String hobbyName = rs.getString("hobbyName");
 										
@@ -374,7 +415,7 @@ public class DAO
 		public Vector<UserHobby> getUserHobby(User inUser)
 		{
 			userHobbyVect = new Vector<UserHobby>();
-			UserHobby tempUserHobby = new UserHobby();
+			
 			String userName = inUser.getUserName();
 			try
 			{
@@ -385,6 +426,7 @@ public class DAO
 				
 				while (rs.next())
 				{
+					UserHobby tempUserHobby = new UserHobby();
 					String userID = rs.getString("userID");
 					int hobbyID = rs.getInt("hobbyID");
 										
@@ -487,7 +529,7 @@ public class DAO
 		
 		public Vector<Level> getLevel()
 		{
-			Level tempLevel = new Level();
+			
 			Vector<Level> levelVect = new Vector<Level>();
 			try
 			{
@@ -496,6 +538,7 @@ public class DAO
 				
 				while (rs.next())
 				{
+					Level tempLevel = new Level();
 					int levelID = rs.getInt("level");
 					String levelDesc = rs.getString("description");
 					
@@ -548,7 +591,7 @@ public class DAO
 		public Vector<Rating> getRatings(User inUser)
 		{
 			Vector<Rating> ratingVect = new Vector<Rating>();
-			Rating tempRating = new Rating();
+			
 			String userName = inUser.getUserName();
 			System.out.println("UserName: " + userName);
 			try
@@ -559,6 +602,7 @@ public class DAO
 				rs = ps.executeQuery();
 				while (rs.next())
 				{
+					Rating tempRating = new Rating();
 					tempRating.setRatingID(rs.getInt("ratingID"));
 					tempRating.setRaterID(rs.getString("raterID"));
 					tempRating.setUserID(rs.getString("userID"));
@@ -631,7 +675,7 @@ public class DAO
 		public Vector<Notification> getNotification(User inUser)
 		{
 			String userName = inUser.getUserName();
-			Notification tempNotification = new Notification();
+			
 			Vector<Notification> notificationVect = new Vector<Notification>();
 			try
 			{
@@ -642,6 +686,7 @@ public class DAO
 				rs = ps.executeQuery();
 				while(rs.next())
 				{
+					Notification tempNotification = new Notification();
 					int noticeID = rs.getInt("noticeID");
 					String requestID = rs.getString("requesterID");
 					String raterID = rs.getString("raterID");
