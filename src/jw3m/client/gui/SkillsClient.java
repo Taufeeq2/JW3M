@@ -3,6 +3,7 @@ package jw3m.client.gui;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Set;
+import java.util.Vector;
 
 import jw3m.beans.*;
 
@@ -46,7 +47,11 @@ public class SkillsClient extends JFrame implements ActionListener
 	//South Panel
 	
 	private JPanel sPanel ;
-	private JLabel sPanelText;
+	private JLabel sPanelLoggedOnAs;
+	private JLabel sPanelConnectionStatus;
+	private JLabel sPanelMessagesLabel;
+	private JButton sPanelMessagesBut;
+	
 	
 	
 	private PanelProfile profileP;
@@ -58,6 +63,21 @@ public class SkillsClient extends JFrame implements ActionListener
 	// DIRECT DAO ACCESS - MUST BE CHANGED LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	public DAO dao;
 	public User authenticatedUser; // mo lester - bleh
+	
+	
+	// Access varaiables 
+	public Vector<User> data_userList;
+	public Vector<UserSkill> data_userSkills;
+	public Vector<Skill> data_skillList;
+	public Vector<Hobby> data_hobbyList;
+	public Vector<UserHobby> data_userHobby;
+	public Vector<User> data_hobbyUsers;
+	public Vector<Level> data_levels;
+	public Vector<Rating> data_userRatings; 
+	public Vector<Notification> data_notifications;
+	
+	
+	
 	
 	public SkillsClient()
 	{
@@ -73,9 +93,6 @@ public class SkillsClient extends JFrame implements ActionListener
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
 		
 		
 		//Now lets do the graphics
@@ -101,6 +118,27 @@ public class SkillsClient extends JFrame implements ActionListener
 		this.setVisible(true);
 		
 	}
+	
+	// Getters and setters for data - must be changed later
+	// get data or refresh data?
+	public void getData()
+	{
+		data_userList = dao.getUserList();
+		data_userSkills = dao.getUserSkills(authenticatedUser);
+	//	skillList = dao.getSkillList();
+	//	hobbyList = dao.getHobbyList();
+		data_userHobby = dao.getUserHobby(authenticatedUser);
+	//	hobbyUsers = dao.getUserHobby(  object of hobby   );
+		data_levels = dao.getLevel();
+		data_userRatings = dao.getRatings(authenticatedUser);
+		data_notifications = dao.getNotification(authenticatedUser);
+		
+	}
+	
+
+	
+	
+	// All the graphics below
 	
 	public JTabbedPane getTabbedPane()
 	{
@@ -200,21 +238,28 @@ public class SkillsClient extends JFrame implements ActionListener
 	
 	public void setupSouthPanel()
 	{
-		
-		String logonDetail = null;
-
-		logonDetail = "Logged on as '" + this.authenticatedUser.getUserName() + "' ";
-
-		//
-		//logonDetail = "Logged on as fake - test user";
-		sPanelText = new JLabel( logonDetail );
+		sPanelConnectionStatus = new JLabel("Connected to localhost:1337");
+		sPanelLoggedOnAs = new JLabel( "Logged on as '" + this.authenticatedUser.getUserName() + "' " );
+	//	sPanelMessagesLabel = new JLabel ("Messages:");
+		sPanelMessagesBut = new JButton("Messages : 3");
+	//	sPanelMessagesBut.setSize(200,50);
+		//sPanelMessagesBut.setText("3");
 		
 		// South Panel setup
 		sPanel = new JPanel();
-		//		sPanel.setLayout(new GridLayout(1,4));
-		sPanel.setAlignmentX(CENTER_ALIGNMENT);
-		sPanel.add(sPanelText);
-	
+		sPanel.setLayout(new GridLayout(1,3));
+		
+	//	sPanel.setAlignmentX(CENTER_ALIGNMENT);
+		
+		sPanel.add(sPanelConnectionStatus);
+		sPanel.add(sPanelLoggedOnAs);
+	//	sPanel.add(sPanelMessagesLabel);
+		sPanel.add(sPanelMessagesBut);
+		
+		
+		//checkout?
+		sPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		
 		this.add(sPanel, BorderLayout.SOUTH);
 		
 	}
@@ -300,52 +345,16 @@ public class SkillsClient extends JFrame implements ActionListener
 		
 			boolean DAO_Open = true;
 			
-//			while (DAO_Open == true)
-//			{
-//				threadSet = Thread.getAllStackTraces().keySet();
-//				threadArray = threadSet.toArray(new Thread[threadSet.size()]);
-//				
-//				// System.out.println(threadSet.toString());
-//				
-//				// if we use threads we can then add the names to below
-//				DAO_Open = false; // as soon as we find one instance of either thread we set to true and the loop will go on
-//				
-//				// fix to any threads
-//				for (int i = 0 ; i < threadArray.length   ; i ++)
-//				{
-//					if (threadArray[i].getName().contains("UserFileSave") || threadArray[i].getName().contains("MediaFileSave")  )
-//					{
-//						DAO_Open = true;
-//						System.out.println("Threads still open... waiting 1 second...");
-//						
-//						
-//						try
-//						{
-//							Thread.sleep(1000);
-//						} catch (InterruptedException ie)
-//						{
-//							// TODO Auto-generated catch block
-//							ie.printStackTrace();
-//						}
-//
-//					} // end if 
-//				} // end for
-//			} //  end while
-			
+	
 			
 			logger.info("Graceful exit - requested");
 			logger.info("Program halted!!!! ");
-//			System.out.println("All DAO threads finished");
-//			System.out.println("Program halted!!!");
+
 			System.exit(0);
-			
-			// test
-			
+		
 		}
-		
-		
-		
-				
+
+			
 		
 	}
 	
