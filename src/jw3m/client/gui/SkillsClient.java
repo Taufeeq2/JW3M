@@ -46,7 +46,11 @@ public class SkillsClient extends JFrame implements ActionListener
 	//South Panel
 	
 	private JPanel sPanel ;
-	private JLabel sPanelText;
+	private JLabel sPanelLoggedOnAs;
+	private JLabel sPanelConnectionStatus;
+	private JLabel sPanelMessagesLabel;
+	private JButton sPanelMessagesBut;
+	
 	
 	
 	private PanelProfile profileP;
@@ -200,21 +204,28 @@ public class SkillsClient extends JFrame implements ActionListener
 	
 	public void setupSouthPanel()
 	{
-		
-		String logonDetail = null;
-
-		logonDetail = "Logged on as '" + this.authenticatedUser.getUserName() + "' ";
-
-		//
-		//logonDetail = "Logged on as fake - test user";
-		sPanelText = new JLabel( logonDetail );
+		sPanelConnectionStatus = new JLabel("Connected to localhost:1337");
+		sPanelLoggedOnAs = new JLabel( "Logged on as '" + this.authenticatedUser.getUserName() + "' " );
+	//	sPanelMessagesLabel = new JLabel ("Messages:");
+		sPanelMessagesBut = new JButton("Messages : 3");
+	//	sPanelMessagesBut.setSize(200,50);
+		//sPanelMessagesBut.setText("3");
 		
 		// South Panel setup
 		sPanel = new JPanel();
-		//		sPanel.setLayout(new GridLayout(1,4));
-		sPanel.setAlignmentX(CENTER_ALIGNMENT);
-		sPanel.add(sPanelText);
-	
+		sPanel.setLayout(new GridLayout(1,3));
+		
+	//	sPanel.setAlignmentX(CENTER_ALIGNMENT);
+		
+		sPanel.add(sPanelConnectionStatus);
+		sPanel.add(sPanelLoggedOnAs);
+	//	sPanel.add(sPanelMessagesLabel);
+		sPanel.add(sPanelMessagesBut);
+		
+		
+		//checkout?
+		sPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		
 		this.add(sPanel, BorderLayout.SOUTH);
 		
 	}
