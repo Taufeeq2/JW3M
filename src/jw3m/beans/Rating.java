@@ -159,4 +159,14 @@ public class Rating implements Serializable
 		this.date = date;
 	}
 
+	@Override
+	public String toString()
+	{
+		return "Rating [ratingID=" + ratingID + ", raterID=" + raterID + ", userID=" + userID + ", skillID=" + skillID
+				+ ", level=" + level + ", knowledge=" + knowledge + ", workStandard=" + workStandard + ", autonomy="
+				+ autonomy + ", complexityCoping=" + complexityCoping + ", contextPerception=" + contextPerception
+				+ ", capabilityGrowing=" + capabilityGrowing + ", collaboration=" + collaboration + ", date=" + date
+				+ "]";
+	}
+
 }
