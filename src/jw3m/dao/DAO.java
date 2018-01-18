@@ -52,7 +52,7 @@ public class DAO
 			
 //			Vector<User> j = this.getUserHobby(1);
 //			Vector<Level> j = this.getLevel();
-//			Vector<UserSkill> j = this.getUserSkills("a126317");
+//			Vector<Rating> j = this.getRatings("a205128");
 //			System.out.println(j.size());
 //			for (int i = 0; i < j.size(); i++)
 //			{
@@ -257,7 +257,7 @@ public class DAO
 			{
 				ps = con.prepareStatement("INSERT INTO userSkills VALUES(null, ?, ?)");
 				ps.setString(1, inUserID);
-				ps.setInt(1, inSkillID);
+				ps.setInt(2, inSkillID);
 				
 				ps.executeUpdate();
 				
@@ -566,11 +566,33 @@ public class DAO
 		public Vector<Rating> getRatings(User inUser)
 		{
 			Vector<Rating> ratingVect = new Vector<Rating>();
+			Rating tempRating = new Rating();
 			String userName = inUser.getUserName();
-			
-			
-			
-			return ratingVect;
+			System.out.println("UserName: " + userName);
+			try
+			{
+				ps = con.prepareStatement("SELECT * FROM ratings WHERE userID = ?");
+				ps.setString(1, userName);
+				
+				rs = ps.executeQuery();
+				while (rs.next())
+				{
+					tempRating.setRatingID(rs.getInt("ratingID"));
+					tempRating.setRaterID(rs.getString("raterID"));
+					tempRating.setUserID(rs.getString("userID"));
+					tempRating.setSkillID(rs.getInt("skillID"));
+					tempRating.setLevel(rs.getInt("level"));
+					tempRating.setDate(rs.getDate("date"));
+					
+					ratingVect.add(tempRating);
+				}
+				return ratingVect;
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
+			}
 		}
 		
 		
