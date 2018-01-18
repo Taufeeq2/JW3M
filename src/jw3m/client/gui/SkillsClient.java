@@ -57,7 +57,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	
 	// DIRECT DAO ACCESS - MUST BE CHANGED LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	public DAO dao;
-	public User authenticatedUser; // mo lester
+	public User authenticatedUser; // mo lester - bleh
 	
 	public SkillsClient()
 	{
