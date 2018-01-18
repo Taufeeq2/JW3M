@@ -51,7 +51,7 @@ public class DAO
 			// Testing methods area
 			
 //			Vector<User> j = this.getUserHobby(1);
-//			Vector<Level> j = this.getLevel();
+//			Vector<UserHobby> j = this.getUserHobby("a126317");
 //			Vector<Rating> j = this.getRatings("a205128");
 //			System.out.println(j.size());
 //			for (int i = 0; i < j.size(); i++)
@@ -297,6 +297,8 @@ public class DAO
 		
 		public Vector<Hobby> getHobby()
 		{
+			hobbyVect = new Vector<Hobby>();
+			Hobby tempHobby = new Hobby();
 			try
 			{
 				ps = con.prepareStatement("SELECT * FROM hobby");
@@ -308,7 +310,6 @@ public class DAO
 					int hobbyID = rs.getInt("hobbyID");
 					String hobbyName = rs.getString("hobbyName");
 										
-					Hobby tempHobby = new Hobby();
 					tempHobby.setHobbyID(hobbyID);
 					tempHobby.setHobbyName(hobbyName);
 					
@@ -372,6 +373,8 @@ public class DAO
 		
 		public Vector<UserHobby> getUserHobby(User inUser)
 		{
+			userHobbyVect = new Vector<UserHobby>();
+			UserHobby tempUserHobby = new UserHobby();
 			String userName = inUser.getUserName();
 			try
 			{
@@ -385,7 +388,6 @@ public class DAO
 					String userID = rs.getString("userID");
 					int hobbyID = rs.getInt("hobbyID");
 										
-					UserHobby tempUserHobby = new UserHobby();
 					tempUserHobby.setUserID(userID);
 					tempUserHobby.setHobbyID(hobbyID);
 					
@@ -594,6 +596,10 @@ public class DAO
 				return null;
 			}
 		}
+		
+		
+		
+		
 		
 		
 		
