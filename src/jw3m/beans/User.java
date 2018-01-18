@@ -101,7 +101,13 @@ public class User implements Serializable
 	{
 		this.mentor = mentor;
 	}
-		
-	
+
+	@Override
+	public String toString()
+	{
+		return "User [userName=" + userName + ", password=" + password + ", firstName=" + firstName + ", surname="
+				+ surname + ", alias=" + alias + ", emailAddress=" + emailAddress + ", mobile=" + mobile + ", mentor="
+				+ mentor + "]";
+	}
 	
 }
