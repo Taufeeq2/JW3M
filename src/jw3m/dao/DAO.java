@@ -278,7 +278,7 @@ public class DAO
 			{
 				ps = con.prepareStatement("DELETE FROM userSkills WHERE userID = ? AND skillID = ?");
 				ps.setString(1, inUserID);
-				ps.setInt(1, inSkillID);
+				ps.setInt(2, inSkillID);
 				
 				ps.executeUpdate();
 				
