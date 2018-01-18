@@ -166,7 +166,7 @@ public class PanelProfile extends JPanel implements ActionListener
 		{
 			for (int i = 0; i < baseFrame.data_userSkills.size(); i++)
 			{
-//				textArea.append();
+				textArea.append(baseFrame.data_userSkills.get(i).getSkillID().toString() + baseFrame.data_skillList.get(i).getSkillName().toString() + "\n");
 				
 			}
 			
