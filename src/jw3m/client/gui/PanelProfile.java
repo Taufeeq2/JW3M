@@ -96,7 +96,7 @@ public class PanelProfile extends JPanel implements ActionListener
 		
 		lblDisplayEmail = new JLabel("display email");
 		lblDisplayEmail.setBounds(126, 229, 278, 16);
-		add(lblDisplayEmail);
+		add(lblDisplayEmail); 
 		
 		lblDisplayMobile = new JLabel("display mobile");
 		lblDisplayMobile.setBounds(126, 272, 146, 16);

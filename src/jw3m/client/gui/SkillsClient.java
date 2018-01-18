@@ -296,7 +296,7 @@ public class SkillsClient extends JFrame implements ActionListener
 			Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
 			Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()]);
 			System.out.println(threadSet.toString());
-			System.out.println();
+			System.out.println(); 
 		
 			boolean DAO_Open = true;
 			
