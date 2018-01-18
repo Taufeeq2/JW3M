@@ -63,7 +63,7 @@ public class PanelProfile extends JPanel implements ActionListener
 		add(lblUserId);
 		
 		lblDisplayUserid = new JLabel("display userid");
-		lblDisplayUserid.setBounds(126, 89, 102, 16);
+		lblDisplayUserid.setBounds(126, 89, 146, 16);
 		add(lblDisplayUserid);
 		
 		lblName = new JLabel("Name");
@@ -75,11 +75,11 @@ public class PanelProfile extends JPanel implements ActionListener
 		add(lblSurname);
 		
 		lblDisplayName = new JLabel("display name");
-		lblDisplayName.setBounds(126, 137, 102, 16);
+		lblDisplayName.setBounds(126, 137, 146, 16);
 		add(lblDisplayName);
 		
 		lblDisplaySurname = new JLabel("display surname");
-		lblDisplaySurname.setBounds(126, 188, 102, 16);
+		lblDisplaySurname.setBounds(126, 188, 146, 16);
 		add(lblDisplaySurname);
 		
 		lblEmail = new JLabel("Email");
@@ -95,11 +95,11 @@ public class PanelProfile extends JPanel implements ActionListener
 		add(lblMentor);
 		
 		lblDisplayEmail = new JLabel("display email");
-		lblDisplayEmail.setBounds(126, 229, 102, 16);
+		lblDisplayEmail.setBounds(126, 229, 278, 16);
 		add(lblDisplayEmail);
 		
 		lblDisplayMobile = new JLabel("display mobile");
-		lblDisplayMobile.setBounds(126, 272, 102, 16);
+		lblDisplayMobile.setBounds(126, 272, 146, 16);
 		add(lblDisplayMobile);
 		
 		rdbtnYes = new JRadioButton("Yes");
@@ -147,6 +147,7 @@ public class PanelProfile extends JPanel implements ActionListener
 			lblDisplaySurname.setText(baseFrame.authenticatedUser.getSurname());
 			lblDisplayEmail.setText(baseFrame.authenticatedUser.getEmailAddress());
 			lblDisplayMobile.setText(""+baseFrame.authenticatedUser.getMobile());
+//			buttonGroup.setSelected(m, b);
 						
 
 
@@ -159,10 +160,29 @@ public class PanelProfile extends JPanel implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		Object source = e.getSource();
+		DAO dao;
+		Vector<UserSkill> skillVect = new Vector<UserSkill>();
 		
 		if(source == btnShowSkills)
 		{
-		
+			try
+			{
+				dao = new DAO();
+				skillVect = dao.getUserSkills(baseFrame.authenticatedUser);
+				String skill = "";
+				
+				for(int i = 0; i < skillVect.size(); i++ )
+				{
+					textArea.append(skill.toString());
+				}
+			} 
+			catch (Exception e1)
+			{
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			
 			
 		}
 		
