@@ -125,10 +125,10 @@ public class SkillsClient extends JFrame implements ActionListener
 	{
 		data_userList = dao.getUserList();
 		data_userSkills = dao.getUserSkills(authenticatedUser);
-	//	skillList = dao.getSkillList();
-	//	hobbyList = dao.getHobbyList();
+	//	data_skillList = dao.getSkillList();
+		data_hobbyList = dao.getHobbyList();
 		data_userHobby = dao.getUserHobby(authenticatedUser);
-	//	hobbyUsers = dao.getUserHobby(  object of hobby   );
+	//	data_hobbyUsers = dao.getUserHobby(  object of hobby   );
 		data_levels = dao.getLevel();
 		data_userRatings = dao.getRatings(authenticatedUser);
 		data_notifications = dao.getNotification(authenticatedUser);
