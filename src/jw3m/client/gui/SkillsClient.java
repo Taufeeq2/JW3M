@@ -76,12 +76,18 @@ public class SkillsClient extends JFrame implements ActionListener
 	public Vector<Rating> data_userRatings; 
 	public Vector<Notification> data_notifications;
 	
+	// Style objecgts
 	
+	public Font standardFont;
+
 	
 	
 	public SkillsClient()
 	{
 		PropertyConfigurator.configure("log4j.properties");
+		
+		standardFont = new Font ("THAHOMA",Font.PLAIN, 16);
+	//	Font.ITALIC|Font.BOLD
 		
 		// DIRECT DAO ACCESS - MUST BE CHANGED LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		
@@ -125,7 +131,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	{
 		data_userList = dao.getUserList();
 		data_userSkills = dao.getUserSkills(authenticatedUser);
-	//	data_skillList = dao.getSkillList();
+		data_skillList = dao.getSkillList();
 		data_hobbyList = dao.getHobbyList();
 		data_userHobby = dao.getUserHobby(authenticatedUser);
 	//	data_hobbyUsers = dao.getUserHobby(  object of hobby   );
