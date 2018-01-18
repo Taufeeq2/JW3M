@@ -66,15 +66,15 @@ public class SkillsClient extends JFrame implements ActionListener
 	
 	
 	// Access varaiables 
-	public Vector<User> userList;
-	public Vector<UserSkill> userSkills;
-	public Vector<Skill> skillList;
-	public Vector<Hobby> hobbyList;
-	public Vector<UserHobby> userHobby;
-	public Vector<User> hobbyUsers;
-	public Vector<Level> levels;
-	public Vector<Rating> userRatings; 
-	public Vector<Notification> notifications;
+	public Vector<User> data_userList;
+	public Vector<UserSkill> data_userSkills;
+	public Vector<Skill> data_skillList;
+	public Vector<Hobby> data_hobbyList;
+	public Vector<UserHobby> data_userHobby;
+	public Vector<User> data_hobbyUsers;
+	public Vector<Level> data_levels;
+	public Vector<Rating> data_userRatings; 
+	public Vector<Notification> data_notifications;
 	
 	
 	
@@ -120,19 +120,18 @@ public class SkillsClient extends JFrame implements ActionListener
 	}
 	
 	// Getters and setters for data - must be changed later
-	
 	// get data or refresh data?
 	public void getData()
 	{
-		userList = dao.getUserList();
-		userSkills = dao.getUserSkills(authenticatedUser);
+		data_userList = dao.getUserList();
+		data_userSkills = dao.getUserSkills(authenticatedUser);
 	//	skillList = dao.getSkillList();
 	//	hobbyList = dao.getHobbyList();
-		userHobby = dao.getUserHobby(authenticatedUser);
+		data_userHobby = dao.getUserHobby(authenticatedUser);
 	//	hobbyUsers = dao.getUserHobby(  object of hobby   );
-		levels = dao.getLevel();
-		userRatings = dao.getRatings(authenticatedUser);
-		notifications = dao.getNotification(authenticatedUser);
+		data_levels = dao.getLevel();
+		data_userRatings = dao.getRatings(authenticatedUser);
+		data_notifications = dao.getNotification(authenticatedUser);
 		
 	}
 	

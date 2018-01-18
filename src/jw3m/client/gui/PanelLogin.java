@@ -221,6 +221,11 @@ public class PanelLogin extends JPanel implements ActionListener
 					
 					// also bad to accesss the public object directly should be using business logic access methods
 					baseFrame.authenticatedUser = baseFrame.dao.getUser(userName);
+					baseFrame.getData(); // updates the local data variables;
+					
+					// example of how to get the data
+					//baseFrame.data_hobbyList[1];
+					
 					
 					
 					baseFrame.setupMenuBar();
