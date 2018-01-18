@@ -1,5 +1,7 @@
 package jw3m.dao;
 import java.util.*;
+import java.sql.Date;
+
 import jw3m.beans.*;
 import java.sql.*;
 
@@ -51,11 +53,16 @@ public class DAO
 		    {
 			    sqlstat.executeUpdate("insert into users values('', '', '', '', '', '', '')");
 		    }
-			Vector<User> j = this.getUserHobby(1);
-			System.out.println(j.size());
+
+			// Testing methods area
+			
+//			Vector<User> j = this.getUserHobby(1);
+//			Vector<Level> j = this.getLevel();
+//			Vector<Notification> j = this.getNotification("a124788");
+//			System.out.println(j.size());
 //			for (int i = 0; i < j.size(); i++)
 //			{
-//				System.out.println(j.get(i).getFirstName());
+//			System.out.println(this.getLevel(3));
 //			}
 
 
@@ -473,49 +480,194 @@ public class DAO
 			return userVectLocal;
 		}
 		
-		public boolean addHo1bby(Hobby inHobby)
+		public boolean addUserHobby(String inUserName, int inHobbyID)
 		{
-			int hobbyID = inHobby.getHobbyID();
-			String hobbyName = inHobby.getHobbyName();
-						
 			try
 			{
-				ps = con.prepareStatement("INSERT INTO hobby VALUES(?, ?)");
+				ps = con.prepareStatement("INSERT INTO userHobbies VALUES(?, ?)");
 				
-				ps.setInt(1, hobbyID);
-				ps.setString(2, hobbyName);
-								
+				ps.setString(1, inUserName);
+				ps.setInt(2, inHobbyID);
+				
 				ps.executeUpdate();
-				
-			} catch (SQLException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return true;
-		}
-		
-		public boolean remove1Hobby(Hobby inHobby)
-		{
-			int hobbyID = inHobby.getHobbyID();
-						
-			try
-			{
-				ps = con.prepareStatement("DELETE FROM hobby WHERE hobbyID = ?");
-				
-				ps.setInt(1, hobbyID);
-							
-				ps.executeUpdate();
-				
+				return true;
 			} catch (SQLException e)
 			{
 				e.printStackTrace();
 				return false;
 			}
 			
-			return true;
 		}
 		
+		public boolean remove1Hobby(String inUserName, int inHobbyID)
+		{						
+			try
+			{
+				ps = con.prepareStatement("DELETE FROM userHobbies WHERE userID = ? AND hobbyID = ?");
+				
+				ps.setString(1, inUserName);
+				ps.setInt(2, inHobbyID);
+							
+				ps.executeUpdate();
+				
+				return true;
+			} catch (SQLException e)
+			{
+				e.printStackTrace();
+				return false;
+			}
+			
+			
+		}
+		
+		
+		
+		public Vector<Level> getLevel()
+		{
+			Level tempLevel = new Level();
+			Vector<Level> levelVect = new Vector<Level>();
+			try
+			{
+				ps = con.prepareStatement("SELECT * FROM level");
+				rs = ps.executeQuery();
+				
+				while (rs.next())
+				{
+					int levelID = rs.getInt("level");
+					String levelDesc = rs.getString("description");
+					
+					tempLevel.setLevel(levelID);
+					tempLevel.setDescription(levelDesc);
+					
+					levelVect.add(tempLevel);
+				}
+				return levelVect;
+				
+			} catch (SQLException e)
+			{
+				
+				e.printStackTrace();
+				return null;
+			}
+		}
+		
+		public String getLevel(int inLevel)
+		{
+			try
+			{
+				ps = con.prepareStatement("SELECT description FROM level WHERE level = ?");
+				ps.setInt(1, inLevel);
+				
+				rs = ps.executeQuery();
+				rs.next();
+				String desc = rs.getString("description");
+				
+				return desc;
+			} catch (SQLException e)
+			{
+				e.printStackTrace();
+				return null;
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		//Notification Methods
+		public Vector<Notification> getNotification(User inUser)
+		{
+			String userName = inUser.getUserName();
+			Notification tempNotification = new Notification();
+			Vector<Notification> notificationVect = new Vector<Notification>();
+			try
+			{
+				ps = con.prepareStatement("SELECT * FROM notifications WHERE raterID = ?");
+				
+				ps.setString(1, userName);
+				
+				rs = ps.executeQuery();
+				while(rs.next())
+				{
+					int noticeID = rs.getInt("noticeID");
+					String requestID = rs.getString("requesterID");
+					String raterID = rs.getString("raterID");
+					Date date = rs.getDate("date");
+					
+					tempNotification.setNoticeID(noticeID);
+					tempNotification.setRequestorID(requestID);
+					tempNotification.setRatorID(raterID);
+					tempNotification.setDate(date);
+					
+					notificationVect.add(tempNotification);
+				}
+				return notificationVect;
+				
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
+			}
+			
+		}
+		
+		public boolean setNotification(Notification inNotice)
+		{
+			String requesterID = inNotice.getRequestorID();
+			String raterID = inNotice.getRatorID();
+			Date date = inNotice.getDate();
+			
+			try
+			{
+				ps = con.prepareStatement("INSERT INTO notifications VALUES(null, ?, ?, ?)");
+				
+				ps.setString(1, requesterID);
+				ps.setString(2, raterID);
+				ps.setDate(3, date);
+				
+				ps.executeUpdate();
+				
+				return true;
+				
+				
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+		}
+
+		public boolean removeNotification(Notification inNotice)
+		{
+			int noticeID = inNotice.getNoticeID();
+			String requesterID = inNotice.getRequestorID();
+			String raterID = inNotice.getRatorID();
+			Date date = inNotice.getDate();
+			
+			try
+			{
+				ps = con.prepareStatement("DELETE FROM notifications WHERE requesterID = ? AND raterID = ?");
+				
+				ps.setString(1, requesterID);
+				ps.setString(2, raterID);
+//				ps.setDate(3, date);
+				
+				ps.executeUpdate();
+				
+				return true;
+				
+				
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+		}
 		
 		
 		public void closeDB()
