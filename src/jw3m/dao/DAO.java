@@ -566,7 +566,7 @@ public class DAO
 		public Vector<Rating> getRatings(User inUser)
 		{
 			Vector<Rating> ratingVect = new Vector<Rating>();
-			
+			String userName = inUser.getUserName();
 			
 			
 			
