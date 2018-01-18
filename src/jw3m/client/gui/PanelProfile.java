@@ -160,29 +160,12 @@ public class PanelProfile extends JPanel implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		Object source = e.getSource();
-		DAO dao;
-		Vector<UserSkill> skillVect = new Vector<UserSkill>();
+//		DAO dao;
+//		Vector<UserSkill> skillVect = new Vector<UserSkill>();
 		
 		if(source == btnShowSkills)
 		{
-			try
-			{
-				dao = new DAO();
-				skillVect = dao.getUserSkills(baseFrame.authenticatedUser);
-				String skill = "";
-				
-				for(int i = 0; i < skillVect.size(); i++ )
-				{
-					textArea.append(skill.toString());
-				}
-			} 
-			catch (Exception e1)
-			{
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-			
+			textArea.setText(baseFrame.data_userSkills.toString());
 			
 		}
 		
