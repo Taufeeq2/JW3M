@@ -597,9 +597,53 @@ public class DAO
 			}
 		}
 		
+		public boolean setRating(User inUser, User inRator, Skill inSkill)
+		{
+			String userName = inUser.getUserName();
+			String ratorID = inRator.getUserName();
+			int SkillID = inSkill.getSkillID();
+			
+			try
+			{
+				ps = con.prepareStatement("INSERT INTO ratings VALUES(null, ?, ?, ?, NOW() )");
+				ps.setString(1, ratorID);
+				ps.setString(2, userName);
+				ps.setInt(3, SkillID);
+				
+				ps.executeUpdate();
+				
+				return true;
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+		}
 		
-		
-		
+		public boolean removeRating(User inUser, User inRator, Skill inSkill)
+		{
+			String userName = inUser.getUserName();
+			String ratorID = inRator.getUserName();
+			int SkillID = inSkill.getSkillID();
+			
+			try
+			{
+				ps = con.prepareStatement("DELETE FROM ratings WHERE raterID = ? AND userID = ? AND skillID = ?");
+				ps.setString(1, ratorID);
+				ps.setString(2, userName);
+				ps.setInt(3, SkillID);
+				
+				ps.executeUpdate();
+				
+				return true;
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+		}
 		
 		
 		
