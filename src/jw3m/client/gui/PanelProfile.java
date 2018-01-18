@@ -33,8 +33,8 @@ public class PanelProfile extends JPanel implements ActionListener
 	private JLabel lblEmail;
 	private JLabel lblMobile;
 	private JLabel lblMentor;
-	private JLabel label;
-	private JLabel label_1;
+	private JLabel lblDisplayEmail;
+	private JLabel lblDisplayMobile;
 	private JRadioButton rdbtnYes;
 	private JRadioButton rdbtnNo;
 	private JPanel panel;
@@ -44,8 +44,13 @@ public class PanelProfile extends JPanel implements ActionListener
 	private JTextArea textArea;
 	private JButton btnShowSkills;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private User user = new User();
+	
 	
 	public PanelProfile(SkillsClient frame) {
+
+		baseFrame = frame;
+		
 		setLayout(null);
 		
 		lblMyProfile = new JLabel("My Profile");
@@ -89,13 +94,13 @@ public class PanelProfile extends JPanel implements ActionListener
 		lblMentor.setBounds(39, 315, 56, 16);
 		add(lblMentor);
 		
-		label = new JLabel("display surname");
-		label.setBounds(126, 229, 102, 16);
-		add(label);
+		lblDisplayEmail = new JLabel("display email");
+		lblDisplayEmail.setBounds(126, 229, 102, 16);
+		add(lblDisplayEmail);
 		
-		label_1 = new JLabel("display surname");
-		label_1.setBounds(126, 272, 102, 16);
-		add(label_1);
+		lblDisplayMobile = new JLabel("display mobile");
+		lblDisplayMobile.setBounds(126, 272, 102, 16);
+		add(lblDisplayMobile);
 		
 		rdbtnYes = new JRadioButton("Yes");
 		buttonGroup.add(rdbtnYes);
@@ -132,6 +137,22 @@ public class PanelProfile extends JPanel implements ActionListener
 		panel_1 = new JPanel();
 		panel_1.setBounds(0, 0, 882, 346);
 		add(panel_1);
+		
+//		baseFrame.authenticatedUser.getFirstName();
+//		baseFrame.authenticatedUser.getSurname();
+
+			
+			lblDisplayUserid.setText(baseFrame.authenticatedUser.getUserName());
+			lblDisplayName.setText(baseFrame.authenticatedUser.getFirstName());
+			lblDisplaySurname.setText(baseFrame.authenticatedUser.getSurname());
+			lblDisplayEmail.setText(baseFrame.authenticatedUser.getEmailAddress());
+			lblDisplayMobile.setText(""+baseFrame.authenticatedUser.getMobile());
+						
+
+
+			
+		
+		
 	}
 
 	@Override
@@ -141,14 +162,6 @@ public class PanelProfile extends JPanel implements ActionListener
 		
 		if(source == btnShowSkills)
 		{
-			String user = new String();
-			
-//			if(user == baseFrame.dao.getUser(user))
-//			{
-//				
-//				
-//			}
-			
 		
 			
 		}
