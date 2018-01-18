@@ -43,6 +43,7 @@ public class PanelLogin extends JPanel implements ActionListener
 	private JButton buttonConnect;
 	private JLabel labelConnectStatus;
 	private JTextField textFieldConnectStatus;
+	private JButton btnRegister;
 
 	/**
 	 * Create the panel.
@@ -112,6 +113,9 @@ public class PanelLogin extends JPanel implements ActionListener
 		textFieldConnectStatus = new JTextField();
 		textFieldConnectStatus.setColumns(10);
 		
+		btnRegister = new JButton("Register");
+		btnRegister.addActionListener(this);
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -139,7 +143,9 @@ public class PanelLogin extends JPanel implements ActionListener
 									.addComponent(buttonChangePassword, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE))
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGap(134)
-									.addComponent(textFieldConnectStatus))))
+									.addComponent(textFieldConnectStatus)))
+							.addGap(18)
+							.addComponent(btnRegister))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(170)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -157,7 +163,7 @@ public class PanelLogin extends JPanel implements ActionListener
 									.addGap(12)
 									.addComponent(buttonConnect))
 								.addComponent(labelConnectStatus))))
-					.addContainerGap(231, Short.MAX_VALUE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -180,7 +186,8 @@ public class PanelLogin extends JPanel implements ActionListener
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 							.addComponent(buttonCancel)
-							.addComponent(buttonChangePassword))
+							.addComponent(buttonChangePassword)
+							.addComponent(btnRegister))
 						.addComponent(buttonSubmit))
 					.addGap(97)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
@@ -263,6 +270,16 @@ public class PanelLogin extends JPanel implements ActionListener
 			
 		}
 		
+		if(source == btnRegister)
+		{
+			PanelNewProfile newProfile = new PanelNewProfile(baseFrame);
+//			this.basePanel.removeAll();
+//            this.basePanel.validate();
+//            this.basePanel.repaint();
+//            this.basePanel.add(newProfile);
+//            this.basePanel.validate();
+//            this.basePanel.repaint();
+		}
 		if (source == buttonChangePassword)
 		{
 //			String userName = JOptionPane.showInputDialog(this,"Username");

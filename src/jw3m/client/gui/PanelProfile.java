@@ -146,6 +146,7 @@ public class PanelProfile extends JPanel implements ActionListener
 			lblDisplayName.setText(baseFrame.authenticatedUser.getFirstName());
 			lblDisplaySurname.setText(baseFrame.authenticatedUser.getSurname());
 			lblDisplayEmail.setText(baseFrame.authenticatedUser.getEmailAddress());
+			lblDisplayMobile.setText("0" + baseFrame.authenticatedUser.getMobile());
 			if(baseFrame.authenticatedUser.isMentor())
 			{
 				rdbtnYes.setSelected(true);
