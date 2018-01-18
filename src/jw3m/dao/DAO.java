@@ -51,8 +51,8 @@ public class DAO
 			// Testing methods area
 			
 //			Vector<User> j = this.getUserHobby(1);
-//			Vector<Level> j = this.getLevel();
-//			Vector<UserSkill> j = this.getUserSkills("a126317");
+//			Vector<UserHobby> j = this.getUserHobby("a126317");
+//			Vector<Rating> j = this.getRatings("a205128");
 //			System.out.println(j.size());
 //			for (int i = 0; i < j.size(); i++)
 //			{
@@ -257,7 +257,7 @@ public class DAO
 			{
 				ps = con.prepareStatement("INSERT INTO userSkills VALUES(null, ?, ?)");
 				ps.setString(1, inUserID);
-				ps.setInt(1, inSkillID);
+				ps.setInt(2, inSkillID);
 				
 				ps.executeUpdate();
 				
@@ -278,7 +278,7 @@ public class DAO
 			{
 				ps = con.prepareStatement("DELETE FROM userSkills WHERE userID = ? AND skillID = ?");
 				ps.setString(1, inUserID);
-				ps.setInt(1, inSkillID);
+				ps.setInt(2, inSkillID);
 				
 				ps.executeUpdate();
 				
@@ -297,6 +297,8 @@ public class DAO
 		
 		public Vector<Hobby> getHobby()
 		{
+			hobbyVect = new Vector<Hobby>();
+			Hobby tempHobby = new Hobby();
 			try
 			{
 				ps = con.prepareStatement("SELECT * FROM hobby");
@@ -308,7 +310,6 @@ public class DAO
 					int hobbyID = rs.getInt("hobbyID");
 					String hobbyName = rs.getString("hobbyName");
 										
-					Hobby tempHobby = new Hobby();
 					tempHobby.setHobbyID(hobbyID);
 					tempHobby.setHobbyName(hobbyName);
 					
@@ -372,6 +373,8 @@ public class DAO
 		
 		public Vector<UserHobby> getUserHobby(User inUser)
 		{
+			userHobbyVect = new Vector<UserHobby>();
+			UserHobby tempUserHobby = new UserHobby();
 			String userName = inUser.getUserName();
 			try
 			{
@@ -385,7 +388,6 @@ public class DAO
 					String userID = rs.getString("userID");
 					int hobbyID = rs.getInt("hobbyID");
 										
-					UserHobby tempUserHobby = new UserHobby();
 					tempUserHobby.setUserID(userID);
 					tempUserHobby.setHobbyID(hobbyID);
 					
@@ -566,11 +568,81 @@ public class DAO
 		public Vector<Rating> getRatings(User inUser)
 		{
 			Vector<Rating> ratingVect = new Vector<Rating>();
+			Rating tempRating = new Rating();
 			String userName = inUser.getUserName();
+			System.out.println("UserName: " + userName);
+			try
+			{
+				ps = con.prepareStatement("SELECT * FROM ratings WHERE userID = ?");
+				ps.setString(1, userName);
+				
+				rs = ps.executeQuery();
+				while (rs.next())
+				{
+					tempRating.setRatingID(rs.getInt("ratingID"));
+					tempRating.setRaterID(rs.getString("raterID"));
+					tempRating.setUserID(rs.getString("userID"));
+					tempRating.setSkillID(rs.getInt("skillID"));
+					tempRating.setLevel(rs.getInt("level"));
+					tempRating.setDate(rs.getDate("date"));
+					
+					ratingVect.add(tempRating);
+				}
+				return ratingVect;
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
+			}
+		}
+		
+		public boolean setRating(User inUser, User inRator, Skill inSkill)
+		{
+			String userName = inUser.getUserName();
+			String ratorID = inRator.getUserName();
+			int SkillID = inSkill.getSkillID();
 			
+			try
+			{
+				ps = con.prepareStatement("INSERT INTO ratings VALUES(null, ?, ?, ?, NOW() )");
+				ps.setString(1, ratorID);
+				ps.setString(2, userName);
+				ps.setInt(3, SkillID);
+				
+				ps.executeUpdate();
+				
+				return true;
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+		}
+		
+		public boolean removeRating(User inUser, User inRator, Skill inSkill)
+		{
+			String userName = inUser.getUserName();
+			String ratorID = inRator.getUserName();
+			int SkillID = inSkill.getSkillID();
 			
-			
-			return ratingVect;
+			try
+			{
+				ps = con.prepareStatement("DELETE FROM ratings WHERE raterID = ? AND userID = ? AND skillID = ?");
+				ps.setString(1, ratorID);
+				ps.setString(2, userName);
+				ps.setInt(3, SkillID);
+				
+				ps.executeUpdate();
+				
+				return true;
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
 		}
 		
 		
