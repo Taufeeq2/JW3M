@@ -130,7 +130,7 @@ public class JunitDAO
 		 
 		 
 		 System.out.println("Testing method getHobby");
-		 hobbyList = dao.getHobby();
+		 hobbyList = dao.getHobbyList();
 		 int numberOfHobbies = hobbyList.size();
 		 System.out.println("Number of hobbies = " + numberOfHobbies);
 		 hobby = new Hobby();
@@ -145,7 +145,7 @@ public class JunitDAO
 		 newHobby.setHobbyID(999);
 		 newHobby.setHobbyName("Testing adding a hobby");
 		 dao.addHobby(newHobby);
-		 hobbyList = dao.getHobby();
+		 hobbyList = dao.getHobbyList();
 		 numberOfHobbies = hobbyList.size();
 		 System.out.println("Number of hobbies = " + numberOfHobbies);
 		 hobby = new Hobby();
@@ -160,7 +160,7 @@ public class JunitDAO
 		 newHobby.setHobbyID(999);
 		 newHobby.setHobbyName("Testing adding a hobby");
 		 dao.removeHobby(newHobby);
-		 hobbyList = dao.getHobby();
+		 hobbyList = dao.getHobbyList();
 		 numberOfHobbies = hobbyList.size();
 		 System.out.println("Number of hobbies = " + numberOfHobbies);
 		 hobby = new Hobby();
