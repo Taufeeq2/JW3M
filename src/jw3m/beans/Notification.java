@@ -58,6 +58,12 @@ public class Notification implements Serializable
 	{
 		this.date = date;
 	}
-	
+
+	@Override
+	public String toString()
+	{
+		return "Notification [noticeID=" + noticeID + ", requestorID=" + requestorID + ", ratorID=" + ratorID
+				+ ", date=" + date + "]";
+	}
 	
 }

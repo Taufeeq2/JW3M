@@ -35,8 +35,11 @@ public class Level implements Serializable
 	{
 		this.description = description;
 	}
-	
-	
-	
+
+	@Override
+	public String toString()
+	{
+		return "Level [level=" + level + ", description=" + description + "]";
+	}
 	
 }

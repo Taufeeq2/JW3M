@@ -295,7 +295,7 @@ public class DAO
 		
 		//HOBBY Methods
 		
-		public Vector<Hobby> getHobby()
+		public Vector<Hobby> getHobbyList()
 		{
 			hobbyVect = new Vector<Hobby>();
 			Hobby tempHobby = new Hobby();
@@ -404,47 +404,28 @@ public class DAO
 			return userHobbyVect;
 		}
 		
-//		public Vector<User> getUserHobby(Hobby inHobby)
-		public Vector<User> getUserHobby(int inHobbyID)
+		public Vector<User> getUserHobby(Hobby inHobby)
 		{
-			Vector<User>userVectLocal = new Vector<User>();
-//			int inHobbyID = inHobby.getHobbyID();
+			Vector<User> userVect = new Vector<User>();
+			ResultSet rs1 = null;
+			int inHobbyID = inHobby.getHobbyID();
 			try
 			{
 				ps = con.prepareStatement("SELECT * FROM userHobbies WHERE hobbyID = ?");
 				ps.setInt(1, inHobbyID);
 				
-				rs = ps.executeQuery();
+				rs1 = ps.executeQuery();
 				
 				User tempUser = null;
 				
 		
-				while (rs.next())
+				while (rs1.next())
 				{
-					System.out.println("This is the row " + rs.getRow());
 					
-					String usrID = rs.getString("userID");
-					
-					System.out.println("bleh " + usrID);
-					
-				//	tempUser = this.getUser(usrID);
-				//	userVectLocal.add(tempUser);
-					
-					
-//					System.out.println("vector size : " + userVect.size());
-//			//		System.out.println("Resultset - " + rs.getRow());
-//					String userID = rs.getString("userID");
-//					int hobbyID = rs.getInt("hobbyID");
-//										
-//					tempUser = this.getUser(userID);
-//			
-//					userVect.add(tempUser);
-//					System.out.println("details " + tempUser.getFirstName());
-//					
-					
-					
-//					
-				
+					String userID = rs1.getString("userID");
+					tempUser = this.getUser(userID);
+					userVect.add(tempUser);
+									
 				}
 							
 								
@@ -453,8 +434,7 @@ public class DAO
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println(userVectLocal.toString());
-			return userVectLocal;
+			return userVect;
 		}
 		
 		public boolean addUserHobby(UserHobby inUserHobby)
@@ -597,9 +577,53 @@ public class DAO
 			}
 		}
 		
+		public boolean setRating(User inUser, User inRator, Skill inSkill)
+		{
+			String userName = inUser.getUserName();
+			String ratorID = inRator.getUserName();
+			int SkillID = inSkill.getSkillID();
+			
+			try
+			{
+				ps = con.prepareStatement("INSERT INTO ratings VALUES(null, ?, ?, ?, NOW() )");
+				ps.setString(1, ratorID);
+				ps.setString(2, userName);
+				ps.setInt(3, SkillID);
+				
+				ps.executeUpdate();
+				
+				return true;
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+		}
 		
-		
-		
+		public boolean removeRating(User inUser, User inRator, Skill inSkill)
+		{
+			String userName = inUser.getUserName();
+			String ratorID = inRator.getUserName();
+			int SkillID = inSkill.getSkillID();
+			
+			try
+			{
+				ps = con.prepareStatement("DELETE FROM ratings WHERE raterID = ? AND userID = ? AND skillID = ?");
+				ps.setString(1, ratorID);
+				ps.setString(2, userName);
+				ps.setInt(3, SkillID);
+				
+				ps.executeUpdate();
+				
+				return true;
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+		}
 		
 		
 		
