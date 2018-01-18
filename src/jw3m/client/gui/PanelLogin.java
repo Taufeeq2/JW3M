@@ -16,6 +16,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import java.awt.Panel;
+import java.awt.Label;
 
 public class PanelLogin extends JPanel implements ActionListener
 {
@@ -34,6 +36,13 @@ public class PanelLogin extends JPanel implements ActionListener
 	private JPanel sPanel ;
 	private JLabel sPanelText;
 	private JLabel lblStandardBank;
+	private JLabel labelServer;
+	private JTextField textFieldServer;
+	private JLabel labelPort;
+	private JTextField textFieldPort;
+	private JButton buttonConnect;
+	private JLabel labelConnectStatus;
+	private JTextField textFieldConnectStatus;
 
 	/**
 	 * Create the panel.
@@ -79,11 +88,37 @@ public class PanelLogin extends JPanel implements ActionListener
 		lblStandardBank = new JLabel("Standard Bank Skills Matrix");
 		lblStandardBank.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
 		
+		labelServer = new JLabel("Server");
+		labelServer.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		textFieldServer = new JTextField();
+		textFieldServer.setText("local");
+		textFieldServer.setColumns(10);
+		
+		labelPort = new JLabel("Port");
+		labelPort.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		textFieldPort = new JTextField();
+		textFieldPort.setText("1337");
+		textFieldPort.setColumns(10);
+		
+		buttonConnect = new JButton("Connect");
+		buttonConnect.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		
+		labelConnectStatus = new JLabel("Connect Status");
+		labelConnectStatus.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		textFieldConnectStatus = new JTextField();
+		textFieldConnectStatus.setColumns(10);
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(260)
+							.addComponent(lblStandardBank))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(175)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -99,12 +134,26 @@ public class PanelLogin extends JPanel implements ActionListener
 									.addComponent(buttonSubmit, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
 									.addGap(18)
 									.addComponent(buttonCancel, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(buttonChangePassword, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE))))
+									.addGap(18)
+									.addComponent(buttonChangePassword, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(134)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(textFieldConnectStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(labelPort)
+											.addGap(18)
+											.addComponent(textFieldPort, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+											.addGap(26)
+											.addComponent(buttonConnect))))))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(260)
-							.addComponent(lblStandardBank)))
-					.addContainerGap(306, Short.MAX_VALUE))
+							.addGap(110)
+							.addComponent(labelServer)
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(labelConnectStatus)
+								.addComponent(textFieldServer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap(203, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -126,10 +175,21 @@ public class PanelLogin extends JPanel implements ActionListener
 					.addGap(79)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-							.addComponent(buttonChangePassword)
-							.addComponent(buttonCancel))
+							.addComponent(buttonCancel)
+							.addComponent(buttonChangePassword))
 						.addComponent(buttonSubmit))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addGap(57)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(labelServer)
+						.addComponent(textFieldServer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(labelPort)
+						.addComponent(textFieldPort, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(buttonConnect))
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(labelConnectStatus)
+						.addComponent(textFieldConnectStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(39, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
 
