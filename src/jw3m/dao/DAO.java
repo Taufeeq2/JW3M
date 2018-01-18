@@ -50,19 +50,19 @@ public class DAO
 			
 			// Testing methods area
 			
-			Vector<Skill> j = this.getSkillList();
+//			Vector<Hobby> j = this.getHobbyList();
 //			Vector<User> j = this.getUserHobby(1);
 //			Vector<UserHobby> j = this.getUserHobby("a126317");
 //			Vector<Rating> j = this.getRatings("a205128");
-			System.out.println(j.size());
+//			System.out.println(j.size());
 //			for (int i = 0; i < j.size(); i++)
 //			{
 //			System.out.println(this.getLevel(3));
 //			}
-			for (int i = 0; i < j.size(); i++)
-			{
-				System.out.println(j.get(i).getSkillName());
-			}
+//			for (int i = 0; i < j.size(); i++)
+//			{
+//				System.out.println(j.get(i).getHobbyName());
+//			}
 
 		}	
 		
@@ -249,7 +249,43 @@ public class DAO
 			
 		}
 		
+		public boolean addSkillList(Skill inSkill)
+		{
+			
+			try
+			{
+				ps = con.prepareStatement("INSERT INTO skills VALUES (null, ?', ?, ?)");
+				ps.setString(1, inSkill.getSkillName());
+				ps.setString(2, inSkill.getSkillVendor());
+				ps.setString(3, inSkill.getSkillDescription());
+				
+				ps.executeUpdate();
+				
+				return true;
+			} catch (SQLException e)
+			{
+				e.printStackTrace();
+				return false;
+			}
+		}
 		
+		public boolean removeSkillList(Skill inSkill)
+		{
+			try
+			{
+				ps = con.prepareStatement("DELETE FROM skills WHERE skillID = ?");
+				ps.setInt(1, inSkill.getSkillID());
+				ps.executeUpdate();
+				
+				return true;
+				
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}			
+		}
 		
 		
 		//USER SKILLS METHODS
