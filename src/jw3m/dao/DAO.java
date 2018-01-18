@@ -47,18 +47,12 @@ public class DAO
 			//System.out.println("Connected to DB");
 			
 			sqlstat = con.createStatement();
-			rs = sqlstat.executeQuery("Select * from users");
 			
-			if (!rs.next())
-		    {
-			    sqlstat.executeUpdate("insert into users values('', '', '', '', '', '', '')");
-		    }
-
 			// Testing methods area
 			
 //			Vector<User> j = this.getUserHobby(1);
 //			Vector<Level> j = this.getLevel();
-//			Vector<Notification> j = this.getNotification("a124788");
+//			Vector<UserSkill> j = this.getUserSkills("a126317");
 //			System.out.println(j.size());
 //			for (int i = 0; i < j.size(); i++)
 //			{
@@ -67,19 +61,6 @@ public class DAO
 
 
 		}	
-		
-		public boolean saveUser(String sql)
-		{
-			try
-			{
-				sqlstat.executeUpdate(sql);
-			} 
-			catch (SQLException e)
-			{
-				e.printStackTrace();
-			}
-			return true;
-		}
 		
 		
 		// USERLIST Methods
@@ -235,14 +216,8 @@ public class DAO
 		
 		public Vector<UserSkill> getUserSkills(User inUser)
 		{
+			userSkillVect = new Vector<UserSkill>();
 			String userName = inUser.getUserName();
-			String password = inUser.getPassword();
-			String firstName = inUser.getFirstName();
-			String surname = inUser.getSurname();
-			String alias = inUser.getAlias();
-			String email = inUser.getEmailAddress();
-			int mobile = inUser.getMobile();
-			boolean mentor = inUser.isMentor();
 			
 			try
 			{
@@ -480,14 +455,17 @@ public class DAO
 			return userVectLocal;
 		}
 		
-		public boolean addUserHobby(String inUserName, int inHobbyID)
+		public boolean addUserHobby(UserHobby inUserHobby)
 		{
+			String userID = inUserHobby.getUserID();
+			int hobbyID = inUserHobby.getHobbyID();
+			
 			try
 			{
 				ps = con.prepareStatement("INSERT INTO userHobbies VALUES(?, ?)");
 				
-				ps.setString(1, inUserName);
-				ps.setInt(2, inHobbyID);
+				ps.setString(1, userID);
+				ps.setInt(2, hobbyID);
 				
 				ps.executeUpdate();
 				return true;
@@ -499,14 +477,17 @@ public class DAO
 			
 		}
 		
-		public boolean remove1Hobby(String inUserName, int inHobbyID)
+		public boolean removeUserHobby(UserHobby inUserHobby)
 		{						
 			try
 			{
+				String userID = inUserHobby.getUserID();
+				int hobbyID = inUserHobby.getHobbyID();
+				
 				ps = con.prepareStatement("DELETE FROM userHobbies WHERE userID = ? AND hobbyID = ?");
 				
-				ps.setString(1, inUserName);
-				ps.setInt(2, inHobbyID);
+				ps.setString(1, userID);
+				ps.setInt(2, hobbyID);
 							
 				ps.executeUpdate();
 				
@@ -570,9 +551,27 @@ public class DAO
 			}
 		}
 		
+		//RATING METHODS
+		public Rating getRating(User inUser, Skill inSkill)
+		{
+			Rating tempRating = new Rating();
+			
+			
+			
+			
+			
+			return tempRating;
+		}
 		
-		
-		
+		public Vector<Rating> getRatings(User inUser)
+		{
+			Vector<Rating> ratingVect = new Vector<Rating>();
+			
+			
+			
+			
+			return ratingVect;
+		}
 		
 		
 		
