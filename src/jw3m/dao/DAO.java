@@ -216,6 +216,36 @@ public class DAO
 
 		}
 		
+		public boolean editUser(User inUser)
+		{
+			try
+			{
+				ps = con.prepareStatement("UPDATE users SET password = ?, firstName = ?, surname = ?, alias = ?, email = ?, mobile = ?, mentor = ? WHERE userID = ?");
+				
+				ps.setString(1, inUser.getPassword());
+				ps.setString(2, inUser.getFirstName());
+				ps.setString(3, inUser.getSurname());
+				ps.setString(4, inUser.getAlias());
+				ps.setString(5, inUser.getEmailAddress());
+				ps.setInt(6, inUser.getMobile());
+				ps.setBoolean(7, inUser.isMentor());
+				ps.setString(8, inUser.getUserName());
+				
+				ps.executeUpdate();
+				
+				return true;
+				
+			} catch (SQLException e)
+			{
+				e.printStackTrace();
+				return false;
+			}
+			
+			
+			
+			
+		}
+		
 		//SKILLS METHODS
 		public Vector<Skill> getSkillList()
 		{
