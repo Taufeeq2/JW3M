@@ -48,6 +48,7 @@ public class PanelLogin extends JPanel implements ActionListener
 	private JTextField textFieldConnectStatus;
 	private JButton btnRegister;
 	
+	public JFrame tempFrame;
 	private PanelNewProfile newProfile;
 
 	/**
@@ -283,14 +284,14 @@ public class PanelLogin extends JPanel implements ActionListener
 			
 			baseFrame.getData();
 			
-			JFrame tempFrame = new JFrame();
+			 tempFrame = new JFrame();
 			
 			tempFrame.add(newProfile);
 			tempFrame.setSize(800,600);
 			tempFrame.setVisible(true);
 			tempFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			
-			
+	//		tempFrame.dispose();
 			
 			
 //			this.add(basePanel, BorderLayout.CENTER);
