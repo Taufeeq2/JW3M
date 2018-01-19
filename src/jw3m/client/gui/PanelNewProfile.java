@@ -40,6 +40,10 @@ public class PanelNewProfile extends JPanel implements ActionListener
 	
 	public PanelNewProfile(SkillsClient frame)
 	{
+		this.baseFrame = frame;
+		
+		System.out.println("new profile panel started");
+		
 		setLayout(null);
 		
 		lblCreateMyProfile = new JLabel("Create My Profile");
@@ -113,7 +117,8 @@ public class PanelNewProfile extends JPanel implements ActionListener
 		alias.setColumns(10);
 		alias.setBounds(128, 189, 161, 22);
 		add(alias);
-		baseFrame = frame;
+	//	baseFrame = frame;
+		this.setVisible(true);
 
 	}
 
