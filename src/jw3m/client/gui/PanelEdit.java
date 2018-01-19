@@ -37,6 +37,8 @@ public class PanelEdit extends JPanel implements ActionListener
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
 	public PanelEdit(SkillsClient frame) {
+		baseFrame = frame;
+		
 		setBackground(UIManager.getColor("Button.background"));
 		setForeground(Color.LIGHT_GRAY);
 		setLayout(null);
@@ -119,7 +121,6 @@ public class PanelEdit extends JPanel implements ActionListener
 		
 		if(source == btnUpdateProfile)
 		{
-			System.out.println(name.getText());
 			baseFrame.authenticatedUser.setFirstName(name.getText());
 			baseFrame.authenticatedUser.setSurname(surname.getText());
 			baseFrame.authenticatedUser.setAlias(alias.getText());
@@ -137,7 +138,7 @@ public class PanelEdit extends JPanel implements ActionListener
 
 			baseFrame.authenticatedUser.setMentor(mentor);
 			
-			
+			baseFrame.dao.editUser(baseFrame.authenticatedUser);
 			JOptionPane.showMessageDialog(this, "Well done on updating your profile"); 
 		}
 		
