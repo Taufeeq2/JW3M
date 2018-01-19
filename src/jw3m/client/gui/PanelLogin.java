@@ -273,12 +273,13 @@ public class PanelLogin extends JPanel implements ActionListener
 		if(source == btnRegister)
 		{
 			PanelNewProfile newProfile = new PanelNewProfile(baseFrame);
-			this.baseFrame.removeAll();
-            this.baseFrame.validate();
-            this.baseFrame.repaint();
-            this.baseFrame.add(newProfile);
-            this.baseFrame.validate();
-            this.baseFrame.repaint();
+			
+			this.basePanel.removeAll();
+            this.basePanel.validate();
+            this.basePanel.repaint();
+            this.basePanel.add(newProfile);
+            this.basePanel.validate();
+            this.basePanel.repaint();
 		}
 		if (source == buttonChangePassword)
 		{
