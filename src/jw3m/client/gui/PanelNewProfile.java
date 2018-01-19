@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import jw3m.beans.User;
 
@@ -46,7 +47,7 @@ public class PanelNewProfile extends JPanel implements ActionListener
 	{
 		this.baseFrame = frame;
 		
-		System.out.println("new profile panel started");
+//		System.out.println("new profile panel started");
 		
 		setLayout(null);
 		
@@ -148,17 +149,26 @@ public class PanelNewProfile extends JPanel implements ActionListener
 		
 			baseFrame.dao.addUserList(newUser);
 			
-			PanelLogin logonP = new PanelLogin(baseFrame);
+			SwingUtilities.windowForComponent(this).dispose();
+			
+			
+		//	this.getParent();
+			
+			
+//			WindowEvent winEvent = new WindowEvent(parent, WindowEvent.WINDOW_CLOSING);
+//		    Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winEvent );
+			
+//			PanelLogin logonP = new PanelLogin(baseFrame);
 			
 				
 //				baseFrame.getData();
 				
-				JFrame tempFrame = new JFrame();
-				
-				tempFrame.add(logonP);
-				tempFrame.setSize(800,600);
-				tempFrame.setVisible(true);
-				tempFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//				JFrame tempFrame = new JFrame();
+//				
+//				tempFrame.add(logonP);
+//				tempFrame.setSize(800,600);
+//				tempFrame.setVisible(true);
+//				tempFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			
 			
 		}

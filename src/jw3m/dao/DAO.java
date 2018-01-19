@@ -674,6 +674,13 @@ public class DAO
 					tempRating.setUserID(rs.getString("userID"));
 					tempRating.setSkillID(rs.getInt("skillID"));
 					tempRating.setLevel(rs.getInt("level"));
+					tempRating.setKnowledge(rs.getInt("knowledge"));
+					tempRating.setWorkStandard(rs.getInt("workStandard"));
+					tempRating.setAutonomy(rs.getInt("autonomy"));
+					tempRating.setComplexityCoping(rs.getInt("complexityCoping"));
+					tempRating.setContextPerception(rs.getInt("contextPerception"));
+					tempRating.setCapabilityGrowing(rs.getInt("capabilityGrowing"));
+					tempRating.setCollaboration(rs.getInt("collaboration"));
 					tempRating.setDate(rs.getDate("date"));
 					
 					ratingVect.add(tempRating);

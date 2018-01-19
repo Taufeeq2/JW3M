@@ -11,6 +11,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Color;
+import javax.swing.JRadioButton;
+import javax.swing.UIManager;
+import javax.swing.ButtonGroup;
 
 public class PanelEdit extends JPanel implements ActionListener
 {
@@ -21,18 +24,20 @@ public class PanelEdit extends JPanel implements ActionListener
 	private JLabel label_3;
 	private JLabel label_4;
 	private JLabel label_7;
-	private JLabel label_8;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextField name;
+	private JTextField surname;
+	private JTextField email;
+	private JTextField mobile;
 	private JButton btnUpdateProfile;
-	private JTextField textField_5;
+	private JTextField alias;
 	private JLabel lblAlias;
+	private JLabel lblMentor;
+	private JRadioButton rdbtnYes;
+	private JRadioButton rdbtnNo;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
 	public PanelEdit(SkillsClient frame) {
-		setBackground(new Color(0, 153, 255));
+		setBackground(UIManager.getColor("Button.background"));
 		setForeground(Color.LIGHT_GRAY);
 		setLayout(null);
 		
@@ -42,72 +47,97 @@ public class PanelEdit extends JPanel implements ActionListener
 		add(lblEditProfile);
 		
 		label_1 = new JLabel("Email");
-		label_1.setBounds(39, 274, 56, 16);
+		label_1.setBounds(39, 237, 56, 16);
 		add(label_1);
 		
 		label_3 = new JLabel("Mobile");
-		label_3.setBounds(39, 323, 56, 16);
+		label_3.setBounds(39, 288, 56, 16);
 		add(label_3);
 		
 		label_4 = new JLabel("Surname");
-		label_4.setBounds(39, 176, 56, 16);
+		label_4.setBounds(39, 132, 56, 16);
 		add(label_4);
 		
 		label_7 = new JLabel("Name");
-		label_7.setBounds(39, 123, 56, 16);
+		label_7.setBounds(39, 79, 56, 16);
 		add(label_7);
 		
-		label_8 = new JLabel("User ID");
-		label_8.setBounds(39, 72, 56, 16);
-		add(label_8);
+		name = new JTextField();
+		name.setBounds(117, 76, 116, 22);
+		add(name);
+		name.setColumns(10);
 		
-		textField = new JTextField();
-		textField.setBounds(117, 69, 116, 22);
-		add(textField);
-		textField.setColumns(10);
+		surname = new JTextField();
+		surname.setBounds(117, 129, 116, 22);
+		add(surname);
+		surname.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(117, 120, 116, 22);
-		add(textField_1);
-		textField_1.setColumns(10);
+		email = new JTextField();
+		email.setBounds(117, 234, 116, 22);
+		add(email);
+		email.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(117, 173, 116, 22);
-		add(textField_2);
-		textField_2.setColumns(10);
-		
-		textField_3 = new JTextField();
-		textField_3.setBounds(117, 271, 116, 22);
-		add(textField_3);
-		textField_3.setColumns(10);
-		
-		textField_4 = new JTextField();
-		textField_4.setBounds(117, 320, 116, 22);
-		add(textField_4);
-		textField_4.setColumns(10);
+		mobile = new JTextField();
+		mobile.setBounds(117, 285, 116, 22);
+		add(mobile);
+		mobile.setColumns(10);
 		
 		btnUpdateProfile = new JButton("Update Profile");
-		btnUpdateProfile.setBounds(119, 364, 114, 25);
+		btnUpdateProfile.setBounds(119, 372, 114, 25);
 		add(btnUpdateProfile);
 		btnUpdateProfile.addActionListener(this);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(117, 220, 116, 22);
-		add(textField_5);
+		alias = new JTextField();
+		alias.setColumns(10);
+		alias.setBounds(117, 186, 116, 22);
+		add(alias);
 		
 		lblAlias = new JLabel("Alias");
-		lblAlias.setBounds(39, 223, 56, 16);
+		lblAlias.setBounds(39, 189, 56, 16);
 		add(lblAlias);
+		
+		lblMentor = new JLabel("Mentor");
+		lblMentor.setBounds(39, 333, 56, 16);
+		add(lblMentor);
+		
+		rdbtnYes = new JRadioButton("Yes");
+		buttonGroup.add(rdbtnYes);
+		rdbtnYes.setBounds(118, 329, 56, 25);
+		add(rdbtnYes);
+		
+		rdbtnNo = new JRadioButton("No");
+		buttonGroup.add(rdbtnNo);
+		rdbtnNo.setBounds(191, 329, 56, 25);
+		add(rdbtnNo);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		Object source = e.getSource();
+		boolean mentor;
 		
 		if(source == btnUpdateProfile)
 		{
+			System.out.println(name.getText());
+			baseFrame.authenticatedUser.setFirstName(name.getText());
+			baseFrame.authenticatedUser.setSurname(surname.getText());
+			baseFrame.authenticatedUser.setAlias(alias.getText());
+			baseFrame.authenticatedUser.setEmailAddress(email.getText());
+			baseFrame.authenticatedUser.setMobile(Integer.parseInt(mobile.getText()));
+			
+			if(rdbtnYes.isSelected())
+			{
+				mentor = true;
+			}
+			else
+			{
+				mentor = false;
+			}
+
+			baseFrame.authenticatedUser.setMentor(mentor);
+			
+			
 			JOptionPane.showMessageDialog(this, "Well done on updating your profile"); 
 		}
 		

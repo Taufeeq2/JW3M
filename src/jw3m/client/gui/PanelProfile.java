@@ -174,14 +174,43 @@ public class PanelProfile extends JPanel implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		Object source = e.getSource();
+		int skill, rating = 0;
+		String skillName = null, skillDesc = null;
 		
 		if(source == btnShowSkills)
 		{
+			textArea.setText("");
 			for (int i = 0; i < baseFrame.data_userSkills.size(); i++)
 			{
-				textArea.append(baseFrame.data_userSkills.get(i).getSkillID().toString() + baseFrame.data_skillList.get(i).getSkillName().toString() + "\n");
+				skill = baseFrame.data_userSkills.get(i).getSkillID();
 				
+				for(int j = 0; j < baseFrame.data_skillList.size(); j++)
+				{
+					if(skill == baseFrame.data_skillList.get(j).getSkillID())
+					{
+						skillName = baseFrame.data_skillList.get(j).getSkillName();
+						skillDesc = baseFrame.data_skillList.get(j).getSkillDescription();
+					}
+
+				}
+				
+				for(int k = 0; k < baseFrame.data_userRatings.size(); k++)
+				{
+					
+					
+					if((baseFrame.authenticatedUser.getUserName().equals(baseFrame.data_userRatings.get(k).getUserID())) 
+							&& (skill == baseFrame.data_userRatings.get(k).getSkillID()) && 
+							(baseFrame.authenticatedUser.getUserName().equals(baseFrame.data_userRatings.get(k).getRaterID())))
+					{
+						rating = baseFrame.data_userRatings.get(k).getLevel();
+					}
+				}
+				textArea.append(skill + "\t" + skillName + "\t" + skillDesc + "\t" + rating + "\n" );
+	
 			}
+			
+			
+			
 			
 		}
 		
