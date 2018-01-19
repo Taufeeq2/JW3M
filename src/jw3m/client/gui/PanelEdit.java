@@ -28,6 +28,8 @@ public class PanelEdit extends JPanel implements ActionListener
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JButton btnUpdateProfile;
+	private JTextField textField_5;
+	private JLabel lblAlias;
 	
 	public PanelEdit(SkillsClient frame) {
 		setBackground(new Color(0, 153, 255));
@@ -40,11 +42,11 @@ public class PanelEdit extends JPanel implements ActionListener
 		add(lblEditProfile);
 		
 		label_1 = new JLabel("Email");
-		label_1.setBounds(39, 228, 56, 16);
+		label_1.setBounds(39, 274, 56, 16);
 		add(label_1);
 		
 		label_3 = new JLabel("Mobile");
-		label_3.setBounds(39, 275, 56, 16);
+		label_3.setBounds(39, 323, 56, 16);
 		add(label_3);
 		
 		label_4 = new JLabel("Surname");
@@ -75,19 +77,28 @@ public class PanelEdit extends JPanel implements ActionListener
 		textField_2.setColumns(10);
 		
 		textField_3 = new JTextField();
-		textField_3.setBounds(117, 225, 116, 22);
+		textField_3.setBounds(117, 271, 116, 22);
 		add(textField_3);
 		textField_3.setColumns(10);
 		
 		textField_4 = new JTextField();
-		textField_4.setBounds(117, 272, 116, 22);
+		textField_4.setBounds(117, 320, 116, 22);
 		add(textField_4);
 		textField_4.setColumns(10);
 		
 		btnUpdateProfile = new JButton("Update Profile");
-		btnUpdateProfile.setBounds(119, 330, 114, 25);
+		btnUpdateProfile.setBounds(119, 364, 114, 25);
 		add(btnUpdateProfile);
 		btnUpdateProfile.addActionListener(this);
+		
+		textField_5 = new JTextField();
+		textField_5.setColumns(10);
+		textField_5.setBounds(117, 220, 116, 22);
+		add(textField_5);
+		
+		lblAlias = new JLabel("Alias");
+		lblAlias.setBounds(39, 223, 56, 16);
+		add(lblAlias);
 	}
 
 	@Override

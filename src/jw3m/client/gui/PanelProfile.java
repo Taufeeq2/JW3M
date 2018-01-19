@@ -45,6 +45,8 @@ public class PanelProfile extends JPanel implements ActionListener
 	private JButton btnShowSkills;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private User user = new User();
+	private JLabel lblAlias;
+	private JLabel lblDisplayalias;
 	
 	
 	public PanelProfile(SkillsClient frame) {
@@ -66,17 +68,9 @@ public class PanelProfile extends JPanel implements ActionListener
 		lblDisplayUserid.setBounds(126, 89, 146, 16);
 		add(lblDisplayUserid);
 		
-		lblName = new JLabel("Name");
-		lblName.setBounds(39, 137, 56, 16);
-		add(lblName);
-		
 		lblSurname = new JLabel("Surname");
 		lblSurname.setBounds(39, 188, 56, 16);
 		add(lblSurname);
-		
-		lblDisplayName = new JLabel("display name");
-		lblDisplayName.setBounds(126, 137, 146, 16);
-		add(lblDisplayName);
 		
 		lblDisplaySurname = new JLabel("display surname");
 		lblDisplaySurname.setBounds(126, 188, 146, 16);
@@ -113,40 +107,58 @@ public class PanelProfile extends JPanel implements ActionListener
 		add(rdbtnNo);
 		
 		panel = new JPanel();
-		panel.setBounds(0, 344, 882, 387);
+		panel.setBounds(0, 388, 882, 361);
 		add(panel);
 		panel.setLayout(null);
 		
 		lblMySkills = new JLabel("My Skills");
-		lblMySkills.setBounds(309, 13, 94, 27);
+		lblMySkills.setBounds(356, 34, 94, 27);
 		lblMySkills.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
 		panel.add(lblMySkills);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(48, 53, 796, 230);
+		scrollPane.setBounds(49, 86, 796, 230);
 		panel.add(scrollPane);
 		
 		textArea = new JTextArea();
 		scrollPane.setViewportView(textArea);
 		
 		btnShowSkills = new JButton("Show Skills");
-		btnShowSkills.setBounds(371, 306, 127, 25);
+		btnShowSkills.setBounds(371, 329, 127, 25);
 		panel.add(btnShowSkills);
 		btnShowSkills.addActionListener(this);
 		
 		panel_1 = new JPanel();
-		panel_1.setBounds(0, 0, 882, 346);
+		panel_1.setBounds(0, 0, 882, 389);
 		add(panel_1);
+		panel_1.setLayout(null);
+		
+		lblName = new JLabel("Name");
+		lblName.setBounds(38, 124, 56, 16);
+		panel_1.add(lblName);
+		
+		lblDisplayName = new JLabel("display name");
+		lblDisplayName.setBounds(126, 124, 146, 16);
+		panel_1.add(lblDisplayName);
+		lblDisplayName.setText(baseFrame.authenticatedUser.getFirstName());
+		
+		lblAlias = new JLabel("Alias");
+		lblAlias.setBounds(38, 160, 56, 16);
+		panel_1.add(lblAlias);
+		
+		lblDisplayalias = new JLabel("displayAlias");
+		lblDisplayalias.setBounds(126, 160, 146, 16);
+		panel_1.add(lblDisplayalias);
 		
 //		baseFrame.authenticatedUser.getFirstName();
 //		baseFrame.authenticatedUser.getSurname();
 
 			
 			lblDisplayUserid.setText(baseFrame.authenticatedUser.getUserName());
-			lblDisplayName.setText(baseFrame.authenticatedUser.getFirstName());
 			lblDisplaySurname.setText(baseFrame.authenticatedUser.getSurname());
 			lblDisplayEmail.setText(baseFrame.authenticatedUser.getEmailAddress());
 			lblDisplayMobile.setText("0" + baseFrame.authenticatedUser.getMobile());
+			lblDisplayalias.setText(baseFrame.authenticatedUser.getAlias());
 			if(baseFrame.authenticatedUser.isMentor())
 			{
 				rdbtnYes.setSelected(true);

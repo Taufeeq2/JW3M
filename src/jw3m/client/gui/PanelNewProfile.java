@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+
+import jw3m.beans.User;
+
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
@@ -24,17 +27,16 @@ public class PanelNewProfile extends JPanel implements ActionListener
 	private JLabel label_2;
 	private JLabel label_3;
 	private JLabel label_4;
-	private JLabel label_5;
 	private JLabel lblPassword;
-	private JRadioButton radioButton;
-	private JRadioButton radioButton_1;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField userID;
+	private JTextField name;
+	private JTextField surname;
 	private JPasswordField passwordField;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextField email;
+	private JTextField mobile;
 	private JButton btnRegister;
+	private JLabel lblAlias;
+	private JTextField alias;
 	
 	public PanelNewProfile(SkillsClient frame)
 	{
@@ -58,61 +60,59 @@ public class PanelNewProfile extends JPanel implements ActionListener
 		add(label_2);
 		
 		label_3 = new JLabel("Email");
-		label_3.setBounds(47, 237, 56, 16);
+		label_3.setBounds(47, 269, 56, 16);
 		add(label_3);
 		
 		label_4 = new JLabel("Mobile");
-		label_4.setBounds(47, 276, 56, 16);
+		label_4.setBounds(47, 313, 56, 16);
 		add(label_4);
 		
-		label_5 = new JLabel("Mentor");
-		label_5.setBounds(47, 323, 56, 16);
-		add(label_5);
-		
 		lblPassword = new JLabel("Password");
-		lblPassword.setBounds(47, 197, 56, 16);
+		lblPassword.setBounds(47, 229, 56, 16);
 		add(lblPassword);
 		
-		radioButton = new JRadioButton("Yes");
-		radioButton.setBounds(128, 319, 56, 25);
-		add(radioButton);
+		userID = new JTextField();
+		userID.setBounds(128, 77, 161, 22);
+		add(userID);
+		userID.setColumns(10);
 		
-		radioButton_1 = new JRadioButton("No");
-		radioButton_1.setBounds(197, 319, 56, 25);
-		add(radioButton_1);
+		name = new JTextField();
+		name.setBounds(128, 119, 161, 22);
+		add(name);
+		name.setColumns(10);
 		
-		textField = new JTextField();
-		textField.setBounds(128, 77, 161, 22);
-		add(textField);
-		textField.setColumns(10);
-		
-		textField_1 = new JTextField();
-		textField_1.setBounds(128, 119, 161, 22);
-		add(textField_1);
-		textField_1.setColumns(10);
-		
-		textField_2 = new JTextField();
-		textField_2.setBounds(128, 154, 161, 22);
-		add(textField_2);
-		textField_2.setColumns(10);
+		surname = new JTextField();
+		surname.setBounds(128, 154, 161, 22);
+		add(surname);
+		surname.setColumns(10);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(128, 194, 161, 22);
+		passwordField.setBounds(128, 226, 161, 22);
 		add(passwordField);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(128, 234, 161, 22);
-		add(textField_3);
-		textField_3.setColumns(10);
+		email = new JTextField();
+		email.setBounds(128, 266, 161, 22);
+		add(email);
+		email.setColumns(10);
 		
-		textField_4 = new JTextField();
-		textField_4.setBounds(128, 273, 161, 22);
-		add(textField_4);
-		textField_4.setColumns(10);
+		mobile = new JTextField();
+		mobile.setBounds(128, 307, 161, 22);
+		add(mobile);
+		mobile.setColumns(10);
 		
 		btnRegister = new JButton("Register");
-		btnRegister.setBounds(147, 364, 97, 25);
+		btnRegister.setBounds(153, 351, 97, 25);
 		add(btnRegister);
+		btnRegister.addActionListener(this);
+		
+		lblAlias = new JLabel("Alias");
+		lblAlias.setBounds(47, 199, 56, 16);
+		add(lblAlias);
+		
+		alias = new JTextField();
+		alias.setColumns(10);
+		alias.setBounds(128, 189, 161, 22);
+		add(alias);
 		baseFrame = frame;
 
 	}
@@ -121,7 +121,21 @@ public class PanelNewProfile extends JPanel implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		Object source = e.getSource();
+		User newUser = new User();
 				
+		if(source == btnRegister)
+		{
+			newUser.setUserName(userID.getText());	
+			newUser.setFirstName(name.getText());
+			newUser.setSurname(surname.getText());
+			newUser.setAlias(alias.getText());
+			newUser.setPassword(passwordField.getText());
+			newUser.setEmailAddress(email.getText());
+			newUser.setMobile(Integer.parseInt(mobile.getText()));
+			
+			
+//			baseFrame.dao.addUserList(inUser);
+		}
 		
 	}
 }
