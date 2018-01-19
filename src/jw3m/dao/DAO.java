@@ -694,18 +694,22 @@ public class DAO
 			}
 		}
 		
-		public boolean setRating(User inUser, User inRator, Skill inSkill)
+		public boolean setRating(Rating inRating)
 		{
-			String userName = inUser.getUserName();
-			String ratorID = inRator.getUserName();
-			int SkillID = inSkill.getSkillID();
-			
 			try
 			{
-				ps = con.prepareStatement("INSERT INTO ratings VALUES(null, ?, ?, ?, NOW() )");
-				ps.setString(1, ratorID);
-				ps.setString(2, userName);
-				ps.setInt(3, SkillID);
+				ps = con.prepareStatement("INSERT INTO ratings VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW() )");
+				ps.setString(1, inRating.getRaterID());
+				ps.setString(2, inRating.getUserID());
+				ps.setInt(3, inRating.getSkillID());
+				ps.setInt(4, inRating.getLevel());
+				ps.setInt(5, inRating.getKnowledge());
+				ps.setInt(6, inRating.getWorkStandard());
+				ps.setInt(7, inRating.getAutonomy());
+				ps.setInt(8, inRating.getComplexityCoping());
+				ps.setInt(9, inRating.getContextPerception());
+				ps.setInt(10, inRating.getCapabilityGrowing());
+				ps.setInt(11, inRating.getCollaboration());
 				
 				ps.executeUpdate();
 				
