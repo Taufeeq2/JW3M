@@ -123,7 +123,7 @@ public class CaptureProfile extends JFrame implements ActionListener
 		textField_3 = new JTextField();
 		textField_3.setBounds(137, 253, 116, 22);
 		panel.add(textField_3);
-		textField_3.setColumns(10);
+		textField_3.setColumns(10); 
 		
 		lblEmail = new JLabel("Email");
 		lblEmail.setBounds(42, 329, 56, 16);
