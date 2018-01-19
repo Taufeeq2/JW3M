@@ -173,16 +173,16 @@ public class CaptureProfile extends JFrame implements ActionListener
 			
 		if(source == btnSubmit)
 		{
-			try
-			{
-				userDAO = new DAO();
-				userDAO.saveUser(sql);
-			} 
-			catch (Exception e1)
-			{
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+//			try
+//			{
+//				userDAO = new DAO();
+//				userDAO.saveUser(sql);
+//			} 
+//			catch (Exception e1)
+//			{
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 			JOptionPane.showMessageDialog(this, "You just submitted your profile");
 		}
 		
