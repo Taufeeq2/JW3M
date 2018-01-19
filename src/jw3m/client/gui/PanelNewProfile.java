@@ -2,6 +2,9 @@ package jw3m.client.gui;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +16,7 @@ import jw3m.beans.User;
 
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 
 public class PanelNewProfile extends JPanel implements ActionListener
 {
@@ -40,6 +44,10 @@ public class PanelNewProfile extends JPanel implements ActionListener
 	
 	public PanelNewProfile(SkillsClient frame)
 	{
+		this.baseFrame = frame;
+		
+		System.out.println("new profile panel started");
+		
 		setLayout(null);
 		
 		lblCreateMyProfile = new JLabel("Create My Profile");
@@ -68,35 +76,35 @@ public class PanelNewProfile extends JPanel implements ActionListener
 		add(label_4);
 		
 		lblPassword = new JLabel("Password");
-		lblPassword.setBounds(47, 229, 56, 16);
+		lblPassword.setBounds(47, 229, 72, 16);
 		add(lblPassword);
 		
 		userID = new JTextField();
-		userID.setBounds(128, 77, 161, 22);
+		userID.setBounds(154, 77, 161, 22);
 		add(userID);
 		userID.setColumns(10);
 		
 		name = new JTextField();
-		name.setBounds(128, 119, 161, 22);
+		name.setBounds(154, 119, 161, 22);
 		add(name);
 		name.setColumns(10);
 		
 		surname = new JTextField();
-		surname.setBounds(128, 154, 161, 22);
+		surname.setBounds(154, 154, 161, 22);
 		add(surname);
 		surname.setColumns(10);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(128, 226, 161, 22);
+		passwordField.setBounds(154, 226, 161, 22);
 		add(passwordField);
 		
 		email = new JTextField();
-		email.setBounds(128, 266, 161, 22);
+		email.setBounds(154, 266, 161, 22);
 		add(email);
 		email.setColumns(10);
 		
 		mobile = new JTextField();
-		mobile.setBounds(128, 307, 161, 22);
+		mobile.setBounds(154, 310, 161, 22);
 		add(mobile);
 		mobile.setColumns(10);
 		
@@ -111,9 +119,10 @@ public class PanelNewProfile extends JPanel implements ActionListener
 		
 		alias = new JTextField();
 		alias.setColumns(10);
-		alias.setBounds(128, 189, 161, 22);
+		alias.setBounds(154, 191, 161, 22);
 		add(alias);
-		baseFrame = frame;
+	//	baseFrame = frame;
+		this.setVisible(true);
 
 	}
 
@@ -122,6 +131,7 @@ public class PanelNewProfile extends JPanel implements ActionListener
 	{
 		Object source = e.getSource();
 		User newUser = new User();
+		
 				
 		if(source == btnRegister)
 		{
@@ -133,8 +143,24 @@ public class PanelNewProfile extends JPanel implements ActionListener
 			newUser.setEmailAddress(email.getText());
 			newUser.setMobile(Integer.parseInt(mobile.getText()));
 			
+			JOptionPane.showMessageDialog(this, "New user " + name.getText() + " created" );
 			
-//			baseFrame.dao.addUserList(inUser);
+		
+			baseFrame.dao.addUserList(newUser);
+			
+			PanelLogin logonP = new PanelLogin(baseFrame);
+			
+				
+//				baseFrame.getData();
+				
+				JFrame tempFrame = new JFrame();
+				
+				tempFrame.add(logonP);
+				tempFrame.setSize(800,600);
+				tempFrame.setVisible(true);
+				tempFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			
+			
 		}
 		
 	}

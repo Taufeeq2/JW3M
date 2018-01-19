@@ -6,9 +6,12 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 
@@ -44,6 +47,8 @@ public class PanelLogin extends JPanel implements ActionListener
 	private JLabel labelConnectStatus;
 	private JTextField textFieldConnectStatus;
 	private JButton btnRegister;
+	
+	private PanelNewProfile newProfile;
 
 	/**
 	 * Create the panel.
@@ -272,14 +277,36 @@ public class PanelLogin extends JPanel implements ActionListener
 		
 		if(source == btnRegister)
 		{
-			PanelNewProfile newProfile = new PanelNewProfile(baseFrame);
+			newProfile = new PanelNewProfile(baseFrame);
 			
-			this.basePanel.removeAll();
-            this.basePanel.validate();
-            this.basePanel.repaint();
-            this.basePanel.add(newProfile);
-            this.basePanel.validate();
-            this.basePanel.repaint();
+		//	baseFrame.add(newProfile);
+			
+			baseFrame.getData();
+			
+			JFrame tempFrame = new JFrame();
+			
+			tempFrame.add(newProfile);
+			tempFrame.setSize(800,600);
+			tempFrame.setVisible(true);
+			tempFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			
+			
+			
+			
+//			this.add(basePanel, BorderLayout.CENTER);
+//			this.baseFrame.setVisible(true);
+//			
+//			
+//			this.baseFrame.removeAll();
+//			this.baseFrame.validate();
+//			this.baseFrame.repaint();
+//			this.baseFrame.add(newProfile,BorderLayout.CENTER);
+//			this.baseFrame.validate();
+//			this.baseFrame.repaint();
+			
+		//	this.baseFrame.setVisible(true);
+            
+            
 		}
 		if (source == buttonChangePassword)
 		{

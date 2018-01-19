@@ -131,14 +131,20 @@ public class SkillsClient extends JFrame implements ActionListener
 	public void getData()
 	{
 		data_userList = dao.getUserList();
-		data_userSkills = dao.getUserSkills(authenticatedUser);
+
 		data_skillList = dao.getSkillList();
 		data_hobbyList = dao.getHobbyList();
-		data_userHobby = dao.getUserHobby(authenticatedUser);
+		
 	//	data_hobbyUsers = dao.getUserHobby(  object of hobby   );
 		data_levels = dao.getLevel();
-		data_userRatings = dao.getRatings(authenticatedUser);
-		data_notifications = dao.getNotification(authenticatedUser);
+		if (authenticatedUser!= null)
+		{
+			data_userSkills = dao.getUserSkills(authenticatedUser);
+			data_userHobby = dao.getUserHobby(authenticatedUser);
+			data_userRatings = dao.getRatings(authenticatedUser);
+			data_notifications = dao.getNotification(authenticatedUser);
+		}
+		
 		
 	}
 	
@@ -197,7 +203,7 @@ public class SkillsClient extends JFrame implements ActionListener
 		tabbedPane.add("Edit", editP);
 		tabbedPane.add("Notification", notificationP);
 		tabbedPane.add("Rate Someone", rateSomeoneP);
-//		tabbedPane.add("Create New Profile", newProfile);
+		tabbedPane.add("Create New Profile", newProfile);
 		
 
 		
