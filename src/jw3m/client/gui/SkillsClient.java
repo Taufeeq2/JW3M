@@ -456,6 +456,9 @@ public class SkillsClient extends JFrame implements ActionListener
 		this.networkSession = networkSession;
 	}
 
-	
+	public void setAuthenticatedUser(User user)
+	{
+		this.authenticatedUser = user;
+	}
 
 }

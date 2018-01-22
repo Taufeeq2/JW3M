@@ -10,10 +10,17 @@ public class Comms implements Serializable
 	private static final long serialVersionUID = 1L;
 	private String text;
 	private Object obj;
-
+	
 	public Comms()
 	{
-		//super();
+		
+	}
+	
+	// not true bean
+	public Comms(String text, Object obj)
+	{
+		this.text = text;
+		this.obj = obj;
 	}
 
 	public String getText()

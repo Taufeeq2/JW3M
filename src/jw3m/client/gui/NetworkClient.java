@@ -13,11 +13,10 @@ public class NetworkClient
 {
 	final static Logger logger = Logger.getLogger(NetworkClient.class);
 	private Socket soc = null;
-    private BufferedReader br = null;
-    private PrintWriter pw = null;
     private boolean tf = true;
     private String msg; 
     private ObjectInputStream ois;
+    private ObjectOutputStream oos;
     private SkillsClient baseFrame;
     
     public NetworkClient(SkillsClient frame, String serverAddress, int serverPort)
@@ -33,7 +32,7 @@ public class NetworkClient
     	try
 	    {
 	        soc = new Socket(serverAddress,serverPort);
-	        pw = new PrintWriter(soc.getOutputStream(), true);
+	       
 	    } 
     	catch (UnknownHostException e)
 	    {
@@ -44,117 +43,15 @@ public class NetworkClient
 	        e.printStackTrace();
 	    }
     	
-    	try
-	    {
-    		
-    			br = new BufferedReader(new InputStreamReader(soc.getInputStream()));
-    			logger.info("client attempting to logon");
-    			String mesg = "request logon" ;
-    		    pw.println(mesg);
-            	pw.flush();
-            	msg = "";
-            	
-//            	passCredentials();
- //           	while((msg = br.readLine()) != null)
-            		
-  //          	{
-//            		msg = br.readLine();
-//            		logger.info("client recieved " + msg);
-//            		if (msg == "Send Username");
-//            		{
-//            			pw.println("Bob");
-//            		}
-//            		
-//            		msg = br.readLine();
-//            		logger.info("client recieved " + msg);
-//               		if (msg == "Send Password");
-//            		{
-//            			pw.println("123");
-//            		}
-    //        	}
-        		
-            		// read vector for testing
-        		
-
-	    } 
-    	
-	    catch (IOException e1)
-	    {
-	    	try
-			{
-				br.close();
-				soc.close();
-			} catch (IOException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    		
-	        e1.printStackTrace();
-	    }
-	}
-    
-    public void passCredentials(String userName, String password)
-    {
     	
 		try
 		{
-			
-			msg = br.readLine();
-			
-			
-			logger.info("1st client recieved " + msg);
-			if (msg.equals("Send Username"))
-			{
-				pw.println(userName);
-			}
-			else
-			{
-				System.out.println("did not get what we expected from server USERNAME");
-			}
-			
-			msg = br.readLine();
-			logger.info("2nd client recieved " + msg);
-			if (msg.equals("Send Password"))
-			{
-				pw.println(password);
-			}
-			else
-			{
-				System.out.println("did not get what we expected from server PASSWORD");
-			}
-			
-			
-			msg = br.readLine();
-			
-			if (msg == "Good logon")
-			{
-				logger.info("client recieved " + msg);
-			}
-			
-			// ask for user bean
-//			System.out.println("expecting user object now");
-//			  ois = new ObjectInputStream(soc.getInputStream());
-//			  
-//			  User user = null;
-//			  
-//			 try
-//			{
-//				user = (User)(ois.readObject() );
-//				System.out.println("got object");
-//				baseFrame.authenticatedUser = user;
-//				
-//			} catch (ClassNotFoundException e)
-//			{
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			oos = new ObjectOutputStream (soc.getOutputStream());
+			ois = new ObjectInputStream (soc.getInputStream());
 			
 			
 			
-//		     FileInputStream fis = new FileInputStream("t.tmp");
-//		     ObjectInputStream ois = new ObjectInputStream(fis);
-//			ois = new ObjectInputStream();
+			// 	read first from client
 			
 			
 			
@@ -163,8 +60,61 @@ public class NetworkClient
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+    	
+    	
+    	
+  
+	}
+    
+    public User passCredentials(String userName, String password)
+    {
+    	Comms creds = null;
+    	User user = null;
+		try
+		{
+			Comms welcome = (Comms) ois.readObject();
+			
+			if (welcome.getText().equals("Welcome"))
+			{
+				logger.info("sending username");
+				oos.writeObject(new Comms("userName", userName));
+				logger.info("sending password");
+				oos.writeObject(new Comms("password", password));
+				
+				logger.info("getting server response to credentials");
+				Comms credentialsReply = (Comms) ois.readObject();
+				
+				
+				
+				if (credentialsReply.getText().equals("authenticated"))
+				{
+					user = (User)credentialsReply.getObj();
+					logger.info("authenticated " + user.getUserName());
+					return user;
+				}
+				else
+				{
+					logger.info("authentication failed");
+					return null;
+				}
+				
+			}
+			else
+			{
+				logger.info("bad server response");
+				return null;
+			}
+		} catch (ClassNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return user;
 		
     }
 
