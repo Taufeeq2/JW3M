@@ -110,16 +110,19 @@ public class Server
 								userObj.setPassword(null);
 								
 								oos.writeObject(new Comms("authenticated", userObj));
+								running = true;
 							}
 							else
 							{
 								// bad password
+								running = false;
 								logger.info("Thread ID:" + threadId + " bad password");
 							}
 						}
 						else
 						{
 							// no user
+							running = false;
 							logger.info("Thread ID:" + threadId + " user does not exist");
 						}
 						
@@ -128,23 +131,47 @@ public class Server
 					{
 						// TODO Auto-generated catch block
 						logger.info("Thread ID:" + threadId + " Sesson dropped");
+						running = false;
 						//e.printStackTrace();
 					} catch (ClassNotFoundException e)
 					{
 						// TODO Auto-generated catch block
-						e.printStackTrace();
+						logger.error("Thread ID:" + threadId + " Server class not found");
+						running = false;
+						// e.printStackTrace();
 					}
 		        	
 
 		            while (running)
 		            {
-
-		            	  
 		            	
+		            	logger.info("waiting for object");
+		            	try
+						{
+			            		
+							Comms comms = (Comms)ois.readObject();
+					
+							listenForTransaction(comms);
+							
+						} catch (ClassNotFoundException e)
+						{
+							// TODO Auto-generated catch block
+							//e.printStackTrace();
+							logger.error("Thread ID:" + threadId + " Server class not found");
+							running = false;
+							
+							
+						} catch (IOException e)
+						{
+							// TODO Auto-generated catch block
+							logger.error("Thread ID:" + threadId + " Server class not found");
+							running = false;
+							// e.printStackTrace();
+						}
 
-//		            	running = false;
 		            }      
-		 
+		            
+		logger.info("Thread ID:" + threadId + " Sesson dropped");
 
 		}
 	
@@ -217,32 +244,29 @@ public class Server
 				logger.info(threadId + " :Bad logon");
 			}
 			
-
-			
-			
-		//	System.out.println(  dao.getUser(clientUserName).getFirstName() );
-			
-			// send back vector for testing
-			
-	//		dao.getUserList();
-			
-			
-			pw.flush();
-			
-		//	logger.info(threadId + " : Thread ended...");
-			
-			
 		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    
-	    
-		// assumes the basic comms extablished lets pass objects
 		
 		
 	}
 	
+	public void listenForTransaction(Comms comms)
+	{
+		
+		logger.info("trancation listener method executed (case switching instructions) ");
+		switch (comms.getText())
+		{
+		
+			case "123" : logger.info("123"); 	break;
+			case "test" : logger.info("test"); break;
+		
+		}
+		
+		
+	}
 
 }
