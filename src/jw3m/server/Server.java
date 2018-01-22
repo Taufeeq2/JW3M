@@ -68,6 +68,7 @@ public class Server
 	    private Socket threadsoc;
 	    private PrintWriter pw = null;
 	    private BufferedReader serverbr = null;
+	    private ObjectOutputStream oos = null;
 	
 	    public ServerThread(Socket threadsoc)
 	    {      
@@ -79,6 +80,9 @@ public class Server
 		{
 		        try
 		        {
+		        	long threadId = Thread.currentThread().getId();
+		        	
+		        //	this.threadsoc.
 		            pw = new PrintWriter(threadsoc.getOutputStream(), true);
 		            serverbr = new BufferedReader(new InputStreamReader(threadsoc.getInputStream()));
 		            boolean running = true;
@@ -87,7 +91,9 @@ public class Server
 		            {
 		            	if (in.equals("request logon"))
 		            	{
-		            		logger.info("receieved : request logon");
+		            		logger.info(threadId + " :receieved : request logon");
+		            		
+		            		oos = new ObjectOutputStream(threadsoc.getOutputStream());
 		            		logonServer(pw, serverbr);
 		            		
 		            		// pass back objets
@@ -123,6 +129,9 @@ public class Server
 	
 	public static void main(String[] args)
 	{
+
+	//	dao = new DAO();
+		
 		new Server();
 	}
 	
@@ -131,31 +140,64 @@ public class Server
 		
 		try
 		{
-			logger.info("server logon method started");
+			long threadId = Thread.currentThread().getId();
+			logger.info(threadId + " : Server thread awaiting credentials");
+			pw.flush();
 			pw.println("Send Username");
 			pw.flush();
 			String clientUserName = serverbr.readLine();
-			logger.info("server got "+ clientUserName);
+			logger.info(threadId + " : Server got "+ clientUserName);
 			pw.println("Send Password");
 			pw.flush();
 			String clientUserPassword = serverbr.readLine();
-			logger.info("server got "+ clientUserPassword);
+			logger.info(threadId + " : server got "+ clientUserPassword);
 			
-			System.out.println(clientUserName +  " " + clientUserPassword);
+		//	System.out.println(clientUserName +  " " + clientUserPassword);
 			
-			if (clientUserName.equals("Bob") && clientUserPassword.equals("123") )
+			if (dao.getUser(clientUserName).getUserName().equals(clientUserName) )
 			{
-				pw.println("Good logon");
-				pw.flush();
-				logger.info("good logon");
+				logger.info("username found...");
 			}
 			else
 			{
-				pw.println("bad logon");
-				pw.flush();
-				logger.info("bad logon");
+				logger.info("no such user...");
 			}
 			
+			if ( dao.getUser(clientUserName).getPassword().equals(clientUserPassword) )
+			{
+				logger.info("passwords match...");
+			}
+			else
+			{
+				logger.info("bas password and or no user");
+			}
+			
+	//		oos = new ObjectOutStream(soc.getInputStream());
+			
+			if (dao.getUser(clientUserName).getUserName().equals(clientUserName) && dao.getUser(clientUserName).getPassword().equals(clientUserPassword) )
+			{
+				pw.println("Good logon");
+				pw.flush();
+				logger.info(threadId + " : good logon");
+				
+//				oos.flush();
+//				oos.writeObject(dao.getUser(clientUserName));
+//				oos.flush();
+//				
+				logger.info(threadId + " : user object sent down the line");
+				
+			}
+			else
+			{
+				pw.println("Bad logon");
+				pw.flush();
+				logger.info(threadId + " :Bad logon");
+			}
+			
+
+			
+			
+		//	System.out.println(  dao.getUser(clientUserName).getFirstName() );
 			
 			// send back vector for testing
 			
@@ -163,6 +205,10 @@ public class Server
 			
 			
 			pw.flush();
+			
+		//	logger.info(threadId + " : Thread ended...");
+			
+			
 		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block

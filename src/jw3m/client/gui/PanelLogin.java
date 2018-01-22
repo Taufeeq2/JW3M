@@ -45,11 +45,12 @@ public class PanelLogin extends JPanel implements ActionListener
 	private JTextField textFieldPort;
 	private JButton buttonConnect;
 	private JLabel labelConnectStatus;
-	private JTextField textFieldConnectStatus;
 	private JButton btnRegister;
 	
 	public JFrame tempFrame;
 	private PanelNewProfile newProfile;
+	private JLabel lblUserDetails;
+	private JLabel lblConnectionStatus;
 
 	/**
 	 * Create the panel.
@@ -69,6 +70,8 @@ public class PanelLogin extends JPanel implements ActionListener
 			// Do nothing 
 			
 		}
+		
+		
 		
 		
 		labelUserID = new JLabel("User ID");
@@ -100,27 +103,30 @@ public class PanelLogin extends JPanel implements ActionListener
 		labelServer.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		textFieldServer = new JTextField();
-		textFieldServer.setText("local");
+		textFieldServer.setText(baseFrame.getServerAddress());
 		textFieldServer.setColumns(10);
 		
 		labelPort = new JLabel("Port");
 		labelPort.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		textFieldPort = new JTextField();
-		textFieldPort.setText("1337");
+		textFieldPort.setText(""+baseFrame.getServerPort());
 		textFieldPort.setColumns(10);
 		
 		buttonConnect = new JButton("Connect");
 		buttonConnect.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
-		labelConnectStatus = new JLabel("Connect Status");
+		labelConnectStatus = new JLabel("No connection");
 		labelConnectStatus.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		
-		textFieldConnectStatus = new JTextField();
-		textFieldConnectStatus.setColumns(10);
 		
 		btnRegister = new JButton("Register");
 		btnRegister.addActionListener(this);
+		
+		lblUserDetails = new JLabel("User details");
+		lblUserDetails.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		lblConnectionStatus = new JLabel("Connection status");
+		lblConnectionStatus.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
@@ -132,51 +138,50 @@ public class PanelLogin extends JPanel implements ActionListener
 							.addComponent(lblStandardBank))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(175)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(labelUserID, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
 									.addGap(78)
 									.addComponent(textFieldUserID, GroupLayout.PREFERRED_SIZE, 236, GroupLayout.PREFERRED_SIZE))
+								.addComponent(lblUserDetails)
+								.addComponent(lblConnectionStatus, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(labelPassword, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
-									.addGap(56)
-									.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 236, GroupLayout.PREFERRED_SIZE))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(buttonSubmit, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-									.addGap(18)
-									.addComponent(buttonCancel, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-									.addGap(18)
-									.addComponent(buttonChangePassword, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(134)
-									.addComponent(textFieldConnectStatus)))
-							.addGap(18)
-							.addComponent(btnRegister))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(170)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+									.addComponent(labelConnectStatus, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+									.addGap(84))
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addGap(199)
-											.addComponent(labelPort)
-											.addGap(18)
-											.addComponent(textFieldPort, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(labelServer)
-											.addGap(18)
-											.addComponent(textFieldServer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-									.addGap(12)
-									.addComponent(buttonConnect))
-								.addComponent(labelConnectStatus))))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+										.addComponent(labelPassword, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
+										.addComponent(labelServer))
+									.addGap(53)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+										.addComponent(passwordField, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 236, GroupLayout.PREFERRED_SIZE)
+										.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+											.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+												.addComponent(buttonSubmit, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addComponent(buttonChangePassword))
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+												.addComponent(btnRegister, GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+												.addComponent(buttonCancel, GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)))
+										.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+											.addComponent(textFieldServer, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+											.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+												.addComponent(buttonConnect, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
+												.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+													.addComponent(labelPort)
+													.addGap(18)
+													.addComponent(textFieldPort, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)))))))))
+					.addContainerGap(258, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(lblStandardBank)
-					.addGap(101)
+					.addGap(58)
+					.addComponent(lblUserDetails)
+					.addGap(27)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(3)
@@ -188,25 +193,27 @@ public class PanelLogin extends JPanel implements ActionListener
 							.addGap(3)
 							.addComponent(labelPassword, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
 						.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-					.addGap(39)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-							.addComponent(buttonCancel)
-							.addComponent(buttonChangePassword)
-							.addComponent(btnRegister))
-						.addComponent(buttonSubmit))
-					.addGap(97)
+					.addGap(28)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(buttonSubmit)
+						.addComponent(buttonCancel))
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnRegister)
+						.addComponent(buttonChangePassword))
+					.addGap(64)
+					.addComponent(lblConnectionStatus, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(labelServer)
 						.addComponent(textFieldServer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(labelPort)
-						.addComponent(textFieldPort, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(buttonConnect))
+						.addComponent(textFieldPort, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(labelConnectStatus)
-						.addComponent(textFieldConnectStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addComponent(buttonConnect))
+					.addContainerGap(112, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
 
@@ -227,41 +234,55 @@ public class PanelLogin extends JPanel implements ActionListener
 			
 			String userName = new String (textFieldUserID.getText());
 			
-			if (baseFrame.dao.getUser(userName) != null)
+			// testing client server comms
+			
+			baseFrame.getNetworkClient().passCredentials(userName, passwordString);
+			
+			if (baseFrame.authenticatedUser!=null)
 			{
-				logger.info("Found user " + userName);
-				
-				if (baseFrame.dao.getUser(userName).getPassword().equals(passwordString))
-				{
-					// clearly bad logic here were the client has the user object with password but ya for now.
-					logger.info("Passwords match " + userName);
-					
-					// also bad to accesss the public object directly should be using business logic access methods
-					baseFrame.authenticatedUser = baseFrame.dao.getUser(userName);
-					baseFrame.getData(); // updates the local data variables;
-					
-					// example of how to get the data
-					//baseFrame.data_hobbyList[1];
-					
-					
-					
-					baseFrame.setupMenuBar();
-					baseFrame.setupSouthPanel();
-					baseFrame.setupTabs();
-					baseFrame.changeToTabbedPane();
-					
-				}
-				else
-				{
-					JOptionPane.showMessageDialog(this, "Bad password");
-				//	textFieldUserID.setText("");
-					passwordField.setText("");
-				}
+				logger.info("User now authenticated");
 			}
 			else
 			{
-				JOptionPane.showMessageDialog(this, "No such user!");
+				logger.info("No user authenticated");
 			}
+			
+			
+//			if (baseFrame.dao.getUser(userName) != null)
+//			{
+//				logger.info("Found user " + userName);
+//				
+//				if (baseFrame.dao.getUser(userName).getPassword().equals(passwordString))
+//				{
+//					// clearly bad logic here were the client has the user object with password but ya for now.
+//					logger.info("Passwords match " + userName);
+//					
+//					// also bad to accesss the public object directly should be using business logic access methods
+//					baseFrame.authenticatedUser = baseFrame.dao.getUser(userName);
+//					baseFrame.getData(); // updates the local data variables;
+//					
+//					// example of how to get the data
+//					//baseFrame.data_hobbyList[1];
+//					
+//					
+//					
+//					baseFrame.setupMenuBar();
+//					baseFrame.setupSouthPanel();
+//					baseFrame.setupTabs();
+//					baseFrame.changeToTabbedPane();
+//					
+//				}
+//				else
+//				{
+//					JOptionPane.showMessageDialog(this, "Bad password");
+//				//	textFieldUserID.setText("");
+//					passwordField.setText("");
+//				}
+//			}
+//			else
+//			{
+//				JOptionPane.showMessageDialog(this, "No such user!");
+//			}
 
 			
 			
@@ -286,7 +307,7 @@ public class PanelLogin extends JPanel implements ActionListener
 			
 			 tempFrame = new JFrame();
 			
-			tempFrame.add(newProfile);
+			tempFrame.getContentPane().add(newProfile);
 			tempFrame.setSize(800,600);
 			tempFrame.setVisible(true);
 			tempFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

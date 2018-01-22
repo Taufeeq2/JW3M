@@ -2,6 +2,12 @@ package jw3m.client.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.Set;
 import java.util.Vector;
 
@@ -81,7 +87,12 @@ public class SkillsClient extends JFrame implements ActionListener
 	
 	public Font standardFont;
 
+	// Networking stuff
 	
+    private NetworkClient networkClient = null;
+	private String serverAddress = null;
+	private int serverPort = 0;
+	private Boolean networkSession = false;
 	
 	public SkillsClient()
 	{
@@ -89,6 +100,26 @@ public class SkillsClient extends JFrame implements ActionListener
 		
 		standardFont = new Font ("THAHOMA",Font.PLAIN, 16);
 	//	Font.ITALIC|Font.BOLD
+		
+		// Lets get the client making network comms to server
+		
+		
+		try
+		{
+			serverAddress = "localhost";
+			serverPort = 1337;
+			networkClient = new NetworkClient(this, serverAddress,serverPort );
+			networkSession = true;
+		} catch (Exception e1)
+		{
+			// TODO Auto-generated catch block
+			logger.error("some ting wong");
+			
+			networkSession = false;
+			
+			//e1.printStackTrace();
+		}
+		
 		
 		// DIRECT DAO ACCESS - MUST BE CHANGED LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		
@@ -118,13 +149,14 @@ public class SkillsClient extends JFrame implements ActionListener
 		// The logon panel goes into the base panel
 		logonP = new PanelLogin(this);
 		basePanel.add(logonP);
-		
-		
+
 		// At first we have a JFrame with a base panel with the logon panel in the middle
 		this.add(basePanel, BorderLayout.CENTER);
 		this.setVisible(true);
 		
 	}
+	
+   
 	
 	// Getters and setters for data - must be changed later
 	// get data or refresh data?
@@ -373,8 +405,57 @@ public class SkillsClient extends JFrame implements ActionListener
 			
 		
 	}
-	
-	
+
+	// Getters and setters for server ports
+
+	public String getServerAddress()
+	{
+		return serverAddress;
+	}
+
+	public void setServerAddress(String serverAddress)
+	{
+		this.serverAddress = serverAddress;
+	}
+
+	public int getServerPort()
+	{
+		return serverPort;
+	}
+
+	public void setServerPort(int serverPort)
+	{
+		this.serverPort = serverPort;
+	}
+
+
+
+	public NetworkClient getNetworkClient()
+	{
+		return networkClient;
+	}
+
+
+
+	public void setNetworkClient(NetworkClient networkClient)
+	{
+		this.networkClient = networkClient;
+	}
+
+
+
+	public Boolean getNetworkSession()
+	{
+		return networkSession;
+	}
+
+
+
+	public void setNetworkSession(Boolean networkSession)
+	{
+		this.networkSession = networkSession;
+	}
+
 	
 
 }
