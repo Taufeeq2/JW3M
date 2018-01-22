@@ -338,6 +338,16 @@ public class JunitDAO
 		 Date date = new Date(20180101);
 		 addNotification.setDate(date); //this date is still wonky
 		 dao.setNotification(addNotification);
+		 
+		 
+		 System.out.println("Testing method removeNotification");
+		 Notification removeNotification = new Notification();
+		 removeNotification.setRequestorID("a999999");
+		 removeNotification.setRatorID("a111111");
+		 Date rmvDate = new Date(20180101);
+		 removeNotification.setDate(rmvDate);
+		 dao.removeNotification(removeNotification);
+		 
 	}
 
 }
