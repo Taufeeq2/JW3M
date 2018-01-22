@@ -2,6 +2,8 @@ package jw3m.client.gui;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
@@ -15,12 +17,16 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import jw3m.beans.Rating;
 import jw3m.beans.Skill;
+import jw3m.beans.User;
+import jw3m.beans.UserSkill;
 import jw3m.dao.DAO;
 
 import javax.swing.JScrollPane;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JTextField;
 
 public class PanelRateSomeone extends JPanel implements ActionListener
 {
@@ -34,13 +40,19 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 	private JTable table;
 	private Vector<Skill> skillList = new Vector<Skill>();
 	private Vector<Skill> skillNames = new Vector<Skill>();
+	private JTextField searchField;
+	private JLabel lblSearch;
+	private JButton btnSearch;
+	private Rating ratee;
 	
 	public PanelRateSomeone(SkillsClient frame) {
 		
+		baseFrame = frame;
 		lblRateSomeone = new JLabel("Rate Someone");
 		lblRateSomeone.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
 		
 		btnSubmit = new JButton("Submit");
+		btnSubmit.addActionListener(this);
 		
 		lblDisplayRatee = new JLabel("Display ratee");
 		lblDisplayRatee.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -51,6 +63,8 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		lblIAmRating.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		Vector<Skill> skillNms = new Vector<Skill>();
+		
+		 ratee = new Rating();
 		
 		try
 		{
@@ -69,6 +83,16 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 			skillNames.add(skillNms.get(i));
 		}
 		
+		searchField = new JTextField();
+		searchField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		searchField.setColumns(10);
+		
+		lblSearch = new JLabel("Search ");
+		lblSearch.setFont(new Font("Tahoma", Font.BOLD, 16));
+		
+		btnSearch = new JButton("Search");
+		btnSearch.addActionListener(this);
+		
 		
 
 		
@@ -84,8 +108,20 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 					.addGap(8)
 					.addComponent(lblDisplayRatee, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE))
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(334)
-					.addComponent(btnSubmit, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(lblSearch))
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+							.addGap(334)
+							.addComponent(btnSubmit, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)))
+					.addGap(32)
+					.addComponent(searchField, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE)
+					.addGap(332))
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap(512, Short.MAX_VALUE)
+					.addComponent(btnSearch)
+					.addGap(363))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -96,7 +132,13 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblIAmRating, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblDisplayRatee, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
-					.addGap(446)
+					.addGap(12)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(searchField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblSearch))
+					.addGap(18)
+					.addComponent(btnSearch)
+					.addGap(369)
 					.addComponent(btnSubmit))
 		);
 		
@@ -120,7 +162,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		// Here we set up the model
 
 		String str[] =
-		{ "Skill ID", "Skill Name", "Knowledgeable", "Standard of Work", "Autonomy", "Coping with Complexity", "Perception of Context",
+		{ "User ID", "Skill ID", "Skill Name", "Knowledgeable", "Standard of Work", "Autonomy", "Coping with Complexity", "Perception of Context",
 				"Growing Capability", "Purposeful Collaboration", "Overall Rating(Level)" };
 		model = new DefaultTableModel(str, 0)
 		{
@@ -152,26 +194,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 
 		// Setup the model
 
-		try
-		{
-			DAO getSkill = new DAO();
-			skillList = getSkill.getSkillList();
-		} catch (Exception e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		for (int i = 0; i < skillList.size(); i++)
-		{
-
-			Skill skill = skillList.get(i);
-
-			Object obj[] =
-			{ skill.getSkillID(), skill.getSkillName() };
-			model.addRow(obj);
-
-		}
+		
 	}
 	
 	public void setCustomTableElement(Object aValue, int row, int column)
@@ -211,13 +234,56 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		Object source = e.getSource();
-		
+		int skill;
+		User tempUser = new User();
+		String skillName;
 		if(source == btnSubmit)
 		{
+			JOptionPane.showMessageDialog(this, "Rating submitted");
+		}
+		
+		if(source == btnSearch)
+		{
+			tempUser = baseFrame.dao.getUser(searchField.getText());
+			model = (DefaultTableModel) table.getModel();
+			model.setRowCount(0);
+			try
+			{
+				DAO getSkill = new DAO();
+				skillList = getSkill.getSkillList();
+				Vector<UserSkill> userSkills = new Vector<UserSkill>();
+				userSkills = getSkill.getUserSkills(tempUser);
+				
+				for (int t = 0; t < userSkills.size(); t++)
+				{
+					skill = userSkills.get(t).getSkillID();
+					
+					for(int j = 0; j < skillList.size(); j++)
+					{
+						if(skill == skillList.get(j).getSkillID())
+						{
+							skillName = skillList.get(j).getSkillName();
+							
+							Object obj[] =
+								{tempUser.getUserName(), skill, skillName};
+								model.addRow(obj);
+
+						}
+			
+
+					}
+				}
+		
+		
+			} 
+			catch (Exception e1)
+			{
+				e1.printStackTrace();
+			}
+			
+			
 			
 		}
 		
 	}
-
-
 }
