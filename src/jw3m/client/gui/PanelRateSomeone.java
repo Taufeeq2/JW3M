@@ -180,10 +180,11 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 			{
 				// make read only field column 0 - other column is directly
 				// editable
-				if (column == 0)
+				if (column == 0 || column == 1 || column == 2)
 				{
 					return false;
-				} else
+				} 
+				else
 				{
 					return true;
 				}
@@ -239,7 +240,10 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		String skillName;
 		if(source == btnSubmit)
 		{
-//			ratee.setKnowledge(knowledge);
+			for(int count = 0; count < model.getRowCount(); count++)
+			{
+				System.out.println(model.getValueAt(count, 0).toString());
+			}
 			
 			JOptionPane.showMessageDialog(this, "Rating submitted");
 		}
