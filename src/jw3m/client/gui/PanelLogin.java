@@ -230,6 +230,9 @@ public class PanelLogin extends JPanel implements ActionListener
 			Boolean logonSuccess= false;
 			// add logic to validate user
 			
+			// this is network comms 
+			baseFrame.connectToServer();
+			
 			String passwordString = new String (passwordField.getPassword() );
 			
 			String userName = new String (textFieldUserID.getText());
@@ -251,6 +254,9 @@ public class PanelLogin extends JPanel implements ActionListener
 			else
 			{
 				logger.info("No user authenticated");
+				// probably need to drop the network client session
+				
+				
 			}
 			
 			
