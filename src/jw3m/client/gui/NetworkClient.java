@@ -65,6 +65,9 @@ public class NetworkClient
 			oos.writeObject(comms);
 			Comms replyComms = (Comms) ois.readObject();
 			
+			logger.info("wrote " + comms.getText() + "--- " + comms.getObj());
+			logger.info("recieved " + replyComms.getText() + "--- " + replyComms.getObj());
+			
 		} catch (ClassNotFoundException e)
 		{
 			// TODO Auto-generated catch block

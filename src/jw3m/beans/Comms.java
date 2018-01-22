@@ -43,6 +43,14 @@ public class Comms implements Serializable
 		this.obj = obj;
 	}
 
+	@Override
+	public String toString()
+	{
+		//return "Comms [text=" + text + ", obj=" + obj + "]";
+		return "Comms [text=" + text + ", obj=" + obj.getClass() + "]";
+		
+	}
+
 
 	
 	

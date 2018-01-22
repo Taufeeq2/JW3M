@@ -16,11 +16,21 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 
 import java.awt.event.ActionListener;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import java.awt.Panel;
 import java.awt.Label;
+import jw3m.beans.Comms;
+import jw3m.beans.Hobby;
+import jw3m.beans.Level;
+import jw3m.beans.Notification;
+import jw3m.beans.Rating;
+import jw3m.beans.Skill;
+import jw3m.beans.User;
+import jw3m.beans.UserHobby;
+import jw3m.beans.UserSkill;
 
 public class PanelLogin extends JPanel implements ActionListener
 {
@@ -241,6 +251,16 @@ public class PanelLogin extends JPanel implements ActionListener
 			
 			baseFrame.setAuthenticatedUser( baseFrame.getNetworkClient().passCredentials(userName, passwordString)  );
 			
+			baseFrame.getData();
+			
+			// 3 temp comms packets for testing
+//			baseFrame.getNetworkClient().networkTransaction(new Comms("123","test"));
+//			baseFrame.getNetworkClient().networkTransaction(new Comms("test1",baseFrame.getAuthenticatedUser()));
+//			baseFrame.getNetworkClient().networkTransaction(new Comms("Expect UserVector" , ""));
+
+
+			
+			
 			if (baseFrame.authenticatedUser!=null)
 			{
 				logger.info("User now authenticated");
@@ -258,45 +278,7 @@ public class PanelLogin extends JPanel implements ActionListener
 				
 				
 			}
-			
-			
-//			if (baseFrame.dao.getUser(userName) != null)
-//			{
-//				logger.info("Found user " + userName);
-//				
-//				if (baseFrame.dao.getUser(userName).getPassword().equals(passwordString))
-//				{
-//					// clearly bad logic here were the client has the user object with password but ya for now.
-//					logger.info("Passwords match " + userName);
-//					
-//					// also bad to accesss the public object directly should be using business logic access methods
-//					baseFrame.authenticatedUser = baseFrame.dao.getUser(userName);
-//					baseFrame.getData(); // updates the local data variables;
-//					
-//					// example of how to get the data
-//					//baseFrame.data_hobbyList[1];
-//					
-//					
-//					
-//					baseFrame.setupMenuBar();
-//					baseFrame.setupSouthPanel();
-//					baseFrame.setupTabs();
-//					baseFrame.changeToTabbedPane();
-//					
-//				}
-//				else
-//				{
-//					JOptionPane.showMessageDialog(this, "Bad password");
-//				//	textFieldUserID.setText("");
-//					passwordField.setText("");
-//				}
-//			}
-//			else
-//			{
-//				JOptionPane.showMessageDialog(this, "No such user!");
-//			}
-
-			
+		
 			
 		}
 		

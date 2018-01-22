@@ -211,7 +211,7 @@ public class SkillsClient extends JFrame implements ActionListener
 		rateSomeoneP = new PanelRateSomeone(this);
 		notificationP = new PanelNotifications(this);
 		editP = new PanelEdit(this);
-		newProfile = new PanelNewProfile(this);
+//		newProfile = new PanelNewProfile(this);
 		panelReporting = new PanelReporting(this);
 		
 		
@@ -223,7 +223,7 @@ public class SkillsClient extends JFrame implements ActionListener
 		tabbedPane.add("Edit", editP);
 		tabbedPane.add("Notification", notificationP);
 		tabbedPane.add("Rate Someone", rateSomeoneP);
-		tabbedPane.add("Create New Profile", newProfile);
+//		tabbedPane.add("Create New Profile", newProfile);
 		tabbedPane.add("Reporting", panelReporting);
 
 		
@@ -446,6 +446,11 @@ public class SkillsClient extends JFrame implements ActionListener
 	public void setAuthenticatedUser(User user)
 	{
 		this.authenticatedUser = user;
+	}
+	
+	public User getAuthenticatedUser()
+	{
+		return this.authenticatedUser;
 	}
 	
 	public void connectToServer()

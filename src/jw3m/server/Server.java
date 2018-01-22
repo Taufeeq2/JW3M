@@ -111,6 +111,12 @@ public class Server
 								
 								oos.writeObject(new Comms("authenticated", userObj));
 								running = true;
+								
+							    while (running)
+							    {
+									Comms comms = (Comms)ois.readObject();
+									listenForTransaction(threadId,ois, oos,  comms);
+							    }							
 							}
 							else
 							{
@@ -142,34 +148,9 @@ public class Server
 					}
 		        	
 
-		            while (running)
-		            {
-		            	
-		            	logger.info("waiting for object");
-		            	try
-						{
-			            		
-							Comms comms = (Comms)ois.readObject();
-					
-							listenForTransaction(comms);
-							
-						} catch (ClassNotFoundException e)
-						{
-							// TODO Auto-generated catch block
-							//e.printStackTrace();
-							logger.error("Thread ID:" + threadId + " Server class not found");
-							running = false;
-							
-							
-						} catch (IOException e)
-						{
-							// TODO Auto-generated catch block
-							logger.error("Thread ID:" + threadId + " Server class not found");
-							running = false;
-							// e.printStackTrace();
-						}
+		           
 
-		            }      
+		        
 		            
 		logger.info("Thread ID:" + threadId + " Sesson dropped");
 
@@ -185,85 +166,50 @@ public class Server
 		new Server();
 	}
 	
-	private void logonServer(PrintWriter pw, BufferedReader serverbr)
+	//listenForTransaction(threadId,ois, oos,  comms);
+	public void listenForTransaction(long threadId, ObjectInputStream ois, ObjectOutputStream oos, Comms comms) // throws Exception
 	{
+		
+	//logger.info("Thread ID: " + threadId + " trancation listener method executed (case switching instructions) ");l
+		
 		
 		try
 		{
-			long threadId = Thread.currentThread().getId();
-			logger.info(threadId + " : Server thread awaiting credentials");
-			pw.flush();
-			pw.println("Send Username");
-			pw.flush();
-			String clientUserName = serverbr.readLine();
-			logger.info(threadId + " : Server got "+ clientUserName);
-			pw.println("Send Password");
-			pw.flush();
-			String clientUserPassword = serverbr.readLine();
-			logger.info(threadId + " : server got "+ clientUserPassword);
-			
-		//	System.out.println(clientUserName +  " " + clientUserPassword);
-			
-			if (dao.getUser(clientUserName).getUserName().equals(clientUserName) )
+			switch (comms.getText())
 			{
-				logger.info("username found...");
-			}
-			else
-			{
-				logger.info("no such user...");
-			}
-			
-			if ( dao.getUser(clientUserName).getPassword().equals(clientUserPassword) )
-			{
-				logger.info("passwords match...");
-			}
-			else
-			{
-				logger.info("bas password and or no user");
-			}
-			
-	//		oos = new ObjectOutStream(soc.getInputStream());
-			
-			if (dao.getUser(clientUserName).getUserName().equals(clientUserName) && dao.getUser(clientUserName).getPassword().equals(clientUserPassword) )
-			{
-				pw.println("Good logon");
-				pw.flush();
-				logger.info(threadId + " : good logon");
 				
-//				oos.flush();
-//				oos.writeObject(dao.getUser(clientUserName));
-//				oos.flush();
-//				
-				logger.info(threadId + " : user object sent down the line");
+				case "Expect UserVector" : 
+				{
 				
-			}
-			else
-			{
-				pw.println("Bad logon");
-				pw.flush();
-				logger.info(threadId + " :Bad logon");
-			}
+						logger.info("Thread ID:" + threadId + " trying to send userVector back");
+						oos.writeObject(new Comms("Returning UserVector", dao.getUserList()));
+
+					break;
+				}
 			
+				case "123" : 
+				{
+					logger.info("123"); 	
+					oos.writeObject(comms);
+					break;
+				}
+				case "test" : logger.info("test"); break;
+				
+				default : 
+				{
+							logger.info("Thread ID:" + threadId + " undefined comm packet!!!");
+							logger.info("------>"	+ comms.getText() + " " + comms.getObj().toString() );
+							
+					
+								oos.writeObject(comms);
+			
+				} // end default
+			
+			} // end switch 
 		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-	    
-		
-		
-	}
-	
-	public void listenForTransaction(Comms comms)
-	{
-		
-		logger.info("trancation listener method executed (case switching instructions) ");
-		switch (comms.getText())
-		{
-		
-			case "123" : logger.info("123"); 	break;
-			case "test" : logger.info("test"); break;
-		
 		}
 		
 		
