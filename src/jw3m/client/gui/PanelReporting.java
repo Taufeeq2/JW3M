@@ -31,13 +31,14 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	private Vector<Skill> skillNames = new Vector<Skill>();
 	private JLabel lblAvailableSkills;
 	private JComboBox comboBoxSkills;
+	private SkillsClient baseFrame = null;
 
 	/**
 	 * Create the panel.
 	 */
-	public PanelReporting(JPanel basePanel)
+	public PanelReporting(SkillsClient frame)
 	{
-		
+		this.baseFrame = frame;
 		lblAvailableSkills = new JLabel("Available Skills");
 		lblAvailableSkills.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
