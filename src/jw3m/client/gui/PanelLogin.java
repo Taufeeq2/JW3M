@@ -236,11 +236,17 @@ public class PanelLogin extends JPanel implements ActionListener
 			
 			// testing client server comms
 			
-			baseFrame.getNetworkClient().passCredentials(userName, passwordString);
+			baseFrame.setAuthenticatedUser( baseFrame.getNetworkClient().passCredentials(userName, passwordString)  );
 			
 			if (baseFrame.authenticatedUser!=null)
 			{
 				logger.info("User now authenticated");
+				
+				baseFrame.getData(); // updates the local data variables;
+				baseFrame.setupMenuBar();
+				baseFrame.setupSouthPanel();
+				baseFrame.setupTabs();
+				baseFrame.changeToTabbedPane();
 			}
 			else
 			{
