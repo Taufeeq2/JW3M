@@ -45,7 +45,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		lblDisplayRatee = new JLabel("Display ratee");
 		lblDisplayRatee.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
-		lblDisplayRatee.setText(baseFrame.authenticatedUser.getFirstName());
+//		lblDisplayRatee.setText(baseFrame.authenticatedUser.getFirstName());
 		
 		lblIAmRating = new JLabel("I am rating:");
 		lblIAmRating.setFont(new Font("Tahoma", Font.BOLD, 16));
