@@ -103,23 +103,8 @@ public class SkillsClient extends JFrame implements ActionListener
 		
 		// Lets get the client making network comms to server
 		
-		
-		try
-		{
-			serverAddress = "localhost";
-			serverPort = 1337;
-			networkClient = new NetworkClient(this, serverAddress,serverPort );
-			networkSession = true;
-		} catch (Exception e1)
-		{
-			// TODO Auto-generated catch block
-			logger.error("some ting wong");
-			
-			networkSession = false;
-			
-			//e1.printStackTrace();
-		}
-		
+		// We need to connect to the server but maybe only on login?
+//		 connectToServer();
 		
 		// DIRECT DAO ACCESS - MUST BE CHANGED LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		
@@ -459,6 +444,25 @@ public class SkillsClient extends JFrame implements ActionListener
 	public void setAuthenticatedUser(User user)
 	{
 		this.authenticatedUser = user;
+	}
+	
+	public void connectToServer()
+	{
+		try
+		{
+			serverAddress = "localhost";
+			serverPort = 1337;
+			networkClient = new NetworkClient(this, serverAddress,serverPort );
+			networkSession = true;
+		} catch (Exception e1)
+		{
+			// TODO Auto-generated catch block
+			logger.error("some ting wong");
+			
+			networkSession = false;
+			
+			//e1.printStackTrace();
+		}
 	}
 
 }

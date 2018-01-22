@@ -24,10 +24,7 @@ public class NetworkClient
     	PropertyConfigurator.configure("log4j.properties");
     	
     	this.baseFrame = frame;
-    	
-//    	private String serverAddress = null;
-//    	private int serverPort = 0;
-    	
+  	
     	
     	try
 	    {
@@ -48,23 +45,42 @@ public class NetworkClient
 		{
 			oos = new ObjectOutputStream (soc.getOutputStream());
 			ois = new ObjectInputStream (soc.getInputStream());
-			
-			
-			
-			// 	read first from client
-			
-			
-			
+
+				
 		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
-    	
-    	
   
 	}
+    
+    public void networkTransaction(Comms comms)
+    {
+    	
+    	
+    	try
+		{
+			oos.writeObject(comms);
+			Comms replyComms = (Comms) ois.readObject();
+			
+		} catch (ClassNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			logger.error("Network client - classnot found");
+			
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			logger.error("Network client - IO error : probably session dropped");
+		}
+    	
+    	
+    	
+    }
     
     public User passCredentials(String userName, String password)
     {
@@ -74,7 +90,8 @@ public class NetworkClient
 		{
 			Comms welcome = (Comms) ois.readObject();
 			
-			if (welcome.getText().equals("Welcome"))
+			// should check that the object part is a string with welcome
+			if (welcome.getText().equals("Welcome")  )
 			{
 				logger.info("sending username");
 				oos.writeObject(new Comms("userName", userName));
@@ -94,6 +111,7 @@ public class NetworkClient
 				}
 				else
 				{
+					// drop the network sesssion
 					logger.info("authentication failed");
 					return null;
 				}
@@ -101,6 +119,7 @@ public class NetworkClient
 			}
 			else
 			{
+				// drop the network sesssion
 				logger.info("bad server response");
 				return null;
 			}
