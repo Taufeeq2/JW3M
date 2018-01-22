@@ -18,7 +18,7 @@ public class Server
     private String msg = null;
     private DAO dao = null;
     private int userID = 0;
-
+    private int threadCounter = 0;
     
     public Server()
 	{
@@ -46,8 +46,11 @@ public class Server
         {
             try
             {
-	            logger.info("Skills server: Listening for connections....");
+            	// how do you get current threads
+            	 
+	            logger.info("Skills server: Listening for connections. This server sesson has processed " + threadCounter + " sessions.");
 	            clientsoc = serversoc.accept();
+	            threadCounter ++;
 	            ServerThread st = new ServerThread(clientsoc);
 	            st.start();             
             }
@@ -82,10 +85,12 @@ public class Server
 		{
 	
 		        	long threadId = Thread.currentThread().getId();
+		        	String strPrefixAuth = "Thread ID:" + threadId + " | Authentication Message : ";
+		        	String strPrefixEnd = "Thread ID:" + threadId + " | Session information : ";
 		        	
 		        	try
 					{
-		        		logger.info("Thread ID:" + threadId + " server thread started");
+		        		logger.info(strPrefixEnd + " server thread started");
 						oos = new ObjectOutputStream (threadsoc.getOutputStream());
 						ois = new ObjectInputStream (threadsoc.getInputStream());
 						
@@ -103,7 +108,7 @@ public class Server
 							{
 								// good logon
 								
-								logger.info("Thread ID:" + threadId + " good logon");
+								logger.info(strPrefixAuth + " good logon");
 								
 								// we set the object we send back to client with no password
 								// as client should have it
@@ -122,27 +127,27 @@ public class Server
 							{
 								// bad password
 								running = false;
-								logger.info("Thread ID:" + threadId + " bad password");
+								logger.info(strPrefixAuth + " bad password");
 							}
 						}
 						else
 						{
 							// no user
 							running = false;
-							logger.info("Thread ID:" + threadId + " user does not exist");
+							logger.info(strPrefixAuth + " user does not exist");
 						}
 						
 						
 					} catch (IOException e)
 					{
 						// TODO Auto-generated catch block
-						logger.info("Thread ID:" + threadId + " Sesson dropped");
+						logger.info(strPrefixEnd + " Sesson dropped");
 						running = false;
 						//e.printStackTrace();
 					} catch (ClassNotFoundException e)
 					{
 						// TODO Auto-generated catch block
-						logger.error("Thread ID:" + threadId + " Server class not found");
+						logger.error(strPrefixEnd + " Server class not found");
 						running = false;
 						// e.printStackTrace();
 					}
@@ -152,7 +157,7 @@ public class Server
 
 		        
 		            
-		logger.info("Thread ID:" + threadId + " Sesson dropped");
+		logger.info(strPrefixEnd+ " Sesson dropped");
 
 		}
 	
@@ -171,7 +176,7 @@ public class Server
 	{
 		
 	//logger.info("Thread ID: " + threadId + " trancation listener method executed (case switching instructions) ");l
-		
+		String strPrefix = "Thread ID:" + threadId + " | Transaction message : ";
 		
 		try
 		{
@@ -181,7 +186,7 @@ public class Server
 				case "Expect UserVector" : 
 				{
 				
-						logger.info("Thread ID:" + threadId + " trying to send userVector back");
+						logger.info(strPrefix + " trying to send userVector back");
 						oos.writeObject(new Comms("Returning UserVector", dao.getUserList()));
 
 					break;
@@ -189,7 +194,7 @@ public class Server
 			
 				case "123" : 
 				{
-					logger.info("123"); 	
+					logger.info(strPrefix + "123 case triggered"); 	
 					oos.writeObject(comms);
 					break;
 				}
@@ -197,7 +202,7 @@ public class Server
 				
 				default : 
 				{
-							logger.info("Thread ID:" + threadId + " undefined comm packet!!!");
+							logger.info(strPrefix + " undefined comm packet!!!");
 							logger.info("------>"	+ comms.getText() + " " + comms.getObj().toString() );
 							
 					

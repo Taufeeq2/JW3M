@@ -254,9 +254,9 @@ public class PanelLogin extends JPanel implements ActionListener
 			baseFrame.getData();
 			
 			// 3 temp comms packets for testing
-//			baseFrame.getNetworkClient().networkTransaction(new Comms("123","test"));
-//			baseFrame.getNetworkClient().networkTransaction(new Comms("test1",baseFrame.getAuthenticatedUser()));
-//			baseFrame.getNetworkClient().networkTransaction(new Comms("Expect UserVector" , ""));
+			baseFrame.getNetworkClient().networkTransaction(new Comms("123","test"));
+			baseFrame.getNetworkClient().networkTransaction(new Comms("test1",baseFrame.getAuthenticatedUser()));
+			baseFrame.getNetworkClient().networkTransaction(new Comms("Expect UserVector" , ""));
 
 
 			
