@@ -39,6 +39,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	public PanelReporting(SkillsClient frame)
 	{
 		this.baseFrame = frame;
+		
 		lblAvailableSkills = new JLabel("Available Skills");
 		lblAvailableSkills.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
