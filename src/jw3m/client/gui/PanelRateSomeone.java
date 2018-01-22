@@ -239,6 +239,8 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		String skillName;
 		if(source == btnSubmit)
 		{
+//			ratee.setKnowledge(knowledge);
+			
 			JOptionPane.showMessageDialog(this, "Rating submitted");
 		}
 		
