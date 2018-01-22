@@ -14,7 +14,6 @@ public class Server
 	
 	private ServerSocket serversoc = null;
     private Socket clientsoc = null;
-//    private BufferedReader br = null;
     private String msg = null;
     private DAO dao = null;
     private int userID = 0;
@@ -39,6 +38,8 @@ public class Server
         } 
     	catch (Exception e)
 		{
+    		// do we need to exit here?
+//    		System.exit(0);
 			e.printStackTrace();
 		}
         
@@ -48,7 +49,7 @@ public class Server
             {
             	// how do you get current threads
             	 
-	            logger.info("Skills server: Listening for connections. This server sesson has processed " + threadCounter + " sessions.");
+	            logger.info("  Listening for connections. Sessions processed [" + threadCounter + "]" );
 	            clientsoc = serversoc.accept();
 	            threadCounter ++;
 	            ServerThread st = new ServerThread(clientsoc);
@@ -69,8 +70,6 @@ public class Server
 	class ServerThread extends Thread
 	{
 	    private Socket threadsoc;
-//	    private PrintWriter pw = null;
-//	    private BufferedReader serverbr = null;
 	    private ObjectOutputStream oos = null;
 	    private ObjectInputStream ois = null;
 	    private Boolean running = true;
@@ -85,8 +84,8 @@ public class Server
 		{
 	
 		        	long threadId = Thread.currentThread().getId();
-		        	String strPrefixAuth = "Thread ID:" + threadId + " | Authentication Message : ";
-		        	String strPrefixEnd = "Thread ID:" + threadId + " | Session information : ";
+		        	String strPrefixAuth = "  Thread ID:" + threadId + " | Authentication Message : ";
+		        	String strPrefixEnd = "  Thread ID:" + threadId + " | Session information : ";
 		        	
 		        	try
 					{
@@ -135,6 +134,7 @@ public class Server
 							// no user
 							running = false;
 							logger.info(strPrefixAuth + " user does not exist");
+							oos.writeObject(new Comms("auth_fail", "User does not exist and/or bad password!"));
 						}
 						
 						
@@ -150,24 +150,15 @@ public class Server
 						logger.error(strPrefixEnd + " Server class not found");
 						running = false;
 						// e.printStackTrace();
-					}
-		        	
-
-		           
-
-		        
+					}    
 		            
-		logger.info(strPrefixEnd+ " Sesson dropped");
-
+		//logger.info(strPrefixEnd+ " Sesson dropped");
 		}
-	
 	}
 	
 	public static void main(String[] args)
 	{
-
-	//	dao = new DAO();
-		
+		logger.info("Skills server starting...");
 		new Server();
 	}
 	
@@ -176,7 +167,7 @@ public class Server
 	{
 		
 	//logger.info("Thread ID: " + threadId + " trancation listener method executed (case switching instructions) ");l
-		String strPrefix = "Thread ID:" + threadId + " | Transaction message : ";
+		String strPrefix = "  Thread ID:" + threadId + " | Transaction message : ";
 		
 		try
 		{
@@ -203,7 +194,7 @@ public class Server
 				default : 
 				{
 							logger.info(strPrefix + " undefined comm packet!!!");
-							logger.info("------>"	+ comms.getText() + " " + comms.getObj().toString() );
+							logger.info("  ------>"	+ comms.getText() + " " + comms.getObj().toString() );
 							
 					
 								oos.writeObject(comms);

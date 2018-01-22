@@ -104,6 +104,14 @@ public class SkillsClient extends JFrame implements ActionListener
 		
 		// Lets get the client making network comms to server
 		
+		// these are the default values - could use a DNS name and properties file
+		this.setServerAddress("localhost");
+		this.setServerPort(1337);
+		this.connectToServer();
+		
+		
+		
+		
 		// We need to connect to the server but maybe only on login?
 //		 connectToServer();
 		
@@ -346,6 +354,14 @@ public class SkillsClient extends JFrame implements ActionListener
 		
 		if (source == fileMenu_logoutItem)
 		{
+			// remove authenticated user
+			this.setAuthenticatedUser(null);
+			disconnectToServer();
+			
+			// establish new clean session
+			this.connectToServer();
+			
+			
 	//		System.out.println("loggin out " + this.userCatalog.getAuthenticatedUser().getUserName() );
 			this.removeMenuBar();
 			this.hideSouthPanel();
@@ -378,7 +394,7 @@ public class SkillsClient extends JFrame implements ActionListener
 			System.out.println(threadSet.toString());
 			System.out.println(); 
 		
-			boolean DAO_Open = true;
+			disconnectToServer();
 			
 	
 			
@@ -424,6 +440,7 @@ public class SkillsClient extends JFrame implements ActionListener
 
 
 
+
 	public void setNetworkClient(NetworkClient networkClient)
 	{
 		this.networkClient = networkClient;
@@ -453,23 +470,39 @@ public class SkillsClient extends JFrame implements ActionListener
 		return this.authenticatedUser;
 	}
 	
+	public void disconnectToServer()
+	{
+		try
+		{
+			networkClient.dropSession();
+		}
+		catch (NullPointerException ne)
+		{
+			logger.error("Unable to drop non-existant session. Nothing to worry about!!!");
+			// ne.printStackTrace();
+		}
+		
+	}
+	
 	public void connectToServer()
 	{
 		try
 		{
-			serverAddress = "localhost";
-			serverPort = 1337;
+//			serverAddress = "localhost";
+//			serverPort = 1337;
 			networkClient = new NetworkClient(this, serverAddress,serverPort );
 			networkSession = true;
 		} catch (Exception e1)
 		{
 			// TODO Auto-generated catch block
-			logger.error("some ting wong");
+			logger.error("Unable to create client/server session. Perhaps the server is not avaliable?");
 			
 			networkSession = false;
 			
 			//e1.printStackTrace();
 		}
 	}
+	
+
 
 }

@@ -60,7 +60,7 @@ public class PanelLogin extends JPanel implements ActionListener
 	public JFrame tempFrame;
 	private PanelNewProfile newProfile;
 	private JLabel lblUserDetails;
-	private JLabel lblConnectionStatus;
+	private JLabel labelConnectionStatusHeading;
 
 	/**
 	 * Create the panel.
@@ -125,6 +125,7 @@ public class PanelLogin extends JPanel implements ActionListener
 		
 		buttonConnect = new JButton("Connect");
 		buttonConnect.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		buttonConnect.addActionListener(this);
 		
 		labelConnectStatus = new JLabel("No connection");
 		labelConnectStatus.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -135,8 +136,25 @@ public class PanelLogin extends JPanel implements ActionListener
 		lblUserDetails = new JLabel("User details");
 		lblUserDetails.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		lblConnectionStatus = new JLabel("Connection status");
-		lblConnectionStatus.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		labelConnectionStatusHeading = new JLabel("Connection status");
+		labelConnectionStatusHeading.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		if (baseFrame.getNetworkClient() != null )
+		{
+			if (baseFrame.getNetworkClient().isConnected())
+			{
+				labelConnectStatus.setText("Connected to " + textFieldServer.getText() + ":" + textFieldPort.getText());
+			}
+			else
+			{
+				labelConnectStatus.setText("Not connected");
+			}
+		}
+		else
+		{
+			labelConnectStatus.setText("Networking not established");
+		}
+	
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
@@ -154,7 +172,7 @@ public class PanelLogin extends JPanel implements ActionListener
 									.addGap(78)
 									.addComponent(textFieldUserID, GroupLayout.PREFERRED_SIZE, 236, GroupLayout.PREFERRED_SIZE))
 								.addComponent(lblUserDetails)
-								.addComponent(lblConnectionStatus, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+								.addComponent(labelConnectionStatusHeading, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(labelConnectStatus, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
 									.addGap(84))
@@ -212,7 +230,7 @@ public class PanelLogin extends JPanel implements ActionListener
 						.addComponent(btnRegister)
 						.addComponent(buttonChangePassword))
 					.addGap(64)
-					.addComponent(lblConnectionStatus, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
+					.addComponent(labelConnectionStatusHeading, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(labelServer)
@@ -241,25 +259,34 @@ public class PanelLogin extends JPanel implements ActionListener
 			// add logic to validate user
 			
 			// this is network comms 
-			baseFrame.connectToServer();
+			
+		//	baseFrame.getNetworkClient().getSocket().close();
+			
+			if (baseFrame.getNetworkClient().getSocketStatus() )
+			{
+				logger.info("client to server/socket already established");
+			}
+			else
+			{
+				logger.info("establishing client/server socket");
+				baseFrame.connectToServer();
+			}
+			
 			
 			String passwordString = new String (passwordField.getPassword() );
-			
 			String userName = new String (textFieldUserID.getText());
 			
 			// testing client server comms
 			
 			baseFrame.setAuthenticatedUser( baseFrame.getNetworkClient().passCredentials(userName, passwordString)  );
 			
-			baseFrame.getData();
-			
-			// 3 temp comms packets for testing
-			baseFrame.getNetworkClient().networkTransaction(new Comms("123","test"));
-			baseFrame.getNetworkClient().networkTransaction(new Comms("test1",baseFrame.getAuthenticatedUser()));
-			baseFrame.getNetworkClient().networkTransaction(new Comms("Expect UserVector" , ""));
+//			baseFrame.getData();
+//			
+//			// 3 temp comms packets for testing
+//			baseFrame.getNetworkClient().networkTransaction(new Comms("123","test"));
+//			baseFrame.getNetworkClient().networkTransaction(new Comms("test1",baseFrame.getAuthenticatedUser()));
+//			baseFrame.getNetworkClient().networkTransaction(new Comms("Expect UserVector" , ""));
 
-
-			
 			
 			if (baseFrame.authenticatedUser!=null)
 			{
@@ -274,6 +301,9 @@ public class PanelLogin extends JPanel implements ActionListener
 			else
 			{
 				logger.info("No user authenticated");
+				
+				baseFrame.getNetworkClient().dropSession();
+				
 				// probably need to drop the network client session
 				
 				
@@ -294,35 +324,14 @@ public class PanelLogin extends JPanel implements ActionListener
 		if(source == btnRegister)
 		{
 			newProfile = new PanelNewProfile(baseFrame);
-			
-		//	baseFrame.add(newProfile);
-			
 			baseFrame.getData();
 			
-			 tempFrame = new JFrame();
-			
+			tempFrame = new JFrame();
 			tempFrame.getContentPane().add(newProfile);
 			tempFrame.setSize(800,600);
 			tempFrame.setVisible(true);
 			tempFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			
-	//		tempFrame.dispose();
-			
-			
-//			this.add(basePanel, BorderLayout.CENTER);
-//			this.baseFrame.setVisible(true);
-//			
-//			
-//			this.baseFrame.removeAll();
-//			this.baseFrame.validate();
-//			this.baseFrame.repaint();
-//			this.baseFrame.add(newProfile,BorderLayout.CENTER);
-//			this.baseFrame.validate();
-//			this.baseFrame.repaint();
-			
-		//	this.baseFrame.setVisible(true);
-            
-            
+
 		}
 		if (source == buttonChangePassword)
 		{
@@ -386,7 +395,39 @@ public class PanelLogin extends JPanel implements ActionListener
 //			}
 //			
 //			
+		}
+			
 		
+	
+		if (source == buttonConnect)
+		{
+			logger.info("button connect pressed");
+			
+			// just in case we have a connection we drop it here
+			baseFrame.disconnectToServer();
+			labelConnectStatus.setText("Disconnected");
+			
+			baseFrame.setServerAddress(textFieldServer.getText());
+			baseFrame.setServerPort(  Integer.parseInt(textFieldPort.getText() ) );
+			baseFrame.connectToServer();
+			
+			// should try get an actual status
+			if (baseFrame.getNetworkClient()!=null)
+			{
+				if (baseFrame.getNetworkClient().isConnected())
+				{
+					labelConnectStatus.setText("Connected to " + textFieldServer.getText() + ":" + textFieldPort.getText());
+				}
+				else
+				{
+					labelConnectStatus.setText("Not connected");
+				}
+			}
+			else
+			{
+				labelConnectStatus.setText("Networking not established");
+			}
+			
 			
 		}
 		

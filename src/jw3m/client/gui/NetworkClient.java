@@ -13,11 +13,14 @@ public class NetworkClient
 {
 	final static Logger logger = Logger.getLogger(NetworkClient.class);
 	private Socket soc = null;
-    private boolean tf = true;
-    private String msg; 
-    private ObjectInputStream ois;
-    private ObjectOutputStream oos;
+    private ObjectInputStream ois = null;
+    private ObjectOutputStream oos = null;
     private SkillsClient baseFrame;
+    private Boolean isConnected = false;
+    
+    // global scope for defaults : not sure if we need this
+    private String serverAddress;
+    private int serverPort = 0;
     
     public NetworkClient(SkillsClient frame, String serverAddress, int serverPort)
 	{
@@ -25,41 +28,22 @@ public class NetworkClient
     	
     	this.baseFrame = frame;
   	
+    	//set the server address and port
+    	setServerAddress(serverAddress);
+    	setServerPort(serverPort);
+    	// get the socket connected
+    	setupSocket();
+    	// get the object streams established
+    	setupObjectStreams();
     	
-    	try
-	    {
-	        soc = new Socket(serverAddress,serverPort);
-	       
-	    } 
-    	catch (UnknownHostException e)
-	    {
-	        e.printStackTrace();
-	    } 
-    	catch (IOException e)
-	    {
-	        e.printStackTrace();
-	    }
-    	
-    	
-		try
-		{
-			oos = new ObjectOutputStream (soc.getOutputStream());
-			ois = new ObjectInputStream (soc.getInputStream());
-
-				
-		} catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	//client will need to process logon - done by PanelLogin
     	
   
 	}
     
     public void networkTransaction(Comms comms)
     {
-    	
-    	
+
     	try
 		{
 			oos.writeObject(comms);
@@ -105,7 +89,6 @@ public class NetworkClient
 				Comms credentialsReply = (Comms) ois.readObject();
 				
 				
-				
 				if (credentialsReply.getText().equals("authenticated"))
 				{
 					user = (User)credentialsReply.getObj();
@@ -115,7 +98,8 @@ public class NetworkClient
 				else
 				{
 					// drop the network sesssion
-					logger.info("authentication failed");
+					logger.info("authentication failed '" + credentialsReply.getObj() + "'");
+					credentialsReply.getText();
 					return null;
 				}
 				
@@ -139,7 +123,151 @@ public class NetworkClient
 		return user;
 		
     }
+    
+    public void dropSession()
+    {
 
+    	try
+		{
+    		logger.info("Trying to close client server session - dropping oos, ois and socket" );
+    		
+    		// sometimes we try closing even if they dont exist to we check for null first
+    		
+    		if (oos!=null)
+    		{
+    			oos.close();
+    		}
+    		if (ois!=null)
+    		{
+    			ois.close();
+			}
+    		if (soc!=null)
+			{
+    			soc.close();
+			}
+    		
+    	//	 if (baseFrame.getNetworkClient() != null )
+    			 
+    		this.setIsConnected(false);
+			
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			logger.error("client trying to drop network session... server can deal it");
+			//e.printStackTrace();
+		} catch (NullPointerException ne)
+    	{
+			// this is bad!!!
+    		ne.printStackTrace();
+    	}
+    	
+    }
+    
+    public void setServerAddress(String serverAddress)
+    {
+    	this.serverAddress = serverAddress;
+    }
+    
+    public void setServerPort(int serverPort)
+    {
+    	this.serverPort = serverPort;
+    }
+    
+    public String getServerAddress()
+    {
+    	return this.serverAddress;
+    }
+    
+    public int getServerPort()
+    {
+    	return this.getServerPort();
+    }
+    
+    
+    public Socket getSocket()
+    {
+    	if (soc == null)
+    	{
+    		logger.error("network client class says socket is null");
+    	}
+    	return this.soc;
+    }
+    
+	public Boolean getSocketStatus()
+	{
+		if (soc!=null)
+		{
+			logger.info("Socket exists");
+			if (soc.isClosed() )
+			{
+				logger.info("Socket is open");
+				return true;
+			}
+			else
+			{
+				logger.error("Socket is closed");
+				return false;
+			}
+		}
+		else
+		{
+			logger.info("Socket does not exist");
+			return false;
+		}
+	
+	}
+    
+    public void setupSocket()
+    {
+    	try
+	    {
+	        this.soc = new Socket(serverAddress,serverPort);
+	        this.setIsConnected(true);
+	        logger.info("Socket established");
+	    } 
+    	catch (UnknownHostException e)
+	    {
+    		logger.error("unknown host");
+	        //e.printStackTrace();
+	    } 
+    	catch (IOException e)
+	    {
+//    		if (this.getServerAddress()!=null && this.getServerPort()!=0 )
+//    		{
+//    			logger.error("Network class says : Server not responding! Unable to create a socket for  " + this.getServerAddress() + ":" + this.getServerPort() + "!!!");
+//    		}
+    		logger.error("Network class says : Server not responding!");
+	        //e.printStackTrace();
+	    }
+    }
+    
+    public void setIsConnected(Boolean bool)
+    {
+    	this.isConnected = bool;
+    }
+    
+    public Boolean isConnected()
+    {
+    	return this.isConnected;
+    }
+
+    public void setupObjectStreams()
+    {
+		try
+		{
+			oos = new ObjectOutputStream (soc.getOutputStream());
+			ois = new ObjectInputStream (soc.getInputStream());
+			logger.info("Network Class has setup oos and ois");
+
+				
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			logger.info("Network Class has failed to setup oos and ois");
+		}
+    }
+    
 //    public static void main(String[] args)
 //	{
 //		new Client();
