@@ -64,7 +64,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		
 		Vector<Skill> skillNms = new Vector<Skill>();
 		
-		 ratee = new Rating();
+		 
 		
 		try
 		{
@@ -239,6 +239,8 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		User tempUser = new User();
 		String skillName;
 		Object rating [] = new Object[model.getColumnCount()];
+		ratee = new Rating();
+		
 		if(source == btnSubmit)
 		{
 			for(int count = 0; count < model.getColumnCount(); count++)
