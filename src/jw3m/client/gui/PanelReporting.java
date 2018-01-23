@@ -44,8 +44,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	public PanelReporting(SkillsClient frame)
 	{
 
-		Object[] values =
-		{ "", "" , "" };
+		Object[] values = { "", "" , "" };
 		data = new Vector();
 		panel = new JPanel();
 
