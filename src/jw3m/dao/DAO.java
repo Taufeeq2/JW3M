@@ -433,7 +433,7 @@ public class DAO
 			return hobbyVect;
 		}
 		
-		public boolean addHobby(Hobby inHobby)
+		public boolean addHobbyList(Hobby inHobby)
 		{
 			int hobbyID = inHobby.getHobbyID();
 			String hobbyName = inHobby.getHobbyName();
