@@ -418,9 +418,44 @@ public class SkillsClient extends JFrame implements ActionListener
 			// just demo of the protocol
 			// take me out
 			
-			getNetworkClient().networkTransaction(new Comms("123","test"));
-			getNetworkClient().networkTransaction(new Comms("test1",this.getAuthenticatedUser()));
-			getNetworkClient().networkTransaction(new Comms("Expect UserVector" , ""));
+//			getNetworkClient().networkTransaction(new Comms("123","test"));
+//			getNetworkClient().networkTransaction(new Comms("test1",this.getAuthenticatedUser()));
+//			getNetworkClient().networkTransaction(new Comms("Expect UserVector" , ""));
+			
+			getNetworkClient().networkTransaction(new Comms("send userList", "" ));
+			getNetworkClient().networkTransaction(new Comms("send skillList", "" ));
+			getNetworkClient().networkTransaction(new Comms("send hobbyList",  ""  ));
+			getNetworkClient().networkTransaction(new Comms("send levels",  ""  ));
+			
+			getNetworkClient().networkTransaction(new Comms("send userSkills",  this.authenticatedUser ));
+			getNetworkClient().networkTransaction(new Comms("send userHobby",  this.authenticatedUser ));
+			getNetworkClient().networkTransaction(new Comms("send userRating",  this.authenticatedUser  ));
+			getNetworkClient().networkTransaction(new Comms("send userNotifications",  this.authenticatedUser ));
+
+//			User newUser = authenticatedUser;
+//			 newUser = new User();
+//			 newUser.setUserName("a1234567");
+//			 newUser.setPassword("1234567");
+//			 newUser.setFirstName("firstName");
+//			 newUser.setSurname("Surname");
+//			 newUser.setAlias("Alias");
+//			 newUser.setEmailAddress("emailAddress");
+//			 newUser.setMobile(113588517);
+//			 newUser.setMentor(true);
+//			 
+//		
+//			
+//			getNetworkClient().networkTransaction(new Comms("add userList", newUser ));
+//			
+			
+			
+			
+			
+//			tempUser.setUserName("a999999");
+//			getNetworkClient().networkTransaction(new Comms("add userList", tempUser ));
+			
+			
+			
 		}
 			
 		

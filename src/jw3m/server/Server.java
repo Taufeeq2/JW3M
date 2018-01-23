@@ -172,38 +172,143 @@ public class Server
 	{
 		
 	//logger.info("Thread ID: " + threadId + " trancation listener method executed (case switching instructions) ");l
-		String strPrefix = "  Thread ID:" + threadId + " | Transaction message : ";
+		String strPrefix = "  Thread ID:" + threadId + " | Known Transaction message : ";
+		String strPrefixDefault = "  Thread ID:" + threadId + " | *** Unknown Transaction message : "; 
+		String strPrefixAdd = "  Thread ID:" + threadId + " |  : ";
 		
 		try
 		{
 			// can make a protocol class
 			switch (comms.getText())
 			{
-				
-				case "Expect UserVector" : 
-				{
-				
-						logger.info(strPrefix + " trying to send userVector back");
-						oos.writeObject(new Comms("Returning UserVector", dao.getUserList()));
 
-					break;
-				}
-			
-				case "123" : 
+			// The sends
+				case "send userList" : 
 				{
-					logger.info(strPrefix + "123 case triggered"); 	
-					oos.writeObject(comms);
+					logger.info(strPrefix + " send userList");
+					oos.writeObject(new Comms("reply userList", dao.getUserList())   );
 					break;
 				}
-				case "test" : logger.info("test"); break;
+							
+				case "send skillList" : 
+				{
+					logger.info(strPrefix + " send skillList");
+					oos.writeObject(new Comms("reply skillList", dao.getSkillList())   );
+					break;
+				}
+								
 				
+				case "send hobbyList" : 
+				{
+					logger.info(strPrefix + " send hobbyList");
+					oos.writeObject(new Comms("reply hobbyList", dao.getHobbyList())   );
+					break;
+				}
+				
+				
+				case "send levels" : 
+				{
+					logger.info(strPrefix + " send levels");
+					oos.writeObject(new Comms("reply levels", dao.getLevel())   );
+					break;
+				}
+				
+				case "send userSkills" : 
+				{
+					logger.info(strPrefix + " send userSkills");
+					oos.writeObject(new Comms("reply userSkills", dao.getUserSkills( (User)comms.getObj()   )       )   );
+					break;
+				}
+				
+				case "send userHobby" : 
+				{
+					logger.info(strPrefix + " send userHobby");
+					oos.writeObject(new Comms("reply userHobby", dao.getUserHobby( (User)comms.getObj()   )       )   );
+					break;
+				}
+				
+				
+				case "send userRating" : 
+				{
+					logger.info(strPrefix + " send userRating");
+					oos.writeObject(new Comms("reply userRating", dao.getRatings( (User)comms.getObj()   )       )   );
+					break;
+				}
+				
+				case "send userNotifications" : 
+				{
+					logger.info(strPrefix + " send userNotifications");
+					oos.writeObject(new Comms("reply userNotifications", dao.getNotification( (User)comms.getObj()   )       )   );
+					break;
+				}
+				
+				// the adds
+				
+
+				case "add userList" : 
+				{
+					logger.info(strPrefix + " add userList");
+
+					// Actually process the add
+					if (  dao.addUserList( (User)comms.getObj()  )      )
+					{ 
+						logger.info(strPrefixAdd + " added " + (User)(comms.getObj()) );
+					}
+					else
+					{
+						logger.error(strPrefixAdd + " Critical failure - could be duplicate primary key");
+					}
+
+					oos.writeObject(new Comms("added userList",   dao.getUserList()  )  )   ;
+					break;
+				}
+
+				case "add skillList" : 
+				{
+					logger.info(strPrefix + " add skillList");
+
+					// Actually process the add
+					if (  dao.addSkillList( (Skill)comms.getObj()  )      )
+					{ 
+						logger.info(strPrefixAdd + " added " + (Skill)(comms.getObj()) );
+					}
+					else
+					{
+						logger.error(strPrefixAdd + " Critical failure");
+					}
+
+					oos.writeObject(new Comms("added skillList",   dao.getSkillList()  )  )   ;
+					break;
+				}
+				
+				case "add hobbyList" : 
+				{
+					logger.info(strPrefix + " add hobbyList");
+
+					// Actually process the add
+					if (  dao.addHobbyList( (Hobby)comms.getObj()  )      )
+					{ 
+						logger.info(strPrefixAdd + " added " + (Hobby)(comms.getObj()) );
+					}
+					else
+					{
+						logger.error(strPrefixAdd + " Critical failure");
+					}
+
+					oos.writeObject(new Comms("added hobbyList",   dao.getHobbyList()  )  )   ;
+					break;
+				}
+				
+				// add levels is never a thing
+				
+				
+				
+				// we keep default to help us code client
 				default : 
 				{
-							logger.info(strPrefix + " undefined comm packet!!!");
+							logger.info(strPrefixDefault + " undefined comm packet!!!");
 							logger.info("  ------>"	+ comms.getText() + " " + comms.getObj().toString() );
-							
-					
-								oos.writeObject(comms);
+							oos.writeObject(comms);
 			
 				} // end default
 			
