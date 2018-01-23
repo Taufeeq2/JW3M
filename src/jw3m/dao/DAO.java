@@ -13,16 +13,16 @@ public class DAO
 		private String url = "jdbc:mysql://localhost:3306/jw3m_project";
 		private String user = "root";
 		private String psw = "root";
-		private ResultSet rs = null;
-		private String msg = "";
-		private Vector<User> userVect = null;
-		private Vector<UserSkill> userSkillVect = null;
-		private Vector<Hobby> hobbyVect = null;
-		private Vector<UserHobby> userHobbyVect = null;
+//		private ResultSet rs = null;
+//		private String msg = "";
+//		private Vector<User> userVect = null;
+//		private Vector<UserSkill> userSkillVect = null;
+//		private Vector<Hobby> hobbyVect = null;
+//		private Vector<UserHobby> userHobbyVect = null;
 	//	private User user1 = null;
-		private String id, fn, s, psw1, al, em;
-		private int mob = 0;
-		private boolean men = true;
+//		private String id, fn, s, psw1, al, em;
+//		private int mob = 0;
+//		private boolean men = true;
 		
 		
 		public DAO() throws Exception 
@@ -71,33 +71,33 @@ public class DAO
 		
 		public Vector<User> getUserList()
 		{
-			userVect = new Vector<User>();
+			Vector<User> userVect = new Vector<User>();
 			try
 			{
-				rs = sqlstat.executeQuery("Select * from users");
+				ResultSet rs = sqlstat.executeQuery("Select * from users");
 				
 				while(rs.next())
 				{
-					id = rs.getString("userID");
-					psw1 = rs.getString("password");
-					fn = rs.getString("firstName");
-					s = rs.getString("surname");
-					al = rs.getString("alias");
-					em = rs.getString("email");
-					mob = rs.getInt("mobile");
-					men = rs.getBoolean("mentor");
+//					id = rs.getString("userID");
+//					psw1 = rs.getString("password");
+//					fn = rs.getString("firstName");
+//					s = rs.getString("surname");
+//					al = rs.getString("alias");
+//					em = rs.getString("email");
+//					mob = rs.getInt("mobile");
+//					men = rs.getBoolean("mentor");
 					
 								
 					User tempUser = new User();
 					
-					tempUser.setUserName(id);
-					tempUser.setPassword(psw1);
-					tempUser.setFirstName(fn);
-					tempUser.setSurname(s);
-					tempUser.setAlias(al);
-					tempUser.setEmailAddress(em);
-					tempUser.setMobile(mob);
-					tempUser.setMentor(men);
+					tempUser.setUserName(rs.getString("userID"));
+					tempUser.setPassword(rs.getString("password"));
+					tempUser.setFirstName(rs.getString("firstName"));
+					tempUser.setSurname(rs.getString("surname"));
+					tempUser.setAlias(rs.getString("alias"));
+					tempUser.setEmailAddress(rs.getString("email"));
+					tempUser.setMobile(rs.getInt("mobile"));
+					tempUser.setMentor(rs.getBoolean("mentor"));
 					
 					userVect.add(tempUser);
 				}
@@ -173,31 +173,31 @@ public class DAO
 			{
 				ps = con.prepareStatement("Select * from users where userID = ?");
 				ps.setString(1, inUserName);
-				rs = ps.executeQuery();
+				ResultSet rs = ps.executeQuery();
 
 				if(rs.isBeforeFirst())
 				{
 					while(rs.next())
 					{
 
-						id = rs.getString("userID");
-						psw1 = rs.getString("password");
-						fn = rs.getString("firstName");
-						s = rs.getString("surname");
-						al = rs.getString("alias");
-						em = rs.getString("email");
-						mob = rs.getInt("mobile");
-						men = rs.getBoolean("mentor");
+//						id = rs.getString("userID");
+//						psw1 = rs.getString("password");
+//						fn = rs.getString("firstName");
+//						s = rs.getString("surname");
+//						al = rs.getString("alias");
+//						em = rs.getString("email");
+//						mob = rs.getInt("mobile");
+//						men = rs.getBoolean("mentor");
 
 
-						tempUser.setUserName(id);
-						tempUser.setPassword(psw1);
-						tempUser.setFirstName(fn);
-						tempUser.setSurname(s);
-						tempUser.setAlias(al);
-						tempUser.setEmailAddress(em);
-						tempUser.setMobile(mob);
-						tempUser.setMentor(men);
+						tempUser.setUserName(rs.getString("userID"));
+						tempUser.setPassword(rs.getString("password"));
+						tempUser.setFirstName(rs.getString("firstName"));
+						tempUser.setSurname(rs.getString("surname"));
+						tempUser.setAlias(rs.getString("alias"));
+						tempUser.setEmailAddress(rs.getString("email"));
+						tempUser.setMobile(rs.getInt("mobile"));
+						tempUser.setMentor(rs.getBoolean("mentor"));
 
 		        	}
 						return tempUser;
@@ -255,7 +255,7 @@ public class DAO
 			try
 			{
 				ps = con.prepareStatement("SELECT * FROM skills");
-				rs = ps.executeQuery();
+				ResultSet rs = ps.executeQuery();
 				
 				while (rs.next())
 				{
@@ -322,7 +322,7 @@ public class DAO
 		
 		public Vector<UserSkill> getUserSkills(User inUser)
 		{
-			userSkillVect = new Vector<UserSkill>();
+			Vector<UserSkill> userSkillVect = new Vector<UserSkill>();
 			String userName = inUser.getUserName();
 			
 			try
@@ -331,7 +331,7 @@ public class DAO
 				
 				ps.setString(1, userName);
 								
-				rs = ps.executeQuery();
+				ResultSet rs = ps.executeQuery();
 				
 				while (rs.next())
 				{
@@ -403,13 +403,13 @@ public class DAO
 		
 		public Vector<Hobby> getHobbyList()
 		{
-			hobbyVect = new Vector<Hobby>();
+			Vector<Hobby> hobbyVect = new Vector<Hobby>();
 			
 			try
 			{
 				ps = con.prepareStatement("SELECT * FROM hobby");
 								
-				rs = ps.executeQuery();
+				ResultSet rs = ps.executeQuery();
 				
 				while (rs.next())
 				{
@@ -480,7 +480,7 @@ public class DAO
 		
 		public Vector<UserHobby> getUserHobby(User inUser)
 		{
-			userHobbyVect = new Vector<UserHobby>();
+			Vector<UserHobby> userHobbyVect = new Vector<UserHobby>();
 			
 			String userName = inUser.getUserName();
 			try
@@ -488,7 +488,7 @@ public class DAO
 				ps = con.prepareStatement("SELECT * FROM userHobbies WHERE userID = ?");
 				ps.setString(1, userName);
 				
-				rs = ps.executeQuery();
+				ResultSet rs = ps.executeQuery();
 				
 				while (rs.next())
 				{
@@ -600,7 +600,7 @@ public class DAO
 			try
 			{
 				ps = con.prepareStatement("SELECT * FROM level");
-				rs = ps.executeQuery();
+				ResultSet rs = ps.executeQuery();
 				
 				while (rs.next())
 				{
@@ -630,7 +630,7 @@ public class DAO
 				ps = con.prepareStatement("SELECT description FROM level WHERE level = ?");
 				ps.setInt(1, inLevel);
 				
-				rs = ps.executeQuery();
+				ResultSet rs = ps.executeQuery();
 				rs.next();
 				String desc = rs.getString("description");
 				
@@ -665,7 +665,7 @@ public class DAO
 				ps = con.prepareStatement("SELECT * FROM ratings WHERE userID = ?");
 				ps.setString(1, userName);
 				
-				rs = ps.executeQuery();
+				ResultSet rs = ps.executeQuery();
 				while (rs.next())
 				{
 					Rating tempRating = new Rating();
@@ -760,7 +760,7 @@ public class DAO
 				
 				ps.setString(1, userName);
 				
-				rs = ps.executeQuery();
+				ResultSet rs = ps.executeQuery();
 				while(rs.next())
 				{
 					Notification tempNotification = new Notification();
