@@ -41,11 +41,11 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	private Vector<Rating> ratingsData = null;
 	private MyTableModel myModel;
 
-	public PanelReporting()
+	public PanelReporting(SkillsClient frame)
 	{
 
-		Object[] values =
-		{ "", "" , "" };
+		
+		Object[] values = { "", "" , "" };
 		data = new Vector();
 		panel = new JPanel();
 
