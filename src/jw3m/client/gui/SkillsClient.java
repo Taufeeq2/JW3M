@@ -447,9 +447,29 @@ public class SkillsClient extends JFrame implements ActionListener
 //			
 //			getNetworkClient().networkTransaction(new Comms("add userList", newUser ));
 //			
+			MultiBean multibean = new MultiBean();
 			
+			multibean.setObj(authenticatedUser);
 			
+
+			multibean.addMulti((Integer)201);
+			multibean.addMulti((Integer)202);
+			multibean.addMulti((Integer)203);
+			multibean.addMulti((Integer)204);
+			multibean.addMulti((Integer)205);
 			
+			logger.debug( multibean.getObj() );
+			logger.debug( multibean.getMulti().get(0));
+			
+			Comms tempComms = new Comms();
+			tempComms.setText("add userSkills");
+			tempComms.setObj(multibean);
+			
+			logger.debug(" if u can see this then cool baananananaa ");
+			
+
+			getNetworkClient().networkTransaction(    tempComms            );
+//			
 			
 //			tempUser.setUserName("a999999");
 //			getNetworkClient().networkTransaction(new Comms("add userList", tempUser ));

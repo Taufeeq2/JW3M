@@ -1,13 +1,21 @@
 package jw3m.beans;
 
+import java.io.Serializable;
 import java.util.Vector;
 
-public class MutliBean
+public class MultiBean implements Serializable
 {
 	private Object obj = null;
 	private Vector<Object> multi= null;
 	
-	public Object getObj1()
+	
+	
+	public MultiBean()
+	{
+		this.multi = new Vector<Object>();
+	}
+
+	public Object getObj()
 	{
 		return obj;
 	}

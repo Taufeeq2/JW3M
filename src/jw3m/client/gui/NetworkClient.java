@@ -62,7 +62,7 @@ public class NetworkClient
 		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			e.printStackTrace();
 			logger.error("Network client - IO error : probably session dropped");
 		}
     	

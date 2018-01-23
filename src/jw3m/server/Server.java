@@ -1,6 +1,7 @@
 package jw3m.server;
 import java.io.*;
 import java.net.*;
+import java.util.Vector;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -301,7 +302,38 @@ public class Server
 				
 					// add levels is never a thing
 				
+
+				case "add userSkills" : 
+				{
+					logger.info(strPrefix + " add userSkills");
+					
+					MultiBean mb = (MultiBean)comms.getObj() ;
+					User tempUser = (User)mb.getObj();
+					Vector<Object> vo = (Vector<Object>)mb.getMulti();
+					Integer skillInt = 0;
+				//	Skill tempSkill = null;
+					
+					// check for off by 1
+					for (int i = 0; i < vo.size() ; i++)
+					{
+						logger.debug("this should never run");
+						skillInt  = (Integer)vo.get(i);
+						if (dao.addUserSkills(tempUser.getUserName(), skillInt ) )
+						{
+							 logger.info(strPrefixAdd + " added " + skillInt );
+	
+						}
+						else
+						{
+							logger.error(strPrefixAdd + " Critical failure");
+						}			
+					}
+					
 				
+				//	oos.writeObject(new Comms("added userSkills",   " BLEH "  )  )   ;
+					oos.writeObject(new Comms("added userSkills",   dao.getUserSkills(  tempUser   )  )  )   ;
+					break;
+				}
 				
 				
 				
