@@ -8,7 +8,7 @@ import org.apache.log4j.PropertyConfigurator;
 import jw3m.dao.DAO;
 import jw3m.beans.*;
 
-import jw3m.server.ServerProtocol;
+// import jw3m.server.ServerProtocol;
 
 public class Server
 {
@@ -176,6 +176,7 @@ public class Server
 		
 		try
 		{
+			// can make a protocol class
 			switch (comms.getText())
 			{
 				
