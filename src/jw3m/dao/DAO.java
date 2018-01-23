@@ -694,6 +694,47 @@ public class DAO
 			}
 		}
 		
+		//added by Mike to use in PanelReporting
+				public Vector<Rating> getRatings(Skill inSkill)
+				{
+					Vector<Rating> ratingVect = new Vector<Rating>();
+					
+					int skillID = inSkill.getSkillID();
+					
+					try
+					{
+						ps = con.prepareStatement("SELECT * FROM ratings WHERE skillID = ?");
+						ps.setInt(1, skillID);
+						
+						ResultSet rs = ps.executeQuery();
+						while (rs.next())
+						{
+							Rating tempRating = new Rating();
+							tempRating.setRatingID(rs.getInt("ratingID"));
+							tempRating.setRaterID(rs.getString("raterID"));
+							tempRating.setUserID(rs.getString("userID"));
+							tempRating.setSkillID(rs.getInt("skillID"));
+							tempRating.setLevel(rs.getInt("level"));
+							tempRating.setKnowledge(rs.getInt("knowledge"));
+							tempRating.setWorkStandard(rs.getInt("workStandard"));
+							tempRating.setAutonomy(rs.getInt("autonomy"));
+							tempRating.setComplexityCoping(rs.getInt("complexityCoping"));
+							tempRating.setContextPerception(rs.getInt("contextPerception"));
+							tempRating.setCapabilityGrowing(rs.getInt("capabilityGrowing"));
+							tempRating.setCollaboration(rs.getInt("collaboration"));
+							tempRating.setDate(rs.getDate("date"));
+							
+							ratingVect.add(tempRating);
+						}
+						return ratingVect;
+					} catch (SQLException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						return null;
+					}
+				}
+		
 		public boolean setRating(Rating inRating)
 		{
 			try
