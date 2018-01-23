@@ -316,11 +316,11 @@ public class Server
 					// check for off by 1
 					for (int i = 0; i < vo.size() ; i++)
 					{
-						logger.debug("this should never run");
+						
 						skillInt  = (Integer)vo.get(i);
 						if (dao.addUserSkills(tempUser.getUserName(), skillInt ) )
 						{
-							 logger.info(strPrefixAdd + " added " + skillInt );
+							 logger.info(strPrefixAdd + " added skillID " + skillInt + " to " + tempUser.getUserName() );
 	
 						}
 						else
@@ -328,13 +328,39 @@ public class Server
 							logger.error(strPrefixAdd + " Critical failure");
 						}			
 					}
-					
-				
-				//	oos.writeObject(new Comms("added userSkills",   " BLEH "  )  )   ;
 					oos.writeObject(new Comms("added userSkills",   dao.getUserSkills(  tempUser   )  )  )   ;
 					break;
 				}
 				
+				
+				case "add userHobby" : 
+				{
+					logger.info(strPrefix + " add userHobby");
+					
+					MultiBean mb = (MultiBean)comms.getObj() ;
+					User tempUser = (User)mb.getObj();
+					Vector<Object> vo = (Vector<Object>)mb.getMulti();
+					Integer hobbyInt = 0;
+				//	Skill tempSkill = null;
+					
+					// check for off by 1
+					for (int i = 0; i < vo.size() ; i++)
+					{
+						
+						hobbyInt  = (Integer)vo.get(i);
+						if (dao.addUserHobby(tempUser.getUserName(), hobbyInt ) )
+						{
+							 logger.info(strPrefixAdd + " added hobbyID " + hobbyInt + " to " + tempUser.getUserName() );
+	
+						}
+						else
+						{
+							logger.error(strPrefixAdd + " Critical failure");
+						}			
+					}
+					oos.writeObject(new Comms("added userHobby",   dao.getUserHobby(  tempUser   )  )  )   ;
+					break;
+				}
 				
 				
 				// we keep default to help us code client

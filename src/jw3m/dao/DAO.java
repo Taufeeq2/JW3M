@@ -573,17 +573,17 @@ public class DAO
 			return userVect;
 		}
 		
-		public boolean addUserHobby(UserHobby inUserHobby)
+		public boolean addUserHobby(String inUserID , int inHobbyID)
 		{
-			String userID = inUserHobby.getUserID();
-			int hobbyID = inUserHobby.getHobbyID();
+//			String userID = inUserHobby.getUserID();
+//			int hobbyID = inUserHobby.getHobbyID();
 			
 			try
 			{
 				ps = con.prepareStatement("INSERT INTO userHobbies VALUES(?, ?)");
 				
-				ps.setString(1, userID);
-				ps.setInt(2, hobbyID);
+				ps.setString(1, inUserID);
+				ps.setInt(2, inHobbyID);
 				
 				ps.executeUpdate();
 				return true;
