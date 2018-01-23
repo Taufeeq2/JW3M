@@ -28,6 +28,7 @@ public class NetworkClient
     	
     	this.baseFrame = frame;
   	
+    	logger.info("Object of NetworkClient created");
     	//set the server address and port
     	setServerAddress(serverAddress);
     	setServerPort(serverPort);
@@ -49,8 +50,8 @@ public class NetworkClient
 			oos.writeObject(comms);
 			Comms replyComms = (Comms) ois.readObject();
 			
-			logger.info("wrote " + comms.getText() + "--- " + comms.getObj());
-			logger.info("recieved " + replyComms.getText() + "--- " + replyComms.getObj());
+			logger.info("...send to server " + comms.getText() + "--- " + comms.getObj());
+			logger.info("reply from server " + replyComms.getText() + "--- " + replyComms.getObj());
 			
 		} catch (ClassNotFoundException e)
 		{
@@ -99,7 +100,9 @@ public class NetworkClient
 				{
 					// drop the network sesssion
 					logger.info("authentication failed '" + credentialsReply.getObj() + "'");
-					credentialsReply.getText();
+					//credentialsReply.getText();
+					this.dropSession();
+					baseFrame.connectToServer();
 					return null;
 				}
 				
@@ -198,6 +201,7 @@ public class NetworkClient
 		if (soc!=null)
 		{
 			logger.info("Socket exists");
+			// this is closed may not work
 			if (soc.isClosed() )
 			{
 				logger.info("Socket is open");

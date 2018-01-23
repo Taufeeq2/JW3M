@@ -146,8 +146,18 @@ public class PanelLogin extends JPanel implements ActionListener
 				labelConnectStatus.setText("Connected to " + textFieldServer.getText() + ":" + textFieldPort.getText());
 			}
 			else
-			{
-				labelConnectStatus.setText("Not connected");
+			{	
+				// we should try connect
+				baseFrame.connectToServer();
+				if (baseFrame.getNetworkClient().isConnected())
+				{
+					logger.info("Started new session to server");
+					labelConnectStatus.setText("Connected");
+				}
+				else
+				{
+					labelConnectStatus.setText("Repeated conncetion failure.");
+				}
 			}
 		}
 		else
@@ -251,66 +261,93 @@ public class PanelLogin extends JPanel implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		Object source = e.getSource();
+		Boolean okToAuth = false;
 		
 		if (source == buttonSubmit)
 		{
 			logger.info("loggon submit clicked");
-			Boolean logonSuccess= false;
-			// add logic to validate user
 			
-			// this is network comms 
+			// check if networkClass is avaliable
 			
-		//	baseFrame.getNetworkClient().getSocket().close();
+			//check if Network Class has been established
 			
-			if (baseFrame.getNetworkClient().getSocketStatus() )
+			if (baseFrame.getNetworkClient() == null)
 			{
-				logger.info("client to server/socket already established");
-			}
-			else
-			{
-				logger.info("establishing client/server socket");
 				baseFrame.connectToServer();
-			}
-			
-			
-			String passwordString = new String (passwordField.getPassword() );
-			String userName = new String (textFieldUserID.getText());
-			
-			// testing client server comms
-			
-			baseFrame.setAuthenticatedUser( baseFrame.getNetworkClient().passCredentials(userName, passwordString)  );
-			
-//			baseFrame.getData();
-//			
-//			// 3 temp comms packets for testing
-//			baseFrame.getNetworkClient().networkTransaction(new Comms("123","test"));
-//			baseFrame.getNetworkClient().networkTransaction(new Comms("test1",baseFrame.getAuthenticatedUser()));
-//			baseFrame.getNetworkClient().networkTransaction(new Comms("Expect UserVector" , ""));
+				if (baseFrame.getNetworkSession())
+				{
+					logger.info("seems we had no comms but now we do");
+					okToAuth = true;
 
-			
-			if (baseFrame.authenticatedUser!=null)
-			{
-				logger.info("User now authenticated");
-				
-				baseFrame.getData(); // updates the local data variables;
-				baseFrame.setupMenuBar();
-				baseFrame.setupSouthPanel();
-				baseFrame.setupTabs();
-				baseFrame.changeToTabbedPane();
+				}
+				else
+				{
+					logger.info("seems we had no comms and still have no comms");
+					okToAuth = false;
+				}
 			}
 			else
 			{
-				logger.info("No user authenticated");
-				
-				baseFrame.getNetworkClient().dropSession();
-				
-				// probably need to drop the network client session
-				
+				if (baseFrame.getNetworkClient().isConnected() )
+				{
+					logger.info("Right away we have comms so proceed to auth phase");
+					okToAuth = true;
+				}
+				else
+				{
+					logger.info("no comms");
+				}
 				
 			}
+			
+			
+				
+			if (okToAuth)
+			{
+				// ok we can go ahead
+				
+				String passwordString = new String (passwordField.getPassword() );
+				String userName = new String (textFieldUserID.getText());
+				
+				// testing client server comms
+				
+				baseFrame.setAuthenticatedUser( baseFrame.getNetworkClient().passCredentials(userName, passwordString)  );
+				
+//				baseFrame.getData();
+//				
+//				// 3 temp comms packets for testing
+
+				
+				if (baseFrame.authenticatedUser!=null)
+				{
+					logger.info("User now authenticated");
+					
+					baseFrame.getData(); // updates the local data variables;
+					baseFrame.setupMenuBar();
+					baseFrame.setupSouthPanel();
+					baseFrame.setupTabs();
+					baseFrame.changeToTabbedPane();
+				}
+				else
+				{
+					logger.info("No user authenticated");
+					
+					// we have to drop the session because the server will drop a bad auth and expect a new?
+//					baseFrame.getNetworkClient().dropSession();
+//					
+					baseFrame.connectToServer();
+					// probably need to drop the network client session
+					
+					
+					
+				}
+				
+				
+			} // end of ok to auth	
+			
 		
 			
-		}
+		} // end of source logon button
 		
 		if (source == buttonCancel)
 		{

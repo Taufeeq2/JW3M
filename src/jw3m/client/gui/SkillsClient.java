@@ -100,6 +100,8 @@ public class SkillsClient extends JFrame implements ActionListener
 		PropertyConfigurator.configure("log4j.properties");
 		
 		standardFont = new Font ("THAHOMA",Font.PLAIN, 16);
+		
+		
 	//	Font.ITALIC|Font.BOLD
 		
 		// Lets get the client making network comms to server
@@ -359,7 +361,7 @@ public class SkillsClient extends JFrame implements ActionListener
 			disconnectToServer();
 			
 			// establish new clean session
-			this.connectToServer();
+		//	this.connectToServer();
 			
 			
 	//		System.out.println("loggin out " + this.userCatalog.getAuthenticatedUser().getUserName() );
@@ -488,21 +490,23 @@ public class SkillsClient extends JFrame implements ActionListener
 	{
 		try
 		{
-//			serverAddress = "localhost";
-//			serverPort = 1337;
 			networkClient = new NetworkClient(this, serverAddress,serverPort );
 			networkSession = true;
 		} catch (Exception e1)
 		{
 			// TODO Auto-generated catch block
 			logger.error("Unable to create client/server session. Perhaps the server is not avaliable?");
-			
+			networkClient = null;
 			networkSession = false;
 			
 			//e1.printStackTrace();
 		}
 	}
 	
+	public Font getFont()
+	{
+		return this.standardFont;
+	}
 
 
 }

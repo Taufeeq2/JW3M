@@ -8,6 +8,8 @@ import org.apache.log4j.PropertyConfigurator;
 import jw3m.dao.DAO;
 import jw3m.beans.*;
 
+import jw3m.server.ServerProtocol;
+
 public class Server
 {
 	final static Logger logger = Logger.getLogger(Server.class);
@@ -87,6 +89,7 @@ public class Server
 		        	String strPrefixAuth = "  Thread ID:" + threadId + " | Authentication Message : ";
 		        	String strPrefixEnd = "  Thread ID:" + threadId + " | Session information : ";
 		        	
+		        	// could maybe move this whole try into authenticate method in this class
 		        	try
 					{
 		        		logger.info(strPrefixEnd + " server thread started");
@@ -115,6 +118,8 @@ public class Server
 								
 								oos.writeObject(new Comms("authenticated", userObj));
 								running = true;
+								
+						//		ServerProtocol serverProtocol = new ServerProtocol(    );
 								
 							    while (running)
 							    {
@@ -152,7 +157,7 @@ public class Server
 						// e.printStackTrace();
 					}    
 		            
-		//logger.info(strPrefixEnd+ " Sesson dropped");
+		logger.info(strPrefixEnd+ " Sesson dropped");
 		}
 	}
 	
@@ -210,5 +215,12 @@ public class Server
 		
 		
 	}
+
+	public DAO getDao()
+	{
+		return dao;
+	}
+	
+	
 
 }
