@@ -285,7 +285,9 @@ public class SkillsClient extends JFrame implements ActionListener
 		sPanelConnectionStatus = new JLabel("Connected to localhost:1337");
 		sPanelLoggedOnAs = new JLabel( "Logged on as '" + this.authenticatedUser.getUserName() + "' " );
 	//	sPanelMessagesLabel = new JLabel ("Messages:");
-		sPanelMessagesBut = new JButton("Messages : 3");
+		sPanelMessagesBut = new JButton("Messages : *3");
+		sPanelMessagesBut.addActionListener(this);
+		
 	//	sPanelMessagesBut.setSize(200,50);
 		//sPanelMessagesBut.setText("3");
 		
@@ -407,6 +409,19 @@ public class SkillsClient extends JFrame implements ActionListener
 		
 		}
 
+		if (source == sPanelMessagesBut)
+		{
+			logger.info("messages butt pressed");
+			
+			
+			tabbedPane.setSelectedComponent(notificationP);
+			// just demo of the protocol
+			// take me out
+			
+			getNetworkClient().networkTransaction(new Comms("123","test"));
+			getNetworkClient().networkTransaction(new Comms("test1",this.getAuthenticatedUser()));
+			getNetworkClient().networkTransaction(new Comms("Expect UserVector" , ""));
+		}
 			
 		
 	}
