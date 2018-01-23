@@ -238,12 +238,17 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		int skill;
 		User tempUser = new User();
 		String skillName;
+		Object rating [] = new Object[model.getColumnCount()];
 		if(source == btnSubmit)
 		{
-			for(int count = 0; count < model.getRowCount(); count++)
+			for(int count = 0; count < model.getColumnCount(); count++)
 			{
-				System.out.println(model.getValueAt(count, 0).toString());
+				rating[count] = model.getValueAt(table.getSelectedRow(), count);	
+				//System.out.println(model.getValueAt(count, 0).toString());
 			}
+			
+			ratee.setKnowledge((Integer)rating[3]);
+			System.out.println(ratee.getKnowledge());
 			
 			JOptionPane.showMessageDialog(this, "Rating submitted");
 		}
