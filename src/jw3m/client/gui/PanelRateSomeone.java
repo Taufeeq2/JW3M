@@ -248,10 +248,22 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 				rating[count] = model.getValueAt(table.getSelectedRow(), count);	
 				//System.out.println(model.getValueAt(count, 0).toString());
 			}
+
+			ratee.setKnowledge(Integer.parseInt((String)rating[3]));
+			ratee.setWorkStandard(Integer.parseInt((String)rating[4]));
+			ratee.setAutonomy(Integer.parseInt((String)rating[5]));
+			ratee.setComplexityCoping(Integer.parseInt((String)rating[6]));
+			ratee.setContextPerception(Integer.parseInt((String)rating[7]));
 			
-			ratee.setKnowledge((Integer)rating[3]);
-			System.out.println(ratee.getKnowledge());
+			System.out.println("Test " + ratee.getAutonomy());
 			
+			ratee.setCapabilityGrowing(Integer.parseInt((String)rating[8]));
+			ratee.setCollaboration(Integer.parseInt((String)rating[9]));
+			ratee.setLevel(Integer.parseInt((String)rating[10]));
+			
+			System.out.println("2nd test " + ratee.getAutonomy());
+			
+			baseFrame.dao.setRating(ratee);
 			JOptionPane.showMessageDialog(this, "Rating submitted");
 		}
 		
