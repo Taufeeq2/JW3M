@@ -30,7 +30,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 
-public class PanelReporting extends JPanel implements ActionListener, ListSelectionListener
+public class PanelReportingTwo extends JPanel implements ActionListener, ListSelectionListener
 {
 	private JPanel panel;
 	MyTableModel a;
@@ -41,7 +41,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	private Vector<Rating> ratingsData = null;
 	private MyTableModel myModel;
 
-	public PanelReporting()
+	public PanelReportingTwo()
 	{
 
 		Object[] values =
