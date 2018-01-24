@@ -431,8 +431,10 @@ public class Server
 				{
 					logger.info(strPrefix + "edit user");
 
+					User tempUser;
+					
 					// Actually process the add
-					if (  dao.editUser( (User)comms.getObj()  )      )
+					if ( tempUser = dao.editUser( (User)comms.getObj()  )      )
 					{ 
 						logger.info(strPrefixAdd + " eddited " + (User)(comms.getObj()) );
 					}
@@ -441,10 +443,10 @@ public class Server
 						logger.error(strPrefixAdd + " Critical failure - ???");
 					}
 				
-					User tempUser = (User)(comms.getObj());
-					tempUser.getUserName();
+//					User tempUser = (User)(comms.getObj());
+//					tempUser.getUserName();
 					
-					oos.writeObject(new Comms("editted user",   dao.getUser(tempUser.getUserName()) )  )   ;
+					oos.writeObject(new Comms("editted user",  tempUser ) )   ;
 					break;
 				}
 				
