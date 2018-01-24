@@ -22,6 +22,7 @@ public class PanelTests extends JPanel implements ActionListener
 	private JButton btnTest_6;
 	private JButton btnTest_7;
 	private JButton btnNewButton;
+	private JButton btnTest_8;
 	
 	/**
 	 * Create the panel.
@@ -78,6 +79,11 @@ public class PanelTests extends JPanel implements ActionListener
 		btnNewButton.setBounds(519, 504, 97, 25);
 		add(btnNewButton);
 		btnNewButton.addActionListener(this);
+		
+		btnTest_8 = new JButton("Test 10");
+		btnTest_8.setBounds(673, 504, 97, 25);
+		add(btnTest_8);
+		btnTest_8.addActionListener(this);
 
 		baseFrame = frame;
 	}
@@ -123,6 +129,10 @@ public class PanelTests extends JPanel implements ActionListener
 		if(source == btnNewButton)
 		{
 			textArea.append(baseFrame.data_userSkills.toString() + "\n");
+		}
+		if(source == btnTest_8)
+		{
+//			textArea.setText(baseFrame.getNetSkill());
 		}
 		
 	}

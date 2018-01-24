@@ -13,6 +13,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
+import jw3m.beans.Hobby;
 import jw3m.beans.User;
 import jw3m.beans.UserSkill;
 import jw3m.dao.DAO;
@@ -53,7 +54,7 @@ public class PanelProfile extends JPanel implements ActionListener
 	private JTextArea textArea_1;
 	private JScrollPane scrollPane_1;
 	private JTextArea textArea_2;
-	private JTextArea textArea_3;
+	private JTextArea hobbyArea;
 	private JLabel lblHobbyList;
 	private JButton btnAddHobby;
 	
@@ -207,9 +208,9 @@ public class PanelProfile extends JPanel implements ActionListener
 				textArea_2.setBounds(763, 89, -177, 254);
 				panel_1.add(textArea_2);
 				
-				textArea_3 = new JTextArea();
-				textArea_3.setBounds(616, 142, 213, 254);
-				panel_1.add(textArea_3);
+				hobbyArea = new JTextArea();
+				hobbyArea.setBounds(616, 142, 213, 254);
+				panel_1.add(hobbyArea);
 				
 				lblHobbyList = new JLabel("Hobby List");
 				lblHobbyList.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -220,6 +221,8 @@ public class PanelProfile extends JPanel implements ActionListener
 				btnAddHobby.setFont(new Font("Tahoma", Font.BOLD, 16));
 				btnAddHobby.setBounds(317, 372, 121, 25);
 				panel_1.add(btnAddHobby);
+				btnAddHobby.addActionListener(this);
+				
 			if(baseFrame.authenticatedUser.isMentor())
 			{
 				rdbtnYes.setSelected(true);
@@ -237,6 +240,9 @@ public class PanelProfile extends JPanel implements ActionListener
 		Object source = e.getSource();
 		int skill, rating = 0;
 		String skillName = null, skillDesc = null;
+		
+		
+//		hobbyArea.append(baseFrame.getNetUserHobby(baseFrame.authenticatedUser.getUserName()));
 		
 		if(source == btnShowSkills)
 		{
@@ -268,11 +274,13 @@ public class PanelProfile extends JPanel implements ActionListener
 				}
 				textArea.append(skill + "\t" + skillName + "\t" + skillDesc + "\t" + rating + "\n" );
 	
-			}
-			
-			
-			
-			
+			}	
+		}
+		
+		if(source == btnAddHobby)
+		{
+			Hobby addHobby = new Hobby();
+		
 		}
 		
 	}
