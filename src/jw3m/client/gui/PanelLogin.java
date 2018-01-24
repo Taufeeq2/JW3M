@@ -85,17 +85,17 @@ public class PanelLogin extends JPanel implements ActionListener
 		
 		
 		labelUserID = new JLabel("User ID");
-		labelUserID.setFont(baseFrame.standardFont);
+		labelUserID.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		textFieldUserID = new JTextField();
-		textFieldUserID.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		textFieldUserID.setFont(new Font("Tahoma", Font.BOLD, 16));
 		textFieldUserID.setColumns(10);
 		
 		passwordField = new JPasswordField();
-		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		passwordField.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		labelPassword = new JLabel("Password");
-		labelPassword.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		labelPassword.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		buttonSubmit = new JButton("Submit");
 		buttonSubmit.addActionListener(this);
@@ -134,7 +134,7 @@ public class PanelLogin extends JPanel implements ActionListener
 		btnRegister.addActionListener(this);
 		
 		lblUserDetails = new JLabel("User details");
-		lblUserDetails.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblUserDetails.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		labelConnectionStatusHeading = new JLabel("Connection status");
 		labelConnectionStatusHeading.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -177,40 +177,44 @@ public class PanelLogin extends JPanel implements ActionListener
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(175)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(labelUserID, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
-									.addGap(78)
-									.addComponent(textFieldUserID, GroupLayout.PREFERRED_SIZE, 236, GroupLayout.PREFERRED_SIZE))
 								.addComponent(lblUserDetails)
 								.addComponent(labelConnectionStatusHeading, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(labelConnectStatus, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+									.addComponent(labelConnectStatus, GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
 									.addGap(84))
 								.addGroup(groupLayout.createSequentialGroup()
+									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+										.addComponent(labelUserID, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(labelServer, Alignment.LEADING)
+										.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+											.addComponent(labelPassword, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+											.addPreferredGap(ComponentPlacement.RELATED)))
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(labelPassword, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
-										.addComponent(labelServer))
-									.addGap(53)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-										.addComponent(passwordField, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 236, GroupLayout.PREFERRED_SIZE)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addGap(53)
+											.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+												.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 236, GroupLayout.PREFERRED_SIZE)
+												.addGroup(groupLayout.createSequentialGroup()
+													.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+														.addComponent(buttonSubmit, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+														.addComponent(buttonChangePassword))
+													.addPreferredGap(ComponentPlacement.RELATED)
+													.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+														.addComponent(btnRegister, GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+														.addComponent(buttonCancel, GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)))
+												.addGroup(groupLayout.createSequentialGroup()
+													.addComponent(textFieldServer, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+													.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+													.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+														.addComponent(buttonConnect, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
+														.addGroup(groupLayout.createSequentialGroup()
+															.addComponent(labelPort)
+															.addGap(18)
+															.addComponent(textFieldPort, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE))))))
 										.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-											.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-												.addComponent(buttonSubmit, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(buttonChangePassword))
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addComponent(btnRegister, GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
-												.addComponent(buttonCancel, GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)))
-										.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-											.addComponent(textFieldServer, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addComponent(buttonConnect, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
-												.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-													.addComponent(labelPort)
-													.addGap(18)
-													.addComponent(textFieldPort, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)))))))))
-					.addContainerGap(258, Short.MAX_VALUE))
+											.addGap(56)
+											.addComponent(textFieldUserID, GroupLayout.PREFERRED_SIZE, 236, GroupLayout.PREFERRED_SIZE)))))))
+					.addContainerGap(298, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -221,24 +225,25 @@ public class PanelLogin extends JPanel implements ActionListener
 					.addComponent(lblUserDetails)
 					.addGap(27)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(textFieldUserID, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(3)
-							.addComponent(labelUserID, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
-						.addComponent(textFieldUserID, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+							.addComponent(labelUserID, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)))
 					.addGap(32)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+							.addGap(28)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(buttonSubmit)
+								.addComponent(buttonCancel))
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnRegister)
+								.addComponent(buttonChangePassword)))
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(3)
-							.addComponent(labelPassword, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
-						.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-					.addGap(28)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(buttonSubmit)
-						.addComponent(buttonCancel))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnRegister)
-						.addComponent(buttonChangePassword))
+							.addComponent(labelPassword, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)))
 					.addGap(64)
 					.addComponent(labelConnectionStatusHeading, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
@@ -251,7 +256,7 @@ public class PanelLogin extends JPanel implements ActionListener
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(labelConnectStatus)
 						.addComponent(buttonConnect))
-					.addContainerGap(112, Short.MAX_VALUE))
+					.addContainerGap(150, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
 

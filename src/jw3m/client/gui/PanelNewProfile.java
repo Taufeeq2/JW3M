@@ -57,70 +57,85 @@ public class PanelNewProfile extends JPanel implements ActionListener
 		add(lblCreateMyProfile);
 		
 		label = new JLabel("User ID");
-		label.setBounds(47, 80, 56, 16);
+		label.setFont(new Font("Tahoma", Font.BOLD, 16));
+		label.setBounds(47, 80, 77, 16);
 		add(label);
 		
 		label_1 = new JLabel("Name");
+		label_1.setFont(new Font("Tahoma", Font.BOLD, 16));
 		label_1.setBounds(47, 122, 56, 16);
 		add(label_1);
 		
 		label_2 = new JLabel("Surname");
-		label_2.setBounds(47, 157, 56, 16);
+		label_2.setFont(new Font("Tahoma", Font.BOLD, 16));
+		label_2.setBounds(47, 167, 77, 16);
 		add(label_2);
 		
 		label_3 = new JLabel("Email");
-		label_3.setBounds(47, 269, 56, 16);
+		label_3.setFont(new Font("Tahoma", Font.BOLD, 16));
+		label_3.setBounds(47, 309, 56, 16);
 		add(label_3);
 		
 		label_4 = new JLabel("Mobile");
-		label_4.setBounds(47, 313, 56, 16);
+		label_4.setFont(new Font("Tahoma", Font.BOLD, 16));
+		label_4.setBounds(47, 355, 56, 16);
 		add(label_4);
 		
 		lblPassword = new JLabel("Password");
-		lblPassword.setBounds(47, 229, 72, 16);
+		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblPassword.setBounds(47, 256, 90, 16);
 		add(lblPassword);
 		
 		userID = new JTextField();
-		userID.setBounds(154, 77, 161, 22);
+		userID.setFont(new Font("Tahoma", Font.BOLD, 16));
+		userID.setBounds(173, 77, 161, 22);
 		add(userID);
 		userID.setColumns(10);
 		
 		name = new JTextField();
-		name.setBounds(154, 119, 161, 22);
+		name.setFont(new Font("Tahoma", Font.BOLD, 16));
+		name.setBounds(173, 119, 161, 22);
 		add(name);
 		name.setColumns(10);
 		
 		surname = new JTextField();
-		surname.setBounds(154, 154, 161, 22);
+		surname.setFont(new Font("Tahoma", Font.BOLD, 16));
+		surname.setBounds(173, 164, 161, 22);
 		add(surname);
 		surname.setColumns(10);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(154, 226, 161, 22);
+		passwordField.setFont(new Font("Tahoma", Font.BOLD, 16));
+		passwordField.setBounds(173, 256, 161, 22);
 		add(passwordField);
 		
 		email = new JTextField();
-		email.setBounds(154, 266, 161, 22);
+		email.setFont(new Font("Tahoma", Font.BOLD, 16));
+		email.setBounds(173, 306, 161, 22);
 		add(email);
 		email.setColumns(10);
 		
 		mobile = new JTextField();
-		mobile.setBounds(154, 310, 161, 22);
+		mobile.setFont(new Font("Tahoma", Font.BOLD, 16));
+		mobile.setBounds(173, 352, 161, 22);
 		add(mobile);
 		mobile.setColumns(10);
 		
 		btnRegister = new JButton("Register");
-		btnRegister.setBounds(153, 351, 97, 25);
+		btnRegister.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnRegister.setBounds(193, 406, 126, 25);
 		add(btnRegister);
 		btnRegister.addActionListener(this);
 		
 		lblAlias = new JLabel("Alias");
-		lblAlias.setBounds(47, 199, 56, 16);
+		lblAlias.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblAlias.setBounds(47, 210, 56, 16);
 		add(lblAlias);
 		
 		alias = new JTextField();
+		alias.setFont(new Font("Tahoma", Font.BOLD, 16));
 		alias.setColumns(10);
-		alias.setBounds(154, 191, 161, 22);
+		alias.setBounds(173, 207, 161, 22);
 		add(alias);
 	//	baseFrame = frame;
 		this.setVisible(true);
