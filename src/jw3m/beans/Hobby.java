@@ -36,9 +36,15 @@ public class Hobby implements Serializable
 		this.hobbyName = hobbyName;
 	} 
 	
+	public String toStringFull()
+	{
+		return "\n[Hobby ID = " + this.getHobbyID() + "]" + "[Hobby Name = " + this.getHobbyName() + "]";
+	}
+	
+	
 	@Override
 	public String toString()
 	{
-		return "\n[Hobby ID = " + this.getHobbyID() + "]" + "[Hobby Name = " + this.getHobbyName() + "]";
+		return this.getHobbyName();
 	}
 }

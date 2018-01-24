@@ -77,14 +77,16 @@ public class SkillsClient extends JFrame implements ActionListener
 	
 	// Access varaiables 
 	public Vector<User> data_userList;   // use getNetUserList(); can be done onces and client has it
-//	public Vector<UserSkill> data_userSkills; // this is probably garbage we SHOULD NOT USE!!!!!!!! - Warren + Justin
 	public Vector<Skill> data_skillList;  // use getNetSkillList(); can be done onces and client has it
 	public Vector<Hobby> data_hobbyList;  // use getNetHobbyList(); can be done onces and client has it
-//	public Vector<UserHobby> data_userHobby;  // this is probably garbage we SHOULD NOT USE!!!!!!!! - Warren + Justin
-	public Vector<User> data_hobbyUsers;  // ????
 	public Vector<Level> data_levels;  // getNetLevels() - should be called once and never again
+
+	public Vector<User> data_hobbyUsers;  // This is a list of users who have hobby
+	
+	//	public Vector<UserSkill> data_userSkills; // this is probably garbage we SHOULD NOT USE!!!!!!!! - Warren + Justin
+//	public Vector<UserHobby> data_userHobby;  // this is probably garbage we SHOULD NOT USE!!!!!!!! - Warren + Justin
 //	public Vector<Rating> data_userRatings; // this is probably garbage we SHOULD NOT USE!!!!!!!! - Warren + Justin 
-	public Vector<Notification> data_notifications; // this is probably garbage we SHOULD NOT USE!!!!!!!! - Warren + Justin
+//	public Vector<Notification> data_notifications; // this is probably garbage we SHOULD NOT USE!!!!!!!! - Warren + Justin
 	
 	// Style objects
 	
