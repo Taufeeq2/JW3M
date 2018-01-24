@@ -221,15 +221,14 @@ public class PanelEdit extends JPanel implements ActionListener
 			baseFrame.authenticatedUser.setMentor(mentor);
 			
 			// Need an edit user in the protocols
-<<<<<<< HEAD
+
 			baseFrame.authenticatedUser = baseFrame.editNetUser(baseFrame.authenticatedUser);
-=======
-			baseFrame.authenticatedUser = baseFrame.editUser(baseFrame.authenticatedUser);
+			
+//			baseFrame.authenticatedUser = baseFrame.editUser(baseFrame.authenticatedUser);
 		
->>>>>>> branch 'master' of https://github.com/Taufeeq2/JW3M.git
+
 			
-			
-			 
+
 			JOptionPane.showMessageDialog(this, "Well done on updating your profile"); 
 		}
 		
