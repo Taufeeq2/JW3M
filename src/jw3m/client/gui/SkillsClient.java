@@ -210,8 +210,6 @@ public class SkillsClient extends JFrame implements ActionListener
 		// gets the Menu Bar to show
 		this.validate();
 		this.repaint();
-
-		
 	}
 	
 	public void setupTabs()
