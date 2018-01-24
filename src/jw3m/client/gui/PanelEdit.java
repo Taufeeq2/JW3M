@@ -28,12 +28,12 @@ public class PanelEdit extends JPanel implements ActionListener
 	private JTextField surname;
 	private JTextField email;
 	private JTextField mobile;
-	private JButton btnUpdateProfile;
 	private JTextField alias;
 	private JLabel lblAlias;
 	private JLabel lblMentor;
 	private JRadioButton rdbtnYes;
 	private JRadioButton rdbtnNo;
+	private JButton btnUpdateProfile;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
 	public PanelEdit(SkillsClient frame) {
@@ -125,6 +125,18 @@ public class PanelEdit extends JPanel implements ActionListener
 		buttonGroup.add(rdbtnNo);
 		rdbtnNo.setBounds(226, 330, 56, 25);
 		add(rdbtnNo);
+		
+		// Mo seriously why not add the current values in edit???? Love Warren
+		name.setText(baseFrame.authenticatedUser.getFirstName());
+		surname.setText(baseFrame.authenticatedUser.getSurname());
+		email.setText(baseFrame.authenticatedUser.getEmailAddress());
+	 	mobile.setText(""+baseFrame.authenticatedUser.getMobile());    // leading ZERO does not work here
+		alias.setText(baseFrame.authenticatedUser.getAlias());
+		
+		// sort out mentor
+		
+		
+		
 	}
 
 	@Override
@@ -152,7 +164,11 @@ public class PanelEdit extends JPanel implements ActionListener
 
 			baseFrame.authenticatedUser.setMentor(mentor);
 			
-			baseFrame.dao.editUser(baseFrame.authenticatedUser);
+			// Need an edit user in the protocols
+			baseFrame.authenticatedUser = baseFrame.editUser(baseFrame.authenticatedUser);
+			
+			
+			
 			JOptionPane.showMessageDialog(this, "Well done on updating your profile"); 
 		}
 		

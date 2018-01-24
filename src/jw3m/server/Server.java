@@ -414,6 +414,29 @@ public class Server
 					break;
 				}
 				
+				// Some edits
+				
+				case "edit user" : 
+				{
+					logger.info(strPrefix + "edit user");
+
+					// Actually process the add
+					if (  dao.editUser( (User)comms.getObj()  )      )
+					{ 
+						logger.info(strPrefixAdd + " eddited " + (User)(comms.getObj()) );
+					}
+					else
+					{
+						logger.error(strPrefixAdd + " Critical failure - ???");
+					}
+				
+					User tempUser = (User)(comms.getObj());
+					tempUser.getUserName();
+					
+					oos.writeObject(new Comms("editted user",   dao.getUser(tempUser.getUserName()) )  )   ;
+					break;
+				}
+				
 				
 				
 				// we keep default to help us code client

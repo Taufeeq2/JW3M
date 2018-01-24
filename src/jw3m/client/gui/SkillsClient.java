@@ -71,7 +71,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	
 	
 	// DIRECT DAO ACCESS - MUST BE CHANGED LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	public DAO dao;
+	//public DAO dao;
 	public User authenticatedUser; // mo lester - bleh
 	
 	
@@ -122,14 +122,14 @@ public class SkillsClient extends JFrame implements ActionListener
 		
 		// DIRECT DAO ACCESS - MUST BE CHANGED LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		
-		try
-		{
-			dao = new DAO();
-		} catch (Exception e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try
+//		{
+//			dao = new DAO();
+//		} catch (Exception e)
+//		{
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		
 		//Now lets do the graphics
@@ -161,19 +161,31 @@ public class SkillsClient extends JFrame implements ActionListener
 	// get data or refresh data?
 	public void getData()
 	{
-		data_userList = dao.getUserList();
+		this.getNetUserList();
+	//	data_userList = dao.getUserList();
 
-		data_skillList = dao.getSkillList();
-		data_hobbyList = dao.getHobbyList();
+		this.getNetSkillList();
+	//	data_skillList = dao.getSkillList();
 		
-	//	data_hobbyUsers = dao.getUserHobby(  object of hobby   );
-		data_levels = dao.getLevel();
+		this.getNetHobbyList();
+	//	data_hobbyList = dao.getHobbyList();
+		
+		this.getNetLevels();
+	// data_levels = dao.getLevel();
+		
 		if (authenticatedUser!= null)
 		{
-			data_userSkills = dao.getUserSkills(authenticatedUser);
-			data_userHobby = dao.getUserHobby(authenticatedUser);
-			data_userRatings = dao.getRatings(authenticatedUser);
-			data_notifications = dao.getNotification(authenticatedUser);
+			data_userSkills = this.getNetUserSkills(authenticatedUser);
+		//	data_userSkills = dao.getUserSkills(authenticatedUser);
+			
+			data_userHobby= this.getNetUserHobby(authenticatedUser);
+		//	data_userHobby = dao.getUserHobby(authenticatedUser);
+			
+			data_userRatings = this.getNetUserRating(authenticatedUser);
+		//	data_userRatings = dao.getRatings(authenticatedUser);
+			
+			data_notifications = this.getNetUserNotifications(authenticatedUser);
+		//	data_notifications = dao.getNotification(authenticatedUser);
 		}
 		
 		
@@ -423,7 +435,7 @@ public class SkillsClient extends JFrame implements ActionListener
 
 			// Tests to come out
 			this.getNetUserList(); 	//data_UserList
-			this.getNetSkill(); 	//data_SkillList
+			this.getNetSkillList(); 	//data_SkillList
 			this.getNetHobbyList(); //data_HobbyList
 			this.getNetLevels();	//data_Levels
 			
@@ -557,7 +569,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	//	logger.debug(" getNetUserList() call invoked");	
 	}
 	
-	public void getNetSkill()
+	public void getNetSkillList()
 	{
 		Comms commsSend = new Comms();
 			commsSend.setText("send skillList");
@@ -754,6 +766,19 @@ public class SkillsClient extends JFrame implements ActionListener
 	//	logger.debug(" getNetUserList() call invoked");	
 	}
 
+	public User editUser(User userIn)
+	{
+		Comms commsSend = new Comms();
+			commsSend.setText("edit user");
+			commsSend.setObj(userIn);
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+		
+		return  (User)commsRec.getObj();
+	
+//	logger.debug(" getNetUserList() call invoked");	
+		
+	}
 	
 
 }
