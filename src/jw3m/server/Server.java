@@ -115,7 +115,7 @@ public class Server
 								
 								// we set the object we send back to client with no password
 								// as client should have it
-								userObj.setPassword(null);
+							//	userObj.setPassword(null);
 								
 								oos.writeObject(new Comms("authenticated", userObj));
 								running = true;

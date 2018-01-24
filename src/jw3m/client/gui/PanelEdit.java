@@ -165,7 +165,7 @@ public class PanelEdit extends JPanel implements ActionListener
 			baseFrame.authenticatedUser.setMentor(mentor);
 			
 			// Need an edit user in the protocols
-			baseFrame.authenticatedUser = baseFrame.editUser(baseFrame.authenticatedUser);
+			baseFrame.authenticatedUser = baseFrame.editNetUser(baseFrame.authenticatedUser);
 			
 			
 			
