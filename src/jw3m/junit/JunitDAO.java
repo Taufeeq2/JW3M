@@ -157,20 +157,20 @@ public class JunitDAO
 			 System.out.println("Hobby ID = " + hobby.getHobbyID() + " Hobby Name = " + hobby.getHobbyName());
 		 }
 		 
-		 System.out.println("Testing method addHobby");
-		 newHobby = new Hobby();
-		 newHobby.setHobbyID(999);
-		 newHobby.setHobbyName("Testing adding a hobby");
-		 dao.addHobby(newHobby);
-		 hobbyList = dao.getHobbyList();
-		 numberOfHobbies = hobbyList.size();
-		 System.out.println("Number of hobbies = " + numberOfHobbies);
-		 hobby = new Hobby();
-		 for (int x=0; x<numberOfHobbies; x++)
-		 {
-			 hobby = hobbyList.get(x);
-			 System.out.println("Hobby ID = " + hobby.getHobbyID() + " Hobby Name = " + hobby.getHobbyName());
-		 }
+		// System.out.println("Testing method addHobby");
+		// newHobby = new Hobby();
+		// newHobby.setHobbyID(999);
+		// newHobby.setHobbyName("Testing adding a hobby");
+		// dao.addHobby(newHobby);
+		// hobbyList = dao.getHobbyList();
+		// numberOfHobbies = hobbyList.size();
+		// System.out.println("Number of hobbies = " + numberOfHobbies);
+		 //hobby = new Hobby();
+		 //for (int x=0; x<numberOfHobbies; x++)
+		// {
+		//	 hobby = hobbyList.get(x);
+		//	 System.out.println("Hobby ID = " + hobby.getHobbyID() + " Hobby Name = " + hobby.getHobbyName());
+		 //}
 		 
 		 System.out.println("Testing method removeHobby");
 		 newHobby = new Hobby();
