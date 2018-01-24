@@ -418,10 +418,10 @@ public class SkillsClient extends JFrame implements ActionListener
 			tabbedPane.setSelectedComponent(notificationP);
 
 			// Tests to come out
-			this.getNetUserList();
-			this.getNetSkill();
-			this.getNetHobbyList();
-			this.getNetLevels();
+			this.getNetUserList(); 	//data_UserList
+			this.getNetSkill(); 	//data_SkillList
+			this.getNetHobbyList(); //data_HobbyList
+			this.getNetLevels();	//data_Levels
 			
 			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserSkills(authenticatedUser) );
 			System.out.println();
