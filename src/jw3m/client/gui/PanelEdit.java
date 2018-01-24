@@ -7,13 +7,18 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.JRadioButton;
 import javax.swing.UIManager;
+
+import jw3m.beans.UserHobby;
+
 import javax.swing.ButtonGroup;
+import javax.swing.JTextArea;
 
 public class PanelEdit extends JPanel implements ActionListener
 {
@@ -35,6 +40,11 @@ public class PanelEdit extends JPanel implements ActionListener
 	private JRadioButton rdbtnNo;
 	private JButton btnUpdateProfile;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JTextArea hobbyArea;
+	private JLabel lblMyHobbies;
+	private JLabel label;
+	private JTextField textField;
+	private JButton btnAddHobby;
 	
 	public PanelEdit(SkillsClient frame) {
 		baseFrame = frame;
@@ -130,10 +140,56 @@ public class PanelEdit extends JPanel implements ActionListener
 		name.setText(baseFrame.authenticatedUser.getFirstName());
 		surname.setText(baseFrame.authenticatedUser.getSurname());
 		email.setText(baseFrame.authenticatedUser.getEmailAddress());
-	 	mobile.setText(""+baseFrame.authenticatedUser.getMobile());    // leading ZERO does not work here
+	 	mobile.setText("" + baseFrame.authenticatedUser.getMobile());    // leading ZERO does not work here
 		alias.setText(baseFrame.authenticatedUser.getAlias());
 		
+		hobbyArea = new JTextArea();
+		hobbyArea.setFont(new Font("Tahoma", Font.BOLD, 15));
+		hobbyArea.setBounds(579, 100, 232, 253);
+		add(hobbyArea);
+		
+		lblMyHobbies = new JLabel("My Hobbies");
+		lblMyHobbies.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblMyHobbies.setBounds(650, 71, 101, 16);
+		add(lblMyHobbies);
+		
+		label = new JLabel("Hobby");
+		label.setFont(new Font("Tahoma", Font.BOLD, 16));
+		label.setBounds(495, 377, 72, 25);
+		add(label);
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		textField.setBounds(579, 379, 161, 22);
+		add(textField);
+		
+		btnAddHobby = new JButton("Add Hobby");
+		btnAddHobby.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnAddHobby.setBounds(765, 377, 121, 25);
+		add(btnAddHobby);
+		
 		// sort out mentor
+		
+		Vector<UserHobby> dobby = new Vector<UserHobby>();
+		baseFrame.getNetHobbyList();
+		
+		dobby = (baseFrame.getNetUserHobby(baseFrame.authenticatedUser));
+		
+		for(int i = 0; i < dobby.size(); i++ )
+		{
+			int hobID = (dobby.get(i).getHobbyID());
+			
+			for(int j = 0; j < baseFrame.data_hobbyList.size(); j++)
+			{
+				if (baseFrame.data_hobbyList.get(j).getHobbyID() == hobID)
+				{
+					hobbyArea.setEditable(false);
+					hobbyArea.setText(baseFrame.data_hobbyList.get(j).getHobbyName());
+				}
+			}
+
+		}
+		
 		
 		
 		
@@ -166,10 +222,16 @@ public class PanelEdit extends JPanel implements ActionListener
 			
 			// Need an edit user in the protocols
 			baseFrame.authenticatedUser = baseFrame.editUser(baseFrame.authenticatedUser);
+		
 			
 			
 			
 			JOptionPane.showMessageDialog(this, "Well done on updating your profile"); 
+		}
+		
+		if(source == btnAddHobby)
+		{
+		
 		}
 		
 	}
