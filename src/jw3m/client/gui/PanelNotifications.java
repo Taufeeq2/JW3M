@@ -155,15 +155,23 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		// skillList.SaveToDisk();
 	}
 	
-	public User getTabledetails(Object aValue, int row, int column)
+	public String getTabledetails(int row)
 	{
-		User userSelected = new User();
+		String userName = null;
+		Object userObject []= new Object[model.getColumnCount()];
 		
-		Notification notify = notificationList.get(row);
-		System.out.println(notify.getNoticeID() + " " + notify.getRequestorID() + " " + notify.getRatorID() + " " + notify.getDate());
+		for (int i = 0; i < model.getColumnCount(); i++)
+		{
+			userObject [i] = model.getValueAt(row, i);
+		}
+		
+		for (int d = 0; d < userObject.length; d++)
+		{
+			System.out.println("Array " + d + " " + userObject[d] + "\n" );
+		}
 		
 		
-		return userSelected;
+		return userName;
 	}
 	
 	@Override
@@ -180,12 +188,8 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		
 		if (source == btnRateUser)
 		{
-			User userSelected = new User();
-			
-			Notification notify = notificationList.get(table.getSelectedRow());
-			System.out.println(notify.getNoticeID() + " " + notify.getRequestorID() + " " + notify.getRatorID() + " " + notify.getDate());
-			
-			System.out.println("Rate someone");
+			String userName = (String) model.getValueAt(table.getSelectedRow(), 1);
+			System.out.println("Requester = " + userName);
 		}
 
 	}
