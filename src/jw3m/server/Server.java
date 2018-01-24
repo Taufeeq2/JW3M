@@ -362,12 +362,42 @@ public class Server
 					break;
 				}
 				
+				case "add userRating" : 
+				{
+					// the rating bean has everything
+					// but inconsistant with multibean way like skills and hobbies???
+					// the adding works but the send back???
+				
+					Rating tempRating = (Rating)(comms.getObj()) ;
+					logger.info(strPrefix + " add userRating");
+					
+					// Actually process the add
+					if (  dao.setRating( tempRating  )      )
+					{ 
+						logger.info(strPrefixAdd + " added " + tempRating );
+					}
+					else
+					{
+						logger.error(strPrefixAdd + " Critical failure");
+					}
+							
+					// return the rator or rateee? or rating?
+
+					oos.writeObject(new Comms("add userRating",   "sending nothing"  )  )   ;
+					break;
+				}
+				
+				
+				
+				
 				
 				// we keep default to help us code client
 				default : 
 				{
-							logger.info(strPrefixDefault + " undefined comm packet!!!");
-							logger.info("  ------>"	+ comms.getText() + " " + comms.getObj().toString() );
+							logger.error(strPrefixDefault + " undefined comm packet!!! Sending whole comm object back to client!");
+							logger.error("  ------> Txt part was: "	+ comms.getText() );
+							logger.error("  ------> Obj part was: " + comms.getObj().toString() );
+							
 							oos.writeObject(comms);
 			
 				} // end default

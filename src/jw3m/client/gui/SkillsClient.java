@@ -432,6 +432,8 @@ public class SkillsClient extends JFrame implements ActionListener
 			getNetworkClient().networkTransaction(new Comms("send userRating",  this.authenticatedUser  ));
 			getNetworkClient().networkTransaction(new Comms("send userNotifications",  this.authenticatedUser ));
 
+			getNetworkClient().networkTransaction(new Comms("xxx",  this.authenticatedUser ));
+			
 //			User newUser = authenticatedUser;
 //			 newUser = new User();
 //			 newUser.setUserName("a1234567");
@@ -475,6 +477,27 @@ public class SkillsClient extends JFrame implements ActionListener
 			
 			
 			getNetworkClient().networkTransaction(new Comms("add userHobby", multibeanHob )           );
+			
+			Rating newRating = new Rating();
+			
+			 newRating = new Rating();
+			 newRating.setAutonomy(9);
+			 newRating.setCapabilityGrowing(9);
+			 newRating.setCollaboration(9);
+			 newRating.setComplexityCoping(9);
+			 newRating.setContextPerception(9);
+			 newRating.setDate(null);
+			 newRating.setKnowledge(9);
+			 newRating.setKnowledge(9);
+			 newRating.setLevel(9);
+			 newRating.setRaterID("a1234567");
+			 newRating.setRatingID(9);
+			 newRating.setSkillID(9);
+			 newRating.setUserID("a126317");
+			 newRating.setWorkStandard(9);
+			 dao.setRating(newRating);
+			
+			getNetworkClient().networkTransaction(new Comms("add userRating", newRating )           );
 			
 			logger.info("test protocols done");
 			
