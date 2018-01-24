@@ -53,7 +53,7 @@ public class PanelEdit extends JPanel implements ActionListener
 		setForeground(Color.LIGHT_GRAY);
 		setLayout(null);
 		
-		lblEditProfile = new JLabel("Edit Profile");
+		lblEditProfile = new JLabel("My Profile");
 		lblEditProfile.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
 		lblEditProfile.setBounds(335, 13, 114, 16);
 		add(lblEditProfile);
@@ -80,25 +80,25 @@ public class PanelEdit extends JPanel implements ActionListener
 		
 		name = new JTextField();
 		name.setFont(new Font("Tahoma", Font.BOLD, 16));
-		name.setBounds(166, 77, 190, 22);
+		name.setBounds(166, 77, 260, 22);
 		add(name);
 		name.setColumns(10);
 		
 		surname = new JTextField();
 		surname.setFont(new Font("Tahoma", Font.BOLD, 16));
-		surname.setBounds(166, 130, 190, 22);
+		surname.setBounds(166, 130, 260, 22);
 		add(surname);
 		surname.setColumns(10);
 		
 		email = new JTextField();
 		email.setFont(new Font("Tahoma", Font.BOLD, 16));
-		email.setBounds(166, 235, 190, 22);
+		email.setBounds(166, 235, 260, 22);
 		add(email);
 		email.setColumns(10);
 		
 		mobile = new JTextField();
 		mobile.setFont(new Font("Tahoma", Font.BOLD, 16));
-		mobile.setBounds(166, 286, 190, 22);
+		mobile.setBounds(166, 286, 260, 22);
 		add(mobile);
 		mobile.setColumns(10);
 		
@@ -111,7 +111,7 @@ public class PanelEdit extends JPanel implements ActionListener
 		alias = new JTextField();
 		alias.setFont(new Font("Tahoma", Font.BOLD, 16));
 		alias.setColumns(10);
-		alias.setBounds(166, 187, 190, 22);
+		alias.setBounds(166, 187, 260, 22);
 		add(alias);
 		
 		lblAlias = new JLabel("Alias");
