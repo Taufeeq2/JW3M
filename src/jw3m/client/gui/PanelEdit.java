@@ -169,10 +169,13 @@ public class PanelEdit extends JPanel implements ActionListener
 		hobbyList = baseFrame.data_hobbyList;
 		
 		comboBox = new JComboBox(hobbyList);
+		comboBox.setToolTipText("Select Hobby and click Add Hobby");
+		
 		comboBox.setFont(new Font("Tahoma", Font.BOLD, 16));
 		comboBox.setBounds(579, 379, 147, 22);
 		add(comboBox);
 		comboBox.addActionListener(this);
+		comboBox.setEditable(true);
 		
 		
 		// sort out mentor
@@ -238,7 +241,7 @@ public class PanelEdit extends JPanel implements ActionListener
 		if(source == btnAddHobby)
 		{
 
-//			baseFrame.setNetUserHobby(baseFrame.authenticatedUser, hobbyField.getText());
+//			baseFrame.setNetUserHobby(baseFrame.authenticatedUser, hobbyList);
 			
 		
 		}
