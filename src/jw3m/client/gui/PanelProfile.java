@@ -61,50 +61,9 @@ public class PanelProfile extends JPanel implements ActionListener
 		add(lblMyProfile);
 		
 		lblUserId = new JLabel("User ID");
-		lblUserId.setBounds(39, 89, 56, 16);
+		lblUserId.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblUserId.setBounds(39, 89, 68, 16);
 		add(lblUserId);
-		
-		lblDisplayUserid = new JLabel("display userid");
-		lblDisplayUserid.setBounds(126, 89, 146, 16);
-		add(lblDisplayUserid);
-		
-		lblSurname = new JLabel("Surname");
-		lblSurname.setBounds(39, 188, 56, 16);
-		add(lblSurname);
-		
-		lblDisplaySurname = new JLabel("display surname");
-		lblDisplaySurname.setBounds(126, 188, 146, 16);
-		add(lblDisplaySurname);
-		
-		lblEmail = new JLabel("Email");
-		lblEmail.setBounds(39, 229, 56, 16);
-		add(lblEmail);
-		
-		lblMobile = new JLabel("Mobile");
-		lblMobile.setBounds(39, 272, 56, 16);
-		add(lblMobile);
-		
-		lblMentor = new JLabel("Mentor");
-		lblMentor.setBounds(39, 315, 56, 16);
-		add(lblMentor);
-		
-		lblDisplayEmail = new JLabel("display email");
-		lblDisplayEmail.setBounds(126, 229, 278, 16);
-		add(lblDisplayEmail); 
-		
-		lblDisplayMobile = new JLabel("display mobile");
-		lblDisplayMobile.setBounds(126, 272, 146, 16);
-		add(lblDisplayMobile);
-		
-		rdbtnYes = new JRadioButton("Yes");
-		buttonGroup.add(rdbtnYes);
-		rdbtnYes.setBounds(125, 311, 56, 25);
-		add(rdbtnYes);
-		
-		rdbtnNo = new JRadioButton("No");
-		buttonGroup.add(rdbtnNo);
-		rdbtnNo.setBounds(194, 311, 56, 25);
-		add(rdbtnNo);
 		
 		panel = new JPanel();
 		panel.setBounds(0, 388, 882, 361);
@@ -124,6 +83,7 @@ public class PanelProfile extends JPanel implements ActionListener
 		scrollPane.setViewportView(textArea);
 		
 		btnShowSkills = new JButton("Show Skills");
+		btnShowSkills.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnShowSkills.setBounds(371, 329, 127, 25);
 		panel.add(btnShowSkills);
 		btnShowSkills.addActionListener(this);
@@ -134,31 +94,87 @@ public class PanelProfile extends JPanel implements ActionListener
 		panel_1.setLayout(null);
 		
 		lblName = new JLabel("Name");
+		lblName.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblName.setBounds(38, 124, 56, 16);
 		panel_1.add(lblName);
 		
 		lblDisplayName = new JLabel("display name");
-		lblDisplayName.setBounds(126, 124, 146, 16);
+		lblDisplayName.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblDisplayName.setBounds(143, 125, 146, 16);
 		panel_1.add(lblDisplayName);
 		lblDisplayName.setText(baseFrame.authenticatedUser.getFirstName());
 		
 		lblAlias = new JLabel("Alias");
+		lblAlias.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblAlias.setBounds(38, 160, 56, 16);
 		panel_1.add(lblAlias);
 		
 		lblDisplayalias = new JLabel("displayAlias");
-		lblDisplayalias.setBounds(126, 160, 146, 16);
+		lblDisplayalias.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblDisplayalias.setBounds(143, 161, 146, 16);
 		panel_1.add(lblDisplayalias);
-		
+			lblDisplayalias.setText(baseFrame.authenticatedUser.getAlias());
+			
+			lblDisplayUserid = new JLabel("display userid");
+			lblDisplayUserid.setFont(new Font("Tahoma", Font.BOLD, 16));
+			lblDisplayUserid.setBounds(143, 89, 146, 16);
+			panel_1.add(lblDisplayUserid);
+			
 //		baseFrame.authenticatedUser.getFirstName();
 //		baseFrame.authenticatedUser.getSurname();
 
-			
-			lblDisplayUserid.setText(baseFrame.authenticatedUser.getUserName());
-			lblDisplaySurname.setText(baseFrame.authenticatedUser.getSurname());
-			lblDisplayEmail.setText(baseFrame.authenticatedUser.getEmailAddress());
-			lblDisplayMobile.setText("0" + baseFrame.authenticatedUser.getMobile());
-			lblDisplayalias.setText(baseFrame.authenticatedUser.getAlias());
+				
+				lblDisplayUserid.setText(baseFrame.authenticatedUser.getUserName());
+				
+				lblMentor = new JLabel("Mentor");
+				lblMentor.setBounds(38, 327, 72, 16);
+				panel_1.add(lblMentor);
+				lblMentor.setFont(new Font("Tahoma", Font.BOLD, 16));
+				
+				lblMobile = new JLabel("Mobile");
+				lblMobile.setBounds(38, 283, 56, 16);
+				panel_1.add(lblMobile);
+				lblMobile.setFont(new Font("Tahoma", Font.BOLD, 16));
+				
+				lblEmail = new JLabel("Email");
+				lblEmail.setBounds(38, 241, 56, 16);
+				panel_1.add(lblEmail);
+				lblEmail.setFont(new Font("Tahoma", Font.BOLD, 16));
+				
+				lblSurname = new JLabel("Surname");
+				lblSurname.setBounds(38, 201, 72, 16);
+				panel_1.add(lblSurname);
+				lblSurname.setFont(new Font("Tahoma", Font.BOLD, 16));
+				
+				lblDisplaySurname = new JLabel("display surname");
+				lblDisplaySurname.setFont(new Font("Tahoma", Font.BOLD, 16));
+				lblDisplaySurname.setBounds(143, 202, 146, 16);
+				panel_1.add(lblDisplaySurname);
+				lblDisplaySurname.setText(baseFrame.authenticatedUser.getSurname());
+				
+				lblDisplayEmail = new JLabel("display email");
+				lblDisplayEmail.setFont(new Font("Tahoma", Font.BOLD, 16));
+				lblDisplayEmail.setBounds(143, 242, 278, 16);
+				panel_1.add(lblDisplayEmail);
+				lblDisplayEmail.setText(baseFrame.authenticatedUser.getEmailAddress());
+				
+				lblDisplayMobile = new JLabel("display mobile");
+				lblDisplayMobile.setFont(new Font("Tahoma", Font.BOLD, 16));
+				lblDisplayMobile.setBounds(143, 284, 146, 16);
+				panel_1.add(lblDisplayMobile);
+				lblDisplayMobile.setText("0" + baseFrame.authenticatedUser.getMobile());
+				
+				rdbtnYes = new JRadioButton("Yes");
+				rdbtnYes.setFont(new Font("Tahoma", Font.BOLD, 14));
+				rdbtnYes.setBounds(143, 324, 56, 25);
+				panel_1.add(rdbtnYes);
+				buttonGroup.add(rdbtnYes);
+				
+				rdbtnNo = new JRadioButton("No");
+				rdbtnNo.setFont(new Font("Tahoma", Font.BOLD, 14));
+				rdbtnNo.setBounds(208, 324, 56, 25);
+				panel_1.add(rdbtnNo);
+				buttonGroup.add(rdbtnNo);
 			if(baseFrame.authenticatedUser.isMentor())
 			{
 				rdbtnYes.setSelected(true);
