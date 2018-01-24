@@ -53,12 +53,14 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		scrollPaneT.setViewportView(table);
 		
 		btnRateUser = new JButton("RATE USER");
-		btnRateUser.setBounds(100, 364, 147, 23);
+		btnRateUser.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnRateUser.setBounds(100, 364, 164, 23);
 		add(btnRateUser);
 		btnRateUser.addActionListener(this);
 		
 		btnCancelNotification = new JButton("CANCEL NOTIFICATION");
-		btnCancelNotification.setBounds(330, 364, 210, 23);
+		btnCancelNotification.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnCancelNotification.setBounds(330, 364, 249, 23);
 		add(btnCancelNotification);
 		
 	} 
