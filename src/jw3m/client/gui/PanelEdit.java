@@ -15,10 +15,12 @@ import java.awt.Color;
 import javax.swing.JRadioButton;
 import javax.swing.UIManager;
 
+import jw3m.beans.Hobby;
 import jw3m.beans.UserHobby;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JTextArea;
+import javax.swing.JComboBox;
 
 public class PanelEdit extends JPanel implements ActionListener
 {
@@ -43,8 +45,8 @@ public class PanelEdit extends JPanel implements ActionListener
 	private JTextArea hobbyArea;
 	private JLabel lblMyHobbies;
 	private JLabel label;
-	private JTextField hobbyField;
 	private JButton btnAddHobby;
+	private JComboBox comboBox;
 	
 	public PanelEdit(SkillsClient frame) {
 		baseFrame = frame;
@@ -158,15 +160,20 @@ public class PanelEdit extends JPanel implements ActionListener
 		label.setBounds(495, 377, 72, 25);
 		add(label);
 		
-		hobbyField = new JTextField();
-		hobbyField.setColumns(10);
-		hobbyField.setBounds(579, 379, 161, 22);
-		add(hobbyField);
-		
 		btnAddHobby = new JButton("Add Hobby");
 		btnAddHobby.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnAddHobby.setBounds(765, 377, 121, 25);
 		add(btnAddHobby);
+		
+		Vector<Hobby> hobbyList = new Vector<Hobby>();
+		hobbyList = baseFrame.data_hobbyList;
+		
+		comboBox = new JComboBox(hobbyList);
+		comboBox.setFont(new Font("Tahoma", Font.BOLD, 16));
+		comboBox.setBounds(579, 379, 147, 22);
+		add(comboBox);
+		comboBox.addActionListener(this);
+		
 		
 		// sort out mentor
 		
@@ -189,10 +196,6 @@ public class PanelEdit extends JPanel implements ActionListener
 			}
 
 		}
-		
-		
-		
-		
 	}
 
 	@Override
@@ -234,7 +237,7 @@ public class PanelEdit extends JPanel implements ActionListener
 		
 		if(source == btnAddHobby)
 		{
-//			Vector 
+
 //			baseFrame.setNetUserHobby(baseFrame.authenticatedUser, hobbyField.getText());
 			
 		
