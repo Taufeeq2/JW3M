@@ -217,7 +217,7 @@ public class DAO
 
 		}
 		
-		public boolean editUser(User inUser)
+		public User editUser(User inUser)
 		{
 			try
 			{
@@ -234,12 +234,15 @@ public class DAO
 				
 				ps.executeUpdate();
 				
-				return true;
+				return getUser(inUser.getUserName());
+				
+				
+				
 				
 			} catch (SQLException e)
 			{
 				e.printStackTrace();
-				return false;
+				return null;
 			}
 			
 			

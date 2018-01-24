@@ -64,18 +64,9 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		lblIAmRating.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		Vector<Skill> skillNms = new Vector<Skill>();
+		baseFrame.getNetSkillList();
+		skillNms = baseFrame.data_skillList;
 		
-		 
-		
-		try
-		{
-			DAO getSkill = new DAO();
-			skillNms = getSkill.getSkillList();
-		} catch (Exception e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		//System.out.println(skillNms);
 		
@@ -268,21 +259,22 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 //			int skill1 = (Integer.parseInt((String)rating[1]));
 			ratee.setSkillID((int)rating[1]); 
 			ratee.setUserID(baseFrame.authenticatedUser.getUserName());
-			baseFrame.dao.setRating(ratee);
+
+			baseFrame.setNetAddRating(ratee);
 			JOptionPane.showMessageDialog(this, "Rating submitted");
 		}
 		
 		if(source == btnSearch)
 		{
-			tempUser = baseFrame.dao.getUser(searchField.getText());
+			tempUser = baseFrame.getNetUser(searchField.getText());
 			model = (DefaultTableModel) table.getModel();
 			model.setRowCount(0);
 			try
 			{
-				DAO getSkill = new DAO();
-				skillList = getSkill.getSkillList();
+				baseFrame.getNetSkillList();
+				skillList = baseFrame.data_skillList;
 				Vector<UserSkill> userSkills = new Vector<UserSkill>();
-				userSkills = getSkill.getUserSkills(tempUser);
+				userSkills = baseFrame.getNetUserSkills(tempUser);
 				
 				for (int t = 0; t < userSkills.size(); t++)
 				{
@@ -322,15 +314,14 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		User tempUser1 = new User();
 		int skill1;
 		String skillName1;
-		tempUser1 = baseFrame.dao.getUser(searchField.getText());
+		tempUser1 = baseFrame.getNetUser(searchField.getText());
 		model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
 		try
 		{
-			DAO getSkill = new DAO();
-			skillList = getSkill.getSkillList();
+			skillList = baseFrame.data_skillList;
 			Vector<UserSkill> userSkills = new Vector<UserSkill>();
-			userSkills = getSkill.getUserSkills(tempUser1);
+			userSkills = baseFrame.getNetUserSkills(tempUser1);
 			
 			for (int t = 0; t < userSkills.size(); t++)
 			{
