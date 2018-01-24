@@ -423,7 +423,12 @@ public class Server
 							logger.error("  ------> Txt part was: "	+ comms.getText() );
 							logger.error("  ------> Obj part was: " + comms.getObj().toString() );
 							
-							oos.writeObject(comms);
+							Comms tempComms = new Comms();
+							
+							tempComms.setText("Unknown Packet... sending you back your whole comms object");
+							tempComms.setObj(comms);
+							
+							oos.writeObject(tempComms);
 			
 				} // end default
 			

@@ -77,16 +77,16 @@ public class SkillsClient extends JFrame implements ActionListener
 	
 	// Access varaiables 
 	public Vector<User> data_userList;
-	public Vector<UserSkill> data_userSkills;
+	public Vector<UserSkill> data_userSkills; // this is probably garbage we SHOULD NOT USE!!!!!!!! - Warren + Justin
 	public Vector<Skill> data_skillList;
 	public Vector<Hobby> data_hobbyList;
-	public Vector<UserHobby> data_userHobby;
+	public Vector<UserHobby> data_userHobby;  // this is probably garbage we SHOULD NOT USE!!!!!!!! - Warren + Justin
 	public Vector<User> data_hobbyUsers;
 	public Vector<Level> data_levels;
-	public Vector<Rating> data_userRatings; 
-	public Vector<Notification> data_notifications;
+	public Vector<Rating> data_userRatings; // this is probably garbage we SHOULD NOT USE!!!!!!!! - Warren + Justin 
+	public Vector<Notification> data_notifications; // this is probably garbage we SHOULD NOT USE!!!!!!!! - Warren + Justin
 	
-	// Style objecgts
+	// Style objects
 	
 	public Font standardFont;
 
@@ -96,6 +96,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	private String serverAddress = null;
 	private int serverPort = 0;
 	private Boolean networkSession = false;
+	
 	
 	public SkillsClient()
 	{
@@ -414,109 +415,25 @@ public class SkillsClient extends JFrame implements ActionListener
 		if (source == sPanelMessagesBut)
 		{
 			logger.info("messages butt pressed");
-			
-			
 			tabbedPane.setSelectedComponent(notificationP);
-			// just demo of the protocol
-			// take me out
-			
-//			getNetworkClient().networkTransaction(new Comms("123","test"));
-//			getNetworkClient().networkTransaction(new Comms("test1",this.getAuthenticatedUser()));
-//			getNetworkClient().networkTransaction(new Comms("Expect UserVector" , ""));
-			
-			getNetworkClient().networkTransaction(new Comms("send userList", "" ));
-			getNetworkClient().networkTransaction(new Comms("send skillList", "" ));
-			getNetworkClient().networkTransaction(new Comms("send hobbyList",  ""  ));
-			getNetworkClient().networkTransaction(new Comms("send levels",  ""  ));
-			
-			getNetworkClient().networkTransaction(new Comms("send userSkills",  this.authenticatedUser ));
-			getNetworkClient().networkTransaction(new Comms("send userHobby",  this.authenticatedUser ));
-			getNetworkClient().networkTransaction(new Comms("send userRating",  this.authenticatedUser  ));
-			getNetworkClient().networkTransaction(new Comms("send userNotifications",  this.authenticatedUser ));
 
-			getNetworkClient().networkTransaction(new Comms("xxx",  this.authenticatedUser ));
+			// Tests to come out
+			this.getNetUserList();
+			this.getNetSkill();
+			this.getNetHobbyList();
+			this.getNetLevels();
 			
-//			User newUser = authenticatedUser;
-//			 newUser = new User();
-//			 newUser.setUserName("a1234567");
-//			 newUser.setPassword("1234567");
-//			 newUser.setFirstName("firstName");
-//			 newUser.setSurname("Surname");
-//			 newUser.setAlias("Alias");
-//			 newUser.setEmailAddress("emailAddress");
-//			 newUser.setMobile(113588517);
-//			 newUser.setMentor(true);
-//			 
-//		
-//			
-//			getNetworkClient().networkTransaction(new Comms("add userList", newUser ));
-//			
-			MultiBean multibean = new MultiBean();
+			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserSkills(authenticatedUser) );
+			System.out.println();
+			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserHobby(authenticatedUser) );
+			System.out.println();
+			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserRating(authenticatedUser) );
+			System.out.println();
+			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserNotifications(authenticatedUser) );
+			System.out.println();
 			
-				multibean.setObj(authenticatedUser);
-	
-				multibean.addMulti((Integer)201);
-				multibean.addMulti((Integer)202);
-				multibean.addMulti((Integer)203);
-				multibean.addMulti((Integer)204);
-				multibean.addMulti((Integer)205);
-	
-
-			getNetworkClient().networkTransaction(new Comms("add userSkills", multibean )           );	
-
-			
-//			public boolean addUserHobby(UserHobby inUserHobby)
-
-			MultiBean multibeanHob = new MultiBean();
-			
-			multibeanHob.setObj(authenticatedUser);
-			
-			multibeanHob.addMulti((Integer)10);
-			multibeanHob.addMulti((Integer)11);
-			multibeanHob.addMulti((Integer)12);
-			multibeanHob.addMulti((Integer)13);
-			multibeanHob.addMulti((Integer)14);
-			
-			
-			getNetworkClient().networkTransaction(new Comms("add userHobby", multibeanHob )           );
-			
-			Rating newRating = new Rating();
-			
-			 newRating = new Rating();
-			 newRating.setAutonomy(9);
-			 newRating.setCapabilityGrowing(9);
-			 newRating.setCollaboration(9);
-			 newRating.setComplexityCoping(9);
-			 newRating.setContextPerception(9);
-			 newRating.setDate(null);
-			 newRating.setKnowledge(9);
-			 newRating.setKnowledge(9);
-			 newRating.setLevel(9);
-			 newRating.setRaterID("a1234567");
-			 newRating.setRatingID(9);
-			 newRating.setSkillID(9);
-			 newRating.setUserID("a126317");
-			 newRating.setWorkStandard(9);
-			 dao.setRating(newRating);
-			
-			getNetworkClient().networkTransaction(new Comms("add userRating", newRating )           );
-			
-			
-			 System.out.println("Testing method setNotification");
-			 Notification newNotification = new Notification();
-			 newNotification.setRequestorID("a999999");
-			 newNotification.setRatorID("a111111");
-			 Date date = new Date(20180101);
-			 newNotification.setDate(date); //this date is still wonky
 		
 			
-			
-			getNetworkClient().networkTransaction(new Comms("add userNotifications", newNotification )    );
-			
-			
-			
-			
-			logger.info("test protocols done");
 			
 		}
 			
@@ -620,5 +537,131 @@ public class SkillsClient extends JFrame implements ActionListener
 		return this.standardFont;
 	}
 
+	// Network client calls
+	
+	public void getNetUserList()
+	{
+		Comms commsSend = new Comms();
+			commsSend.setText("send userList");
+			commsSend.setObj("");
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+			
+		this.data_userList = (Vector<User>)commsRec.getObj();
+		
+	//	logger.debug(" getNetUserList() call invoked");	
+	}
+	
+	public void getNetSkill()
+	{
+		Comms commsSend = new Comms();
+			commsSend.setText("send skillList");
+			commsSend.setObj("");
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+			
+		this.data_skillList = (Vector<Skill>)commsRec.getObj();
+		
+	//	logger.debug(" getNetUserList() call invoked");
+
+	}
+	
+	public void getNetHobbyList()
+	{
+		Comms commsSend = new Comms();
+			commsSend.setText("send hobbyList");
+			commsSend.setObj("");
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+			
+		this.data_hobbyList = (Vector<Hobby>)commsRec.getObj();
+		
+	//	logger.debug(" getNetUserList() call invoked");
+
+	}
+	
+	public void getNetLevels()
+	{
+		Comms commsSend = new Comms();
+			commsSend.setText("send levels");
+			commsSend.setObj("");
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+			
+		this.data_levels = (Vector<Level>)commsRec.getObj();
+		
+	//	logger.debug(" getNetUserList() call invoked");
+
+	}
+
+	public Vector<UserSkill> getNetUserSkills(User userIn)
+	{
+		Comms commsSend = new Comms();
+			commsSend.setText("send userSkills");
+			commsSend.setObj(userIn);
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+			
+		return (Vector<UserSkill>)commsRec.getObj();
+		
+	//	logger.debug(" getNetUserList() call invoked");
+
+	}
+	
+	public Vector<UserHobby> getNetUserHobby(User userIn)
+	{
+		Comms commsSend = new Comms();
+			commsSend.setText("send userHobby");
+			commsSend.setObj(userIn);
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+			
+		return (Vector<UserHobby>)commsRec.getObj();
+		
+	//	logger.debug(" getNetUserList() call invoked");
+
+	}
+	
+	public Vector<Rating> getNetUserRating(User userIn)
+	{
+		Comms commsSend = new Comms();
+			commsSend.setText("send userRating");
+			commsSend.setObj(userIn);
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+			
+		return (Vector<Rating>)commsRec.getObj();
+		
+	//	logger.debug(" getNetUserList() call invoked");
+
+	}
+	
+	public Vector<Notification> getNetUserNotifications(User userIn)
+	{
+		Comms commsSend = new Comms();
+			commsSend.setText("send userNotifications");
+			commsSend.setObj(userIn);
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+			
+		return (Vector<Notification>)commsRec.getObj();
+		
+	//	logger.debug(" getNetUserList() call invoked");
+
+	}
+	
+
+
+
+//	
+//	getNetworkClient().networkTransaction(new Comms("add userList", newUser ));
+//	getNetworkClient().networkTransaction(new Comms("add userSkills", multibean )           );	
+//	getNetworkClient().networkTransaction(new Comms("add userHobby", multibeanHob )           );
+//	getNetworkClient().networkTransaction(new Comms("add userRating", newRating )           );
+//	getNetworkClient().networkTransaction(new Comms("add userNotifications", newNotification )    );
+//	
+//	
+	
+	
 
 }

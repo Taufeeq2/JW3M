@@ -42,16 +42,22 @@ public class NetworkClient
   
 	}
     
-    public void networkTransaction(Comms comms)
+    public Comms networkTransaction(Comms commsSend)
     {
 
     	try
 		{
-			oos.writeObject(comms);
+			oos.writeObject(commsSend);
 			Comms replyComms = (Comms) ois.readObject();
+
+			String commsPrefixStrSend = " Client sent : ";
+			String commsPrefixStrRec =  " Client rec  : ";
 			
-			logger.info("...send to server " + comms.getText() + "--- " + comms.getObj());
-			logger.info("reply from server " + replyComms.getText() + "--- " + replyComms.getObj());
+			logger.info(commsPrefixStrSend + commsSend.getText() + " " + commsSend.getObj());
+			logger.info(commsPrefixStrRec + replyComms.getText() + " " + replyComms.getObj());
+			
+
+			return replyComms;
 			
 		} catch (ClassNotFoundException e)
 		{
@@ -66,7 +72,7 @@ public class NetworkClient
 			logger.error("Network client - IO error : probably session dropped");
 		}
     	
-    	
+    	return null;
     	
     }
     
