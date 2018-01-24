@@ -432,7 +432,7 @@ public class Server
 					logger.info(strPrefix + "edit user");
 
 					User tempUser;
-					
+					//lies
 					// Actually process the add
 					if ( tempUser = dao.editUser( (User)comms.getObj()  )      )
 					{ 
