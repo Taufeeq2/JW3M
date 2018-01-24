@@ -229,7 +229,7 @@ public class PanelEdit extends JPanel implements ActionListener
 >>>>>>> branch 'master' of https://github.com/Taufeeq2/JW3M.git
 			
 			
-			
+			 
 			JOptionPane.showMessageDialog(this, "Well done on updating your profile"); 
 		}
 		
