@@ -243,8 +243,10 @@ public class SkillsClient extends JFrame implements ActionListener
 	//	userMaintenanceP = new PanelUserMaintenance(this);
 		
 		tabbedPane = new JTabbedPane();
-		tabbedPane.add("My Profile", profileP);
-		tabbedPane.add("Edit", editP);
+		tabbedPane.add("My Profile", editP); // this is my basic details which are edditable by default
+		
+		tabbedPane.add("My Skills", profileP); // this should change to my skills
+		
 		tabbedPane.add("Notification", notificationP);
 		tabbedPane.add("Rate Someone", rateSomeoneP);
 //		tabbedPane.add("Create New Profile", newProfile);
