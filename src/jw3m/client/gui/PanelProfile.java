@@ -19,6 +19,7 @@ import jw3m.dao.DAO;
 
 import javax.swing.JScrollPane;
 import javax.swing.ButtonGroup;
+import javax.swing.JTextField;
 
 public class PanelProfile extends JPanel implements ActionListener
 {
@@ -47,6 +48,11 @@ public class PanelProfile extends JPanel implements ActionListener
 	private User user = new User();
 	private JLabel lblAlias;
 	private JLabel lblDisplayalias;
+	private JLabel lblHobby;
+	private JTextField textField;
+	private JTextArea textArea_1;
+	private JScrollPane scrollPane_1;
+	private JTextArea textArea_2;
 	
 	
 	public PanelProfile(SkillsClient frame) {
@@ -66,58 +72,58 @@ public class PanelProfile extends JPanel implements ActionListener
 		add(lblUserId);
 		
 		panel = new JPanel();
-		panel.setBounds(0, 388, 882, 361);
+		panel.setBounds(0, 447, 882, 385);
 		add(panel);
 		panel.setLayout(null);
 		
 		lblMySkills = new JLabel("My Skills");
-		lblMySkills.setBounds(356, 34, 94, 27);
+		lblMySkills.setBounds(354, 57, 94, 27);
 		lblMySkills.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
 		panel.add(lblMySkills);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(49, 86, 796, 230);
+		scrollPane.setBounds(46, 97, 796, 230);
 		panel.add(scrollPane);
 		
 		textArea = new JTextArea();
 		scrollPane.setViewportView(textArea);
 		
 		btnShowSkills = new JButton("Show Skills");
+		btnShowSkills.setBounds(370, 347, 127, 25);
 		btnShowSkills.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnShowSkills.setBounds(371, 329, 127, 25);
 		panel.add(btnShowSkills);
 		btnShowSkills.addActionListener(this);
 		
 		panel_1 = new JPanel();
-		panel_1.setBounds(0, 0, 882, 389);
+		panel_1.setBounds(0, 0, 882, 447);
 		add(panel_1);
 		panel_1.setLayout(null);
 		
 		lblName = new JLabel("Name");
-		lblName.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblName.setBounds(38, 124, 56, 16);
+		lblName.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panel_1.add(lblName);
 		
 		lblDisplayName = new JLabel("display name");
-		lblDisplayName.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblDisplayName.setBounds(143, 125, 146, 16);
+		lblDisplayName.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panel_1.add(lblDisplayName);
 		lblDisplayName.setText(baseFrame.authenticatedUser.getFirstName());
 		
 		lblAlias = new JLabel("Alias");
-		lblAlias.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblAlias.setBounds(38, 160, 56, 16);
+		lblAlias.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panel_1.add(lblAlias);
 		
 		lblDisplayalias = new JLabel("displayAlias");
-		lblDisplayalias.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblDisplayalias.setBounds(143, 161, 146, 16);
+		lblDisplayalias.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panel_1.add(lblDisplayalias);
 			lblDisplayalias.setText(baseFrame.authenticatedUser.getAlias());
 			
 			lblDisplayUserid = new JLabel("display userid");
-			lblDisplayUserid.setFont(new Font("Tahoma", Font.BOLD, 16));
 			lblDisplayUserid.setBounds(143, 89, 146, 16);
+			lblDisplayUserid.setFont(new Font("Tahoma", Font.BOLD, 16));
 			panel_1.add(lblDisplayUserid);
 			
 //		baseFrame.authenticatedUser.getFirstName();
@@ -147,34 +153,56 @@ public class PanelProfile extends JPanel implements ActionListener
 				lblSurname.setFont(new Font("Tahoma", Font.BOLD, 16));
 				
 				lblDisplaySurname = new JLabel("display surname");
-				lblDisplaySurname.setFont(new Font("Tahoma", Font.BOLD, 16));
 				lblDisplaySurname.setBounds(143, 202, 146, 16);
+				lblDisplaySurname.setFont(new Font("Tahoma", Font.BOLD, 16));
 				panel_1.add(lblDisplaySurname);
 				lblDisplaySurname.setText(baseFrame.authenticatedUser.getSurname());
 				
 				lblDisplayEmail = new JLabel("display email");
+				lblDisplayEmail.setBounds(143, 242, 329, 16);
 				lblDisplayEmail.setFont(new Font("Tahoma", Font.BOLD, 16));
-				lblDisplayEmail.setBounds(143, 242, 278, 16);
 				panel_1.add(lblDisplayEmail);
 				lblDisplayEmail.setText(baseFrame.authenticatedUser.getEmailAddress());
 				
 				lblDisplayMobile = new JLabel("display mobile");
-				lblDisplayMobile.setFont(new Font("Tahoma", Font.BOLD, 16));
 				lblDisplayMobile.setBounds(143, 284, 146, 16);
+				lblDisplayMobile.setFont(new Font("Tahoma", Font.BOLD, 16));
 				panel_1.add(lblDisplayMobile);
 				lblDisplayMobile.setText("0" + baseFrame.authenticatedUser.getMobile());
 				
 				rdbtnYes = new JRadioButton("Yes");
-				rdbtnYes.setFont(new Font("Tahoma", Font.BOLD, 14));
 				rdbtnYes.setBounds(143, 324, 56, 25);
+				rdbtnYes.setFont(new Font("Tahoma", Font.BOLD, 14));
 				panel_1.add(rdbtnYes);
 				buttonGroup.add(rdbtnYes);
 				
 				rdbtnNo = new JRadioButton("No");
-				rdbtnNo.setFont(new Font("Tahoma", Font.BOLD, 14));
 				rdbtnNo.setBounds(208, 324, 56, 25);
+				rdbtnNo.setFont(new Font("Tahoma", Font.BOLD, 14));
 				panel_1.add(rdbtnNo);
 				buttonGroup.add(rdbtnNo);
+				
+				lblHobby = new JLabel("Hobby");
+				lblHobby.setBounds(38, 371, 72, 25);
+				lblHobby.setFont(new Font("Tahoma", Font.BOLD, 16));
+				panel_1.add(lblHobby);
+				
+				textField = new JTextField();
+				textField.setBounds(143, 373, 161, 22);
+				panel_1.add(textField);
+				textField.setColumns(10);
+				
+				textArea_1 = new JTextArea();
+				textArea_1.setBounds(783, 87, -100, 286);
+				panel_1.add(textArea_1);
+				
+				scrollPane_1 = new JScrollPane();
+				scrollPane_1.setBounds(629, 386, 167, -295);
+				panel_1.add(scrollPane_1);
+				
+				textArea_2 = new JTextArea();
+				textArea_2.setBounds(763, 89, -177, 254);
+				panel_1.add(textArea_2);
 			if(baseFrame.authenticatedUser.isMentor())
 			{
 				rdbtnYes.setSelected(true);
