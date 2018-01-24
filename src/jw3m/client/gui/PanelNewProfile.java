@@ -162,7 +162,9 @@ public class PanelNewProfile extends JPanel implements ActionListener
 			JOptionPane.showMessageDialog(this, "New user " + name.getText() + " created" );
 			
 		
-			baseFrame.dao.addUserList(newUser);
+			baseFrame.setNetAddUser(newUser);
+			
+		//	baseFrame.dao.addUserList(newUser);
 			
 			SwingUtilities.windowForComponent(this).dispose();
 			
