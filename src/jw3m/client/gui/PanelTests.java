@@ -89,40 +89,40 @@ public class PanelTests extends JPanel implements ActionListener
 		
 		if(source == btnTest)
 		{
-			textArea.setText(baseFrame.data_hobbyList.toString());
+			textArea.append(baseFrame.data_hobbyList.toString() + "\n");
 		}
 		
-		if(source == btnTest_1)
-		{
-			textArea.setText(baseFrame.data_hobbyUsers.toString());
-		}
+//		if(source == btnTest_1)
+//		{
+//			textArea.append(baseFrame.data_hobbyUsers.toString() + "\n");
+//		}
 		if(source == btnTest_2)
 		{
-			textArea.setText(baseFrame.data_levels.toString());
+			textArea.append(baseFrame.data_levels.toString() + "\n");
 		}
 		if(source == btnTest_3)
 		{
-			textArea.setText(baseFrame.data_notifications.toString());
+			textArea.append(baseFrame.data_notifications.toString() + "\n");
 		}
 		if(source == btnTest_4)
 		{
-			textArea.setText(baseFrame.data_skillList.toString());
+			textArea.append(baseFrame.data_skillList.toString() + "\n");
 		}
 		if(source == btnTest_5)
 		{
-			textArea.setText(baseFrame.data_userHobby.toString());
+			textArea.append(baseFrame.data_userHobby.toString() + "\n");
 		}
 		if(source == btnTest_6)
 		{
-			textArea.setText(baseFrame.data_userList.toString());
+			textArea.append(baseFrame.data_userList.toString() + "\n");
 		}
 		if(source == btnTest_7)
 		{
-			textArea.setText(baseFrame.data_userRatings.toString());
+			textArea.append(baseFrame.data_userRatings.toString() + "\n");
 		}
 		if(source == btnNewButton)
 		{
-			textArea.setText(baseFrame.data_userSkills.toString());
+			textArea.append(baseFrame.data_userSkills.toString() + "\n");
 		}
 		
 	}
