@@ -184,6 +184,17 @@ public class Server
 			{
 
 			// The sends
+				
+						
+				case "send user" : 
+				{
+					logger.info(strPrefix + " send user");
+					
+					oos.writeObject(new Comms("reply userList", dao.getUser((String)comms.getObj() )  )  );
+					break;
+				}
+					
+			
 				case "send userList" : 
 				{
 					logger.info(strPrefix + " send userList");

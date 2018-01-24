@@ -556,6 +556,19 @@ public class SkillsClient extends JFrame implements ActionListener
 
 	// Network client calls
 	
+	public User getNetUser(String userID)
+	{
+		Comms commsSend = new Comms();
+			commsSend.setText("send user");
+			commsSend.setObj(userID);
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+			
+		return (User)commsRec.getObj();
+		
+	//	logger.debug(" getNetUserList() call invoked");	
+	}
+	
 	public void getNetUserList()
 	{
 		Comms commsSend = new Comms();
