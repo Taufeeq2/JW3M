@@ -51,14 +51,9 @@ public class PanelProfile extends JPanel implements ActionListener
 	private User user = new User();
 	private JLabel lblAlias;
 	private JLabel lblDisplayalias;
-	private JLabel lblHobby;
-	private JTextField hobbyField;
 	private JTextArea textArea_1;
 	private JScrollPane scrollPane_1;
 	private JTextArea textArea_2;
-	private JTextArea hobbyArea;
-	private JLabel lblHobbyList;
-	private JButton btnAddHobby;
 	
 	
 	public PanelProfile(SkillsClient frame) {
@@ -188,16 +183,6 @@ public class PanelProfile extends JPanel implements ActionListener
 				panel_1.add(rdbtnNo);
 				buttonGroup.add(rdbtnNo);
 				
-				lblHobby = new JLabel("Hobby");
-				lblHobby.setBounds(38, 371, 72, 25);
-				lblHobby.setFont(new Font("Tahoma", Font.BOLD, 16));
-				panel_1.add(lblHobby);
-				
-				hobbyField = new JTextField();
-				hobbyField.setBounds(143, 373, 161, 22);
-				panel_1.add(hobbyField);
-				hobbyField.setColumns(10);
-				
 				textArea_1 = new JTextArea();
 				textArea_1.setBounds(783, 87, -100, 286);
 				panel_1.add(textArea_1);
@@ -210,21 +195,6 @@ public class PanelProfile extends JPanel implements ActionListener
 				textArea_2.setBounds(763, 89, -177, 254);
 				panel_1.add(textArea_2);
 				
-				hobbyArea = new JTextArea();
-				hobbyArea.setBounds(616, 142, 213, 254);
-				panel_1.add(hobbyArea);
-				
-				lblHobbyList = new JLabel("Hobby List");
-				lblHobbyList.setFont(new Font("Tahoma", Font.BOLD, 16));
-				lblHobbyList.setBounds(667, 113, 101, 16);
-				panel_1.add(lblHobbyList);
-				
-				btnAddHobby = new JButton("Add Hobby");
-				btnAddHobby.setFont(new Font("Tahoma", Font.BOLD, 16));
-				btnAddHobby.setBounds(317, 372, 121, 25);
-				panel_1.add(btnAddHobby);
-				btnAddHobby.addActionListener(this);
-				
 			if(baseFrame.authenticatedUser.isMentor())
 			{
 				rdbtnYes.setSelected(true);
@@ -234,25 +204,7 @@ public class PanelProfile extends JPanel implements ActionListener
 				rdbtnNo.setSelected(true);
 			}
 			
-			Vector<UserHobby> dobby = new Vector<UserHobby>();
-			baseFrame.getNetHobbyList();
-			
-			dobby = (baseFrame.getNetUserHobby(baseFrame.authenticatedUser));
-			
-			for(int i = 0; i < dobby.size(); i++ )
-			{
-				int hobID = (dobby.get(i).getHobbyID());
-				
-				for(int j = 0; j < baseFrame.data_hobbyList.size(); j++)
-				{
-					if (baseFrame.data_hobbyList.get(j).getHobbyID() == hobID)
-					{
-						hobbyArea.setEditable(false);
-						hobbyArea.setText(baseFrame.data_hobbyList.get(j).getHobbyName());
-					}
-				}
 
-			}
 			
 	}
 
@@ -297,10 +249,7 @@ public class PanelProfile extends JPanel implements ActionListener
 			}	
 		}
 		
-		if(source == btnAddHobby)
-		{
 		
-		}
 		
 	}
 }
