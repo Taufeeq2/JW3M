@@ -66,6 +66,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	private PanelRateSomeone rateSomeoneP;
 	private PanelNewProfile newProfile;
 	private PanelReporting panelReporting;
+	private PanelTests testPanel;
 	
 	
 	// DIRECT DAO ACCESS - MUST BE CHANGED LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -223,6 +224,7 @@ public class SkillsClient extends JFrame implements ActionListener
 		editP = new PanelEdit(this);
 //		newProfile = new PanelNewProfile(this);
 		panelReporting = new PanelReporting(this);
+		testPanel = new PanelTests(this);
 		
 		
 		//wtf
@@ -235,6 +237,7 @@ public class SkillsClient extends JFrame implements ActionListener
 		tabbedPane.add("Rate Someone", rateSomeoneP);
 //		tabbedPane.add("Create New Profile", newProfile);
 		tabbedPane.add("Reporting", panelReporting);
+		tabbedPane.addTab("Test Panel", testPanel);
 
 		
 	}
