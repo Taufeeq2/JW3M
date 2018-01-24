@@ -247,6 +247,7 @@ public class PanelProfile extends JPanel implements ActionListener
 				{
 					if (baseFrame.data_hobbyList.get(j).getHobbyID() == hobID)
 					{
+						hobbyArea.setEditable(false);
 						hobbyArea.setText(baseFrame.data_hobbyList.get(j).getHobbyName());
 					}
 				}
