@@ -345,12 +345,8 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 							model.addRow(obj);
 
 					}
-		
-
 				}
 			}
-	
-	
 		} 
 		catch (Exception e1)
 		{
