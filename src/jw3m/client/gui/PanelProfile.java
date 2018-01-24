@@ -14,7 +14,9 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 
 import jw3m.beans.Hobby;
+import jw3m.beans.Skill;
 import jw3m.beans.User;
+import jw3m.beans.UserHobby;
 import jw3m.beans.UserSkill;
 import jw3m.dao.DAO;
 
@@ -50,7 +52,7 @@ public class PanelProfile extends JPanel implements ActionListener
 	private JLabel lblAlias;
 	private JLabel lblDisplayalias;
 	private JLabel lblHobby;
-	private JTextField textField;
+	private JTextField hobbyField;
 	private JTextArea textArea_1;
 	private JScrollPane scrollPane_1;
 	private JTextArea textArea_2;
@@ -191,10 +193,10 @@ public class PanelProfile extends JPanel implements ActionListener
 				lblHobby.setFont(new Font("Tahoma", Font.BOLD, 16));
 				panel_1.add(lblHobby);
 				
-				textField = new JTextField();
-				textField.setBounds(143, 373, 161, 22);
-				panel_1.add(textField);
-				textField.setColumns(10);
+				hobbyField = new JTextField();
+				hobbyField.setBounds(143, 373, 161, 22);
+				panel_1.add(hobbyField);
+				hobbyField.setColumns(10);
 				
 				textArea_1 = new JTextArea();
 				textArea_1.setBounds(783, 87, -100, 286);
@@ -231,7 +233,26 @@ public class PanelProfile extends JPanel implements ActionListener
 			{
 				rdbtnNo.setSelected(true);
 			}
+			
+			Vector<UserHobby> dobby = new Vector<UserHobby>();
+			baseFrame.getNetHobbyList();
+			
+			dobby = (baseFrame.getNetUserHobby(baseFrame.authenticatedUser));
+			
+			for(int i = 0; i < dobby.size(); i++ )
+			{
+				int hobID = (dobby.get(i).getHobbyID());
+				
+				for(int j = 0; j < baseFrame.data_hobbyList.size(); j++)
+				{
+					if (baseFrame.data_hobbyList.get(j).getHobbyID() == hobID)
+					{
+						hobbyArea.setText(baseFrame.data_hobbyList.get(j).getHobbyName());
+					}
+				}
 
+			}
+			
 	}
 
 	@Override
@@ -241,8 +262,6 @@ public class PanelProfile extends JPanel implements ActionListener
 		int skill, rating = 0;
 		String skillName = null, skillDesc = null;
 		
-		
-//		hobbyArea.append(baseFrame.getNetUserHobby(baseFrame.authenticatedUser.getUserName()));
 		
 		if(source == btnShowSkills)
 		{
@@ -279,7 +298,6 @@ public class PanelProfile extends JPanel implements ActionListener
 		
 		if(source == btnAddHobby)
 		{
-			Hobby addHobby = new Hobby();
 		
 		}
 		
