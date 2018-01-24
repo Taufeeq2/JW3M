@@ -43,7 +43,7 @@ public class PanelEdit extends JPanel implements ActionListener
 	private JTextArea hobbyArea;
 	private JLabel lblMyHobbies;
 	private JLabel label;
-	private JTextField textField;
+	private JTextField hobbyField;
 	private JButton btnAddHobby;
 	
 	public PanelEdit(SkillsClient frame) {
@@ -80,38 +80,38 @@ public class PanelEdit extends JPanel implements ActionListener
 		
 		name = new JTextField();
 		name.setFont(new Font("Tahoma", Font.BOLD, 16));
-		name.setBounds(166, 77, 116, 22);
+		name.setBounds(166, 77, 190, 22);
 		add(name);
 		name.setColumns(10);
 		
 		surname = new JTextField();
 		surname.setFont(new Font("Tahoma", Font.BOLD, 16));
-		surname.setBounds(166, 130, 116, 22);
+		surname.setBounds(166, 130, 190, 22);
 		add(surname);
 		surname.setColumns(10);
 		
 		email = new JTextField();
 		email.setFont(new Font("Tahoma", Font.BOLD, 16));
-		email.setBounds(166, 235, 116, 22);
+		email.setBounds(166, 235, 190, 22);
 		add(email);
 		email.setColumns(10);
 		
 		mobile = new JTextField();
 		mobile.setFont(new Font("Tahoma", Font.BOLD, 16));
-		mobile.setBounds(166, 286, 116, 22);
+		mobile.setBounds(166, 286, 190, 22);
 		add(mobile);
 		mobile.setColumns(10);
 		
 		btnUpdateProfile = new JButton("Update Profile");
 		btnUpdateProfile.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnUpdateProfile.setBounds(166, 377, 129, 25);
+		btnUpdateProfile.setBounds(166, 377, 147, 25);
 		add(btnUpdateProfile);
 		btnUpdateProfile.addActionListener(this);
 		
 		alias = new JTextField();
 		alias.setFont(new Font("Tahoma", Font.BOLD, 16));
 		alias.setColumns(10);
-		alias.setBounds(166, 187, 116, 22);
+		alias.setBounds(166, 187, 190, 22);
 		add(alias);
 		
 		lblAlias = new JLabel("Alias");
@@ -158,10 +158,10 @@ public class PanelEdit extends JPanel implements ActionListener
 		label.setBounds(495, 377, 72, 25);
 		add(label);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(579, 379, 161, 22);
-		add(textField);
+		hobbyField = new JTextField();
+		hobbyField.setColumns(10);
+		hobbyField.setBounds(579, 379, 161, 22);
+		add(hobbyField);
 		
 		btnAddHobby = new JButton("Add Hobby");
 		btnAddHobby.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -231,6 +231,9 @@ public class PanelEdit extends JPanel implements ActionListener
 		
 		if(source == btnAddHobby)
 		{
+//			Vector 
+//			baseFrame.setNetUserHobby(baseFrame.authenticatedUser, hobbyField.getText());
+			
 		
 		}
 		
