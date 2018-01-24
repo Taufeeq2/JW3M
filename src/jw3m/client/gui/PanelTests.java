@@ -12,6 +12,7 @@ public class PanelTests extends JPanel
 	 */
 	public PanelTests(SkillsClient frame)
 	{
+		setLayout(null);
 
 		baseFrame = frame;
 	}
