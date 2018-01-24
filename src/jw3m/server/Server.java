@@ -430,11 +430,13 @@ public class Server
 				case "edit user" : 
 				{
 					logger.info(strPrefix + "edit user");
-
+					// Check values coming into the server is incorrect
+					logger.info(">>>>>>>>>>" + (User)comms.getObj());
+					
 					User tempUser;
 					//lies
 					// Actually process the add
-					if ( tempUser = dao.editUser( (User)comms.getObj()  )      )
+					if ( (  tempUser = dao.editUser( (User)comms.getObj()  ) ) != null     )
 					{ 
 						logger.info(strPrefixAdd + " eddited " + (User)(comms.getObj()) );
 					}
