@@ -237,8 +237,6 @@ public class DAO
 				return getUser(inUser.getUserName());
 				
 				
-				
-				
 			} catch (SQLException e)
 			{
 				e.printStackTrace();
