@@ -222,7 +222,7 @@ public class DAO
 			try
 			{
 				ps = con.prepareStatement("UPDATE users SET password = ?, firstName = ?, surname = ?, alias = ?, email = ?, mobile = ?, mentor = ? WHERE userID = ?");
-				
+
 				ps.setString(1, inUser.getPassword());
 				ps.setString(2, inUser.getFirstName());
 				ps.setString(3, inUser.getSurname());
