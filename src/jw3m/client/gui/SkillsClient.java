@@ -76,14 +76,14 @@ public class SkillsClient extends JFrame implements ActionListener
 	
 	
 	// Access varaiables 
-	public Vector<User> data_userList;
-	public Vector<UserSkill> data_userSkills; // this is probably garbage we SHOULD NOT USE!!!!!!!! - Warren + Justin
-	public Vector<Skill> data_skillList;
-	public Vector<Hobby> data_hobbyList;
-	public Vector<UserHobby> data_userHobby;  // this is probably garbage we SHOULD NOT USE!!!!!!!! - Warren + Justin
-	public Vector<User> data_hobbyUsers;
-	public Vector<Level> data_levels;
-	public Vector<Rating> data_userRatings; // this is probably garbage we SHOULD NOT USE!!!!!!!! - Warren + Justin 
+	public Vector<User> data_userList;   // use getNetUserList(); can be done onces and client has it
+//	public Vector<UserSkill> data_userSkills; // this is probably garbage we SHOULD NOT USE!!!!!!!! - Warren + Justin
+	public Vector<Skill> data_skillList;  // use getNetSkillList(); can be done onces and client has it
+	public Vector<Hobby> data_hobbyList;  // use getNetHobbyList(); can be done onces and client has it
+//	public Vector<UserHobby> data_userHobby;  // this is probably garbage we SHOULD NOT USE!!!!!!!! - Warren + Justin
+	public Vector<User> data_hobbyUsers;  // ????
+	public Vector<Level> data_levels;  // getNetLevels() - should be called once and never again
+//	public Vector<Rating> data_userRatings; // this is probably garbage we SHOULD NOT USE!!!!!!!! - Warren + Justin 
 	public Vector<Notification> data_notifications; // this is probably garbage we SHOULD NOT USE!!!!!!!! - Warren + Justin
 	
 	// Style objects
@@ -175,16 +175,16 @@ public class SkillsClient extends JFrame implements ActionListener
 		
 		if (authenticatedUser!= null)
 		{
-			data_userSkills = this.getNetUserSkills(authenticatedUser);
+	//		data_userSkills = this.getNetUserSkills(authenticatedUser);
 		//	data_userSkills = dao.getUserSkills(authenticatedUser);
 			
-			data_userHobby= this.getNetUserHobby(authenticatedUser);
+	//		data_userHobby= this.getNetUserHobby(authenticatedUser);
 		//	data_userHobby = dao.getUserHobby(authenticatedUser);
 			
-			data_userRatings = this.getNetUserRating(authenticatedUser);
+	//		data_userRatings = this.getNetUserRating(authenticatedUser);
 		//	data_userRatings = dao.getRatings(authenticatedUser);
 			
-			data_notifications = this.getNetUserNotifications(authenticatedUser);
+	//		data_notifications = this.getNetUserNotifications(authenticatedUser);
 		//	data_notifications = dao.getNotification(authenticatedUser);
 		}
 		
@@ -243,8 +243,10 @@ public class SkillsClient extends JFrame implements ActionListener
 	//	userMaintenanceP = new PanelUserMaintenance(this);
 		
 		tabbedPane = new JTabbedPane();
-		tabbedPane.add("My Profile", profileP);
-		tabbedPane.add("Edit", editP);
+		tabbedPane.add("My Profile", editP); // this is my basic details which are edditable by default
+		
+		tabbedPane.add("My Skills", profileP); // this should change to my skills
+		
 		tabbedPane.add("Notification", notificationP);
 		tabbedPane.add("Rate Someone", rateSomeoneP);
 //		tabbedPane.add("Create New Profile", newProfile);
@@ -779,7 +781,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	//	logger.debug(" getNetUserList() call invoked");	
 	}
 
-	public User editUser(User userIn)
+	public User editNetUser(User userIn)
 	{
 		Comms commsSend = new Comms();
 			commsSend.setText("edit user");
@@ -793,5 +795,5 @@ public class SkillsClient extends JFrame implements ActionListener
 		
 	}
 	
-
+	
 }
