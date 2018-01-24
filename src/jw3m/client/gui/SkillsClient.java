@@ -432,6 +432,7 @@ public class SkillsClient extends JFrame implements ActionListener
 			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserNotifications(authenticatedUser) );
 			System.out.println();
 			
+			//nlrh
 		
 			
 			
