@@ -53,6 +53,9 @@ public class PanelProfile extends JPanel implements ActionListener
 	private JTextArea textArea_1;
 	private JScrollPane scrollPane_1;
 	private JTextArea textArea_2;
+	private JTextArea textArea_3;
+	private JLabel lblHobbyList;
+	private JButton btnAddHobby;
 	
 	
 	public PanelProfile(SkillsClient frame) {
@@ -92,7 +95,7 @@ public class PanelProfile extends JPanel implements ActionListener
 		btnShowSkills.setBounds(370, 347, 127, 25);
 		btnShowSkills.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panel.add(btnShowSkills);
-		btnShowSkills.addActionListener(this);
+		btnShowSkills.addActionListener(this); 
 		
 		panel_1 = new JPanel();
 		panel_1.setBounds(0, 0, 882, 447);
@@ -203,6 +206,20 @@ public class PanelProfile extends JPanel implements ActionListener
 				textArea_2 = new JTextArea();
 				textArea_2.setBounds(763, 89, -177, 254);
 				panel_1.add(textArea_2);
+				
+				textArea_3 = new JTextArea();
+				textArea_3.setBounds(616, 142, 213, 254);
+				panel_1.add(textArea_3);
+				
+				lblHobbyList = new JLabel("Hobby List");
+				lblHobbyList.setFont(new Font("Tahoma", Font.BOLD, 16));
+				lblHobbyList.setBounds(667, 113, 101, 16);
+				panel_1.add(lblHobbyList);
+				
+				btnAddHobby = new JButton("Add Hobby");
+				btnAddHobby.setFont(new Font("Tahoma", Font.BOLD, 16));
+				btnAddHobby.setBounds(317, 372, 121, 25);
+				panel_1.add(btnAddHobby);
 			if(baseFrame.authenticatedUser.isMentor())
 			{
 				rdbtnYes.setSelected(true);
