@@ -288,7 +288,11 @@ public class SkillsClient extends JFrame implements ActionListener
 		sPanelConnectionStatus = new JLabel("Connected to localhost:1337");
 		sPanelLoggedOnAs = new JLabel( "Logged on as '" + this.authenticatedUser.getUserName() + "' " );
 	//	sPanelMessagesLabel = new JLabel ("Messages:");
-		sPanelMessagesBut = new JButton("Messages : *3");
+		
+		//this.getNetUserNotifications(this.authenticatedUser).size()
+		
+		sPanelMessagesBut = new JButton("Messages : " + this.getNetUserNotifications(this.authenticatedUser).size());
+		
 		sPanelMessagesBut.addActionListener(this);
 		
 	//	sPanelMessagesBut.setSize(200,50);
