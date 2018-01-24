@@ -104,8 +104,7 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 
 		try
 		{
-			DAO getNotifications = new DAO();
-			notificationList = getNotifications.getNotification(baseFrame.authenticatedUser);
+			notificationList = baseFrame.getNetUserNotifications(baseFrame.authenticatedUser);
 		} catch (Exception e)
 		{
 			// TODO Auto-generated catch block
