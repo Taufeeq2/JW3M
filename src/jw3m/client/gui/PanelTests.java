@@ -18,6 +18,10 @@ public class PanelTests extends JPanel implements ActionListener
 	private JButton btnTest_2;
 	private JButton btnTest_3;
 	private JButton btnTest_4;
+	private JButton btnTest_5;
+	private JButton btnTest_6;
+	private JButton btnTest_7;
+	private JButton btnNewButton;
 	
 	/**
 	 * Create the panel.
@@ -54,6 +58,26 @@ public class PanelTests extends JPanel implements ActionListener
 		btnTest_4.setBounds(673, 430, 97, 25);
 		add(btnTest_4);
 		btnTest_4.addActionListener(this);
+		
+		btnTest_5 = new JButton("Test 6");
+		btnTest_5.setBounds(93, 504, 97, 25);
+		add(btnTest_5);
+		btnTest_5.addActionListener(this);
+		
+		btnTest_6 = new JButton("Test 7");
+		btnTest_6.setBounds(234, 504, 97, 25);
+		add(btnTest_6);
+		btnTest_6.addActionListener(this);
+		
+		btnTest_7 = new JButton("Test 8");
+		btnTest_7.setBounds(376, 504, 97, 25);
+		add(btnTest_7);
+		btnTest_7.addActionListener(this);
+		
+		btnNewButton = new JButton("Test 9");
+		btnNewButton.setBounds(519, 504, 97, 25);
+		add(btnNewButton);
+		btnNewButton.addActionListener(this);
 
 		baseFrame = frame;
 	}
@@ -63,6 +87,43 @@ public class PanelTests extends JPanel implements ActionListener
 	{
 		Object source = e.getSource();
 		
+		if(source == btnTest)
+		{
+			textArea.setText(baseFrame.data_hobbyList.toString());
+		}
+		
+		if(source == btnTest_1)
+		{
+			textArea.setText(baseFrame.data_hobbyUsers.toString());
+		}
+		if(source == btnTest_2)
+		{
+			textArea.setText(baseFrame.data_levels.toString());
+		}
+		if(source == btnTest_3)
+		{
+			textArea.setText(baseFrame.data_notifications.toString());
+		}
+		if(source == btnTest_4)
+		{
+			textArea.setText(baseFrame.data_skillList.toString());
+		}
+		if(source == btnTest_5)
+		{
+			textArea.setText(baseFrame.data_userHobby.toString());
+		}
+		if(source == btnTest_6)
+		{
+			textArea.setText(baseFrame.data_userList.toString());
+		}
+		if(source == btnTest_7)
+		{
+			textArea.setText(baseFrame.data_userRatings.toString());
+		}
+		if(source == btnNewButton)
+		{
+			textArea.setText(baseFrame.data_userSkills.toString());
+		}
 		
 	}
 }

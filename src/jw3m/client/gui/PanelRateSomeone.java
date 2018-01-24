@@ -52,6 +52,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		lblRateSomeone.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
 		
 		btnSubmit = new JButton("Submit");
+		btnSubmit.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnSubmit.addActionListener(this);
 		
 		lblDisplayRatee = new JLabel("Display ratee");
@@ -91,6 +92,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		lblSearch.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		btnSearch = new JButton("Search");
+		btnSearch.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnSearch.addActionListener(this);
 		
 		
