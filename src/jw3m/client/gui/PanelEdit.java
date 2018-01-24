@@ -69,21 +69,25 @@ public class PanelEdit extends JPanel implements ActionListener
 		add(label_7);
 		
 		name = new JTextField();
+		name.setFont(new Font("Tahoma", Font.BOLD, 16));
 		name.setBounds(166, 77, 116, 22);
 		add(name);
 		name.setColumns(10);
 		
 		surname = new JTextField();
+		surname.setFont(new Font("Tahoma", Font.BOLD, 16));
 		surname.setBounds(166, 130, 116, 22);
 		add(surname);
 		surname.setColumns(10);
 		
 		email = new JTextField();
+		email.setFont(new Font("Tahoma", Font.BOLD, 16));
 		email.setBounds(166, 235, 116, 22);
 		add(email);
 		email.setColumns(10);
 		
 		mobile = new JTextField();
+		mobile.setFont(new Font("Tahoma", Font.BOLD, 16));
 		mobile.setBounds(166, 286, 116, 22);
 		add(mobile);
 		mobile.setColumns(10);
@@ -95,6 +99,7 @@ public class PanelEdit extends JPanel implements ActionListener
 		btnUpdateProfile.addActionListener(this);
 		
 		alias = new JTextField();
+		alias.setFont(new Font("Tahoma", Font.BOLD, 16));
 		alias.setColumns(10);
 		alias.setBounds(166, 187, 116, 22);
 		add(alias);
