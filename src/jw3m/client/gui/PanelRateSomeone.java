@@ -314,4 +314,47 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		}
 		
 	}
+	
+	public void getRateUser(String user)
+	{
+		User tempUser1 = new User();
+		int skill1;
+		String skillName1;
+		tempUser1 = baseFrame.dao.getUser(searchField.getText());
+		model = (DefaultTableModel) table.getModel();
+		model.setRowCount(0);
+		try
+		{
+			DAO getSkill = new DAO();
+			skillList = getSkill.getSkillList();
+			Vector<UserSkill> userSkills = new Vector<UserSkill>();
+			userSkills = getSkill.getUserSkills(tempUser1);
+			
+			for (int t = 0; t < userSkills.size(); t++)
+			{
+				skill1 = userSkills.get(t).getSkillID();
+				
+				for(int j = 0; j < skillList.size(); j++)
+				{
+					if(skill1 == skillList.get(j).getSkillID())
+					{
+						skillName1 = skillList.get(j).getSkillName();
+						
+						Object obj[] =
+							{tempUser1.getUserName(), skill1, skillName1};
+							model.addRow(obj);
+
+					}
+		
+
+				}
+			}
+	
+	
+		} 
+		catch (Exception e1)
+		{
+			e1.printStackTrace();
+		}
+	}
 }
