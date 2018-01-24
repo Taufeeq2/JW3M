@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.sql.Date;
 import java.util.Set;
 import java.util.Vector;
 
@@ -498,6 +499,21 @@ public class SkillsClient extends JFrame implements ActionListener
 			 dao.setRating(newRating);
 			
 			getNetworkClient().networkTransaction(new Comms("add userRating", newRating )           );
+			
+			
+			 System.out.println("Testing method setNotification");
+			 Notification newNotification = new Notification();
+			 newNotification.setRequestorID("a999999");
+			 newNotification.setRatorID("a111111");
+			 Date date = new Date(20180101);
+			 newNotification.setDate(date); //this date is still wonky
+		
+			
+			
+			getNetworkClient().networkTransaction(new Comms("add userNotifications", newNotification )    );
+			
+			
+			
 			
 			logger.info("test protocols done");
 			

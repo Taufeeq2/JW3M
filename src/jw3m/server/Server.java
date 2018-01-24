@@ -383,11 +383,36 @@ public class Server
 							
 					// return the rator or rateee? or rating?
 
-					oos.writeObject(new Comms("add userRating",   "sending nothing"  )  )   ;
+					oos.writeObject(new Comms("added userRating",   "sending nothing"  )  )   ;
 					break;
 				}
 				
+				case "add userNotifications" : 
+				{
+					// the rating bean has everything
+					// but inconsistant with multibean way like skills and hobbies???
+					// the adding works but the send back???
 				
+					
+					Notification tempNotification = (Notification)(comms.getObj()) ;
+					
+					logger.info(strPrefix + "add userNotifications");
+					
+					// Actually process the add
+					if (  dao.setNotification( tempNotification  )      )
+					{ 
+						logger.info(strPrefixAdd + " added " + tempNotification);
+					}
+					else
+					{
+						logger.error(strPrefixAdd + " Critical failure");
+					}
+							
+					// return the rator or rateee? or rating?
+
+					oos.writeObject(new Comms("added userNotifications",   "sending nothing"  )  )   ;
+					break;
+				}
 				
 				
 				
