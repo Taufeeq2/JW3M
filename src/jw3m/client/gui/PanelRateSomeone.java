@@ -59,7 +59,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		
 //		lblDisplayRatee.setText(baseFrame.authenticatedUser.getFirstName());
 		
-		lblIAmRating = new JLabel("I am rating:");
+		lblIAmRating = new JLabel("Welcome: ");
 		lblIAmRating.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		Vector<Skill> skillNms = new Vector<Skill>();
