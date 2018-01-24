@@ -651,18 +651,105 @@ public class SkillsClient extends JFrame implements ActionListener
 
 	}
 	
+	// Do we return boolean or the user or the whole list???
+	public void setNetAddUser(User userIn)
+	{
+		Comms commsSend = new Comms();
+			commsSend.setText("add userList");
+			commsSend.setObj(userIn);
 
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+			
+		this.data_userList = (Vector<User>)commsRec.getObj();
+		
+	//	logger.debug(" getNetUserList() call invoked");	
+	}
 
+	public Vector<UserSkill> setNetUserSkills(User userIn, Vector<Skill> skillsSet)
+	{
+		// This is what we do
+		// We make a MultiBean with User as the first Object and create a vector of Skills
+		// The Server wants [ User , <1,2,3,4> ] 
+		
+		MultiBean multiBean = new MultiBean();
+		
+		multiBean.setObj(userIn);
+		
+		for (int i = 0; i < skillsSet.size()   ;  i++   )
+		{
+			multiBean.addMulti(skillsSet.get(i).getSkillID());
+		}
+		
+		Comms commsSend = new Comms();
+			commsSend.setText("add userSkills");
+			commsSend.setObj(multiBean);
 
-//	
-//	getNetworkClient().networkTransaction(new Comms("add userList", newUser ));
-//	getNetworkClient().networkTransaction(new Comms("add userSkills", multibean )           );	
-//	getNetworkClient().networkTransaction(new Comms("add userHobby", multibeanHob )           );
-//	getNetworkClient().networkTransaction(new Comms("add userRating", newRating )           );
-//	getNetworkClient().networkTransaction(new Comms("add userNotifications", newNotification )    );
-//	
-//	
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+			
+		return (Vector<UserSkill>)commsRec.getObj();
+		
+	//	logger.debug(" getNetUserList() call invoked");
+
+	}
+
+	public Vector<UserHobby> setNetUserHobby(User userIn, Vector<Hobby> hobbySet)
+	{
+		// This is what we do
+		// We make a MultiBean with User as the first Object and create a vector of Hobbies
+		// The Server wants [ User , <1,2,3,4> ] 
+		
+		MultiBean multiBean = new MultiBean();
+		
+		multiBean.setObj(userIn);
+		
+		for (int i = 0; i < hobbySet.size()   ;  i++   )
+		{
+			multiBean.addMulti(hobbySet.get(i).getHobbyID());
+		}
+		
+		Comms commsSend = new Comms();
+			commsSend.setText("add userHobby");
+			commsSend.setObj(multiBean);
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+			
+		return (Vector<UserHobby>)commsRec.getObj();
+		
+	//	logger.debug(" getNetUserList() call invoked");
+
+	}
+
+	// probably a boolean to say coool we did it
+	public void setNetAddRating(Rating ratingIn)
+	{
+		Comms commsSend = new Comms();
+			commsSend.setText("add userRating");
+			commsSend.setObj(ratingIn);
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+		
+		// Do nothing.. the server does not yet return anything !!!!!!!
+		
+		
+	//	logger.debug(" getNetUserList() call invoked");	
+	}
+
 	
+	// probably a boolean to say coool we did it
+	public void setNetNotifcation(Notification notificationIn)
+	{
+		Comms commsSend = new Comms();
+			commsSend.setText("add userNotifications");
+			commsSend.setObj(notificationIn);
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+		
+		// Do nothing.. the server does not yet return anything !!!!!!!
+		
+		
+	//	logger.debug(" getNetUserList() call invoked");	
+	}
+
 	
 
 }
