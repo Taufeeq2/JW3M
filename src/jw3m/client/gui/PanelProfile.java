@@ -8,8 +8,6 @@ import java.util.Vector;
 
 import javax.swing.JRadioButton;
 
-
-
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
@@ -23,6 +21,8 @@ import jw3m.dao.DAO;
 import javax.swing.JScrollPane;
 import javax.swing.ButtonGroup;
 import javax.swing.JTextField;
+import javax.swing.JTable;
+import javax.swing.JComboBox;
 
 public class PanelProfile extends JPanel implements ActionListener
 {
@@ -41,12 +41,7 @@ public class PanelProfile extends JPanel implements ActionListener
 	private JLabel lblDisplayMobile;
 	private JRadioButton rdbtnYes;
 	private JRadioButton rdbtnNo;
-	private JPanel panel;
 	private JPanel panel_1;
-	private JLabel lblMySkills;
-	private JScrollPane scrollPane;
-	private JTextArea textArea;
-	private JButton btnShowSkills;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private User user = new User();
 	private JLabel lblAlias;
@@ -54,6 +49,14 @@ public class PanelProfile extends JPanel implements ActionListener
 	private JTextArea textArea_1;
 	private JScrollPane scrollPane_1;
 	private JTextArea textArea_2;
+	private JPanel panel;
+	private JScrollPane scrollPane;
+	private JTable table;
+	private JLabel lblMySkills;
+	private JButton btnRemoveSelectedSkill;
+	private JComboBox comboBoxSkills;
+	private JButton btnAddSelectedSkill;
+	private Vector<String> skillNames = new Vector<String>();
 	
 	
 	public PanelProfile(SkillsClient frame) {
@@ -72,31 +75,8 @@ public class PanelProfile extends JPanel implements ActionListener
 		lblUserId.setBounds(39, 89, 68, 16);
 		add(lblUserId);
 		
-		panel = new JPanel();
-		panel.setBounds(0, 447, 882, 385);
-		add(panel);
-		panel.setLayout(null);
-		
-		lblMySkills = new JLabel("My Skills");
-		lblMySkills.setBounds(354, 57, 94, 27);
-		lblMySkills.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
-		panel.add(lblMySkills);
-		
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(46, 97, 796, 230);
-		panel.add(scrollPane);
-		
-		textArea = new JTextArea();
-		scrollPane.setViewportView(textArea);
-		
-		btnShowSkills = new JButton("Show Skills");
-		btnShowSkills.setBounds(370, 347, 127, 25);
-		btnShowSkills.setFont(new Font("Tahoma", Font.BOLD, 16));
-		panel.add(btnShowSkills);
-		btnShowSkills.addActionListener(this); 
-		
 		panel_1 = new JPanel();
-		panel_1.setBounds(0, 0, 882, 447);
+		panel_1.setBounds(0, 0, 882, 387);
 		add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -195,6 +175,39 @@ public class PanelProfile extends JPanel implements ActionListener
 				textArea_2.setBounds(763, 89, -177, 254);
 				panel_1.add(textArea_2);
 				
+				panel = new JPanel();
+				panel.setBounds(0, 400, 1031, 267);
+				add(panel);
+				panel.setLayout(null);
+				
+				scrollPane = new JScrollPane();
+				scrollPane.setBounds(1028, 13, -1029, 241);
+				panel.add(scrollPane);
+				
+				table = new JTable();
+				table.setBounds(1012, 151, -980, -108);
+				panel.add(table);
+				
+				lblMySkills = new JLabel("My Skills");
+				lblMySkills.setFont(new Font("Calibri", Font.BOLD, 22));
+				lblMySkills.setBounds(468, 0, 88, 30);
+				panel.add(lblMySkills);
+				
+				btnRemoveSelectedSkill = new JButton("Remove selected skill from above table");
+				btnRemoveSelectedSkill.setBounds(22, 158, 308, 25);
+				panel.add(btnRemoveSelectedSkill);
+				
+				
+				baseFrame.getNetSkillList();
+								
+				comboBoxSkills = new JComboBox();
+				comboBoxSkills.setBounds(22, 207, 308, 22);
+				panel.add(comboBoxSkills);
+				
+				btnAddSelectedSkill = new JButton("Add selected skill from dropdown");
+				btnAddSelectedSkill.setBounds(22, 242, 308, 25);
+				panel.add(btnAddSelectedSkill);
+				
 			if(baseFrame.authenticatedUser.isMentor())
 			{
 				rdbtnYes.setSelected(true);
@@ -214,40 +227,6 @@ public class PanelProfile extends JPanel implements ActionListener
 		Object source = e.getSource();
 		int skill, rating = 0;
 		String skillName = null, skillDesc = null;
-		
-		
-		if(source == btnShowSkills)
-		{
-			textArea.setText("");
-			for (int i = 0; i < baseFrame.data_userSkills.size(); i++)
-			{
-				skill = baseFrame.data_userSkills.get(i).getSkillID();
-				
-				for(int j = 0; j < baseFrame.data_skillList.size(); j++)
-				{
-					if(skill == baseFrame.data_skillList.get(j).getSkillID())
-					{
-						skillName = baseFrame.data_skillList.get(j).getSkillName();
-						skillDesc = baseFrame.data_skillList.get(j).getSkillDescription();
-					}
-
-				}
-				
-				for(int k = 0; k < baseFrame.data_userRatings.size(); k++)
-				{
-					
-					
-					if((baseFrame.authenticatedUser.getUserName().equals(baseFrame.data_userRatings.get(k).getUserID())) 
-							&& (skill == baseFrame.data_userRatings.get(k).getSkillID()) && 
-							(baseFrame.authenticatedUser.getUserName().equals(baseFrame.data_userRatings.get(k).getRaterID())))
-					{
-						rating = baseFrame.data_userRatings.get(k).getLevel();
-					}
-				}
-				textArea.append(skill + "\t" + skillName + "\t" + skillDesc + "\t" + rating + "\n" );
-	
-			}	
-		}
 		
 		
 		
