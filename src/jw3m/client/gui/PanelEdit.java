@@ -174,6 +174,7 @@ public class PanelEdit extends JPanel implements ActionListener
 		btnAddHobby.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnAddHobby.setBounds(765, 377, 121, 25);
 		add(btnAddHobby);
+		btnAddHobby.addActionListener(this);
 		
 		Vector<Hobby> hobbyList = new Vector<Hobby>();
 		hobbyList = baseFrame.data_hobbyList;
@@ -250,9 +251,11 @@ public class PanelEdit extends JPanel implements ActionListener
 		
 		if(source == btnAddHobby)
 		{
+			Vector<Hobby> hobby = new Vector<Hobby>();
+			hobby.add((Hobby)comboBox.getSelectedItem());
+			hobbyArea.append("\n" + hobby.toString());
 
-			
-//			baseFrame.setNetUserHobby(baseFrame.authenticatedUser, comboBox.getSelectedItem());
+//			baseFrame.setNetUserHobby(baseFrame.authenticatedUser, hobbySet);
 			
 		
 		}
