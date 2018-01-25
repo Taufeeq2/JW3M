@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 import jw3m.beans.Rating;
 import jw3m.beans.Skill;
-import jw3m.dao.DAO;
+import jw3m.beans.User;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -40,13 +40,14 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	private Skill skillSelected = null;
 	private Vector data = null;
 	private Vector<Rating> ratingsData = null;
+	private User thisUser = null;
 	private MyTableModel myModel;
 
 	public PanelReporting(SkillsClient frame)
 	{
 		baseFrame = frame;
 		
-		Object[] values = { "", "" , "" };
+		Object[] values = { "", "" , "" , "" , "" };
 		data = new Vector();
 		panel = new JPanel();
 
@@ -75,8 +76,8 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		Vector<Skill> skillNames = new Vector<Skill>();
 		try 
 		{
-			DAO getSkills = new DAO();
-			skillNames = getSkills.getSkillList();
+			baseFrame.getNetSkillList();
+		
 		} 
 		catch (Exception e) 
 		{
@@ -85,7 +86,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		
 		
 		
-		comboBox = new JComboBox(skillNames);
+		comboBox = new JComboBox(baseFrame.data_skillList);
 		comboBox.addActionListener(this);
 		panel_1.add(comboBox);
 		panel.setLayout(new GridLayout(1, 1, 0, 0));
@@ -109,7 +110,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	class MyTableModel extends AbstractTableModel
 	{
 		private String[] columnNames =
-		{ "User ID", "Average Rating", "Ratings" };
+		{ "User ID", "Surname" , "Name" , "Average", "Ratings" };
 
 	//	private Vector data = new Vector();
 	
@@ -217,11 +218,11 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 			}
 			
 			skillSelected = (Skill) comboBox.getSelectedItem();
-			DAO skillUsers;
+		  
 			try
 			{
-				skillUsers = new DAO();
-				ratingsData = skillUsers.getRatings(skillSelected);
+		  		
+		   		ratingsData = baseFrame.getNetSkillRating(skillSelected);
 				Vector<String> vectUserId = new Vector<String>();
 				Vector<Double> vectSum = new Vector<Double>();
 				Vector<Integer> vectCount = new Vector<Integer>();
@@ -231,15 +232,13 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 					Rating thisRating = ratingsData.get(x);	
 					String saveUserId = thisRating.getUserID();
 					char matched = 'n';
-					System.out.println("saveUserId =" + saveUserId);
-			//		System.out.println("vectorUserId.get(y) = " + vectUserId.get(0));
+				
 					for (int y=0; y<vectUserId.size(); y++ )	
 					{
-						System.out.println("saveUserId =" + saveUserId);
-						System.out.println("vectorUserId.get(y) = " + vectUserId.get(y));
+					
 						if (saveUserId.equals(vectUserId.get(y)))
 						{
-							System.out.println("matched = y");
+							
 							matched = 'y';
 							double sum = vectSum.get(y) + thisRating.getLevel();
 							vectSum.set(y, sum);
@@ -249,26 +248,56 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 					}
 					if (matched == 'n')
 					{
-						System.out.println("matched = n");
+						
 						vectUserId.addElement(saveUserId);
 						vectSum.addElement((double)thisRating.getLevel());
 						vectCount.addElement(1);
 					}
 				}	
 				
-				System.out.println("Number of User IDs = " + vectUserId.size());
+	 			//sort the vector by average rating
+				char sorted = 'n';
+	  			while (sorted == 'n')
+	  			{
+	  				sorted = 'y';
+	  				for (int ind=1; ind<vectUserId.size(); ind++)
+	  				{
+	  					if((vectSum.get(ind-1)/vectCount.get(ind-1)) < (vectSum.get(ind)/vectCount.get(ind)))
+	  					{
+	  						sorted = 'n';
+	  						String tempUserId = vectUserId.get(ind-1);
+	  						Double tempSum = vectSum.get(ind-1);
+	  						Integer tempCount = vectCount.get(ind-1);
+	  						
+	  						vectUserId.set(ind-1, vectUserId.get(ind));
+	  						vectSum.set(ind-1, vectSum.get(ind));
+	  						vectCount.set(ind-1,  vectCount.get(ind));
+	  						
+	  						vectUserId.set(ind,  tempUserId);
+	  						vectSum.set(ind, tempSum);
+	  						vectCount.set(ind,  tempCount);
+	  						
+	  					}
+	  				}
+	  			}
+				
 				
 				for (int z=0; z<vectUserId.size(); z++ )
 				{	
-					Object[] data = new Object[3];
+					Object[] data = new Object[5];
 					double aveLevel = vectSum.get(z)/vectCount.get(z);
 					int numberOfRatings = vectCount.get(z);
 					String thisUserId = vectUserId.get(z);
 						
+					User thisUser = new User();
+					thisUser = baseFrame.getNetUser(thisUserId);
+					
 						
 						data[0] = thisUserId;
-						data[1] = aveLevel;
-						data[2] = numberOfRatings;
+						data[1] = thisUser.getSurname();
+						data[2] = thisUser.getFirstName();
+						data[3] = aveLevel;
+						data[4] = numberOfRatings;
 					
 					a = (MyTableModel) table.getModel();
 					a.insertData(data);

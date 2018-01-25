@@ -212,24 +212,37 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		if (source ==btnInv)
 		{
 			
-			Notification notification = new Notification();
-			notification.setRequestorID(  baseFrame.getAuthenticatedUser().getUserName()  );
-			
 			User tempUser = (User)comboBox.getSelectedItem();
 			tempUser.getUserName();
-			notification.setRatorID(   tempUser.getUserName()    );
-		
 			
-			java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
 			
-			notification.setDate(date);
 			
-			baseFrame.setNetNotifcation(notification);
+			if (baseFrame.getAuthenticatedUser().getUserName().equals(tempUser.getUserName()) )
+			{
+				JOptionPane.showMessageDialog(this, "You cannot invite yourself");
+			}
+			else
+			{
+				Notification notification = new Notification();
+				
+				notification.setRequestorID(  baseFrame.getAuthenticatedUser().getUserName()  );
+				
+				notification.setRatorID(   tempUser.getUserName()    );
 			
-			User tempUserRator = baseFrame.getNetUser(notification.getRatorID());
+				
+				java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
+				
+				notification.setDate(date);
+				
+				baseFrame.setNetNotifcation(notification);
+				
+				User tempUserRator = baseFrame.getNetUser(notification.getRatorID());
+				
+				JOptionPane.showMessageDialog(this, "You have invited " + tempUserRator.getFirstName() + " " + tempUserRator.getSurname() + " ("+ tempUserRator.getUserName()+ ") to rate you.");
+				
+			}
 			
-			JOptionPane.showMessageDialog(this, "You have invited " + tempUserRator.getFirstName() + " " + tempUserRator.getSurname() + " ("+ tempUserRator.getUserName()+ ") to rate you.");
-			
+
 			
 			
 		}

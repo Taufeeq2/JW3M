@@ -437,24 +437,22 @@ public class SkillsClient extends JFrame implements ActionListener
 			logger.info("messages butt pressed");
 			tabbedPane.setSelectedComponent(notificationP);
 
-			// Tests to come out
-			this.getNetUserList(); 	//data_UserList
-			this.getNetSkillList(); 	//data_SkillList
-			this.getNetHobbyList(); //data_HobbyList
-			this.getNetLevels();	//data_Levels
-			
-			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserSkills(authenticatedUser) );
-			System.out.println();
-			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserHobby(authenticatedUser) );
-			System.out.println();
-			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserRating(authenticatedUser) );
-			System.out.println();
-			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserNotifications(authenticatedUser) );
-			System.out.println();
-			
-			//nlrh
-		
-			
+//			// Tests to come out
+//			this.getNetUserList(); 	//data_UserList
+//			this.getNetSkillList(); 	//data_SkillList
+//			this.getNetHobbyList(); //data_HobbyList
+//			this.getNetLevels();	//data_Levels
+//			
+//			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserSkills(authenticatedUser) );
+//			System.out.println();
+//			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserHobby(authenticatedUser) );
+//			System.out.println();
+//			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserRating(authenticatedUser) );
+//			System.out.println();
+//			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserNotifications(authenticatedUser) );
+//			System.out.println();
+//			
+
 			
 		}
 			
