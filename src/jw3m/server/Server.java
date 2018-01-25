@@ -247,6 +247,13 @@ public class Server
 					break;
 				}
 				
+				case "send skillRating" : 
+				{
+					logger.info(strPrefix + " send skillRating");
+					oos.writeObject(new Comms("reply skillRating", dao.getRatings( (Skill)comms.getObj()   )       )   );
+					break;
+				}
+				
 				case "send userNotifications" : 
 				{
 					logger.info(strPrefix + " send userNotifications");
