@@ -40,7 +40,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	private JPanel basePanel;
 	// Main "screens"
 	private PanelLogin logonP;
-
+ 
 
 	private JTabbedPane tabbedPane = null;
 	
@@ -437,24 +437,22 @@ public class SkillsClient extends JFrame implements ActionListener
 			logger.info("messages butt pressed");
 			tabbedPane.setSelectedComponent(notificationP);
 
-			// Tests to come out
-			this.getNetUserList(); 	//data_UserList
-			this.getNetSkillList(); 	//data_SkillList
-			this.getNetHobbyList(); //data_HobbyList
-			this.getNetLevels();	//data_Levels
-			
-			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserSkills(authenticatedUser) );
-			System.out.println();
-			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserHobby(authenticatedUser) );
-			System.out.println();
-			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserRating(authenticatedUser) );
-			System.out.println();
-			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserNotifications(authenticatedUser) );
-			System.out.println();
-			
-			//nlrh
-		
-			
+//			// Tests to come out
+//			this.getNetUserList(); 	//data_UserList
+//			this.getNetSkillList(); 	//data_SkillList
+//			this.getNetHobbyList(); //data_HobbyList
+//			this.getNetLevels();	//data_Levels
+//			
+//			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserSkills(authenticatedUser) );
+//			System.out.println();
+//			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserHobby(authenticatedUser) );
+//			System.out.println();
+//			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserRating(authenticatedUser) );
+//			System.out.println();
+//			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserNotifications(authenticatedUser) );
+//			System.out.println();
+//			
+
 			
 		}
 			
@@ -668,6 +666,17 @@ public class SkillsClient extends JFrame implements ActionListener
 		
 	//	logger.debug(" getNetUserList() call invoked");
 
+	}
+	
+	public Vector<Rating> getNetSkillRating(Skill skillIn)
+	{
+		Comms commsSend = new Comms();
+		commsSend.setText("send skillRating");
+		commsSend.setObj(skillIn);
+
+	Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+		
+	return (Vector<Rating>)commsRec.getObj();
 	}
 	
 	public Vector<Notification> getNetUserNotifications(User userIn)

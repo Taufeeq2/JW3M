@@ -47,6 +47,7 @@ public class PanelEdit extends JPanel implements ActionListener
 	private JLabel label;
 	private JButton btnAddHobby;
 	private JComboBox comboBox;
+	private JButton btnRemove;
 	
 	public PanelEdit(SkillsClient frame) {
 		baseFrame = frame;
@@ -142,8 +143,18 @@ public class PanelEdit extends JPanel implements ActionListener
 		name.setText(baseFrame.authenticatedUser.getFirstName());
 		surname.setText(baseFrame.authenticatedUser.getSurname());
 		email.setText(baseFrame.authenticatedUser.getEmailAddress());
-	 	mobile.setText("" + baseFrame.authenticatedUser.getMobile());    // leading ZERO does not work here
+	 	mobile.setText("0" + baseFrame.authenticatedUser.getMobile());    // leading ZERO does not work here
 		alias.setText(baseFrame.authenticatedUser.getAlias());
+		
+		
+		if(baseFrame.authenticatedUser.isMentor())
+		{
+			rdbtnYes.setSelected(true);
+		}
+		else
+		{
+			rdbtnNo.setSelected(true);
+		}
 		
 		hobbyArea = new JTextArea();
 		hobbyArea.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -157,22 +168,33 @@ public class PanelEdit extends JPanel implements ActionListener
 		
 		label = new JLabel("Hobby");
 		label.setFont(new Font("Tahoma", Font.BOLD, 16));
-		label.setBounds(495, 377, 72, 25);
+		label.setBounds(495, 418, 72, 25);
 		add(label);
 		
 		btnAddHobby = new JButton("Add Hobby");
 		btnAddHobby.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnAddHobby.setBounds(765, 377, 121, 25);
+		btnAddHobby.setBounds(766, 418, 121, 25);
 		add(btnAddHobby);
+		btnAddHobby.addActionListener(this);
 		
 		Vector<Hobby> hobbyList = new Vector<Hobby>();
 		hobbyList = baseFrame.data_hobbyList;
 		
 		comboBox = new JComboBox(hobbyList);
+		comboBox.setToolTipText("Select Hobby and click Add Hobby");
+		
 		comboBox.setFont(new Font("Tahoma", Font.BOLD, 16));
-		comboBox.setBounds(579, 379, 147, 22);
+		comboBox.setBounds(582, 419, 147, 22);
 		add(comboBox);
 		comboBox.addActionListener(this);
+		comboBox.setEditable(true);
+		
+		btnRemove = new JButton("Remove Hobby");
+		btnRemove.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnRemove.setBounds(621, 366, 147, 25);
+		add(btnRemove);
+		btnRemove.addActionListener(this);
+		
 		
 		
 		// sort out mentor
@@ -191,7 +213,7 @@ public class PanelEdit extends JPanel implements ActionListener
 				if (baseFrame.data_hobbyList.get(j).getHobbyID() == hobID)
 				{
 					hobbyArea.setEditable(false);
-					hobbyArea.setText(baseFrame.data_hobbyList.get(j).getHobbyName());
+					hobbyArea.append(baseFrame.data_hobbyList.get(j).getHobbyName() + "\n");
 				}
 			}
 
@@ -237,10 +259,20 @@ public class PanelEdit extends JPanel implements ActionListener
 		
 		if(source == btnAddHobby)
 		{
+			Vector<Hobby> hobby = new Vector<Hobby>();
+			hobby.add((Hobby)comboBox.getSelectedItem());
+			hobbyArea.append("\n" + hobby.toString());
 
-//			baseFrame.setNetUserHobby(baseFrame.authenticatedUser, hobbyField.getText());
+			baseFrame.setNetUserHobby(baseFrame.authenticatedUser, hobby);
 			
 		
+		}
+		
+		if(source == btnRemove)
+		{
+			Vector<Hobby> hobby1 = new Vector<Hobby>();
+//			hobbyArea.remove(hobbyArea.getText().replace('', ''));
+			baseFrame.setNetUserHobby(baseFrame.authenticatedUser, hobby1);
 		}
 		
 	}

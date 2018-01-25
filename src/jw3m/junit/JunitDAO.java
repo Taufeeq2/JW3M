@@ -216,7 +216,12 @@ public class JunitDAO
 		 userHobby = new UserHobby();
 		 userHobby.setUserID("a124788");
 		 userHobby.setHobbyID(1);
-		 dao.addUserHobby(userHobby);
+		
+		 // this may need to be checked again
+		 dao.addUserHobby("a124788", 1);
+	//	 dao.addUserHobby(userHobby);
+		 
+		 
 		 System.out.println("After adding chess as a hobby for a124788");
 		 userList = dao.getUserHobby(newHobby);
 		 numberOfUsers = userList.size();
@@ -335,8 +340,12 @@ public class JunitDAO
 		 Notification addNotification = new Notification();
 		 addNotification.setRequestorID("a999999");
 		 addNotification.setRatorID("a111111");
-		 Date date = new Date(20180101);
-		 addNotification.setDate(date); //this date is still wonky
+		 
+		 java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
+		 
+		 //Date date = new Date(20180101); //this date is still wonky
+		 
+		 addNotification.setDate(date); 
 		 dao.setNotification(addNotification);
 		 
 		 
@@ -346,6 +355,8 @@ public class JunitDAO
 		 removeNotification.setRatorID("a111111");
 		 Date rmvDate = new Date(20180101);
 		 removeNotification.setDate(rmvDate);
+		 
+		 // this should remove notification by ID
 		 dao.removeNotification(removeNotification);
 		 
 	}

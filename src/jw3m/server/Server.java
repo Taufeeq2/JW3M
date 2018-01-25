@@ -247,6 +247,13 @@ public class Server
 					break;
 				}
 				
+				case "send skillRating" : 
+				{
+					logger.info(strPrefix + " send skillRating");
+					oos.writeObject(new Comms("reply skillRating", dao.getRatings( (Skill)comms.getObj()   )       )   );
+					break;
+				}
+				
 				case "send userNotifications" : 
 				{
 					logger.info(strPrefix + " send userNotifications");
@@ -430,8 +437,6 @@ public class Server
 				case "edit user" : 
 				{
 					logger.info(strPrefix + "edit user");
-					// Check values coming into the server is incorrect
-					logger.info(">>>>>>>>>>" + (User)comms.getObj());
 					
 					User tempUser;
 					//lies

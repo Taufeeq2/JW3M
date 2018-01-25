@@ -1,10 +1,13 @@
 package jw3m.client.gui;
 
 import javax.swing.JPanel;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.Vector;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -12,6 +15,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import jw3m.beans.Notification;
 import jw3m.beans.User;
+import jw3m.beans.Rating;
 import jw3m.dao.DAO;
 
 import javax.swing.*;
@@ -30,6 +34,8 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 	private JTable table;
 	private JButton btnRateUser;
 	private JButton btnCancelNotification;
+	private JButton btnInv;
+	private JComboBox comboBox;
 	
 	public PanelNotifications(SkillsClient frame) {
 		baseFrame = frame;
@@ -62,6 +68,16 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		btnCancelNotification.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnCancelNotification.setBounds(330, 364, 249, 23);
 		add(btnCancelNotification);
+		
+		btnInv = new JButton("Invite rating");
+		btnInv.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnInv.setBounds(100, 415, 164, 23);
+		btnInv.addActionListener(this);
+		add(btnInv);
+		
+		comboBox = new JComboBox(baseFrame.data_userList);
+		comboBox.setBounds(330, 416, 249, 22);
+		add(comboBox);
 		
 	} 
 	
@@ -192,6 +208,43 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 			String userName = (String) model.getValueAt(table.getSelectedRow(), 1);
 			System.out.println("Requester = " + userName);
 		}
+		
+		if (source ==btnInv)
+		{
+			
+			User tempUser = (User)comboBox.getSelectedItem();
+			tempUser.getUserName();
+			
+			
+			
+			if (baseFrame.getAuthenticatedUser().getUserName().equals(tempUser.getUserName()) )
+			{
+				JOptionPane.showMessageDialog(this, "You cannot invite yourself");
+			}
+			else
+			{
+				Notification notification = new Notification();
+				
+				notification.setRequestorID(  baseFrame.getAuthenticatedUser().getUserName()  );
+				
+				notification.setRatorID(   tempUser.getUserName()    );
+			
+				
+				java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
+				
+				notification.setDate(date);
+				
+				baseFrame.setNetNotifcation(notification);
+				
+				User tempUserRator = baseFrame.getNetUser(notification.getRatorID());
+				
+				JOptionPane.showMessageDialog(this, "You have invited " + tempUserRator.getFirstName() + " " + tempUserRator.getSurname() + " ("+ tempUserRator.getUserName()+ ") to rate you.");
+				
+			}
+			
 
+			
+			
+		}
 	}
 }
