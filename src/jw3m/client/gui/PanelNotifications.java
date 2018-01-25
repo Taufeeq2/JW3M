@@ -211,9 +211,6 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		
 		if (source ==btnInv)
 		{
-//			private String requestorID = null;
-//			private String ratorID = null;
-//			private Date date;
 			
 			Notification notification = new Notification();
 			notification.setRequestorID(  baseFrame.getAuthenticatedUser().getUserName()  );
@@ -221,8 +218,7 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 			User tempUser = (User)comboBox.getSelectedItem();
 			tempUser.getUserName();
 			notification.setRatorID(   tempUser.getUserName()    );
-			
-			// fix this 
+		
 			
 			java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
 			
@@ -231,8 +227,6 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 			baseFrame.setNetNotifcation(notification);
 			
 			User tempUserRator = baseFrame.getNetUser(notification.getRatorID());
-			
-			
 			
 			JOptionPane.showMessageDialog(this, "You have invited " + tempUserRator.getFirstName() + " " + tempUserRator.getSurname() + " ("+ tempUserRator.getUserName()+ ") to rate you.");
 			
