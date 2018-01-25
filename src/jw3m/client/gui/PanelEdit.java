@@ -182,6 +182,11 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		
 		hobbyList = baseFrame.data_hobbyList;
+//		
+//		for(int i = 0; i < hobbyList.size(); i++)
+//		{
+//			dobby1.addElement(hobbyList.get(i).to);
+//		}
 		
 		comboBox = new JComboBox(hobbyList);
 		comboBox.setBounds(582, 419, 147, 22);
