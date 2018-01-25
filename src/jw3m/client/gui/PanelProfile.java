@@ -309,6 +309,9 @@ public class PanelProfile extends JPanel implements ActionListener
 				add(scrollPane);
 
 				scrollPane.setViewportView(table);
+				
+				this.panel.validate();
+				this.panel.repaint();
 
 				populateComboBox();
 
@@ -353,7 +356,8 @@ public class PanelProfile extends JPanel implements ActionListener
 			btnAddSkill.setBounds(669, 292, 97, 25);
 			panel.add(btnAddSkill);
 			
-			panel.repaint();
+			this.panel.validate();
+			this.panel.repaint();
 		}
 	}
 }
