@@ -106,8 +106,11 @@ public class Server
 						oos.writeObject(welcome);
 						
 						// rather read a multi bean
-						
+
+						// change comms auth to first Objeects
 						Comms commsAUTH = (Comms)ois.readObject();
+						// send first packets to a different method with switch that will handle logon and add new
+						
 						
 						// if commsAUTH is actually add user then
 						// 
