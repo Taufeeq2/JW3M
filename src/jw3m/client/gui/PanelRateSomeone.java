@@ -257,7 +257,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 			ratee.setSkillID((int)rating[1]); 
 			ratee.setUserID((String)rating[0]);
 
-			int level = 0;
+			int level = 0; 
 			level = (ratee.getKnowledge() + ratee.getWorkStandard() + ratee.getAutonomy() + ratee.getComplexityCoping() + ratee.getContextPerception() 
 					+ ratee.getCapabilityGrowing() + ratee.getCollaboration()) / 7;
 			ratee.setLevel(level);
