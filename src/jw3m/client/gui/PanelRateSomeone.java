@@ -255,10 +255,10 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 			ratee.setLevel(Integer.parseInt((String)rating[10]));
 			
 //			System.out.println("2nd test " + ratee.getAutonomy());
-			ratee.setRaterID((String)rating[0]);
+			ratee.setRaterID(baseFrame.authenticatedUser.getUserName());
 //			int skill1 = (Integer.parseInt((String)rating[1]));
 			ratee.setSkillID((int)rating[1]); 
-			ratee.setUserID(baseFrame.authenticatedUser.getUserName());
+			ratee.setUserID((String)rating[0]);
 
 			baseFrame.setNetAddRating(ratee);
 			JOptionPane.showMessageDialog(this, "Rating submitted");
