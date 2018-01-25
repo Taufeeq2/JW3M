@@ -37,6 +37,9 @@ public class UserHobby implements Serializable
 		this.hobbyID = hobbyID;
 	}
 
+	// we can't add the other toString cos we have hobby id and not the name avaliable to us.
+	
+	
 	@Override
 	public String toString()
 	{
