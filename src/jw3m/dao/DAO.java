@@ -50,12 +50,14 @@ public class DAO
 			sqlstat = con.createStatement();
 			
 			// Testing methods area
-			Skill tempSkill = new Skill();
-			tempSkill.setSkillID(500);
-			tempSkill.setSkillName("Postilion");
-			tempSkill.setSkillVendor("SBSA");
-			tempSkill.setSkillDescription("Payments");
-			this.addSkillList(tempSkill);
+//			boolean test = this.addUserSkills("a124788", 100);
+//			System.out.println("Result from addUserSkill = " + test);
+//			Skill tempSkill = new Skill();
+//			tempSkill.setSkillID(500);
+//			tempSkill.setSkillName("Postilion");
+//			tempSkill.setSkillVendor("SBSA");
+//			tempSkill.setSkillDescription("Payments");
+//			this.addSkillList(tempSkill);
 //			Vector<Hobby> j = this.getHobbyList();
 //			Vector<User> j = this.getUserHobby(1);
 //			Vector<UserHobby> j = this.getUserHobby("a126317");
@@ -302,15 +304,6 @@ public class DAO
 					}
 				}
 				
-				
-			} catch (SQLException e1)
-			{
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-			try
-			{
 				ps = con.prepareStatement("INSERT INTO skills VALUES (null, ?, ?, ?)");
 				ps.setString(1, inSkill.getSkillName());
 				ps.setString(2, inSkill.getSkillVendor());
@@ -414,13 +407,22 @@ public class DAO
 		{
 			try
 			{
+				ResultSet rsCheck = sqlstat.executeQuery("SELECT * FROM UserSkills");
+				while (rsCheck.next())
+				{
+					if ((inUserID.equals(rsCheck.getString("userID"))) && (inSkillID == rsCheck.getInt("skillID")))
+					{
+						return false;
+					}
+				}
+				
 				ps = con.prepareStatement("INSERT INTO userSkills VALUES(null, ?, ?)");
 				ps.setString(1, inUserID);
 				ps.setInt(2, inSkillID);
 				
 				ps.executeUpdate();
 				
-				
+				return true;
 				
 			} catch (SQLException e)
 			{
@@ -428,7 +430,7 @@ public class DAO
 				e.printStackTrace();
 				return false;
 			}
-			return true;
+			
 		}
 		
 		public boolean removeUserSkills(String inUserID, int inSkillID)
