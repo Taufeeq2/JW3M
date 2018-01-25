@@ -156,7 +156,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 
 		String str[] =
 		{ "User ID", "Skill ID", "Skill Name", "Knowledgeable", "Standard of Work", "Autonomy", "Coping with Complexity", "Perception of Context",
-				"Growing Capability", "Purposeful Collaboration", "Overall Rating(Level)" };
+				"Growing Capability", "Purposeful Collaboration" };
 		model = new DefaultTableModel(str, 0)
 		{
 			public void setValueAt(Object aValue, int row, int column)
@@ -247,12 +247,9 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 			ratee.setAutonomy(Integer.parseInt((String)rating[5]));
 			ratee.setComplexityCoping(Integer.parseInt((String)rating[6]));
 			ratee.setContextPerception(Integer.parseInt((String)rating[7]));
-			
-//			System.out.println("Test " + ratee.getAutonomy());
-			
 			ratee.setCapabilityGrowing(Integer.parseInt((String)rating[8]));
 			ratee.setCollaboration(Integer.parseInt((String)rating[9]));
-			ratee.setLevel(Integer.parseInt((String)rating[10]));
+			
 			
 //			System.out.println("2nd test " + ratee.getAutonomy());
 			ratee.setRaterID(baseFrame.authenticatedUser.getUserName());
@@ -260,6 +257,12 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 			ratee.setSkillID((int)rating[1]); 
 			ratee.setUserID((String)rating[0]);
 
+			int level = 0; 
+			level = (ratee.getKnowledge() + ratee.getWorkStandard() + ratee.getAutonomy() + ratee.getComplexityCoping() + ratee.getContextPerception() 
+					+ ratee.getCapabilityGrowing() + ratee.getCollaboration()) / 7;
+			ratee.setLevel(level);
+			
+			
 			baseFrame.setNetAddRating(ratee);
 			JOptionPane.showMessageDialog(this, "Rating submitted");
 		}
