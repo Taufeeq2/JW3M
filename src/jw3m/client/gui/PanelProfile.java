@@ -42,7 +42,8 @@ public class PanelProfile extends JPanel implements ActionListener
 	private JButton btnAddSelectedSkill;
 	private Vector<Skill> skillList = new Vector<Skill>();
 	private Vector<Skill> skillNames = new Vector<Skill>();
-	Vector<Skill> skillNms = new Vector<Skill>();
+	private Vector<Skill> skillNms = new Vector<Skill>();
+	private Vector<UserSkill> userSkills = new Vector<UserSkill>();
 	private JScrollPane scrollPane;
 
 	public PanelProfile(SkillsClient frame)
@@ -60,10 +61,11 @@ public class PanelProfile extends JPanel implements ActionListener
 		lblMySkills.setFont(new Font("Calibri", Font.BOLD, 22));
 		lblMySkills.setBounds(468, 0, 88, 30);
 		panel.add(lblMySkills);
-
+		
 		btnRemoveSelectedSkill = new JButton("Remove selected skill from above table");
 		btnRemoveSelectedSkill.setBounds(22, 158, 308, 25);
 		panel.add(btnRemoveSelectedSkill);
+		btnRemoveSelectedSkill.addActionListener(this);
 
 		//Vector<Skill> skillNms = new Vector<Skill>();
 		baseFrame.getNetSkillList();
@@ -96,7 +98,7 @@ public class PanelProfile extends JPanel implements ActionListener
 		panel.add(scrollPane);
 		scrollPane.setViewportView(table);
 
-		User tempUser = new User();
+		/*User tempUser = new User();
 		int skill;
 		String skillName;
 
@@ -106,7 +108,7 @@ public class PanelProfile extends JPanel implements ActionListener
 		{
 			baseFrame.getNetSkillList();
 			skillList = baseFrame.data_skillList;
-			Vector<UserSkill> userSkills = new Vector<UserSkill>();
+			//Vector<UserSkill> userSkills = new Vector<UserSkill>();
 			userSkills = baseFrame.getNetUserSkills(tempUser);
 
 			for (int t = 0; t < userSkills.size(); t++)
@@ -131,7 +133,7 @@ public class PanelProfile extends JPanel implements ActionListener
 		} catch (Exception e1)
 		{
 			e1.printStackTrace();
-		}
+		}*/
 
 	}
 
@@ -172,7 +174,44 @@ public class PanelProfile extends JPanel implements ActionListener
 
 		};
 
-		// Setup the model
+		// populate the model
+		
+		User tempUser = new User();
+		int skill;
+		String skillName;
+
+		tempUser = baseFrame.authenticatedUser;
+		model.setRowCount(0);
+		try
+		{
+			baseFrame.getNetSkillList();
+			skillList = baseFrame.data_skillList;
+			//Vector<UserSkill> userSkills = new Vector<UserSkill>();
+			userSkills = baseFrame.getNetUserSkills(tempUser);
+
+			for (int t = 0; t < userSkills.size(); t++)
+			{
+				skill = userSkills.get(t).getSkillID();
+
+				for (int j = 0; j < skillList.size(); j++)
+				{
+					if (skill == skillList.get(j).getSkillID())
+					{
+						skillName = skillList.get(j).getSkillName();
+
+						Object obj[] =
+						{ tempUser.getUserName(), skill, skillName };
+						model.addRow(obj);
+
+					}
+
+				}
+			}
+
+		} catch (Exception e1)
+		{
+			e1.printStackTrace();
+		}
 
 	}
 
@@ -240,10 +279,12 @@ public class PanelProfile extends JPanel implements ActionListener
 		String skillName = null, skillDesc = null;
 		User tempUser = new User();
 		String tmpUser = null;
-		tmpUser = baseFrame.authenticatedUser.toString();
+		tmpUser = baseFrame.authenticatedUser.getUserName();
 		tempUser = baseFrame.authenticatedUser;
 		
 		int i = table.getSelectedRow(); // set index for selected row
+		
+		System.out.println("user and selected row index: " + tmpUser + "  " + i);
 
 		if (source == btnRemoveSelectedSkill && i >= 0) // if nothing selected
 														// its -1
@@ -252,33 +293,14 @@ public class PanelProfile extends JPanel implements ActionListener
 			try
 			{
 				DAO getSkill = new DAO();
-				skillList = baseFrame.data_skillList;
+				//skillList = getSkill.getSkillListByUser();
 				
-				getSkill.removeUserSkills(tmpUser, skillList.get(i).getSkillID());
-				
-				skillList = baseFrame.data_skillList;
-				Vector<UserSkill> userSkills = new Vector<UserSkill>();
+				System.out.println("skill list : " + skillList);
+								
 				userSkills = baseFrame.getNetUserSkills(tempUser);
+				skill = userSkills.get(i).getSkillID();
 				
-
-				for (int t = 0; t < userSkills.size(); t++)
-				{
-					skill = userSkills.get(t).getSkillID();
-
-					for (int j = 0; j < skillList.size(); j++)
-					{
-						if (skill == skillList.get(j).getSkillID())
-						{
-							skillName = skillList.get(j).getSkillName();
-
-							Object obj[] =
-							{ tempUser.getUserName(), skill, skillName };
-							model.addRow(obj);
-
-						}
-
-					}
-				}
+				getSkill.removeUserSkills(tmpUser, skill);
 				
 				setupSkillsTable();
 
