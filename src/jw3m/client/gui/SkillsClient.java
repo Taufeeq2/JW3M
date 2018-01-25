@@ -301,7 +301,10 @@ public class SkillsClient extends JFrame implements ActionListener
 	
 	public void setupSouthPanel()
 	{
-		sPanelConnectionStatus = new JLabel("Connected to localhost:1337");
+		
+		sPanelConnectionStatus = new JLabel("Connected to " + this.getNetworkClient().getServerAddress() + ":" +this.getNetworkClient().getServerPort() );
+		
+		
 		sPanelLoggedOnAs = new JLabel( "Logged on as '" + this.authenticatedUser.getUserName() + "' " );
 	//	sPanelMessagesLabel = new JLabel ("Messages:");
 		

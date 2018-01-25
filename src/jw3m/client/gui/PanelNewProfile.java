@@ -161,6 +161,8 @@ public class PanelNewProfile extends JPanel implements ActionListener
 			
 			JOptionPane.showMessageDialog(this, "New user " + name.getText() + " created" );
 			
+			
+			
 		
 			baseFrame.setNetAddUser(newUser);
 			

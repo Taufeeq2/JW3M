@@ -85,8 +85,11 @@ public class Server
 		@Override
 		public void run()
 		{
-	
+					User authenticatedUser = null;
+					
 		        	long threadId = Thread.currentThread().getId();
+		        	
+		        	
 		        	String strPrefixAuth = "  Thread ID:" + threadId + " | Authentication Message : ";
 		        	String strPrefixEnd = "  Thread ID:" + threadId + " | Session information : ";
 		        	
@@ -99,15 +102,30 @@ public class Server
 						
 						Comms welcome = new Comms("Welcome", "Welcome");
 		//				Comms comms_Creds = null;
-						oos.writeObject(welcome);
-						Comms comms_Username = (Comms)ois.readObject();
-						Comms comms_Password = (Comms)ois.readObject();
 						
-						User userObj = dao.getUser((String)comms_Username.getObj());
+						oos.writeObject(welcome);
+						
+						// rather read a multi bean
+						
+						Comms commsAUTH = (Comms)ois.readObject();
+						
+						// if commsAUTH is actually add user then
+						// 
+						
+
+						MultiBean multiBean = (MultiBean)commsAUTH.getObj();
+						
+						
+						String userName =(String)multiBean.getObj();
+						String password =(String)multiBean.getMulti().get(0);
+	
+						
+						
+						User userObj = dao.getUser( userName );
 						
 						if (userObj != null)
 						{
-							if (userObj.getPassword().equals((String)comms_Password.getObj()))
+							if (userObj.getPassword().equals(    password    ))
 							{
 								// good logon
 								
@@ -120,6 +138,8 @@ public class Server
 								oos.writeObject(new Comms("authenticated", userObj));
 								running = true;
 								
+								// now this session can have context
+								authenticatedUser = userObj;
 						//		ServerProtocol serverProtocol = new ServerProtocol(    );
 								
 							    while (running)
@@ -458,6 +478,17 @@ public class Server
 				}
 				
 				
+//				case ""request auth"" : 
+//				{
+//					logger.info(strPrefix + " "request auth"");
+//					
+				
+				
+//					oos.writeObject(new Comms("reply userList", dao.getUser((String)comms.getObj() )  )  );
+//					break;
+//				}
+//				
+//				
 				
 				// we keep default to help us code client
 				default : 

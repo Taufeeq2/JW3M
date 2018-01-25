@@ -79,8 +79,15 @@ public class NetworkClient
     
     public User passCredentials(String userName, String password)
     {
-    	Comms creds = null;
+  //  	Comms creds = null;
     	User user = null;
+    	
+    	MultiBean multiBean = new MultiBean();
+    	
+    	multiBean.setObj(userName);
+    	multiBean.addMulti(password);
+    	
+    	
 		try
 		{
 			Comms welcome = (Comms) ois.readObject();
@@ -88,13 +95,20 @@ public class NetworkClient
 			// should check that the object part is a string with welcome
 			if (welcome.getText().equals("Welcome")  )
 			{
-				logger.info("sending username");
-				oos.writeObject(new Comms("userName", userName));
-				logger.info("sending password");
-				oos.writeObject(new Comms("password", password));
+				
+				oos.writeObject( new Comms("request auth",multiBean)    );
+				
+//				logger.info("sending username");
+//				oos.writeObject(new Comms("userName", userName));
+//				logger.info("sending password");
+//				oos.writeObject(new Comms("password", password));
+//				
+				
+				
 				
 				logger.info("getting server response to credentials");
 				Comms credentialsReply = (Comms) ois.readObject();
+				
 				
 				
 				if (credentialsReply.getText().equals("authenticated"))
@@ -190,7 +204,7 @@ public class NetworkClient
     
     public int getServerPort()
     {
-    	return this.getServerPort();
+    	return this.serverPort;
     }
     
     
