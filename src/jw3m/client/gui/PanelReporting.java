@@ -15,7 +15,6 @@ import javax.swing.table.DefaultTableModel;
 import jw3m.beans.Rating;
 import jw3m.beans.Skill;
 import jw3m.beans.User;
-import jw3m.dao.DAO;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -77,8 +76,6 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		Vector<Skill> skillNames = new Vector<Skill>();
 		try 
 		{
-			//DAO getSkills = new DAO();
-			//skillNames = getSkills.getSkillList();
 			baseFrame.getNetSkillList();
 		
 		} 
@@ -221,11 +218,10 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 			}
 			
 			skillSelected = (Skill) comboBox.getSelectedItem();
-		  	//DAO skillUsers;
+		  
 			try
 			{
-		  		//skillUsers = new DAO();
-		 // 		ratingsData = skillUsers.getRatings(skillSelected);
+		  		
 		   		ratingsData = baseFrame.getNetSkillRating(skillSelected);
 				Vector<String> vectUserId = new Vector<String>();
 				Vector<Double> vectSum = new Vector<Double>();
