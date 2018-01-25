@@ -47,6 +47,7 @@ public class NetworkClient
 
     	try
 		{
+    		oos.reset();
 			oos.writeObject(commsSend);
 			Comms replyComms = (Comms) ois.readObject();
 

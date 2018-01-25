@@ -430,8 +430,6 @@ public class Server
 				case "edit user" : 
 				{
 					logger.info(strPrefix + "edit user");
-					// Check values coming into the server is incorrect
-					logger.info(">>>>>>>>>>" + (User)comms.getObj());
 					
 					User tempUser;
 					//lies
