@@ -40,7 +40,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	private JPanel basePanel;
 	// Main "screens"
 	private PanelLogin logonP;
-
+ 
 
 	private JTabbedPane tabbedPane = null;
 	
