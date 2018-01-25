@@ -319,34 +319,7 @@ public class DAO
 			}			
 		}
 		
-		public Vector<SkillName> getSkillName(int skillID)
-		{
-			Vector<SkillName> skillVect = new Vector<SkillName>();
-
-			try
-			{
-				ps = con.prepareStatement(
-						"SELECT skillName FROM skills where skillID = ?");
-				ResultSet rs = ps.executeQuery();
-				rs = ps.executeQuery();
-
-				while (rs.next())
-				{
-					SkillName tempSkill = new SkillName();
-					tempSkill.setSkillName(rs.getString("skillName"));
-					skillVect.addElement(tempSkill);
-				}
-
-				return skillVect;
-			} catch (SQLException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return null;
-			}
-
-		}
-		
+			
 		//USER SKILLS METHODS
 		
 		public Vector<UserSkill> getUserSkills(User inUser)
