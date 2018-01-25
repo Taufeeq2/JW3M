@@ -75,6 +75,7 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		btnInv.addActionListener(this);
 		add(btnInv);
 		
+		
 		comboBox = new JComboBox(baseFrame.data_userList);
 		comboBox.setBounds(330, 416, 249, 22);
 		
