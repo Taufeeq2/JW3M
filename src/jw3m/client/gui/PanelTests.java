@@ -106,30 +106,30 @@ public class PanelTests extends JPanel implements ActionListener
 		{
 			textArea.append(baseFrame.data_levels.toString() + "\n");
 		}
-		if(source == btnTest_3)
-		{
-			textArea.append(baseFrame.data_notifications.toString() + "\n");
-		}
-		if(source == btnTest_4)
-		{
-			textArea.append(baseFrame.data_skillList.toString() + "\n");
-		}
-		if(source == btnTest_5)
-		{
-			textArea.append(baseFrame.data_userHobby.toString() + "\n");
-		}
-		if(source == btnTest_6)
-		{
-			textArea.append(baseFrame.data_userList.toString() + "\n");
-		}
-		if(source == btnTest_7)
-		{
-			textArea.append(baseFrame.data_userRatings.toString() + "\n");
-		}
-		if(source == btnNewButton)
-		{
-			textArea.append(baseFrame.data_userSkills.toString() + "\n");
-		}
+//		if(source == btnTest_3)
+//		{
+//			textArea.append(baseFrame.data_notifications.toString() + "\n");
+//		}
+//		if(source == btnTest_4)
+//		{
+//			textArea.append(baseFrame.data_skillList.toString() + "\n");
+//		}
+//		if(source == btnTest_5)
+//		{
+//			textArea.append(baseFrame.data_userHobby.toString() + "\n");
+//		}
+//		if(source == btnTest_6)
+//		{
+//			textArea.append(baseFrame.data_userList.toString() + "\n");
+//		}
+//		if(source == btnTest_7)
+//		{
+//			textArea.append(baseFrame.data_userRatings.toString() + "\n");
+//		}
+//		if(source == btnNewButton)
+//		{
+//			textArea.append(baseFrame.data_userSkills.toString() + "\n");
+//		}
 		if(source == btnTest_8)
 		{
 //			textArea.setText(baseFrame.getNetSkill());
