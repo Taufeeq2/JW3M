@@ -142,7 +142,7 @@ public class PanelEdit extends JPanel implements ActionListener
 		name.setText(baseFrame.authenticatedUser.getFirstName());
 		surname.setText(baseFrame.authenticatedUser.getSurname());
 		email.setText(baseFrame.authenticatedUser.getEmailAddress());
-	 	mobile.setText("" + baseFrame.authenticatedUser.getMobile());    // leading ZERO does not work here
+	 	mobile.setText("0" + baseFrame.authenticatedUser.getMobile());    // leading ZERO does not work here
 		alias.setText(baseFrame.authenticatedUser.getAlias());
 		
 		
