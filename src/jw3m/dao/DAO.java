@@ -50,7 +50,12 @@ public class DAO
 			sqlstat = con.createStatement();
 			
 			// Testing methods area
-			
+			Skill tempSkill = new Skill();
+			tempSkill.setSkillID(500);
+			tempSkill.setSkillName("Postilion");
+			tempSkill.setSkillVendor("SBSA");
+			tempSkill.setSkillDescription("Payments");
+			this.addSkillList(tempSkill);
 //			Vector<Hobby> j = this.getHobbyList();
 //			Vector<User> j = this.getUserHobby(1);
 //			Vector<UserHobby> j = this.getUserHobby("a126317");
@@ -221,6 +226,7 @@ public class DAO
 		{
 			try
 			{
+
 				ps = con.prepareStatement("UPDATE users SET password = ?, firstName = ?, surname = ?, alias = ?, email = ?, mobile = ?, mentor = ? WHERE userID = ?");
 
 				ps.setString(1, inUser.getPassword());
@@ -283,16 +289,34 @@ public class DAO
 		
 		public boolean addSkillList(Skill inSkill)
 		{
+			String skillName = inSkill.getSkillName();
 			
 			try
 			{
-				ps = con.prepareStatement("INSERT INTO skills VALUES (null, ?', ?, ?)");
+				ResultSet rsCheck = sqlstat.executeQuery("SELECT * FROM skills");
+				while (rsCheck.next())
+				{
+					if (skillName.equals(rsCheck.getString("skillName")))
+					{
+						return false;
+					}
+				}
+				
+				
+			} catch (SQLException e1)
+			{
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			try
+			{
+				ps = con.prepareStatement("INSERT INTO skills VALUES (null, ?, ?, ?)");
 				ps.setString(1, inSkill.getSkillName());
 				ps.setString(2, inSkill.getSkillVendor());
 				ps.setString(3, inSkill.getSkillDescription());
 				
 				ps.executeUpdate();
-				
 				return true;
 			} catch (SQLException e)
 			{
