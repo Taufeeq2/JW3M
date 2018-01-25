@@ -145,6 +145,16 @@ public class PanelEdit extends JPanel implements ActionListener
 	 	mobile.setText("" + baseFrame.authenticatedUser.getMobile());    // leading ZERO does not work here
 		alias.setText(baseFrame.authenticatedUser.getAlias());
 		
+		
+		if(baseFrame.authenticatedUser.isMentor())
+		{
+			rdbtnYes.setSelected(true);
+		}
+		else
+		{
+			rdbtnNo.setSelected(true);
+		}
+		
 		hobbyArea = new JTextArea();
 		hobbyArea.setFont(new Font("Tahoma", Font.BOLD, 15));
 		hobbyArea.setBounds(579, 100, 232, 253);
@@ -241,7 +251,8 @@ public class PanelEdit extends JPanel implements ActionListener
 		if(source == btnAddHobby)
 		{
 
-//			baseFrame.setNetUserHobby(baseFrame.authenticatedUser, hobbyList);
+			
+//			baseFrame.setNetUserHobby(baseFrame.authenticatedUser, comboBox.getSelectedItem());
 			
 		
 		}
