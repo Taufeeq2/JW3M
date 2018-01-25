@@ -105,7 +105,7 @@ public class PanelTests extends JPanel implements ActionListener
 		if(source == btnTest_2)
 		{
 			textArea.append(baseFrame.data_levels.toString() + "\n");
-		}
+		} 
 //		if(source == btnTest_3)
 //		{
 //			textArea.append(baseFrame.data_notifications.toString() + "\n");
