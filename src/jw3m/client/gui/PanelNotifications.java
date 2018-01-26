@@ -248,9 +248,7 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 				}
 			}
 
-			
-			PanelRateSomeone prs = new PanelRateSomeone(baseFrame);
-			prs.getRateUser(userName);
+			baseFrame.rateSomeoneP.getRateUser(userName);
 			baseFrame.getTabbedPane().setSelectedComponent(baseFrame.rateSomeoneP);
 		}
 		
