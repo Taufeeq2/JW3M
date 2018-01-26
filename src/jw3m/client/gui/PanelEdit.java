@@ -18,7 +18,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import jw3m.beans.Hobby;
+import jw3m.beans.User;
 import jw3m.beans.UserHobby;
+import jw3m.dao.DAO;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JTextArea;
@@ -56,6 +58,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 	Vector<UserHobby> dobby = new Vector<UserHobby>();
 	Vector<String> dobby1 = new Vector<String>();
 	Vector<Hobby> hobbyList = new Vector<Hobby>();
+	User temp = new User();
 	
 	public PanelEdit(SkillsClient frame) {
 		baseFrame = frame;
@@ -228,6 +231,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 				{
 //					hobbyArea.append(baseFrame.data_hobbyList.get(j).getHobbyName() + "\n");
 					dobby1.add(baseFrame.data_hobbyList.get(j).getHobbyName());
+					
 
 				}
 			}
@@ -295,25 +299,54 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 //			String hobbyName = (String) comboBox.getSelectedItem();
 //			list.add(hobbyName);
 			
+			
+			temp = baseFrame.authenticatedUser;
+			
+
 			list.removeListSelectionListener(this);
 			dobby1.add(comboBox.getSelectedItem().toString());
 			list.setListData(dobby1);
 			list.addListSelectionListener(this);
 			
+			baseFrame.setNetUserHobby(temp, hobbyList);
 			
 		
 		}
 		
 		if(source == btnRemove)
 		{
+			DAO dao;
+			try
+			{
+				dao = new DAO();
+				UserHobby uHob = new UserHobby();
+				list.removeListSelectionListener(this);
+				dobby1.removeElement(comboBox.getSelectedItem().toString());
+				list.setListData(dobby1);
+				list.addListSelectionListener(this);
+				
+				uHob.setUserID(baseFrame.authenticatedUser.getUserName());
+				for (int i = 0; i < hobbyList.size(); i++)
+				{
+					if((comboBox.getSelectedItem().toString()).equals(hobbyList.get(i).getHobbyName()))
+					{
+						uHob.setHobbyID(hobbyList.get(i).getHobbyID());
+					}
+				}
+				
+				dao.removeUserHobby(uHob);
+			} 
+			catch (Exception e1)
+			{
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 //			Vector<Hobby> hobby1 = new Vector<Hobby>();
 //			hobbyArea.remove(hobbyArea.getText().replace('', ''));
 //			baseFrame.setNetUserHobby(baseFrame.authenticatedUser, hobby1);
 			
-			list.removeListSelectionListener(this);
-			dobby1.removeElement(comboBox.getSelectedItem().toString());
-			list.setListData(dobby1);
-			list.addListSelectionListener(this);
+			
 		}
 		
 	}
