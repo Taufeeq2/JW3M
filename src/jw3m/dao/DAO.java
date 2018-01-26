@@ -50,14 +50,32 @@ public class DAO
 			sqlstat = con.createStatement();
 			
 			// Testing methods area
-//			boolean test = this.addUserSkills("a124788", 100);
-//			System.out.println("Result from addUserSkill = " + test);
-//			Skill tempSkill = new Skill();
-//			tempSkill.setSkillID(500);
-//			tempSkill.setSkillName("Postilion");
-//			tempSkill.setSkillVendor("SBSA");
-//			tempSkill.setSkillDescription("Payments");
-//			this.addSkillList(tempSkill);
+//			Notification not = new Notification();
+//			not.setRatorID("a142273");
+//			not.setRequestorID("a149936");
+//			
+//			this.setNotification(not);
+//			int rate = 0;
+//			Rating tempRating = new Rating();
+//			tempRating.setRaterID("a149936");
+//			tempRating.setUserID("a124788");
+//			tempRating.setSkillID(150);
+//			tempRating.setLevel(rate);
+//			tempRating.setKnowledge(rate);
+//			tempRating.setWorkStandard(rate);
+//			tempRating.setAutonomy(rate);
+//			tempRating.setComplexityCoping(rate);
+//			tempRating.setContextPerception(rate);
+//			tempRating.setCapabilityGrowing(rate);
+//			tempRating.setCollaboration(rate);
+//			
+//			
+//			boolean test = this.setRating(tempRating);
+//			System.out.println("---->>>> Result from addRating = " + test);
+//			Hobby tempHobby = new Hobby();
+//			String user = "a124788";
+//			int hob = 7;
+//			this.addUserHobby(user, hob);
 //			Vector<Hobby> j = this.getHobbyList();
 //			Vector<User> j = this.getUserHobby(1);
 //			Vector<UserHobby> j = this.getUserHobby("a126317");
@@ -463,15 +481,22 @@ public class DAO
 		
 		public boolean addHobbyList(Hobby inHobby)
 		{
-			int hobbyID = inHobby.getHobbyID();
 			String hobbyName = inHobby.getHobbyName();
 						
 			try
 			{
-				ps = con.prepareStatement("INSERT INTO hobby VALUES(?, ?)");
+				ResultSet rsCheck = sqlstat.executeQuery("SELECT * FROM hobby");
+				while (rsCheck.next())
+				{
+					if (hobbyName.equals(rsCheck.getString("hobbyName")))
+					{
+						return false;
+					}
+				}
 				
-				ps.setInt(1, hobbyID);
-				ps.setString(2, hobbyName);
+				ps = con.prepareStatement("INSERT INTO hobby VALUES(null, ?)");
+				
+				ps.setString(1, hobbyName);
 								
 				ps.executeUpdate();
 				
@@ -575,17 +600,25 @@ public class DAO
 		
 		public boolean addUserHobby(String inUserID , int inHobbyID)
 		{
-//			String userID = inUserHobby.getUserID();
-//			int hobbyID = inUserHobby.getHobbyID();
-			
 			try
 			{
+				ResultSet rsCheck = sqlstat.executeQuery("SELECT * FROM Userhobbies");
+				while (rsCheck.next())
+				{
+					if ((inUserID.equals(rsCheck.getString("userID"))) && (inHobbyID == rsCheck.getInt("hobbyID")))
+					{
+						System.out.println("Hobby for user exists");
+						return false;
+					}
+				}
+				
 				ps = con.prepareStatement("INSERT INTO userHobbies VALUES(?, ?)");
 				
 				ps.setString(1, inUserID);
 				ps.setInt(2, inHobbyID);
 				
 				ps.executeUpdate();
+				System.out.println("Hobby added");
 				return true;
 			} catch (SQLException e)
 			{
@@ -767,6 +800,30 @@ public class DAO
 		{
 			try
 			{
+				ResultSet rsCheck = sqlstat.executeQuery("SELECT * FROM ratings");
+				while (rsCheck.next())
+				{
+					if ((inRating.getRaterID().equals(rsCheck.getString("raterID"))) && (inRating.getUserID().equals(rsCheck.getString("userID"))) && (inRating.getSkillID() == rsCheck.getInt("skillID")))	
+					{
+						ps = con.prepareStatement("UPDATE ratings SET level = ?, knowledge = ?, workStandard = ?, autonomy = ?, complexityCoping = ?, "
+								+ "contextPerception = ?, capabilityGrowing = ?, collaboration = ?, date = now() WHERE ratingID = ?");
+						
+						ps.setInt(1, inRating.getLevel());
+						ps.setInt(2, inRating.getKnowledge());
+						ps.setInt(3, inRating.getWorkStandard());
+						ps.setInt(4, inRating.getAutonomy());
+						ps.setInt(5, inRating.getComplexityCoping());
+						ps.setInt(6, inRating.getContextPerception());
+						ps.setInt(7, inRating.getCapabilityGrowing());
+						ps.setInt(8, inRating.getCollaboration());
+						ps.setInt(9, rsCheck.getInt("ratingID"));
+						
+						ps.executeUpdate();					
+						
+						return true;
+					}	
+				}
+				
 				ps = con.prepareStatement("INSERT INTO ratings VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW() )");
 				ps.setString(1, inRating.getRaterID());
 				ps.setString(2, inRating.getUserID());
@@ -781,8 +838,9 @@ public class DAO
 				ps.setInt(11, inRating.getCollaboration());
 				
 				ps.executeUpdate();
-				
 				return true;
+
+				
 			} catch (SQLException e)
 			{
 				// TODO Auto-generated catch block
@@ -864,6 +922,19 @@ public class DAO
 			
 			try
 			{
+				ResultSet rsCheck = sqlstat.executeQuery("SELECT * FROM notifications");
+				while (rsCheck.next())
+				{
+					if ((requesterID.equals(rsCheck.getString("requesterID"))) && (raterID.equals(rsCheck.getString("raterID"))))
+					{
+						System.out.println("notification for user exists");
+						return false;
+					}
+				}
+				
+				
+				
+				
 				ps = con.prepareStatement("INSERT INTO notifications VALUES(null, ?, ?, ?)");
 				
 				ps.setString(1, requesterID);
@@ -927,16 +998,16 @@ public class DAO
 		
 
 		
-		public static void main(String[] args)
-		{
-			try
-			{
-				new DAO();
-				
-			} catch (Exception e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+//		public static void main(String[] args)
+//		{
+//			try
+//			{
+//				new DAO();
+//				
+//			} catch (Exception e)
+//			{
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
 }
