@@ -300,8 +300,24 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 //			String hobbyName = (String) comboBox.getSelectedItem();
 //			list.add(hobbyName);
 
+			Vector<Hobby> dobs = new Vector<Hobby>();
+			Hobby hobs = new Hobby();
+			
+			for (int i = 0; i < hobbyList.size(); i++)
+			{
+
+				
+				if((comboBox.getSelectedItem()).equals(hobbyList.get(i).getHobbyName()))
+				{
+					hobs.setHobbyID(hobbyList.get(i).getHobbyID());
+					hobs.setHobbyName(comboBox.getSelectedItem().toString());
+				}
+				
+				dobs.add(hobs);
+			}
 			
 			temp = baseFrame.authenticatedUser;
+			
 			
 
 			list.removeListSelectionListener(this);
@@ -309,14 +325,16 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 			list.setListData(dobby1);
 			list.addListSelectionListener(this);
 			
-			if((baseFrame.setNetUserHobby(temp, hobbyList)).equals(true))
-			{
-				JOptionPane.showMessageDialog(this, "Hobby added");
-			}
-			else
-			{
-				JOptionPane.showMessageDialog(this, "You already have this hobby added");
-			}
+			baseFrame.setNetUserHobby(temp, dobs);
+//			
+//			if((baseFrame.setNetUserHobby(temp, dobby)).equals(true))
+//			{
+//				JOptionPane.showMessageDialog(this, "Hobby added");
+//			}
+//			else
+//			{
+//				JOptionPane.showMessageDialog(this, "You already have this hobby added");
+//			}
 			
 				
 			
