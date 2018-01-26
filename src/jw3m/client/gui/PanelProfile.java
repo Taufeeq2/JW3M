@@ -25,7 +25,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
+import javax.swing.table.TableColumn;
 import javax.swing.JComboBox;
+import java.awt.Dimension;
 
 public class PanelProfile extends JPanel implements ActionListener
 {
@@ -41,11 +43,13 @@ public class PanelProfile extends JPanel implements ActionListener
 	private JComboBox comboBoxSkills;
 	private JButton btnAddSelectedSkill;
 	private Vector<Skill> skillList = new Vector<Skill>();
+	private Vector<Skill> tmpSkills = new Vector<Skill>();
 	private Vector<Skill> comboSkillNames = new Vector<Skill>();
 	private Vector<Skill> tempSkillNames = new Vector<Skill>();
 	private Vector<UserSkill> userSkills = new Vector<UserSkill>();
 	private Vector<UserSkill> tmpUserSkills = new Vector<UserSkill>();
 	private Vector<UserSkill> tmpUserSkillIds = new Vector<UserSkill>();
+	private Vector<Integer> allSkillVect = new Vector<Integer>();
 	private JScrollPane scrollPane;
 	private JLabel lblAddSkills;
 	private JLabel lblRemoveSkills;
@@ -59,20 +63,25 @@ public class PanelProfile extends JPanel implements ActionListener
 	private JTextField textFieldVendor;
 	private JTextField textFieldSkillDesc;
 	private JButton btnAddSkill;
+	private int skill = 0;
+	private int allSkill = 0;
+	private String skillName = null;
 
 	public PanelProfile(SkillsClient frame)
 	{
+		setPreferredSize(new Dimension(1700, 650));
 		baseFrame = frame;
 
 		setLayout(null);
 
 		panel = new JPanel();
-		panel.setBounds(0, 13, 1031, 641);
+		panel.setBounds(0, 13, 1688, 641);
 		add(panel);
 		panel.setLayout(null);
 
 		lblMySkills = new JLabel("My Skills");
 		lblMySkills.setFont(new Font("Calibri", Font.BOLD, 22));
+		//lblMySkills.setFont(baseFrame.getFont());
 		lblMySkills.setBounds(468, 0, 88, 30);
 		panel.add(lblMySkills);
 
@@ -80,22 +89,50 @@ public class PanelProfile extends JPanel implements ActionListener
 		btnRemoveSelectedSkill.setBounds(22, 66, 308, 25);
 		panel.add(btnRemoveSelectedSkill);
 		btnRemoveSelectedSkill.addActionListener(this);
-
-		tempSkillNames = baseFrame.data_skillList;
-		tmpUserSkills = baseFrame.getNetUserSkills(tempUser);
-
-		for (int j = 0; j < tmpUserSkills.size(); j++)
+		
+		//***********************************************************
+		try
 		{
-			tmpUserSkillIds.add(tmpUserSkills.get(j));
-		}
+			baseFrame.getNetSkillList();
+			skillList = baseFrame.data_skillList;
+			
+			for (int j = 0; j < skillList.size(); j++)
+				{
+					allSkill = skillList.get(j).getSkillID();
+					
+					allSkillVect.add(allSkill);
+					
+				}
+			System.out.println("ALL SKILL IDS ----------->>>>>>>>>> " + allSkillVect);
 
+		} catch (Exception e1)
+		{
+			e1.printStackTrace();
+		}
+		
+		
+		//***********************************************************
+		
+		tempUser = baseFrame.authenticatedUser;
+		
+		tempSkillNames = baseFrame.data_skillList;
+		
+		tmpUserSkills = baseFrame.getNetUserSkills(tempUser);
+		System.out.println("USER SKILL IDS --------------> " + tmpUserSkills);
+
+		//if ()
+		//{
+			
+		//}
+		
 		for (int i = 0; i < tempSkillNames.size(); i++)
 		{
-			if (!(tempSkillNames.contains(tmpUserSkills)))
-			{
-				comboSkillNames.add(tempSkillNames.get(i));
-			}
+			
+			comboSkillNames.add(tempSkillNames.get(i));
+		
 		}
+		
+		//System.out.println("all skill names gngn : " + comboSkillNames);
 
 		comboBoxSkills = new JComboBox(comboSkillNames);
 		comboBoxSkills.setBounds(546, 67, 308, 22);
@@ -110,8 +147,10 @@ public class PanelProfile extends JPanel implements ActionListener
 
 		table = new JTable(model);
 
+		//JScrollPane scrollpane = new JScrollPane(table);
+		//scrollpane.setPreferredSize(new Dimension(480, 300));
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(22, 344, 973, 284);
+		scrollPane.setBounds(22, 344, 1654, 284);
 		panel.add(scrollPane);
 		scrollPane.setViewportView(table);
 
@@ -145,7 +184,8 @@ public class PanelProfile extends JPanel implements ActionListener
 		String str[] =
 		{ "User ID", "Skill ID", "Skill Name", "Knowledgeable", "Standard of Work", "Autonomy",
 				"Coping with Complexity", "Perception of Context", "Growing Capability", "Purposeful Collaboration",
-				"Overall Rating(Level)" };
+				"Average Self-Rating", "Ave. Colleague Rating" };
+		
 		model = new DefaultTableModel(str, 0)
 		{
 			public void setValueAt(Object aValue, int row, int column)
@@ -155,6 +195,19 @@ public class PanelProfile extends JPanel implements ActionListener
 				fireTableCellUpdated(row, column);
 
 				setCustomTableElement(aValue, row, column);
+				
+				/*table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				table.getColumnModel().getColumn(0).setPreferredWidth(20);
+				table.getColumnModel().getColumn(1).setPreferredWidth(20);
+				table.getColumnModel().getColumn(2).setPreferredWidth(20);
+				table.getColumnModel().getColumn(3).setPreferredWidth(20);
+				table.getColumnModel().getColumn(4).setPreferredWidth(20);
+				table.getColumnModel().getColumn(5).setPreferredWidth(20);
+				table.getColumnModel().getColumn(6).setPreferredWidth(20);
+				table.getColumnModel().getColumn(7).setPreferredWidth(20);
+				table.getColumnModel().getColumn(8).setPreferredWidth(20);
+				table.getColumnModel().getColumn(9).setPreferredWidth(20);
+				table.getColumnModel().getColumn(10).setPreferredWidth(50);*/
 
 			}
 
@@ -177,8 +230,8 @@ public class PanelProfile extends JPanel implements ActionListener
 		// populate the model for the table
 
 		// User tempUser = new User();
-		int skill;
-		String skillName;
+		//int skill;
+		//String skillName;
 
 		tempUser = baseFrame.authenticatedUser;
 		model.setRowCount(0);
@@ -186,7 +239,6 @@ public class PanelProfile extends JPanel implements ActionListener
 		{
 			baseFrame.getNetSkillList();
 			skillList = baseFrame.data_skillList;
-			// Vector<UserSkill> userSkills = new Vector<UserSkill>();
 			userSkills = baseFrame.getNetUserSkills(tempUser);
 
 			for (int t = 0; t < userSkills.size(); t++)
