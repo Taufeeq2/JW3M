@@ -63,13 +63,13 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(34)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addComponent(panel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(362)
 							.addComponent(titleLabel)))
-					.addContainerGap(273, Short.MAX_VALUE))
+					.addGap(2))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -80,7 +80,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
 					.addGap(138)
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 252, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap(110, Short.MAX_VALUE))
 		);
 		panel_1.setLayout(new GridLayout(2, 5, 0, 0));
 		
@@ -107,7 +107,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		table.setFont(baseFrame.standardFont);
 		table.setRowHeight(28);
 		table.getTableHeader().setFont(baseFrame.standardFont);
-		table.setPreferredScrollableViewportSize(new Dimension(800, 70));
+		table.setPreferredScrollableViewportSize(new Dimension(1200, 70));
 		table.setFillsViewportHeight(true);
 //		a = (MyTableModel) table.getModel();
 //		a.insertData(values);
