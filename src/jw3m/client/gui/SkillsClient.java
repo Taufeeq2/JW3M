@@ -252,7 +252,7 @@ public class SkillsClient extends JFrame implements ActionListener
 		tabbedPane.add("Notification", notificationP);
 		tabbedPane.add("Rate Someone", rateSomeoneP);
 //		tabbedPane.add("Create New Profile", newProfile);
-		tabbedPane.add("Users per skill", panelReporting);
+		tabbedPane.add("People-Skill finder", panelReporting);
 		tabbedPane.addTab("Test Panel", testPanel);
 
 		
