@@ -252,7 +252,7 @@ public class SkillsClient extends JFrame implements ActionListener
 		tabbedPane.add("Notification", notificationP);
 		tabbedPane.add("Rate Someone", rateSomeoneP);
 //		tabbedPane.add("Create New Profile", newProfile);
-		tabbedPane.add("Reporting", panelReporting);
+		tabbedPane.add("Users per skill", panelReporting);
 		tabbedPane.addTab("Test Panel", testPanel);
 
 		
@@ -704,7 +704,8 @@ public class SkillsClient extends JFrame implements ActionListener
 			commsSend.setObj(userIn);
 
 		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
-			
+		
+		logger.info(commsRec.getText());
 		this.data_userList = (Vector<User>)commsRec.getObj();
 		
 	//	logger.debug(" getNetUserList() call invoked");	
