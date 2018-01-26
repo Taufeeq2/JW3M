@@ -107,7 +107,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		// Here we set up the model
 
 		String str[] =
-		{ "User ID", "Skill ID", "Skill Name", "Knowledgeable", "Standard of Work", "Autonomy", "Coping with Complexity", "Perception of Context",
+		{ "User ID", "Name", "Surname", "Skill ID", "Skill Name", "Knowledgeable", "Standard of Work", "Autonomy", "Coping with Complexity", "Perception of Context",
 				"Growing Capability", "Purposeful Collaboration", "Overall Rating" };
 		model = new DefaultTableModel(str, 0)
 		{
@@ -125,7 +125,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 			{
 				// make read only field column 0 - other column is directly
 				// editable
-				if (column == 0 || column == 1 || column == 2 || column == 10)
+				if (column == 0 || column == 1 || column == 2 || column == 3 || column == 4 ||  column == 12)
 				{
 					return false;
 				} 
@@ -246,7 +246,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 							skillName = skillList.get(j).getSkillName();
 							
 							Object obj[] =
-								{tempUser.getUserName(), skill, skillName};
+								{tempUser.getUserName(), tempUser.getFirstName(), tempUser.getSurname(), skill, skillName};
 								model.addRow(obj);
 
 						}
@@ -276,7 +276,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		String skillName1;
 		Vector<Rating> userRatings = new Vector<Rating>();
 		
-		tempUser1 = baseFrame.getNetUser(searchField.getText());
+		tempUser1 = baseFrame.getNetUser(user);
 		model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
 		try
@@ -296,7 +296,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 						skillName1 = skillList.get(j).getSkillName();
 						
 						Object obj[] =
-							{tempUser1.getUserName(), skill1, skillName1};
+							{tempUser1.getUserName(), tempUser1.getFirstName(), tempUser1.getSurname(), skill1, skillName1};
 							model.addRow(obj);
 
 					}
