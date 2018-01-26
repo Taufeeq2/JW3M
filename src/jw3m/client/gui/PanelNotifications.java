@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.StringTokenizer;
 import java.util.Vector;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -89,7 +90,7 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		// Here we set up the model
 
 		String str[] =
-			{ "noticeID", "requesterID", "raterID", "date" };
+			{ "Requester", "Rator", "date" };
 		model = new DefaultTableModel(str, 0)
 		{
 			public void setValueAt(Object aValue, int row, int column)
@@ -128,14 +129,31 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
+		Vector<User> userList = new Vector<User>();
+		userList = baseFrame.data_userList;
+		
 		for (int i = 0; i < notificationList.size(); i++)
 		{
 
 			Notification notification = notificationList.get(i);
+			String requester = "";
+			String rater = "";
 
+			for (int j = 0; j < userList.size(); j++)
+			{
+				if(notification.getRequestorID().equals(userList.get(j).getUserName()))
+				{
+					requester = userList.get(j).getFirstName() + " " + userList.get(j).getSurname();
+				}
+				if(notification.getRatorID().equals(userList.get(j).getUserName()))
+				{
+					rater = userList.get(j).getFirstName() + " " + userList.get(j).getSurname();
+				}
+				
+			}
 			Object obj[] =
-				{ notification.getNoticeID(), notification.getRequestorID(), notification.getRatorID(), notification.getDate() };
+				{ requester, rater, notification.getDate() };
 			model.addRow(obj);
 
 		}
@@ -207,8 +225,30 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		
 		if (source == btnRateUser)
 		{
-			String userName = (String) model.getValueAt(table.getSelectedRow(), 1);
+			String userName = (String) model.getValueAt(table.getSelectedRow(), 0);
 			System.out.println("Requester = " + userName);
+			
+			StringTokenizer tokenizer = new StringTokenizer(userName, " ");
+			String token1;
+			String token2;
+			
+
+			tokenizer.hasMoreTokens();
+		    token1 = tokenizer.nextToken();
+		    System.out.println("NAME " + token1);
+		    tokenizer.hasMoreTokens();
+		    token2 = tokenizer.nextToken();
+		    System.out.println("SURNAME " + token2);
+		    
+		    for (int i = 0; i < baseFrame.data_userList.size(); i++)
+			{
+				if ((baseFrame.data_userList.get(i).getFirstName().equals(token1)) && (baseFrame.data_userList.get(i).getSurname().equals(token2)))
+				{
+					userName = baseFrame.data_userList.get(i).getUserName();
+				}
+			}
+
+			
 			PanelRateSomeone prs = new PanelRateSomeone(baseFrame);
 			prs.getRateUser(userName);
 			baseFrame.getTabbedPane().setSelectedComponent(baseFrame.rateSomeoneP);
