@@ -59,6 +59,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 	Vector<String> dobby1 = new Vector<String>();
 	Vector<Hobby> hobbyList = new Vector<Hobby>();
 	User temp = new User();
+	String returnedValue;
 	
 	public PanelEdit(SkillsClient frame) {
 		baseFrame = frame;
@@ -298,7 +299,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 			
 //			String hobbyName = (String) comboBox.getSelectedItem();
 //			list.add(hobbyName);
-			
+
 			
 			temp = baseFrame.authenticatedUser;
 			
@@ -308,7 +309,16 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 			list.setListData(dobby1);
 			list.addListSelectionListener(this);
 			
-			baseFrame.setNetUserHobby(temp, hobbyList);
+			if((baseFrame.setNetUserHobby(temp, hobbyList)).equals(true))
+			{
+				JOptionPane.showMessageDialog(this, "Hobby added");
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(this, "You already have this hobby added");
+			}
+			
+				
 			
 		
 		}
@@ -321,14 +331,18 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 				dao = new DAO();
 				UserHobby uHob = new UserHobby();
 				list.removeListSelectionListener(this);
-				dobby1.removeElement(comboBox.getSelectedItem().toString());
+				dobby1.removeElement(list.getSelectedValue());
 				list.setListData(dobby1);
 				list.addListSelectionListener(this);
+				
+				
 				
 				uHob.setUserID(baseFrame.authenticatedUser.getUserName());
 				for (int i = 0; i < hobbyList.size(); i++)
 				{
-					if((comboBox.getSelectedItem().toString()).equals(hobbyList.get(i).getHobbyName()))
+
+					
+					if((returnedValue).equals(hobbyList.get(i).getHobbyName()))
 					{
 						uHob.setHobbyID(hobbyList.get(i).getHobbyID());
 					}
@@ -356,6 +370,8 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 	{
 		if(e.getValueIsAdjusting())
 		{
+			returnedValue = list.getSelectedValue().toString();
+			System.out.println("Hobby Name " + returnedValue);
 			return;
 		}
 		
