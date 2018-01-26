@@ -366,7 +366,7 @@ public class PanelLogin extends JPanel implements ActionListener
 		if(source == btnRegister)
 		{
 			newProfile = new PanelNewProfile(baseFrame);
-			baseFrame.getData();
+	//		baseFrame.getData();
 			
 			tempFrame = new JFrame();
 			tempFrame.getContentPane().add(newProfile);

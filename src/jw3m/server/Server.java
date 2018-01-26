@@ -89,9 +89,9 @@ public class Server
 					
 		        	long threadId = Thread.currentThread().getId();
 		        	
-		        	
 		        	String strPrefixAuth = "  Thread ID:" + threadId + " | Authentication Message : ";
 		        	String strPrefixEnd = "  Thread ID:" + threadId + " | Session information : ";
+		        
 		        	
 		        	// could maybe move this whole try into authenticate method in this class
 		        	try
@@ -101,70 +101,20 @@ public class Server
 						ois = new ObjectInputStream (threadsoc.getInputStream());
 						
 						Comms welcome = new Comms("Welcome", "Welcome");
-		//				Comms comms_Creds = null;
-						
 						oos.writeObject(welcome);
 						
-						// rather read a multi bean
+						Comms commsFirstPacket = (Comms)ois.readObject();
 
-						// change comms auth to first Objeects
-						Comms commsAUTH = (Comms)ois.readObject();
-						// send first packets to a different method with switch that will handle logon and add new
+					//	logger.info("server got " + );
+						listenForFirstTransaction(threadId,ois, oos,  commsFirstPacket, authenticatedUser, running);
 						
-						
-						// if commsAUTH is actually add user then
-						// 
-						
+					    while (running)
+					    {
+							Comms comms = (Comms)ois.readObject();
+							listenForTransaction(threadId,ois, oos,  comms);
+					    }							
 
-						MultiBean multiBean = (MultiBean)commsAUTH.getObj();
-						
-						
-						String userName =(String)multiBean.getObj();
-						String password =(String)multiBean.getMulti().get(0);
 	
-						
-						
-						User userObj = dao.getUser( userName );
-						
-						if (userObj != null)
-						{
-							if (userObj.getPassword().equals(    password    ))
-							{
-								// good logon
-								
-								logger.info(strPrefixAuth + " good logon");
-								
-								// we set the object we send back to client with no password
-								// as client should have it
-							//	userObj.setPassword(null);
-								
-								oos.writeObject(new Comms("authenticated", userObj));
-								running = true;
-								
-								// now this session can have context
-								authenticatedUser = userObj;
-						//		ServerProtocol serverProtocol = new ServerProtocol(    );
-								
-							    while (running)
-							    {
-									Comms comms = (Comms)ois.readObject();
-									listenForTransaction(threadId,ois, oos,  comms);
-							    }							
-							}
-							else
-							{
-								// bad password
-								running = false;
-								logger.info(strPrefixAuth + " bad password");
-							}
-						}
-						else
-						{
-							// no user
-							running = false;
-							logger.info(strPrefixAuth + " user does not exist");
-							oos.writeObject(new Comms("auth_fail", "User does not exist and/or bad password!"));
-						}
 						
 						
 					} catch (IOException e)
@@ -191,14 +141,127 @@ public class Server
 		new Server();
 	}
 	
+	public void listenForFirstTransaction(long threadId, ObjectInputStream ois, ObjectOutputStream oos, Comms comms, User authenticatedUser, Boolean running)
+	{
+		String strPrefix = "  Thread ID:" + threadId + " | Known Transaction message : ";
+		String strPrefixDefault = "  Thread ID:" + threadId + " | *** Unknown Transaction message : "; 
+		String strPrefixAdd = "  Thread ID:" + threadId + " |  : ";		
+		
+		String strPrefixAuth = "  Thread ID:" + threadId + " | Authentication Message : ";
+    	String strPrefixEnd = "  Thread ID:" + threadId + " | Session information : ";
+    
+		
+		try
+		{
+			switch (comms.getText())
+			{
+			
+				case "request auth" : 
+				{
+					logger.info(strPrefix + " request auth");
+	
+		
+					MultiBean multiBean = (MultiBean)comms.getObj();
+					
+					
+					String userName =(String)multiBean.getObj();
+					String password =(String)multiBean.getMulti().get(0);
+
+				
+					User userObj = dao.getUser( userName );
+					
+					if (userObj != null)
+					{
+						if (userObj.getPassword().equals(    password    ))
+						{
+							// good logon
+							
+							logger.info(strPrefixAuth + " good logon");
+							
+							// we set the object we send back to client with no password
+							// as client should have it
+  						   //	userObj.setPassword(null);
+ 							
+							oos.writeObject(new Comms("authenticated", userObj));
+
+							authenticatedUser = userObj;
+							running = true;
+							
+						}
+						else
+						{
+							// bad password
+							running = false;
+							logger.info(strPrefixAuth + " bad password");
+							//return false;
+						}
+					}
+					else
+					{
+						// no user
+						running = false;
+						logger.info(strPrefixAuth + " user does not exist");
+						oos.writeObject(new Comms("auth_fail", "User does not exist and/or bad password!"));
+						//return false;
+					}
+
+					break;
+				}
+				
+				case "add userList" : 
+				{
+					logger.info(strPrefix + " add userList");
+
+					// Actually process the add
+					if (  dao.addUserList( (User)comms.getObj()  )      )
+					{ 
+						logger.info(strPrefixAdd + " added " + (User)(comms.getObj()) );
+					}
+					else
+					{
+						logger.error(strPrefixAdd + " Critical failure - could be duplicate primary key");
+					}
+
+					// seems i am not sending the new bean back - How did justin fixed
+					
+					oos.writeObject(new Comms("added userList",   dao.getUserList()  )  )   ;
+					break;
+				}
+				
+	
+				default : 
+				{
+							logger.error(strPrefixDefault + " unexpected packet. At this time packet must be authenticate or add user only");
+							logger.error("  ------> Txt part was: "	+ comms.getText() );
+							logger.error("  ------> Obj part was: " + comms.getObj().toString() );
+							
+							Comms tempComms = new Comms();
+							
+							tempComms.setText("Unknown Packet... sending you back your whole comms object");
+							tempComms.setObj(comms);
+							
+							oos.writeObject(tempComms);
+			
+				} // end default
+			
+			
+			}
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	//listenForTransaction(threadId,ois, oos,  comms);
 	public void listenForTransaction(long threadId, ObjectInputStream ois, ObjectOutputStream oos, Comms comms) // throws Exception
 	{
-		
-	//logger.info("Thread ID: " + threadId + " trancation listener method executed (case switching instructions) ");l
 		String strPrefix = "  Thread ID:" + threadId + " | Known Transaction message : ";
 		String strPrefixDefault = "  Thread ID:" + threadId + " | *** Unknown Transaction message : "; 
-		String strPrefixAdd = "  Thread ID:" + threadId + " |  : ";
+		String strPrefixAdd = "  Thread ID:" + threadId + " |  : ";			
+	//logger.info("Thread ID: " + threadId + " trancation listener method executed (case switching instructions) ");l
+
 		
 		try
 		{
@@ -286,24 +349,24 @@ public class Server
 				
 				// the adds
 				
-
-				case "add userList" : 
-				{
-					logger.info(strPrefix + " add userList");
-
-					// Actually process the add
-					if (  dao.addUserList( (User)comms.getObj()  )      )
-					{ 
-						logger.info(strPrefixAdd + " added " + (User)(comms.getObj()) );
-					}
-					else
-					{
-						logger.error(strPrefixAdd + " Critical failure - could be duplicate primary key");
-					}
-
-					oos.writeObject(new Comms("added userList",   dao.getUserList()  )  )   ;
-					break;
-				}
+// moved to first packets switcher
+//				case "add userList" : 
+//				{
+//					logger.info(strPrefix + " add userList");
+//
+//					// Actually process the add
+//					if (  dao.addUserList( (User)comms.getObj()  )      )
+//					{ 
+//						logger.info(strPrefixAdd + " added " + (User)(comms.getObj()) );
+//					}
+//					else
+//					{
+//						logger.error(strPrefixAdd + " Critical failure - could be duplicate primary key");
+//					}
+//
+//					oos.writeObject(new Comms("added userList",   dao.getUserList()  )  )   ;
+//					break;
+//				}
 
 				case "add skillList" : 
 				{
