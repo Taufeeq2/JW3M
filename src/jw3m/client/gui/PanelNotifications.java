@@ -209,6 +209,9 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		{
 			String userName = (String) model.getValueAt(table.getSelectedRow(), 1);
 			System.out.println("Requester = " + userName);
+			PanelRateSomeone prs = new PanelRateSomeone(baseFrame);
+			prs.getRateUser(userName);
+			baseFrame.getTabbedPane().setSelectedComponent(baseFrame.rateSomeoneP);
 		}
 		
 		if (source ==btnInv)

@@ -64,7 +64,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	private PanelProfile profileP;
 	private	PanelEdit editP;
 	private PanelNotifications notificationP;
-	private PanelRateSomeone rateSomeoneP;
+	public PanelRateSomeone rateSomeoneP;
 	private PanelNewProfile newProfile;
 	private PanelReporting panelReporting;
 	private PanelTests testPanel;
