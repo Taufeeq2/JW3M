@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -15,7 +16,12 @@ import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.MouseInputListener;
 import javax.swing.table.DefaultTableModel;
+
+import org.w3c.dom.events.EventTarget;
+import org.w3c.dom.events.MouseEvent;
+import org.w3c.dom.views.AbstractView;
 
 import jw3m.beans.Rating;
 import jw3m.beans.Skill;
@@ -28,6 +34,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Component;
 
 public class PanelRateSomeone extends JPanel implements ActionListener
 {
@@ -86,10 +93,13 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		setLayout(null);
 
 		table = new JTable(model);
-	
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		
+
 		scrollPane = new JScrollPane(table);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(112, 273, 800, 300);
+		scrollPane.setBounds(39, 273, 1200, 300);
 		add(scrollPane);
 		scrollPane.setViewportView(table);
 		add(scrollPane);
@@ -308,4 +318,6 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 			e1.printStackTrace();
 		}
 	}
+
+
 }
