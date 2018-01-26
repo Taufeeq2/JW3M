@@ -292,12 +292,12 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		try
 		{
 			skillList = baseFrame.data_skillList;
-			Vector<UserSkill> userSkills = new Vector<UserSkill>();
-			userSkills = baseFrame.getNetUserSkills(tempUser1);
+			Vector<UserSkill> userSkills1 = new Vector<UserSkill>();
+			userSkills1 = baseFrame.getNetUserSkills(tempUser1);
 			
-			for (int t = 0; t < userSkills.size(); t++)
+			for (int t = 0; t < userSkills1.size(); t++)
 			{
-				skill1 = userSkills.get(t).getSkillID();
+				skill1 = userSkills1.get(t).getSkillID();
 				
 				for(int j = 0; j < skillList.size(); j++)
 				{
