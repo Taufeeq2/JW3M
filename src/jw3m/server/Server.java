@@ -543,6 +543,30 @@ public class Server
 					break;
 				}
 				
+				case "remove userHobby" : 
+				{
+					logger.info(strPrefix + " remove userHobby");
+					
+					UserHobby tempUserHobby = (UserHobby)comms.getObj();
+					
+					if (  dao.removeUserHobby( (UserHobby)comms.getObj()  )      )
+					{ 
+						logger.info(strPrefixAdd + " removed " + (UserHobby)comms.getObj()  );
+					}
+					else
+					{
+						logger.error(strPrefixAdd + " Critical failure");
+					}
+					
+					User tempUser = new User();
+					tempUser = dao.getUser(tempUser.getUserName());
+
+					oos.writeObject(new Comms("removed UserHobby",   dao.getUserHobby(tempUser)  )  )   ;
+					break;
+					
+				}
+				
+				
 				
 //				case ""request auth"" : 
 //				{
