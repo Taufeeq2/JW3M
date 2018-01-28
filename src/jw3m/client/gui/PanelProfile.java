@@ -68,6 +68,7 @@ public class PanelProfile extends JPanel implements ActionListener
 	private JTextField textFieldSkillDesc;
 	private JButton btnAddSkill;
 	private int skill = 0;
+	private int skillIDAdd = 0;
 	private String allSkill = null;
 	private String skillName = null;
 
@@ -126,6 +127,7 @@ public class PanelProfile extends JPanel implements ActionListener
 		btnAddSelectedSkill = new JButton("Add selected skill from dropdown");
 		btnAddSelectedSkill.setBounds(546, 102, 308, 25);
 		panel.add(btnAddSelectedSkill);
+		btnAddSelectedSkill.addActionListener(this);
 
 		// JScrollPane scrollpane = new JScrollPane(table);
 		// scrollpane.setPreferredSize(new Dimension(480, 300));
@@ -288,7 +290,7 @@ public class PanelProfile extends JPanel implements ActionListener
 		// break;
 
 		}
-		System.out.println(aValue + " " + row + " " + column);
+		//System.out.println(aValue + " " + row + " " + column);
 
 	}
 
@@ -337,7 +339,7 @@ public class PanelProfile extends JPanel implements ActionListener
 
 		int i = table.getSelectedRow(); // set index for selected row
 
-		System.out.println("selected row index -------->>>>>>> " + i);
+		//System.out.println("selected row index -------->>>>>>> " + i);
 
 		if (source == btnRemoveSelectedSkill && i >= 0) // if nothing selected
 														// its -1
@@ -346,13 +348,9 @@ public class PanelProfile extends JPanel implements ActionListener
 			try
 			{
 				DAO getSkill = new DAO();
-				// skillList = getSkill.getSkillListByUser();
-
+				
 				userSkills = baseFrame.getNetUserSkills(tempUser);
 				skill = userSkills.get(i).getSkillID();
-
-				System.out.println("all user skills : " + userSkills);
-				System.out.println("selected skill : " + skill);
 
 				getSkill.removeUserSkills(tmpUser, skill);
 
@@ -380,6 +378,50 @@ public class PanelProfile extends JPanel implements ActionListener
 			}
 
 		} // end remove button
+		
+		if (source == btnAddSelectedSkill) // top skill always selected
+		{
+			try
+			{
+				DAO getSkill = new DAO();
+				
+				/*allSkill = comboBoxSkills.getSelectedItem().toString();
+				System.out.println("selected skill name " + allSkill);
+				System.out.println("all skills " + skillList);
+				//skill = skillList.indexOf(allSkill);
+				int index = skillList.indexOf("Skill [skillID=12, skillName=JCL, skillVendor=JCL, skillDescription=JCL]");
+				System.out.println("index of skill  " + index);
+				//skill = skillList.elementAt(11).getSkillID();*/
+				
+				for (int m = 0; m < skillList.size(); m++)
+				{
+				   allSkillVect.add(skillList.elementAt(m).getSkillName());
+				}
+				System.out.println("all skills " + allSkillVect);
+				int index = allSkillVect.indexOf("JCL");
+				System.out.println("index of skill  " + index);
+				
+				skillIDAdd = skillList.get(index).getSkillID();
+				
+				System.out.println("skill id to add " + skillIDAdd);
+				
+				getSkill.addUserSkills(tmpUser, skillIDAdd);
+				setupSkillsTable();
+
+				table = new JTable(model);
+
+				add(scrollPane);
+
+				scrollPane.setViewportView(table);
+
+				populateComboBox();
+
+			} catch (Exception e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} // end add button
 
 		if (source == btnCaptureSkill)
 		{
@@ -416,6 +458,6 @@ public class PanelProfile extends JPanel implements ActionListener
 
 			this.panel.validate();
 			this.panel.repaint();
-		}
+		} //end capture skill button
 	}
 }
