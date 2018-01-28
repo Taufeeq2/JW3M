@@ -812,6 +812,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	
 	public Vector<UserHobby> setNetRemoveUserHobby(UserHobby userHobbyIn)
 	{
+//		logger.info("Transaction sent : Remove UserHobby " + userHobbyIn.getUserID() + " ID: " + userHobbyIn.getHobbyID());
 		Comms commsSend = new Comms();
 			commsSend.setText("remove userHobby");
 			commsSend.setObj(userHobbyIn);

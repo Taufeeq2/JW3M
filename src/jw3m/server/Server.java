@@ -559,7 +559,7 @@ public class Server
 					}
 					
 					User tempUser = new User();
-					tempUser = dao.getUser(tempUser.getUserName());
+					tempUser = dao.getUser(tempUserHobby.getUserID());
 
 					oos.writeObject(new Comms("removed UserHobby",   dao.getUserHobby(tempUser)  )  )   ;
 					break;

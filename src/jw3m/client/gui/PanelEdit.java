@@ -284,51 +284,56 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		if(source == btnAddHobby)
 		{
-//			Vector<Hobby> hobby = new Vector<Hobby>();
-//			hobby.add((Hobby)comboBox.getSelectedItem());
-//			hobbyArea.append("\n" + hobby.toString());
-//			
-//			Hobby tempHobby = new Hobby();
-//			
-//			tempHobby = (Hobby) comboBox.getSelectedItem();
-//			System.out.println(tempHobby + " Test");
-//			dobby1.add(tempHobby);
-//			list.add
-//
-//			baseFrame.setNetUserHobby(baseFrame.authenticatedUser, hobby);
-			
-//			String hobbyName = (String) comboBox.getSelectedItem();
-//			list.add(hobbyName);
+			Vector<Hobby> hobby = new Vector<Hobby>();
+			Vector<Hobby> newHobby = new Vector<Hobby>();
 
+			Hobby tempHobby = new Hobby();
+			hobby = baseFrame.data_hobbyList;			
+			String checkHobby = (comboBox.getSelectedItem().toString());
 			
-			temp = baseFrame.authenticatedUser;
-			
-
-			list.removeListSelectionListener(this);
-			dobby1.add(comboBox.getSelectedItem().toString());
-			list.setListData(dobby1);
-			list.addListSelectionListener(this);
-			
-			if((baseFrame.setNetUserHobby(temp, hobbyList)).equals(true))
+			for (int j = 0; j < hobby.size(); j++)
 			{
-				JOptionPane.showMessageDialog(this, "Hobby added");
+				if(hobby.get(j).getHobbyName().equals(checkHobby))
+				{
+					tempHobby.setHobbyID(hobby.get(j).getHobbyID());
+					tempHobby.setHobbyName(hobby.get(j).getHobbyName());
+				}
+			}
+			newHobby.add(tempHobby);
+			boolean alreadyAdded = true;
+			
+			for (int i = 0; i < dobby1.size(); i++)
+			{
+				System.out.println("Sting Hobby: " + dobby1.get(i) + "IF Check = " + dobby1.get(i).equals(checkHobby));
+				if (dobby1.get(i).equals(checkHobby))
+				{
+					alreadyAdded = false;
+					break;
+				}
+				else
+				{
+					alreadyAdded = true;
+				}
+			}
+			if (alreadyAdded)
+			{
+				list.removeListSelectionListener(this);
+				dobby1.add(comboBox.getSelectedItem().toString());
+				list.setListData(dobby1);
+				list.addListSelectionListener(this);
+				baseFrame.setNetUserHobby(baseFrame.authenticatedUser, newHobby);
+				JOptionPane.showMessageDialog(this, "Hobby added");				
 			}
 			else
 			{
 				JOptionPane.showMessageDialog(this, "You already have this hobby added");
 			}
-			
-				
-			
-		
 		}
 		
 		if(source == btnRemove)
 		{
-			DAO dao;
 			try
 			{
-				dao = new DAO();
 				UserHobby uHob = new UserHobby();
 				list.removeListSelectionListener(this);
 				dobby1.removeElement(list.getSelectedValue());
@@ -348,7 +353,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 					}
 				}
 				
-				dao.removeUserHobby(uHob);
+				baseFrame.setNetRemoveUserHobby(uHob);
 			} 
 			catch (Exception e1)
 			{
