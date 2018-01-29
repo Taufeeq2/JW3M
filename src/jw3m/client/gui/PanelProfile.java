@@ -63,6 +63,7 @@ public class PanelProfile extends JPanel implements ActionListener
 	private int skill = 0;
 	private int skillIDAdd = 0;
 	private String skillName = null;
+	private Skill newSkill = null;;
 
 	public PanelProfile(SkillsClient frame)
 	{
@@ -434,13 +435,52 @@ public class PanelProfile extends JPanel implements ActionListener
 			this.panel.repaint();
 		} // end capture skill button
 
-		if (source == btnAddSkill) // add a skill not on the dropdown
+		if (source == btnAddSkill) // add a skill not on the dropdown (new skill)
 		{
 			try
 			{
 				DAO getSkill = new DAO();
+
+				newSkill = new Skill();
+				newSkill.setSkillID(100);
+				newSkill.setSkillName(textFieldSkillName.getText());
+				newSkill.setSkillDescription(textFieldSkillDesc.getText());
+				newSkill.setSkillVendor(textFieldVendor.getText());
+
+				getSkill.addSkillList(newSkill);
+
 				Vector<Skill> tempASkill = new Vector<Skill>();
+
+				baseFrame.getNetSkillList();
+				tempASkill = baseFrame.data_skillList;
+
+				for (int m = 0; m < tempASkill.size(); m++)
+				{
+					allSkillVect.add(tempASkill.elementAt(m).getSkillName());
+				}
 				
+				int index = allSkillVect.indexOf(textFieldSkillName.getText());
+
+				skillIDAdd = tempASkill.get(index).getSkillID();
+
+				getSkill.addUserSkills(tmpUser, skillIDAdd);
+				setupSkillsTable();
+
+				table = new JTable(model);
+
+				add(scrollPane);
+
+				scrollPane.setViewportView(table);
+
+				populateComboBox();
+
+				lblSkillName.setVisible(false);
+				lblVendor.setVisible(false);
+				lblSkillDescription.setVisible(false);
+				textFieldSkillName.setVisible(false);
+				textFieldSkillDesc.setVisible(false);
+				textFieldVendor.setVisible(false);
+
 			} catch (Exception e)
 			{
 				// TODO Auto-generated catch block
