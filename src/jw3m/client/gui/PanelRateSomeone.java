@@ -233,7 +233,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 			ratee.setLevel(level);
 			table.setValueAt(level, table.getSelectedRow(), 12);
 			
-			
+			 
 			baseFrame.setNetAddRating(ratee);
 			JOptionPane.showMessageDialog(this, "Rating submitted");
 		}
