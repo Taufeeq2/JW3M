@@ -1,6 +1,7 @@
 package jw3m.client.gui;
 
 import javax.swing.JPanel;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -19,12 +20,16 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 public class PanelNewProfile extends JPanel implements ActionListener
 {
 
 	/**
 	 * Create the panel.
 	 */
+	final static Logger logger = Logger.getLogger(PanelNewProfile.class);
 	private SkillsClient baseFrame;
 	private JLabel lblCreateMyProfile;
 	private JLabel label;
@@ -45,6 +50,7 @@ public class PanelNewProfile extends JPanel implements ActionListener
 	
 	public PanelNewProfile(SkillsClient frame)
 	{
+		
 		this.baseFrame = frame;
 		
 //		System.out.println("new profile panel started");
@@ -138,6 +144,8 @@ public class PanelNewProfile extends JPanel implements ActionListener
 		alias.setBounds(173, 207, 161, 22);
 		add(alias);
 	//	baseFrame = frame;
+		
+		baseFrame.getNetworkClient().reconnect();
 		this.setVisible(true);
 
 	}
@@ -161,34 +169,13 @@ public class PanelNewProfile extends JPanel implements ActionListener
 			
 			JOptionPane.showMessageDialog(this, "New user " + name.getText() + " created" );
 			
-			
-			
-		
+			// we have to soak up the welcome message first 
+			baseFrame.getNetworkClient().soakWelcomeMessage();
 			baseFrame.setNetAddUser(newUser);
-			
-		//	baseFrame.dao.addUserList(newUser);
-			
+			logger.info("PanelNewProfile - register button now trying to drop session");
+			baseFrame.getNetworkClient().dropSession();
 			SwingUtilities.windowForComponent(this).dispose();
-			
-			
-		//	this.getParent();
-			
-			
-//			WindowEvent winEvent = new WindowEvent(parent, WindowEvent.WINDOW_CLOSING);
-//		    Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winEvent );
-			
-//			PanelLogin logonP = new PanelLogin(baseFrame);
-			
-				
-//				baseFrame.getData();
-				
-//				JFrame tempFrame = new JFrame();
-//				
-//				tempFrame.add(logonP);
-//				tempFrame.setSize(800,600);
-//				tempFrame.setVisible(true);
-//				tempFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			
+
 			
 		}
 		

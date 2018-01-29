@@ -42,6 +42,37 @@ public class NetworkClient
   
 	}
     
+	public void soakWelcomeMessage()
+	{
+		// we want to soak up the first welcome message in two cases
+		// 1) when we create new user (register)
+		// 2) when we change password (change password button)
+		
+		String commsPrefixStrSend = " Client sent : ";
+		String commsPrefixStrRec =  " Client rec  : ";
+		
+		logger.info("### Soaking up welcome message and sending a different request to server....");
+		try
+		{
+			oos.reset();
+	//		oos.writeObject(commsSend);
+			Comms replyComms = (Comms) ois.readObject();
+			logger.info(commsPrefixStrRec + replyComms.getText() + " " + replyComms.getObj());
+		} catch (ClassNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		logger.info("### End  of soaking up welcome...");
+
+	}
+	
+    
     public Comms networkTransaction(Comms commsSend)
     {
 
@@ -64,7 +95,7 @@ public class NetworkClient
 		{
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
-			logger.error("Network client - classnot found");
+			logger.error("Network client - class not found");
 			
 		} catch (IOException e)
 		{
@@ -290,6 +321,37 @@ public class NetworkClient
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
 			logger.info("Network Class has failed to setup oos and ois");
+		}
+    }
+    
+    public void reconnect()
+    {
+    	if (baseFrame.getNetworkClient() != null )
+		{
+			if (baseFrame.getNetworkClient().isConnected())
+			{
+				// do nothing
+				// labelConnectStatus.setText("Connected to " + textFieldServer.getText() + ":" + textFieldPort.getText());
+			}
+			else
+			{	
+				// we should try connect
+				baseFrame.connectToServer();
+				if (baseFrame.getNetworkClient().isConnected())
+				{
+					logger.info("Started new session to server");
+			//		labelConnectStatus.setText("Connected");
+				}
+				else
+				{
+					
+			//		labelConnectStatus.setText("Repeated conncetion failure.");
+				}
+			}
+		}
+		else
+		{
+			// labelConnectStatus.setText("Networking not established");
 		}
     }
     

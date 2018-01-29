@@ -139,31 +139,13 @@ public class PanelLogin extends JPanel implements ActionListener
 		labelConnectionStatusHeading = new JLabel("Connection status");
 		labelConnectionStatusHeading.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		if (baseFrame.getNetworkClient() != null )
-		{
-			if (baseFrame.getNetworkClient().isConnected())
-			{
-				labelConnectStatus.setText("Connected to " + textFieldServer.getText() + ":" + textFieldPort.getText());
-			}
-			else
-			{	
-				// we should try connect
-				baseFrame.connectToServer();
-				if (baseFrame.getNetworkClient().isConnected())
-				{
-					logger.info("Started new session to server");
-					labelConnectStatus.setText("Connected");
-				}
-				else
-				{
-					labelConnectStatus.setText("Repeated conncetion failure.");
-				}
-			}
-		}
-		else
-		{
-			labelConnectStatus.setText("Networking not established");
-		}
+		
+		// this should try connect on start up
+		buttonConnect.doClick();
+		
+	//	baseFrame.getNetworkClient().reconnect();
+		
+		
 	
 		
 		GroupLayout groupLayout = new GroupLayout(this);
@@ -276,6 +258,8 @@ public class PanelLogin extends JPanel implements ActionListener
 			
 			//check if Network Class has been established
 			
+			baseFrame.getNetworkClient().reconnect();
+			
 			if (baseFrame.getNetworkClient() == null)
 			{
 				baseFrame.connectToServer();
@@ -336,6 +320,7 @@ public class PanelLogin extends JPanel implements ActionListener
 				else
 				{
 					logger.info("No user authenticated");
+					JOptionPane.showMessageDialog(this,"Password incorrect!");
 					
 					// we have to drop the session because the server will drop a bad auth and expect a new?
 //					baseFrame.getNetworkClient().dropSession();
@@ -375,68 +360,50 @@ public class PanelLogin extends JPanel implements ActionListener
 			tempFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		}
+		
 		if (source == buttonChangePassword)
 		{
+			
+			baseFrame.getNetworkClient().reconnect();
+			
 			String userName = JOptionPane.showInputDialog(this,"Username");
 			
-			if (baseFrame.getNetUser(userName) != null)
+			// we have to soak up the welcome message first 
+			baseFrame.getNetworkClient().soakWelcomeMessage();
+			
+			User tempUser = baseFrame.getNetUser(userName);
+			
+			if ( tempUser!= null)
 			{
 				logger.info("Found user " + userName);
+				String oldPassword = JOptionPane.showInputDialog(this,"Enter old password");
+				
+				if (tempUser.getPassword().equals(oldPassword))
+				{
+					logger.info("old password matches");
+					
+					String newPassword = JOptionPane.showInputDialog(this,"Enter new password");
+					tempUser.setPassword(newPassword);
+					baseFrame.editNetUser(tempUser);
+					
+				}
+				else
+				{
+					logger.info("old password does not match");
+				}
+				
 			}
 			else
 			{
-				JOptionPane.showConfirmDialog(this, "No such user!");
+				//baseFrame.getNetworkClient().dropSession();
+				JOptionPane.showMessageDialog(this, "No such user!");
+				
 			}
 			
-//			if (mainFrame.getUserCatalog().userExists(username) )
-//			{
-//			//	User user = mainFrame.getUserCatalog().findUser(username);
-//				
-//				String oldpassword = JOptionPane.showInputDialog(this,"Old password");
-//				
-//				if (oldpassword.equals (mainFrame.getUserCatalog().findUser(username).getUserPassword() ))
-//				{
-//					// passwords match
-//					
-//					String newpw1 = JOptionPane.showInputDialog(this,"New password");
-//					String newpw2 = JOptionPane.showInputDialog(this,"New password (confirm)");
-//					
-//					if (newpw1.equals(newpw2))
-//					{
-//
-//							try
-//							{
-//								mainFrame.getUserCatalog().findUser(username).setUserPassword(newpw1);
-//							} catch (UserException e1)
-//							{
-//								// TODO Auto-generated catch block
-//								JOptionPane.showConfirmDialog(this, "New password does not meet complexity requirement");
-//								e1.printStackTrace();
-//							}
-//	
-//					}
-//					else
-//					{
-//						JOptionPane.showConfirmDialog(this, "New password does not match");
-//					}
-//					
-//				}
-//				else
-//				{
-//					// invalid password
-//					JOptionPane.showConfirmDialog(this, "New password does not match");
-//				}
-//				
 //			
-//				
-//				
-//			}
-//			else
-//			{
-//				JOptionPane.showConfirmDialog(this, "No such user!");
-//			}
-//			
-//			
+			// we should always drop the session after good or bad reset because server will go wonky
+			logger.info("Panel Login - Reset Password button trying to drop session...");
+			baseFrame.getNetworkClient().dropSession();
 		}
 			
 		

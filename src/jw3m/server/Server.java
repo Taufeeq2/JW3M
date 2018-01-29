@@ -195,6 +195,7 @@ public class Server
 							// bad password
 							running = false;
 							logger.info(strPrefixAuth + " bad password");
+							oos.writeObject(new Comms("auth_fail", "Bad password!!!"));
 							//return false;
 						}
 					}
@@ -236,13 +237,11 @@ public class Server
 					
 					String tempStr = (String)comms.getObj() ;
 					User tempUser = dao.getUser(   tempStr      );
-					// again we are sending wrong stuff back here?
-					oos.reset();
-					oos.flush();
-					logger.debug("this should show up " + tempUser.getUserName() );
 					oos.writeObject(new Comms("reply user",   tempUser      )  );
 					break;
 				}
+				
+				
 				
 	
 				default : 

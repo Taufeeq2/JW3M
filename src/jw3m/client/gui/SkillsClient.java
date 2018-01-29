@@ -569,7 +569,6 @@ public class SkillsClient extends JFrame implements ActionListener
 
 		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
 		
-		logger.debug("Looks like we are getting bad response back" + commsRec.getObj());
 		
 		return (User)commsRec.getObj();
 		
