@@ -2,6 +2,9 @@ package jw3m.widgets;
 
 import java.awt.*;
 import javax.swing.*;
+
+import jw3m.client.gui.SkillsClient;
+
 import java.awt.event.*;
  
 public class BarChart extends JPanel {
@@ -10,12 +13,14 @@ public class BarChart extends JPanel {
   private String[] labels;
   private Color[] colors;
   private String title;
+  static SkillsClient baseFrame = null;
  
-  public BarChart(double[] values, String[] labels, Color[] colors, String title) {
+  public BarChart(double[] values, String[] labels, Color[] colors, String title, SkillsClient baseFrame) {
     this.labels = labels;
     this.values = values;
     this.colors = colors;
     this.title = title;
+    this.baseFrame = baseFrame;
   }
  
   public void paintComponent(Graphics g) {
@@ -99,7 +104,7 @@ public class BarChart extends JPanel {
         Color.green,
         Color.blue
     };
-    BarChart bc = new BarChart(values, labels, colors, title);
+    BarChart bc = new BarChart(values, labels, colors, title, baseFrame);
  
     frame.add(bc);
     frame.setVisible(true);

@@ -1,5 +1,6 @@
 package jw3m.client.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -15,6 +16,8 @@ import javax.swing.table.DefaultTableModel;
 import jw3m.beans.Rating;
 import jw3m.beans.Skill;
 import jw3m.beans.User;
+import jw3m.beans.UserHobby;
+import jw3m.widgets.BarChart;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -43,6 +46,9 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	private User thisUser = null;
 	private MyTableModel myModel;
 	private JLabel titleLabel;
+	private JButton buttonHobbies;
+	private Vector<User> userList = null;
+	
 
 	public PanelReporting(SkillsClient frame)
 	{
@@ -56,6 +62,9 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		
 		titleLabel = new JLabel("People per Skill");
 		titleLabel.setFont(baseFrame.getFont());
+		
+		buttonHobbies = new JButton("Hobbies");
+		buttonHobbies.addActionListener(this);
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -64,8 +73,9 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(34)
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(panel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)))
+								.addComponent(panel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1059, Short.MAX_VALUE)
+								.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1059, Short.MAX_VALUE)
+								.addComponent(buttonHobbies, Alignment.LEADING)))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(362)
 							.addComponent(titleLabel)))
@@ -80,7 +90,9 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
 					.addGap(138)
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 252, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(110, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+					.addComponent(buttonHobbies)
+					.addContainerGap())
 		);
 		panel_1.setLayout(new GridLayout(2, 5, 0, 0));
 		
@@ -221,6 +233,46 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	public void actionPerformed(ActionEvent ae)
 	{
 		Object source = ae.getSource();
+		
+		if (source == buttonHobbies)
+		{
+			userList = baseFrame.data_userList;
+			double[] values = new double [userList.size()];
+			String[] labels = new String[userList.size()];
+			Color[] colors = new Color[userList.size()];
+			String barChartTitle = "Hobbies";
+			for (int i=0; i<userList.size(); i++)
+			{
+				thisUser = userList.get(i);
+				labels[i] = thisUser.getSurname();
+				Vector<UserHobby> userHobbyList = baseFrame.getNetUserHobby(thisUser);
+				values[i] = userHobbyList.size();
+				int rem = i%5;
+				if (rem == 0)
+				{
+					colors[i] = Color.red;
+				}
+				if (rem == 1)
+				{
+					colors[i] = Color.orange; 
+				}
+				if (rem == 2)
+				{
+					colors[i] = Color.yellow;
+				}
+				if (rem == 3)
+				{
+					colors[i] = Color.green;
+				}
+				if (rem == 4)
+				{
+					colors[i] = Color.blue;
+				}
+			}
+			BarChart barChart = new BarChart(values, labels, colors, barChartTitle, baseFrame);
+			System.out.println("Called BarChart");
+		}
+		
 		if (source == comboBox)
 		{
 			int numberOfRowsInTable = table.getRowCount();
