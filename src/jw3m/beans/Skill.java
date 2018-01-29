@@ -51,16 +51,21 @@ public class Skill implements Serializable
 		this.skillDescription = skillDescription;
 	}
 	
-	public String toStringFull()
+	/*public String toStringFull()
+	{
+		return "Skill [skillID=" + skillID + ", skillName=" + skillName + ", skillVendor=" + skillVendor
+				+ ", skillDescription=" + skillDescription + "]";
+	}*/
+
+	@Override
+	public String toString()
 	{
 		return "Skill [skillID=" + skillID + ", skillName=" + skillName + ", skillVendor=" + skillVendor
 				+ ", skillDescription=" + skillDescription + "]";
 	}
-
-	@Override
 	
-	public String toString()
+	/*public String toString()
 	{
 		return skillName;
-	}
+	}*/
 }

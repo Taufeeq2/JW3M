@@ -90,7 +90,7 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		// Here we set up the model
 
 		String str[] =
-			{ "Requester", "Rator", "date" };
+			{ "Notification", "date" };
 		model = new DefaultTableModel(str, 0)
 		{
 			public void setValueAt(Object aValue, int row, int column)
@@ -144,16 +144,16 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 			{
 				if(notification.getRequestorID().equals(userList.get(j).getUserName()))
 				{
-					requester = userList.get(j).getFirstName() + " " + userList.get(j).getSurname();
+					requester = userList.get(j).getFirstName() + " " + userList.get(j).getSurname() + " has requested you to rate them.";
 				}
-				if(notification.getRatorID().equals(userList.get(j).getUserName()))
-				{
-					rater = userList.get(j).getFirstName() + " " + userList.get(j).getSurname();
-				}
+//				if(notification.getRatorID().equals(userList.get(j).getUserName()))
+//				{
+//					rater = userList.get(j).getFirstName() + " " + userList.get(j).getSurname();
+//				}
 				
 			}
 			Object obj[] =
-				{ requester, rater, notification.getDate() };
+				{ requester, notification.getDate() };
 			model.addRow(obj);
 
 		}
@@ -248,9 +248,7 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 				}
 			}
 
-			
-			PanelRateSomeone prs = new PanelRateSomeone(baseFrame);
-			prs.getRateUser(userName);
+			baseFrame.rateSomeoneP.getRateUser(userName);
 			baseFrame.getTabbedPane().setSelectedComponent(baseFrame.rateSomeoneP);
 		}
 		

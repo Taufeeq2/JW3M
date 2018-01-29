@@ -1,8 +1,12 @@
 package jw3m.dao;
 import java.util.*;
+
+import org.apache.log4j.Logger;
+
 import java.sql.Date;
 
 import jw3m.beans.*;
+import jw3m.client.gui.SkillsClient;
 
 import java.sql.*;
 
@@ -14,17 +18,8 @@ public class DAO
 		private String url = "jdbc:mysql://localhost:3306/jw3m_project";
 		private String user = "root";
 		private String psw = "root";
-//		private ResultSet rs = null;
-//		private String msg = "";
-//		private Vector<User> userVect = null;
-//		private Vector<UserSkill> userSkillVect = null;
-//		private Vector<Hobby> hobbyVect = null;
-//		private Vector<UserHobby> userHobbyVect = null;
-	//	private User user1 = null;
-//		private String id, fn, s, psw1, al, em;
-//		private int mob = 0;
-//		private boolean men = true;
-		
+		final static Logger logger = Logger.getLogger(SkillsClient.class);
+		private String strPrefix = "DAO call to the Database for ";
 		
 		public DAO() throws Exception 
 		{
@@ -43,53 +38,9 @@ public class DAO
 			{
 				e.printStackTrace();
 			}
-			
-			
-			//System.out.println("Connected to DB");
-			
+						
 			sqlstat = con.createStatement();
 			
-			// Testing methods area
-//			Notification not = new Notification();
-//			not.setRatorID("a142273");
-//			not.setRequestorID("a149936");
-//			
-//			this.setNotification(not);
-//			int rate = 0;
-//			Rating tempRating = new Rating();
-//			tempRating.setRaterID("a149936");
-//			tempRating.setUserID("a124788");
-//			tempRating.setSkillID(150);
-//			tempRating.setLevel(rate);
-//			tempRating.setKnowledge(rate);
-//			tempRating.setWorkStandard(rate);
-//			tempRating.setAutonomy(rate);
-//			tempRating.setComplexityCoping(rate);
-//			tempRating.setContextPerception(rate);
-//			tempRating.setCapabilityGrowing(rate);
-//			tempRating.setCollaboration(rate);
-//			
-//			
-//			boolean test = this.setRating(tempRating);
-//			System.out.println("---->>>> Result from addRating = " + test);
-//			Hobby tempHobby = new Hobby();
-//			String user = "a124788";
-//			int hob = 7;
-//			this.addUserHobby(user, hob);
-//			Vector<Hobby> j = this.getHobbyList();
-//			Vector<User> j = this.getUserHobby(1);
-//			Vector<UserHobby> j = this.getUserHobby("a126317");
-//			Vector<Rating> j = this.getRatings("a205128");
-//			System.out.println(j.size());
-//			for (int i = 0; i < j.size(); i++)
-//			{
-//			System.out.println(this.getLevel(3));
-//			}
-//			for (int i = 0; i < j.size(); i++)
-//			{
-//				System.out.println(j.get(i).getHobbyName());
-//			}
-
 		}	
 		
 		
@@ -97,6 +48,7 @@ public class DAO
 		
 		public Vector<User> getUserList()
 		{
+			logger.info(strPrefix + " getUserList()");
 			Vector<User> userVect = new Vector<User>();
 			try
 			{
@@ -104,15 +56,6 @@ public class DAO
 				
 				while(rs.next())
 				{
-//					id = rs.getString("userID");
-//					psw1 = rs.getString("password");
-//					fn = rs.getString("firstName");
-//					s = rs.getString("surname");
-//					al = rs.getString("alias");
-//					em = rs.getString("email");
-//					mob = rs.getInt("mobile");
-//					men = rs.getBoolean("mentor");
-					
 								
 					User tempUser = new User();
 					
@@ -139,6 +82,7 @@ public class DAO
 		
 		public boolean addUserList(User inUser)
 		{
+			logger.info(strPrefix + " addUserList()");
 			String userName = inUser.getUserName();
 			String password = inUser.getPassword();
 			String firstName = inUser.getFirstName();
@@ -175,6 +119,7 @@ public class DAO
 		
 		public boolean removeUserList(String inUserID)
 		{
+			logger.info(strPrefix + " removeUserList()");
 			try
 			{
 				ps = con.prepareStatement("DELETE FROM users WHERE userID = ?");
@@ -194,6 +139,7 @@ public class DAO
 		
 		public User getUser(String inUserName)
 		{
+			logger.info(strPrefix + " getUser()");
 			User tempUser = new User();
 			try
 			{
@@ -205,17 +151,6 @@ public class DAO
 				{
 					while(rs.next())
 					{
-
-//						id = rs.getString("userID");
-//						psw1 = rs.getString("password");
-//						fn = rs.getString("firstName");
-//						s = rs.getString("surname");
-//						al = rs.getString("alias");
-//						em = rs.getString("email");
-//						mob = rs.getInt("mobile");
-//						men = rs.getBoolean("mentor");
-
-
 						tempUser.setUserName(rs.getString("userID"));
 						tempUser.setPassword(rs.getString("password"));
 						tempUser.setFirstName(rs.getString("firstName"));
@@ -244,6 +179,7 @@ public class DAO
 		
 		public User editUser(User inUser)
 		{
+			logger.info(strPrefix + " editUser()");
 			try
 			{
 
@@ -277,6 +213,7 @@ public class DAO
 		//SKILLS METHODS
 		public Vector<Skill> getSkillList()
 		{
+			logger.info(strPrefix + " getSkillList()");
 			Vector<Skill> skillVect = new Vector<Skill>();
 			
 			
@@ -309,6 +246,7 @@ public class DAO
 		
 		public boolean addSkillList(Skill inSkill)
 		{
+			logger.info(strPrefix + " addSkillList()");
 			String skillName = inSkill.getSkillName();
 			
 			try
@@ -338,6 +276,7 @@ public class DAO
 		
 		public boolean removeSkillList(Skill inSkill)
 		{
+			logger.info(strPrefix + " removeSkillList()");
 			try
 			{
 				ps = con.prepareStatement("DELETE FROM skills WHERE skillID = ?");
@@ -359,6 +298,7 @@ public class DAO
 		
 		public Vector<UserSkill> getUserSkills(User inUser)
 		{
+			logger.info(strPrefix + " getUserSkill()");
 			Vector<UserSkill> userSkillVect = new Vector<UserSkill>();
 			String userName = inUser.getUserName();
 			
@@ -396,6 +336,7 @@ public class DAO
 		
 		public boolean addUserSkills(String inUserID, int inSkillID)
 		{
+			logger.info(strPrefix + " addUserSkill()");
 			try
 			{
 				ResultSet rsCheck = sqlstat.executeQuery("SELECT * FROM UserSkills");
@@ -426,6 +367,7 @@ public class DAO
 		
 		public boolean removeUserSkills(String inUserID, int inSkillID)
 		{
+			logger.info(strPrefix + " removeUserSkills()");
 			try
 			{
 				ps = con.prepareStatement("DELETE FROM userSkills WHERE userID = ? AND skillID = ?");
@@ -449,6 +391,7 @@ public class DAO
 		
 		public Vector<Hobby> getHobbyList()
 		{
+			logger.info(strPrefix + " getHobbyList()");
 			Vector<Hobby> hobbyVect = new Vector<Hobby>();
 			
 			try
@@ -481,6 +424,7 @@ public class DAO
 		
 		public boolean addHobbyList(Hobby inHobby)
 		{
+			logger.info(strPrefix + " addHobbyList()");
 			String hobbyName = inHobby.getHobbyName();
 						
 			try
@@ -510,6 +454,7 @@ public class DAO
 		
 		public boolean removeHobby(Hobby inHobby)
 		{
+			logger.info(strPrefix + " removeHobby()");
 			int hobbyID = inHobby.getHobbyID();
 						
 			try
@@ -533,6 +478,7 @@ public class DAO
 		
 		public Vector<UserHobby> getUserHobby(User inUser)
 		{
+			logger.info(strPrefix + " getUserHobby()");
 			Vector<UserHobby> userHobbyVect = new Vector<UserHobby>();
 			
 			String userName = inUser.getUserName();
@@ -567,6 +513,7 @@ public class DAO
 		
 		public Vector<User> getUserHobby(Hobby inHobby)
 		{
+			logger.info(strPrefix + " getUserHobby()");
 			Vector<User> userVect = new Vector<User>();
 			ResultSet rs1 = null;
 			int inHobbyID = inHobby.getHobbyID();
@@ -600,6 +547,7 @@ public class DAO
 		
 		public boolean addUserHobby(String inUserID , int inHobbyID)
 		{
+			logger.info(strPrefix + " addUserHobby()");
 			try
 			{
 				ResultSet rsCheck = sqlstat.executeQuery("SELECT * FROM Userhobbies");
@@ -630,6 +578,7 @@ public class DAO
 		
 		public boolean removeUserHobby(UserHobby inUserHobby)
 		{						
+			logger.info(strPrefix + " removeUserHobby()");
 			try
 			{
 				String userID = inUserHobby.getUserID();
@@ -656,7 +605,7 @@ public class DAO
 		
 		public Vector<Level> getLevel()
 		{
-			
+			logger.info(strPrefix + " getLevel()");
 			Vector<Level> levelVect = new Vector<Level>();
 			try
 			{
@@ -686,6 +635,7 @@ public class DAO
 		
 		public String getLevel(int inLevel)
 		{
+			logger.info(strPrefix + " getLevel()");
 			try
 			{
 				ps = con.prepareStatement("SELECT description FROM level WHERE level = ?");
@@ -717,6 +667,7 @@ public class DAO
 		
 		public Vector<Rating> getRatings(User inUser)
 		{
+			logger.info(strPrefix + " getRatings()");
 			Vector<Rating> ratingVect = new Vector<Rating>();
 			
 			String userName = inUser.getUserName();
@@ -758,6 +709,7 @@ public class DAO
 		//added by Mike to use in PanelReporting
 		public Vector<Rating> getRatings(Skill inSkill)
 		{
+			logger.info(strPrefix + " getRatings()");
 			Vector<Rating> ratingVect = new Vector<Rating>();
 			
 			int skillID = inSkill.getSkillID();
@@ -798,6 +750,7 @@ public class DAO
 		
 		public boolean setRating(Rating inRating)
 		{
+			logger.info(strPrefix + " setRatings()");
 			try
 			{
 				ResultSet rsCheck = sqlstat.executeQuery("SELECT * FROM ratings");
@@ -851,6 +804,7 @@ public class DAO
 		
 		public boolean removeRating(User inUser, User inRator, Skill inSkill)
 		{
+			logger.info(strPrefix + " removeRatings()");
 			String userName = inUser.getUserName();
 			String ratorID = inRator.getUserName();
 			int SkillID = inSkill.getSkillID();
@@ -878,6 +832,7 @@ public class DAO
 		//Notification Methods
 		public Vector<Notification> getNotification(User inUser)
 		{
+			logger.info(strPrefix + " getNotification()");
 			String userName = inUser.getUserName();
 			
 			Vector<Notification> notificationVect = new Vector<Notification>();
@@ -916,6 +871,7 @@ public class DAO
 		
 		public boolean setNotification(Notification inNotice)
 		{
+			logger.info(strPrefix + " setNotification()");
 			String requesterID = inNotice.getRequestorID();
 			String raterID = inNotice.getRatorID();
 			Date date = inNotice.getDate();
@@ -956,6 +912,7 @@ public class DAO
 
 		public boolean removeNotification(Notification inNotice)
 		{
+			logger.info(strPrefix + " removeNotification()");
 			int noticeID = inNotice.getNoticeID();
 			String requesterID = inNotice.getRequestorID();
 			String raterID = inNotice.getRatorID();

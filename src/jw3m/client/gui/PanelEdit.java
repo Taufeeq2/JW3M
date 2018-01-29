@@ -316,7 +316,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 				
 					hobs.setHobbyName(comboBox.getSelectedItem().toString());
 					
-					hobs.add(d);
+//					hobs.add(d);
 				}
 				
 				
@@ -331,7 +331,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 			list.setListData(dobby1);
 			list.addListSelectionListener(this);
 			
-			baseFrame.setNetUserHobby(temp, uhobby);
+//			baseFrame.setNetUserHobby(temp, uhobby);
 //			
 //			if((baseFrame.setNetUserHobby(temp, dobby)).equals(true))
 //			{
