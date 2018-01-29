@@ -377,16 +377,16 @@ public class PanelLogin extends JPanel implements ActionListener
 		}
 		if (source == buttonChangePassword)
 		{
-//			String userName = JOptionPane.showInputDialog(this,"Username");
-//			
-//			if (baseFrame.dao.getUser(userName) != null)
-//			{
-//				logger.info("Found user " + userName);
-//			}
-//			else
-//			{
-//				JOptionPane.showConfirmDialog(this, "No such user!");
-//			}
+			String userName = JOptionPane.showInputDialog(this,"Username");
+			
+			if (baseFrame.getNetUser(userName) != null)
+			{
+				logger.info("Found user " + userName);
+			}
+			else
+			{
+				JOptionPane.showConfirmDialog(this, "No such user!");
+			}
 			
 //			if (mainFrame.getUserCatalog().userExists(username) )
 //			{

@@ -185,6 +185,8 @@ public class Server
 							oos.writeObject(new Comms("authenticated", userObj));
 
 							authenticatedUser = userObj;
+							
+							// running tells the server to now process normal transactions when logged in.
 							running = true;
 							
 						}
@@ -225,6 +227,20 @@ public class Server
 					// seems i am not sending the new bean back - How did justin fixed
 					
 					oos.writeObject(new Comms("added userList",   dao.getUserList()  )  )   ;
+					break;
+				}
+
+				case "send user" : 
+				{
+					logger.info(strPrefix + " send user");
+					
+					String tempStr = (String)comms.getObj() ;
+					User tempUser = dao.getUser(   tempStr      );
+					// again we are sending wrong stuff back here?
+					oos.reset();
+					oos.flush();
+					logger.debug("this should show up " + tempUser.getUserName() );
+					oos.writeObject(new Comms("reply user",   tempUser      )  );
 					break;
 				}
 				
@@ -276,7 +292,8 @@ public class Server
 				{
 					logger.info(strPrefix + " send user");
 					
-					oos.writeObject(new Comms("reply userList", dao.getUser((String)comms.getObj() )  )  );
+					String tempStr = (String)comms.getObj() ;
+					oos.writeObject(new Comms("reply user", dao.getUser(   tempStr      )         )  );
 					break;
 				}
 					
