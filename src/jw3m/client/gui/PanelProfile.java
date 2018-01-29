@@ -2,6 +2,8 @@ package jw3m.client.gui;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +12,7 @@ import java.util.Vector;
 import javax.swing.JButton;
 
 import jw3m.beans.Hobby;
+import jw3m.beans.Rating;
 import jw3m.beans.Skill;
 import jw3m.beans.User;
 import jw3m.beans.UserHobby;
@@ -62,8 +65,18 @@ public class PanelProfile extends JPanel implements ActionListener
 	private JButton btnAddSkill;
 	private int skill = 0;
 	private int skillIDAdd = 0;
+	private int knowledge = 0;
+	private int workStandard = 0;
+	private int autonomy = 0;
+	private int complexityCoping = 0;
+	private int contextPerception = 0;
+	private int capabilityGrowing = 0;
+	private int collaboration = 0;
+	private int aveSelfRating = 0;
+	private int aveColleagueRating = 0;
 	private String skillName = null;
-	private Skill newSkill = null;;
+	private Skill newSkill = null;
+	private Vector<Rating> allRatingVect = new Vector<Rating>();
 
 	public PanelProfile(SkillsClient frame)
 	{
@@ -189,9 +202,9 @@ public class PanelProfile extends JPanel implements ActionListener
 
 			public boolean isCellEditable(int row, int column)
 			{
-				// make read only field column 0 - other column is directly
-				// editable
-				if (column == 0 || column == 1 || column == 2)
+				// make read only field columns 0, 1, 2, 10, 11 - other columns
+				// directly editable
+				if (column == 0 || column == 1 || column == 2 || column == 10 || column == 11)
 				{
 					return false;
 				} else
@@ -222,9 +235,45 @@ public class PanelProfile extends JPanel implements ActionListener
 					if (skill == skillList.get(j).getSkillID())
 					{
 						skillName = skillList.get(j).getSkillName();
+						// *******************************************************************
+
+						newSkill = new Skill();
+						newSkill.setSkillID(skillList.get(j).getSkillID());
+						newSkill.setSkillName(skillList.get(j).getSkillName());
+						newSkill.setSkillDescription(skillList.get(j).getSkillDescription());
+						newSkill.setSkillVendor(skillList.get(j).getSkillVendor());
+						allRatingVect = baseFrame.getNetSkillRating(newSkill);
+
+						// *******************************************************************
+						if (allRatingVect.size() > 0)
+						{
+							knowledge = allRatingVect.firstElement().getKnowledge();
+							workStandard = allRatingVect.firstElement().getWorkStandard();
+							autonomy = allRatingVect.firstElement().getAutonomy();
+							complexityCoping = allRatingVect.firstElement().getComplexityCoping();
+							contextPerception = allRatingVect.firstElement().getContextPerception();
+							capabilityGrowing = allRatingVect.firstElement().getCapabilityGrowing();
+							collaboration = allRatingVect.firstElement().getCollaboration();
+							aveSelfRating = (int) ((knowledge + workStandard + autonomy + complexityCoping
+									+ contextPerception + capabilityGrowing + collaboration) / 7 + 0.5);
+							aveColleagueRating = 0;
+						} else
+						{
+							knowledge = 0;
+							workStandard = 0;
+							autonomy = 0;
+							complexityCoping = 0;
+							contextPerception = 0;
+							capabilityGrowing = 0;
+							collaboration = 0;
+							aveSelfRating = 0;
+							aveColleagueRating = 0;
+						}
 
 						Object obj[] =
-						{ tempUser.getUserName(), skill, skillName };
+						{ tempUser.getUserName(), skill, skillName, knowledge, workStandard, autonomy, complexityCoping,
+								contextPerception, capabilityGrowing, collaboration, aveSelfRating,
+								aveColleagueRating };
 						model.addRow(obj);
 
 					}
@@ -246,7 +295,7 @@ public class PanelProfile extends JPanel implements ActionListener
 
 		switch (column)
 		{
-		case 0:
+		case 3:
 			try
 			{
 				skl.setSkillID(Integer.parseInt(aValue.toString()));
@@ -256,15 +305,6 @@ public class PanelProfile extends JPanel implements ActionListener
 
 			}
 			break;
-		case 1:
-			skl.setSkillName(aValue.toString());
-			break;
-		// case 2:
-		// skl.setSkillVendor(aValue.toString());
-		// break;
-		// case 3:
-		// skl.setSkillDescription(aValue.toString());
-		// break;
 
 		}
 		// System.out.println(aValue + " " + row + " " + column);
@@ -435,7 +475,8 @@ public class PanelProfile extends JPanel implements ActionListener
 			this.panel.repaint();
 		} // end capture skill button
 
-		if (source == btnAddSkill) // add a skill not on the dropdown (new skill)
+		if (source == btnAddSkill) // add a skill not on the dropdown (new
+									// skill)
 		{
 			try
 			{
@@ -447,40 +488,46 @@ public class PanelProfile extends JPanel implements ActionListener
 				newSkill.setSkillDescription(textFieldSkillDesc.getText());
 				newSkill.setSkillVendor(textFieldVendor.getText());
 
-				getSkill.addSkillList(newSkill);
-
-				Vector<Skill> tempASkill = new Vector<Skill>();
-
-				baseFrame.getNetSkillList();
-				tempASkill = baseFrame.data_skillList;
-
-				for (int m = 0; m < tempASkill.size(); m++)
+				if (textFieldSkillName.getText().equals("") || textFieldSkillDesc.getText().equals("")
+						|| textFieldVendor.getText().equals(""))
 				{
-					allSkillVect.add(tempASkill.elementAt(m).getSkillName());
+					JOptionPane.showMessageDialog(this, "Fill in all the fields!");
+				} else
+				{
+					getSkill.addSkillList(newSkill);
+
+					Vector<Skill> tempASkill = new Vector<Skill>();
+
+					baseFrame.getNetSkillList();
+					tempASkill = baseFrame.data_skillList;
+
+					for (int m = 0; m < tempASkill.size(); m++)
+					{
+						allSkillVect.add(tempASkill.elementAt(m).getSkillName());
+					}
+
+					int index = allSkillVect.indexOf(textFieldSkillName.getText());
+
+					skillIDAdd = tempASkill.get(index).getSkillID();
+
+					getSkill.addUserSkills(tmpUser, skillIDAdd);
+					setupSkillsTable();
+
+					table = new JTable(model);
+
+					add(scrollPane);
+
+					scrollPane.setViewportView(table);
+
+					populateComboBox();
+
+					lblSkillName.setVisible(false);
+					lblVendor.setVisible(false);
+					lblSkillDescription.setVisible(false);
+					textFieldSkillName.setVisible(false);
+					textFieldSkillDesc.setVisible(false);
+					textFieldVendor.setVisible(false);
 				}
-				
-				int index = allSkillVect.indexOf(textFieldSkillName.getText());
-
-				skillIDAdd = tempASkill.get(index).getSkillID();
-
-				getSkill.addUserSkills(tmpUser, skillIDAdd);
-				setupSkillsTable();
-
-				table = new JTable(model);
-
-				add(scrollPane);
-
-				scrollPane.setViewportView(table);
-
-				populateComboBox();
-
-				lblSkillName.setVisible(false);
-				lblVendor.setVisible(false);
-				lblSkillDescription.setVisible(false);
-				textFieldSkillName.setVisible(false);
-				textFieldSkillDesc.setVisible(false);
-				textFieldVendor.setVisible(false);
-
 			} catch (Exception e)
 			{
 				// TODO Auto-generated catch block
