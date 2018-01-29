@@ -1,6 +1,7 @@
 package jw3m.client.gui;
 
 import javax.swing.JPanel;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.Font;
@@ -32,6 +33,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Component;
 import javax.swing.JComboBox;
+import jw3m.widgets.SeparatorComboBox;
 
 public class PanelRateSomeone extends JPanel implements ActionListener
 {
@@ -101,15 +103,16 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		add(btnSubmit);
 		add(btnRate);
 		
-		
-		
+
 
         JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
         Vector items = new Vector();
-        Vector<Notification> notify = new Vector<Notification>();
-        notify = baseFrame.getNetUserNotifications(baseFrame.authenticatedUser);
+        
+        Vector<Notification> notify = baseFrame.getNetUserNotifications(baseFrame.authenticatedUser);
+        		
         String str = new String();
         User requestUser = new User();
+        
         
         System.out.println("size of notify" + notify.size());
         
@@ -117,35 +120,43 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		{
         	if(baseFrame.authenticatedUser.getUserName().equals(notify.get(i).getRatorID()))
         	{
-        		requestUser = baseFrame.getNetUser(notify.get(i).getRequestorID());
-//        		str.add(requestUser.toString() + " (requested rating)");
-        		str = requestUser.toString() + " (requested rating)";
-        		items.addElement(str);
+        		requestUser = baseFrame.getNetUser(notify.get(i).getRequestorID()); 
+        		
+        		
+        		
+        		
+        		str = requestUser.getFirstName() + " " + requestUser.getSurname() + " (" + requestUser.getUserName() + ")" ;
+        		items.addElement("Rate request - " + str );
+        		
+        		// or other order
+//        		str = requestUser.getFirstName() + " " + requestUser.getSurname() + " (" + requestUser.getUserName() + ")" ;
+//        		items.addElement(str + "(Rate requested)" );
+        		
         	}
 			
 		}
+       
+
+        items.addElement(separator );
         
+        Vector<User> allUsers = baseFrame.data_userList;
         
-        Vector<User> allUsers = new Vector<User>(); 
-        String str1 = new String();
-        
-        items.addElement("_____________________");
-        
-        allUsers = baseFrame.data_userList;
         
         for (int i = 0; i < allUsers.size(); i++)
 		{
+
+       
         	
-//        	str1.add(allUsers.get(i).toString());
-        	str1 = allUsers.get(i).toString();
-        	items.addElement(str1);
+        	// for this to always work nicely do not rely on toStrings!!!!
+    
+        	items.addElement(allUsers.get(i).getFirstName() + " " + allUsers.get(i).getSurname() + " (" +  allUsers.get(i).getUserName() + ")" );
 			
 		}
         
-//        items.addElement(str1);
 
-		
-        separatorComboBox  = new JComboBox(items);
+
+		// Changed this to a SeperatorComboBox (which is a custom class jw3m.widgets.SeparatorComboBox
+        separatorComboBox  = new SeparatorComboBox(items);
         separatorComboBox.setFont(new Font("Tahoma", Font.BOLD, 16));
         separatorComboBox .setBounds(409, 109, 412, 22);
 		add(separatorComboBox );
