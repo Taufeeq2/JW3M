@@ -266,7 +266,7 @@ public class PanelProfile extends JPanel implements ActionListener
 		// break;
 
 		}
-		//System.out.println(aValue + " " + row + " " + column);
+		// System.out.println(aValue + " " + row + " " + column);
 
 	}
 
@@ -296,10 +296,10 @@ public class PanelProfile extends JPanel implements ActionListener
 			comboSkillNames.add(tempSkillNames.get(k).getSkillName());
 
 		}
-	
+
 		DefaultComboBoxModel cboNewModel = new DefaultComboBoxModel(comboSkillNames);
 		comboBoxSkills.setModel(cboNewModel);
-		
+
 	}
 
 	@Override
@@ -315,7 +315,7 @@ public class PanelProfile extends JPanel implements ActionListener
 
 		int i = table.getSelectedRow(); // set index for selected row
 
-		//System.out.println("selected row index -------->>>>>>> " + i);
+		// System.out.println("selected row index -------->>>>>>> " + i);
 
 		if (source == btnRemoveSelectedSkill && i >= 0) // if nothing selected
 														// its -1
@@ -324,7 +324,7 @@ public class PanelProfile extends JPanel implements ActionListener
 			try
 			{
 				DAO getSkill = new DAO();
-				
+
 				userSkills = baseFrame.getNetUserSkills(tempUser);
 				skill = userSkills.get(i).getSkillID();
 
@@ -354,30 +354,30 @@ public class PanelProfile extends JPanel implements ActionListener
 			}
 
 		} // end remove button
-		
+
 		if (source == btnAddSelectedSkill) // top skill always selected
 		{
 			try
 			{
 				DAO getSkill = new DAO();
 				Vector<Skill> tempASkill = new Vector<Skill>();
-				
+
 				baseFrame.getNetSkillList();
 				tempASkill = baseFrame.data_skillList;
 				System.out.println("tempASkill skill list ------------>>>>>>>  " + tempASkill);
-				
+
 				for (int m = 0; m < tempASkill.size(); m++)
 				{
-				   allSkillVect.add(tempASkill.elementAt(m).getSkillName());
+					allSkillVect.add(tempASkill.elementAt(m).getSkillName());
 				}
 				System.out.println("all skills vector --------------->>>>>>>>>>> " + allSkillVect);
 				int index = allSkillVect.indexOf(comboBoxSkills.getSelectedItem().toString());
 				System.out.println("index of skill from vector ------------------>>>>>>>>>>>  " + index);
-				
+
 				skillIDAdd = tempASkill.get(index).getSkillID();
-				
+
 				System.out.println("skill id to add  ---------------------->>>>>>>>>>>>> " + skillIDAdd);
-				
+
 				getSkill.addUserSkills(tmpUser, skillIDAdd);
 				setupSkillsTable();
 
@@ -428,9 +428,24 @@ public class PanelProfile extends JPanel implements ActionListener
 			btnAddSkill = new JButton("Add Skill");
 			btnAddSkill.setBounds(669, 292, 97, 25);
 			panel.add(btnAddSkill);
+			btnAddSkill.addActionListener(this);
 
 			this.panel.validate();
 			this.panel.repaint();
-		} //end capture skill button
+		} // end capture skill button
+
+		if (source == btnAddSkill) // add a skill not on the dropdown
+		{
+			try
+			{
+				DAO getSkill = new DAO();
+				Vector<Skill> tempASkill = new Vector<Skill>();
+				
+			} catch (Exception e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }
