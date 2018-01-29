@@ -195,46 +195,51 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		String skillName;
 		Object rating [] = new Object[model.getColumnCount()];
 		ratee = new Rating();
+//		Vector<Rating> rateVect	= new Vector<Rating>();
+		
 		
 		if(source == btnSubmit)
 		{
-			for(int count = 0; count < model.getColumnCount(); count++)
+			for (int i = 0; i < model.getRowCount(); i++)
 			{
-				rating[count] = model.getValueAt(table.getSelectedRow(), count);	
-				//System.out.println(model.getValueAt(count, 0).toString());
+				System.out.println("number of rows: " + model.getRowCount());
+				
+				for(int count = 0; count < model.getColumnCount(); count++)
+				{
+					rating[count] = model.getValueAt(table.getSelectedRow(), count);	
+				}
+				
+				ratee.setKnowledge(Integer.parseInt((String)rating[5]));	
+				ratee.setWorkStandard(Integer.parseInt((String)rating[6]));
+				ratee.setAutonomy(Integer.parseInt((String)rating[7]));
+				ratee.setComplexityCoping(Integer.parseInt((String)rating[8]));
+				ratee.setContextPerception(Integer.parseInt((String)rating[9]));
+				ratee.setCapabilityGrowing(Integer.parseInt((String)rating[10]));
+				ratee.setCollaboration(Integer.parseInt((String)rating[11]));
+
+				ratee.setRaterID(baseFrame.authenticatedUser.getUserName());
+				ratee.setSkillID((int)rating[3]); 
+				ratee.setUserID((String)rating[0]);
+
+				int level = 0; 
+//				level = (ratee.getKnowledge() + ratee.getWorkStandard() + ratee.getAutonomy() + ratee.getComplexityCoping() + ratee.getContextPerception() 
+//						+ ratee.getCapabilityGrowing() + ratee.getCollaboration()) / 7;
+				level = (Integer.parseInt((String)rating[5]) + Integer.parseInt((String)rating[6]) + Integer.parseInt((String)rating[7]) + Integer.parseInt((String)rating[8]) + 
+						Integer.parseInt((String)rating[9]) + Integer.parseInt((String)rating[10]) + Integer.parseInt((String)rating[11])) / 7 ;
+				ratee.setLevel(level);
+				System.out.println("Level is: " + (ratee.getKnowledge() + ratee.getWorkStandard() + ratee.getAutonomy() + ratee.getComplexityCoping() + ratee.getContextPerception() 
+						+ ratee.getCapabilityGrowing() + ratee.getCollaboration()) / 7);
+				System.out.println("level: " + level + " skill id: " + ratee.getSkillID());
+				table.setValueAt(level, i, 12);
+				baseFrame.setNetAddRating(ratee);
+		
 			}
+			
 
-			ratee.setKnowledge(Integer.parseInt((String)rating[5]));	
-			ratee.setWorkStandard(Integer.parseInt((String)rating[6]));
-			ratee.setAutonomy(Integer.parseInt((String)rating[7]));
-			ratee.setComplexityCoping(Integer.parseInt((String)rating[8]));
-			ratee.setContextPerception(Integer.parseInt((String)rating[9]));
-			ratee.setCapabilityGrowing(Integer.parseInt((String)rating[10]));
-			ratee.setCollaboration(Integer.parseInt((String)rating[11]));
-			System.out.println("knowledge " + ratee.getKnowledge());
 			
-//			ratee.setKnowledge((int)rating[5]);	
-//			ratee.setWorkStandard((int)rating[6]);
-//			ratee.setAutonomy((int)rating[7]);
-//			ratee.setComplexityCoping((int)rating[8]);
-//			ratee.setContextPerception((int)rating[9]);
-//			ratee.setCapabilityGrowing((int)rating[10]);
-//			ratee.setCollaboration((int)rating[11]);
-			
-			
-			
-			ratee.setRaterID(baseFrame.authenticatedUser.getUserName());
-			ratee.setSkillID((int)rating[3]); 
-			ratee.setUserID((String)rating[0]);
-
-			int level = 0; 
-			level = (ratee.getKnowledge() + ratee.getWorkStandard() + ratee.getAutonomy() + ratee.getComplexityCoping() + ratee.getContextPerception() 
-					+ ratee.getCapabilityGrowing() + ratee.getCollaboration()) / 7;
-			ratee.setLevel(level);
-			table.setValueAt(level, table.getSelectedRow(), 12);
 			
 			 
-			baseFrame.setNetAddRating(ratee);
+//			baseFrame.setNetAddRating(ratee);
 			JOptionPane.showMessageDialog(this, "Rating submitted");
 		}
 		
