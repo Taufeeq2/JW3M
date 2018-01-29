@@ -2,28 +2,31 @@ package jw3m.widgets;
 
 import java.awt.*;
 import javax.swing.*;
-
-import jw3m.client.gui.SkillsClient;
-
 import java.awt.event.*;
  
 public class BarChart extends JPanel {
  
-  private double[] values;
-  private String[] labels;
-  private Color[] colors;
-  private String title;
-  static SkillsClient baseFrame = null;
+	//Mike Findlay - make these values static rather than private
+  // private double[] values;
+  // private String[] labels;
+  // private Color[] colors;
+  // private String title;
+	static double[] values;
+	static String[] labels;
+	static Color[] colors;
+	static String title;
  
-  public BarChart(double[] values, String[] labels, Color[] colors, String title, SkillsClient baseFrame) {
+  public BarChart(double[] values, String[] labels, Color[] colors, String title) {
     this.labels = labels;
     this.values = values;
     this.colors = colors;
     this.title = title;
-    this.baseFrame = baseFrame;
+    
+   
   }
  
   public void paintComponent(Graphics g) {
+	  System.out.println("method paintComponents");
     super.paintComponent(g);
     if (values == null || values.length == 0) {
       return;
@@ -94,17 +97,18 @@ public class BarChart extends JPanel {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(350, 300);
  
-    String title = "My Title";
-    double[] values = new double[]{1,2,3,4,5};
-    String[] labels = new String[]{"A","B","C","D","E"};
-    Color[] colors = new Color[]{
-        Color.red,
-        Color.orange,
-        Color.yellow,
-        Color.green,
-        Color.blue
-    };
-    BarChart bc = new BarChart(values, labels, colors, title, baseFrame);
+    // Mike Findlay, commenting out the arrays
+  //  String title = "My Title";
+  //  double[] values = new double[]{1,2,3,4,5};
+  //  String[] labels = new String[]{"A","B","C","D","E"};
+  //  Color[] colors = new Color[]{
+  //      Color.red,
+  //      Color.orange,
+  //      Color.yellow,
+  //      Color.green,
+  //      Color.blue
+  //  };
+    BarChart bc = new BarChart(values, labels, colors, title);
  
     frame.add(bc);
     frame.setVisible(true);
