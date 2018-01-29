@@ -826,5 +826,20 @@ public class SkillsClient extends JFrame implements ActionListener
 	//	logger.debug(" getNetUserList() call invoked");	
 	}
 
+	public Vector<Notification> setNetRemoveUserNotification(Notification notificationIn)
+	{
+//		logger.info("Transaction sent : Remove UserHobby " + userHobbyIn.getUserID() + " ID: " + userHobbyIn.getHobbyID());
+		Comms commsSend = new Comms();
+			commsSend.setText("remove userNotification");
+			commsSend.setObj(notificationIn);
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+		
+		logger.info(commsRec.getText());
+		return (Vector<Notification>)commsRec.getObj();
+		
+	//	logger.debug(" getNetUserList() call invoked");	
+	}
+	
 	
 }
