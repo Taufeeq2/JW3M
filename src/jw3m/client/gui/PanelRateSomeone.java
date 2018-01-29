@@ -99,7 +99,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		scrollPane = new JScrollPane(table);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(39, 273, 1200, 300);
+		scrollPane.setBounds(39, 273, 1653, 300);
 		add(scrollPane);
 		scrollPane.setViewportView(table);
 		add(scrollPane);
@@ -204,26 +204,34 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 				//System.out.println(model.getValueAt(count, 0).toString());
 			}
 
-			ratee.setKnowledge(Integer.parseInt((String)rating[3]));
-			ratee.setWorkStandard(Integer.parseInt((String)rating[4]));
-			ratee.setAutonomy(Integer.parseInt((String)rating[5]));
-			ratee.setComplexityCoping(Integer.parseInt((String)rating[6]));
-			ratee.setContextPerception(Integer.parseInt((String)rating[7]));
-			ratee.setCapabilityGrowing(Integer.parseInt((String)rating[8]));
-			ratee.setCollaboration(Integer.parseInt((String)rating[9]));
+			ratee.setKnowledge(Integer.parseInt((String)rating[5]));	
+			ratee.setWorkStandard(Integer.parseInt((String)rating[6]));
+			ratee.setAutonomy(Integer.parseInt((String)rating[7]));
+			ratee.setComplexityCoping(Integer.parseInt((String)rating[8]));
+			ratee.setContextPerception(Integer.parseInt((String)rating[9]));
+			ratee.setCapabilityGrowing(Integer.parseInt((String)rating[10]));
+			ratee.setCollaboration(Integer.parseInt((String)rating[11]));
+			System.out.println("knowledge " + ratee.getKnowledge());
+			
+//			ratee.setKnowledge((int)rating[5]);	
+//			ratee.setWorkStandard((int)rating[6]);
+//			ratee.setAutonomy((int)rating[7]);
+//			ratee.setComplexityCoping((int)rating[8]);
+//			ratee.setContextPerception((int)rating[9]);
+//			ratee.setCapabilityGrowing((int)rating[10]);
+//			ratee.setCollaboration((int)rating[11]);
 			
 			
-//			System.out.println("2nd test " + ratee.getAutonomy());
+			
 			ratee.setRaterID(baseFrame.authenticatedUser.getUserName());
-//			int skill1 = (Integer.parseInt((String)rating[1]));
-			ratee.setSkillID((int)rating[1]); 
+			ratee.setSkillID((int)rating[3]); 
 			ratee.setUserID((String)rating[0]);
 
 			int level = 0; 
 			level = (ratee.getKnowledge() + ratee.getWorkStandard() + ratee.getAutonomy() + ratee.getComplexityCoping() + ratee.getContextPerception() 
 					+ ratee.getCapabilityGrowing() + ratee.getCollaboration()) / 7;
 			ratee.setLevel(level);
-			table.setValueAt(level, table.getSelectedRow(), 10);
+			table.setValueAt(level, table.getSelectedRow(), 12);
 			
 			
 			baseFrame.setNetAddRating(ratee);
@@ -312,6 +320,9 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 					}
 				}
 			}
+			
+			btnSubmit.setEnabled(true);
+			searchField.setText("");
 		} 
 		catch (Exception e1)
 		{
