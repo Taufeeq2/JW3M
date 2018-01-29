@@ -269,7 +269,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 					colors[i] = Color.blue;
 				}
 			}
-			BarChart barChart = new BarChart(values, labels, colors, barChartTitle, baseFrame);
+			BarChart barChart = new BarChart(values, labels, colors, barChartTitle);
 			System.out.println("Called BarChart");
 		}
 		
