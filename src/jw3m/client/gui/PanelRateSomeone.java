@@ -206,8 +206,9 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 				
 				for(int count = 0; count < model.getColumnCount(); count++)
 				{
-					rating[count] = model.getValueAt(table.getSelectedRow(), count);	
+					rating[count] = model.getValueAt(i, count);	
 				}
+				
 				
 				ratee.setKnowledge(Integer.parseInt((String)rating[5]));	
 				ratee.setWorkStandard(Integer.parseInt((String)rating[6]));
