@@ -17,11 +17,13 @@ import jw3m.beans.Rating;
 import jw3m.beans.Skill;
 import jw3m.beans.User;
 import jw3m.beans.UserHobby;
+import jw3m.beans.UserSkill;
 import jw3m.widgets.BarChart;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
@@ -48,6 +50,8 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	private JLabel titleLabel;
 	private JButton buttonHobbies;
 	private Vector<User> userList = null;
+	private JScrollPane scrollPane = null;
+	private JButton buttonSkills;
 	
 
 	public PanelReporting(SkillsClient frame)
@@ -65,6 +69,10 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		
 		buttonHobbies = new JButton("Hobbies");
 		buttonHobbies.addActionListener(this);
+		
+		buttonSkills = new JButton("Skills");
+		buttonSkills.addActionListener(this);
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -73,9 +81,12 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(34)
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(panel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1059, Short.MAX_VALUE)
-								.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1059, Short.MAX_VALUE)
-								.addComponent(buttonHobbies, Alignment.LEADING)))
+								.addComponent(panel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+								.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+									.addComponent(buttonHobbies)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(buttonSkills))))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(362)
 							.addComponent(titleLabel)))
@@ -90,8 +101,10 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
 					.addGap(138)
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 252, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
-					.addComponent(buttonHobbies)
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(buttonHobbies)
+						.addComponent(buttonSkills))
 					.addContainerGap())
 		);
 		panel_1.setLayout(new GridLayout(2, 5, 0, 0));
@@ -125,7 +138,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 //		a.insertData(values);
 
 		// Create the scroll pane and add the table to it.
-		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane = new JScrollPane(table);
 		panel.add(scrollPane);
 		setLayout(groupLayout);
 	}
@@ -270,12 +283,66 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 				}
 			}
 			BarChart barChart = new BarChart(values, labels, colors, barChartTitle);
-			
-			System.out.println("Called BarChart");
+			panel.removeAll();
+			panel.validate();
+			panel.repaint();
+			panel.add(barChart);
+			panel.validate();
+			panel.repaint();
+		}
+		
+		if (source == buttonSkills)
+		{
+			userList = baseFrame.data_userList;
+			double[] values = new double [userList.size()];
+			String[] labels = new String[userList.size()];
+			Color[] colors = new Color[userList.size()];
+			String barChartTitle = "Skills";
+			for (int i=0; i<userList.size(); i++)
+			{
+				thisUser = userList.get(i);
+				labels[i] = thisUser.getSurname();
+				Vector<UserSkill> userSkillsList = baseFrame.getNetUserSkills(thisUser);
+				values[i] = userSkillsList.size();
+				int rem = i%5;
+				if (rem == 0)
+				{
+					colors[i] = Color.red;
+				}
+				if (rem == 1)
+				{
+					colors[i] = Color.orange; 
+				}
+				if (rem == 2)
+				{
+					colors[i] = Color.yellow;
+				}
+				if (rem == 3)
+				{
+					colors[i] = Color.green;
+				}
+				if (rem == 4)
+				{
+					colors[i] = Color.blue;
+				}
+			}
+			BarChart barChart = new BarChart(values, labels, colors, barChartTitle);
+			panel.removeAll();
+			panel.validate();
+			panel.repaint();
+			panel.add(barChart);
+			panel.validate();
+			panel.repaint();
 		}
 		
 		if (source == comboBox)
 		{
+			panel.removeAll();
+			panel.validate();
+			panel.repaint();
+			panel.add(scrollPane);
+			panel.validate();
+			panel.repaint();
 			int numberOfRowsInTable = table.getRowCount();
 			
 			for (int x=0; x<numberOfRowsInTable; x++)
@@ -401,13 +468,21 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 				{	
 					Object[] data = new Object[13];
 					double aveLevel = vectSum.get(z)/vectCount.get(z);
+					int aveLevelRounded = (int)(aveLevel + 0.5);
 					double aveKnowledgeable = vectKnowledgeable.get(z)/vectCount.get(z);
+					int aveKnowledgeableRounded = (int)(aveKnowledgeable + 0.5);
 					double aveStandard = vectStandard.get(z)/vectCount.get(z);
+					int aveStandardRounded = (int)(aveStandard + 0.5);
 					double aveAutonomy = vectAutonomy.get(z)/vectCount.get(z);
+					int aveAutonomyRounded = (int)(aveAutonomy + 0.5);
 					double aveComplexity = vectComplexity.get(z)/vectCount.get(z);
+					int aveComplexityRounded = (int)(aveComplexity + 0.5);
 					double aveContext = vectContext.get(z)/vectCount.get(z);
+					int aveContextRounded = (int)(aveContext + 0.5);
 					double aveCapability = vectCapability.get(z)/vectCount.get(z);
+					int aveCapabilityRounded = (int)(aveCapability + 0.5);
 					double aveCollaboration = vectCollaboration.get(z)/vectCount.get(z);
+					int aveCollaborationRounded = (int)(aveCollaboration + 0.5);
 					int numberOfRatings = vectCount.get(z);
 					String thisUserId = vectUserId.get(z);
 						
@@ -418,16 +493,16 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 						data[0] = thisUserId;
 						data[1] = thisUser.getSurname();
 						data[2] = thisUser.getFirstName();
-						data[3] = aveLevel;
+						data[3] = aveLevelRounded;
 						data[4] = numberOfRatings;
 						data[5] = thisUser.isMentor();
-						data[6] = aveKnowledgeable;
-						data[7] = aveStandard;
-						data[8] = aveAutonomy;
-						data[9] = aveComplexity;
-						data[10] = aveContext;
-						data[11] = aveCapability;
-						data[12] = aveCollaboration;
+						data[6] = aveKnowledgeableRounded;
+						data[7] = aveStandardRounded;
+						data[8] = aveAutonomyRounded;
+						data[9] = aveComplexityRounded;
+						data[10] = aveContextRounded;
+						data[11] = aveCapabilityRounded;
+						data[12] = aveCollaborationRounded;
 					
 					a = (MyTableModel) table.getModel();
 					a.insertData(data);
