@@ -3,38 +3,35 @@ package jw3m.client.gui;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.util.StringTokenizer;
 import java.util.Vector;
-
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.MouseInputListener;
 import javax.swing.table.DefaultTableModel;
-
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.events.MouseEvent;
 import org.w3c.dom.views.AbstractView;
-
-import jw3m.beans.Rating;
-import jw3m.beans.Skill;
-import jw3m.beans.User;
-import jw3m.beans.UserSkill;
+import jw3m.beans.*;
 import jw3m.dao.DAO;
-
+import jw3m.widgets.SeparatorComboBox;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Component;
+import javax.swing.JComboBox;
 
 public class PanelRateSomeone extends JPanel implements ActionListener
 {
@@ -46,11 +43,12 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 	private JTable table;
 	private Vector<Skill> skillList = new Vector<Skill>();
 	private Vector<Skill> skillNames = new Vector<Skill>();
-	private JTextField searchField;
 	private JLabel lblSearch;
-	private JButton btnSearch;
+	private JButton btnRate;
 	private Rating ratee;
+	private JComboBox separatorComboBox ;
 	
+	@SuppressWarnings("unchecked")
 	public PanelRateSomeone(SkillsClient frame) {
 		
 		baseFrame = frame;
@@ -59,7 +57,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		lblRateSomeone.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
 		
 		btnSubmit = new JButton("Submit");
-		btnSubmit.setBounds(485, 173, 97, 29);
+		btnSubmit.setBounds(603, 173, 97, 29);
 		btnSubmit.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnSubmit.addActionListener(this);
 		btnSubmit.setEnabled(false);
@@ -75,19 +73,14 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 			skillNames.add(skillNms.get(i));
 		}
 		
-		searchField = new JTextField();
-		searchField.setBounds(415, 107, 153, 26);
-		searchField.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		searchField.setColumns(10);
-		
 		lblSearch = new JLabel("Search ");
 		lblSearch.setBounds(326, 110, 60, 20);
 		lblSearch.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
-		btnSearch = new JButton("Search");
-		btnSearch.setBounds(353, 173, 102, 29);
-		btnSearch.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnSearch.addActionListener(this);
+		btnRate = new JButton("Rate");
+		btnRate.setBounds(441, 173, 102, 29);
+		btnRate.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnRate.addActionListener(this);
 		
 		setupSkillsTable();
 		setLayout(null);
@@ -97,18 +90,66 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		
 
 		scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(39, 273, 1653, 300);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(39, 273, 1653, 300);
 		add(scrollPane);
 		scrollPane.setViewportView(table);
 		add(scrollPane);
 		add(lblRateSomeone);
 		add(lblSearch);
 		add(btnSubmit);
-		add(searchField);
-		add(btnSearch);
+		add(btnRate);
 		
+		
+		
+
+        JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
+        Vector items = new Vector();
+        Vector<Notification> notify = new Vector<Notification>();
+        notify = baseFrame.getNetUserNotifications(baseFrame.authenticatedUser);
+        String str = new String();
+        User requestUser = new User();
+        
+        System.out.println("size of notify" + notify.size());
+        
+        for (int i = 0; i < notify.size(); i++)
+		{
+        	if(baseFrame.authenticatedUser.getUserName().equals(notify.get(i).getRatorID()))
+        	{
+        		requestUser = baseFrame.getNetUser(notify.get(i).getRequestorID());
+//        		str.add(requestUser.toString() + " (requested rating)");
+        		str = requestUser.toString() + " (requested rating)";
+        		items.addElement(str);
+        	}
+			
+		}
+        
+        
+        Vector<User> allUsers = new Vector<User>(); 
+        String str1 = new String();
+        
+        items.addElement("_____________________");
+        
+        allUsers = baseFrame.data_userList;
+        
+        for (int i = 0; i < allUsers.size(); i++)
+		{
+        	
+//        	str1.add(allUsers.get(i).toString());
+        	str1 = allUsers.get(i).toString();
+        	items.addElement(str1);
+			
+		}
+        
+//        items.addElement(str1);
+
+		
+        separatorComboBox  = new JComboBox(items);
+        separatorComboBox.setFont(new Font("Tahoma", Font.BOLD, 16));
+        separatorComboBox .setBounds(409, 109, 412, 22);
+		add(separatorComboBox );
+        
 	}
 	
 	public void setupSkillsTable()
@@ -244,11 +285,32 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 			JOptionPane.showMessageDialog(this, "Rating submitted");
 		}
 		
-		if(source == btnSearch)
+		if(source == btnRate)
 		{
 			Vector<Rating> userRatings1 = new Vector<Rating>();
-			tempUser = baseFrame.getNetUser(searchField.getText());
-			userRatings1 = baseFrame.getNetUserRating(tempUser);
+//			tempUser = baseFrame.getNetUser(searchField.getText());
+  
+			String userName = (String)separatorComboBox.getSelectedItem();
+
+			StringTokenizer tokenizer = new StringTokenizer(userName, " ");
+			String token1;
+			String token2; 
+			tokenizer.hasMoreTokens();
+			token1 = tokenizer.nextToken();
+			System.out.println("NAME " + token1);
+			tokenizer.hasMoreTokens();
+			token2 = tokenizer.nextToken();
+			System.out.println("SURNAME " + token2); 
+			for (int i = 0; i < baseFrame.data_userList.size(); i++)
+			{
+				if ((baseFrame.data_userList.get(i).getFirstName().equals(token1)) && (baseFrame.data_userList.get(i).getSurname().equals(token2)))
+				{
+					userName = baseFrame.data_userList.get(i).getUserName();
+				}
+			} 
+			tempUser = baseFrame.getNetUser(userName);
+			
+//			userRatings1 = baseFrame.getNetUserRating(tempUser);
 //			System.out.println("ratings " + userRatings1);
 			model = (DefaultTableModel) table.getModel();
 			model.setRowCount(0);
@@ -281,7 +343,6 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		
 		
 				btnSubmit.setEnabled(true);
-				searchField.setText("");
 			} 
 			catch (Exception e1)
 			{
@@ -328,13 +389,10 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 			}
 			
 			btnSubmit.setEnabled(true);
-			searchField.setText("");
 		} 
 		catch (Exception e1)
 		{
 			e1.printStackTrace();
 		}
 	}
-
-
 }
