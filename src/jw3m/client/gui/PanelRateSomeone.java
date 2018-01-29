@@ -209,7 +209,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 					rating[count] = model.getValueAt(i, count);	
 				}
 				
-				
+				 
 				ratee.setKnowledge(Integer.parseInt((String)rating[5]));	
 				ratee.setWorkStandard(Integer.parseInt((String)rating[6]));
 				ratee.setAutonomy(Integer.parseInt((String)rating[7]));
