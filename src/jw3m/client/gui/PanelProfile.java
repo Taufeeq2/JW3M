@@ -5,13 +5,9 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Collections;
 import java.util.Vector;
 
-import javax.swing.JRadioButton;
-
 import javax.swing.JButton;
-import javax.swing.JTextArea;
 
 import jw3m.beans.Hobby;
 import jw3m.beans.Skill;
@@ -37,8 +33,6 @@ public class PanelProfile extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	private SkillsClient baseFrame;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private User user = new User();
 	private JPanel panel;
 	private JTable table;
 	private DefaultTableModel model = null;
@@ -47,12 +41,11 @@ public class PanelProfile extends JPanel implements ActionListener
 	private JComboBox comboBoxSkills;
 	private JButton btnAddSelectedSkill;
 	private Vector<Skill> skillList = new Vector<Skill>();
-	private Vector<Skill> tmpSkills = new Vector<Skill>();
 	private Vector<String> comboSkillNames = new Vector<String>();
 	private Vector<Skill> tempSkillNames = new Vector<Skill>();
+	private Vector<Skill> tempASkill = new Vector<Skill>();
 	private Vector<UserSkill> userSkills = new Vector<UserSkill>();
 	private Vector<UserSkill> tmpUserSkills = new Vector<UserSkill>();
-	private Vector<UserSkill> tmpUserSkillIds = new Vector<UserSkill>();
 	private Vector<String> allSkillVect = new Vector<String>();
 	private JScrollPane scrollPane;
 	private JLabel lblAddSkills;
@@ -69,7 +62,6 @@ public class PanelProfile extends JPanel implements ActionListener
 	private JButton btnAddSkill;
 	private int skill = 0;
 	private int skillIDAdd = 0;
-	private String allSkill = null;
 	private String skillName = null;
 
 	public PanelProfile(SkillsClient frame)
@@ -139,22 +131,6 @@ public class PanelProfile extends JPanel implements ActionListener
 
 		setupSkillsTable();
 		setLayout(null);
-
-		/*
-		 * table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		 * table.getColumnModel().getColumn(0).setPreferredWidth(20);
-		 * table.getColumnModel().getColumn(1).setPreferredWidth(20);
-		 * table.getColumnModel().getColumn(2).setPreferredWidth(20);
-		 * table.getColumnModel().getColumn(3).setPreferredWidth(20);
-		 * table.getColumnModel().getColumn(4).setPreferredWidth(20);
-		 * table.getColumnModel().getColumn(5).setPreferredWidth(20);
-		 * table.getColumnModel().getColumn(6).setPreferredWidth(20);
-		 * table.getColumnModel().getColumn(7).setPreferredWidth(20);
-		 * table.getColumnModel().getColumn(8).setPreferredWidth(20);
-		 * table.getColumnModel().getColumn(9).setPreferredWidth(20);
-		 * table.getColumnModel().getColumn(10).setPreferredWidth(20);
-		 * table.getColumnModel().getColumn(11).setPreferredWidth(20);
-		 */
 
 		// Set up the columns of the Jtable to be sortable
 		table = new JTable(model);
@@ -384,26 +360,23 @@ public class PanelProfile extends JPanel implements ActionListener
 			try
 			{
 				DAO getSkill = new DAO();
+				Vector<Skill> tempASkill = new Vector<Skill>();
 				
-				/*allSkill = comboBoxSkills.getSelectedItem().toString();
-				System.out.println("selected skill name " + allSkill);
-				System.out.println("all skills " + skillList);
-				//skill = skillList.indexOf(allSkill);
-				int index = skillList.indexOf("Skill [skillID=12, skillName=JCL, skillVendor=JCL, skillDescription=JCL]");
-				System.out.println("index of skill  " + index);
-				//skill = skillList.elementAt(11).getSkillID();*/
+				baseFrame.getNetSkillList();
+				tempASkill = baseFrame.data_skillList;
+				System.out.println("tempASkill skill list ------------>>>>>>>  " + tempASkill);
 				
-				for (int m = 0; m < skillList.size(); m++)
+				for (int m = 0; m < tempASkill.size(); m++)
 				{
-				   allSkillVect.add(skillList.elementAt(m).getSkillName());
+				   allSkillVect.add(tempASkill.elementAt(m).getSkillName());
 				}
-				System.out.println("all skills " + allSkillVect);
-				int index = allSkillVect.indexOf("JCL");
-				System.out.println("index of skill  " + index);
+				System.out.println("all skills vector --------------->>>>>>>>>>> " + allSkillVect);
+				int index = allSkillVect.indexOf(comboBoxSkills.getSelectedItem().toString());
+				System.out.println("index of skill from vector ------------------>>>>>>>>>>>  " + index);
 				
-				skillIDAdd = skillList.get(index).getSkillID();
+				skillIDAdd = tempASkill.get(index).getSkillID();
 				
-				System.out.println("skill id to add " + skillIDAdd);
+				System.out.println("skill id to add  ---------------------->>>>>>>>>>>>> " + skillIDAdd);
 				
 				getSkill.addUserSkills(tmpUser, skillIDAdd);
 				setupSkillsTable();
