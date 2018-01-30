@@ -22,6 +22,7 @@ import jw3m.dao.DAO;
 import javax.swing.*;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.awt.BorderLayout;
 
 public class PanelNotifications extends JPanel implements ActionListener, ListSelectionListener
 {
@@ -37,52 +38,60 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 	private JButton btnCancelNotification;
 	private JButton btnInv;
 	private JComboBox comboBox;
+	private JPanel northP, centerP;
 	
 	public PanelNotifications(SkillsClient frame) {
 		baseFrame = frame;
+		setLayout(new BorderLayout(0, 0));
 		
-		setLayout(null);
-		
+		northP = new JPanel();
 		lblNotifications = new JLabel("Notifications");
 		lblNotifications.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
-		lblNotifications.setBounds(345, 23, 155, 16);
-		add(lblNotifications);
+		northP.add(lblNotifications);
 		
-		setupNotificationsTable();;
+		centerP = new JPanel();
+		
+		
+		
+		
+		setupNotificationsTable();
+		centerP.setLayout(null);
 
 		table = new JTable(model);
 	
 		scrollPaneT = new JScrollPane(table);
+		scrollPaneT.setBounds(20, 10, 900, 300);
 		scrollPaneT.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPaneT.setBounds(100, 120, 600, 200);
-		add(scrollPaneT);
+		centerP.add(scrollPaneT);
 
 		scrollPaneT.setViewportView(table);
 		
 		btnRateUser = new JButton("RATE USER");
+		btnRateUser.setBounds(50, 361, 225, 30);
 		btnRateUser.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnRateUser.setBounds(100, 364, 164, 23);
-		add(btnRateUser);
+		centerP.add(btnRateUser);
 		btnRateUser.addActionListener(this);
 		
 		btnCancelNotification = new JButton("CANCEL NOTIFICATION");
+		btnCancelNotification.setBounds(499, 362, 225, 30);
 		btnCancelNotification.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnCancelNotification.setBounds(330, 364, 249, 23);
-		add(btnCancelNotification);
+		centerP.add(btnCancelNotification);
 		btnCancelNotification.addActionListener(this);
 		
-		btnInv = new JButton("Invite rating");
+		btnInv = new JButton("INVITE RATING");
+		btnInv.setBounds(50, 420, 225, 30);
 		btnInv.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnInv.setBounds(100, 415, 164, 23);
 		btnInv.addActionListener(this);
-		add(btnInv);
+		centerP.add(btnInv);
 		
 		
 		comboBox = new JComboBox(baseFrame.data_userList);
-		comboBox.setBounds(330, 416, 249, 22);
+		comboBox.setBounds(499, 420, 225, 30);
 		
-		add(comboBox);
+		centerP.add(comboBox);
 		
+		this.add(northP, BorderLayout.NORTH);
+		this.add(centerP, BorderLayout.CENTER);
 	} 
 	
 	public void setupNotificationsTable()
