@@ -355,10 +355,14 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		if(source == btnRemove)
 		{
-			DAO dao;
+			if(list.getSelectedValue() == null)
+			{
+				return;
+			}
+//			DAO dao;
 			try
 			{
-				dao = new DAO();
+//				dao = new DAO();
 				UserHobby uHob = new UserHobby();
 				list.removeListSelectionListener(this);
 				dobby1.removeElement(list.getSelectedValue());
@@ -378,17 +382,15 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 					}
 				}
 				
-				dao.removeUserHobby(uHob);
+//				dao.removeUserHobby(uHob);
+				baseFrame.setNetRemoveUserHobby(uHob);
 			} 
 			catch (Exception e1)
 			{
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			
-//			Vector<Hobby> hobby1 = new Vector<Hobby>();
-//			hobbyArea.remove(hobbyArea.getText().replace('', ''));
-//			baseFrame.setNetUserHobby(baseFrame.authenticatedUser, hobby1);
+
 			
 			
 		}
