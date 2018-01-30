@@ -19,9 +19,11 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.MouseInputListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.events.MouseEvent;
@@ -32,6 +34,7 @@ import jw3m.widgets.SeparatorComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
@@ -148,6 +151,8 @@ public class PanelRateSomeone extends JPanel implements ActionListener
         itemsText.addElement(separator );
         itemsName.addElement("seperator"); // as this index will be unselectable it does not matter what we put here
         
+        
+        
         Vector<User> allUsers = baseFrame.data_userList;
         
         
@@ -195,6 +200,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 
 				setCustomTableElement(aValue, row, column);
 
+				
 			}
 			
 			
@@ -225,6 +231,28 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 	{
 
 		Skill skl = skillList.get(row);
+		
+		TableColumnModel cm = table.getColumnModel();
+		
+		
+		Vector<String> rateVect = new Vector<String>();
+		rateVect.addElement("1");
+		rateVect.addElement("2");
+		rateVect.addElement("3");
+		rateVect.addElement("4");
+		rateVect.addElement("5");
+		
+		JComboBox ratings = new JComboBox(rateVect);
+
+		cm.getColumn(column).setCellEditor(new DefaultCellEditor(ratings));
+		
+		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+		renderer.setToolTipText("Click for combo box");
+		cm.getColumn(column).setCellRenderer(renderer);
+
+		
+		    
+
 
 		switch (column)
 		{
@@ -434,4 +462,6 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 			e1.printStackTrace();
 		}
 	}
+
+
 }
