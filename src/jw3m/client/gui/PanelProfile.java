@@ -76,6 +76,8 @@ public class PanelProfile extends JPanel implements ActionListener
 	private int aveColleagueRating = 0;
 	private String skillName = null;
 	private Skill newSkill = null;
+	private Skill selectedSkill = null;
+	private Vector<Rating> ratingVect = new Vector<Rating>();
 	private Vector<Rating> allRatingVect = new Vector<Rating>();
 
 	public PanelProfile(SkillsClient frame)
@@ -242,18 +244,18 @@ public class PanelProfile extends JPanel implements ActionListener
 						newSkill.setSkillName(skillList.get(j).getSkillName());
 						newSkill.setSkillDescription(skillList.get(j).getSkillDescription());
 						newSkill.setSkillVendor(skillList.get(j).getSkillVendor());
-						allRatingVect = baseFrame.getNetSkillRating(newSkill);
+						ratingVect = baseFrame.getNetSkillRating(newSkill);
 
 						// *******************************************************************
-						if (allRatingVect.size() > 0)
+						if (ratingVect.size() > 0)
 						{
-							knowledge = allRatingVect.firstElement().getKnowledge();
-							workStandard = allRatingVect.firstElement().getWorkStandard();
-							autonomy = allRatingVect.firstElement().getAutonomy();
-							complexityCoping = allRatingVect.firstElement().getComplexityCoping();
-							contextPerception = allRatingVect.firstElement().getContextPerception();
-							capabilityGrowing = allRatingVect.firstElement().getCapabilityGrowing();
-							collaboration = allRatingVect.firstElement().getCollaboration();
+							knowledge = ratingVect.firstElement().getKnowledge();
+							workStandard = ratingVect.firstElement().getWorkStandard();
+							autonomy = ratingVect.firstElement().getAutonomy();
+							complexityCoping = ratingVect.firstElement().getComplexityCoping();
+							contextPerception = ratingVect.firstElement().getContextPerception();
+							capabilityGrowing = ratingVect.firstElement().getCapabilityGrowing();
+							collaboration = ratingVect.firstElement().getCollaboration();
 							aveSelfRating = (int) ((knowledge + workStandard + autonomy + complexityCoping
 									+ contextPerception + capabilityGrowing + collaboration) / 7 + 0.5);
 							aveColleagueRating = 0;
@@ -290,25 +292,94 @@ public class PanelProfile extends JPanel implements ActionListener
 
 	public void setCustomTableElement(Object aValue, int row, int column)
 	{
-
-		Skill skl = skillList.get(row);
+		
+		row = table.getSelectedRow();
+		
+		selectedSkill = new Skill();
+		selectedSkill.setSkillID(skillList.get(row).getSkillID());
+		selectedSkill.setSkillName(skillList.get(row).getSkillName());
+		selectedSkill.setSkillDescription(skillList.get(row).getSkillDescription());
+		selectedSkill.setSkillVendor(skillList.get(row).getSkillVendor());
+		allRatingVect = baseFrame.getNetSkillRating(selectedSkill);
+		
+		
+		Rating rt1 = allRatingVect.get(row);
 
 		switch (column)
 		{
 		case 3:
 			try
 			{
-				skl.setSkillID(Integer.parseInt(aValue.toString()));
+				rt1.setKnowledge(Integer.parseInt(aValue.toString()));
 			} catch (NumberFormatException e)
 			{
-				model.setValueAt(skl.getSkillID(), row, column);
+				model.setValueAt(rt1.getKnowledge(), row, column);
+				
+			}
+			break;
+		case 4:
+			try
+			{
+				rt1.setWorkStandard(column);
+			} catch (NumberFormatException e)
+			{
+				model.setValueAt(rt1.getWorkStandard(), row, column);
+
+			}
+			break;	
+		case 5:
+			try
+			{
+				rt1.setAutonomy(column);
+			} catch (NumberFormatException e)
+			{
+				model.setValueAt(rt1.getAutonomy(), row, column);
+
+			}
+			break;
+		case 6:
+			try
+			{
+				rt1.setComplexityCoping(column);
+			} catch (NumberFormatException e)
+			{
+				model.setValueAt(rt1.getComplexityCoping(), row, column);
+
+			}
+			break;
+		case 7:
+			try
+			{
+				rt1.setContextPerception(column);
+			} catch (NumberFormatException e)
+			{
+				model.setValueAt(rt1.getContextPerception(), row, column);
+
+			}
+			break;
+		case 8:
+			try
+			{
+				rt1.setCapabilityGrowing(column);
+			} catch (NumberFormatException e)
+			{
+				model.setValueAt(rt1.getCapabilityGrowing(), row, column);
+
+			}
+			break;
+		case 9:
+			try
+			{
+				rt1.setCollaboration(column);;
+			} catch (NumberFormatException e)
+			{
+				model.setValueAt(rt1.getCollaboration(), row, column);
 
 			}
 			break;
 
 		}
-		// System.out.println(aValue + " " + row + " " + column);
-
+		
 	}
 
 	public void populateComboBox()
@@ -353,10 +424,32 @@ public class PanelProfile extends JPanel implements ActionListener
 		String tmpUser = null;
 		tmpUser = baseFrame.authenticatedUser.getUserName();
 		tempUser = baseFrame.authenticatedUser;
+		
+		int i = table.getSelectedRow();    // set index for selected row
+		int j = table.getSelectedColumn(); // set index for selected column
+		
+		//*****************************************************************************
+		
+			// Add prompt text where ratings are not populated
+		
+			// get current value
+		
+			/*int k = table.getHeight();
+			int l = table.getWidth();
+			
+		      String value = table.getValueAt(8, 3).toString();
+		      
+		      System.out.println("selected value ----- >>>> " + value);
 
-		int i = table.getSelectedRow(); // set index for selected row
+		      // append new value
+		      value = "1 to 5";  // set prompt text
+		      table.setValueAt(value, 9, 3);
+		   */
+		
+		
+		//*****************************************************************************
 
-		// System.out.println("selected row index -------->>>>>>> " + i);
+		
 
 		if (source == btnRemoveSelectedSkill && i >= 0) // if nothing selected
 														// its -1
@@ -396,7 +489,7 @@ public class PanelProfile extends JPanel implements ActionListener
 
 		} // end remove button
 
-		if (source == btnAddSelectedSkill) // top skill always selected
+		if (source == btnAddSelectedSkill) // top skill selected by default unless changed
 		{
 			try
 			{
@@ -405,19 +498,14 @@ public class PanelProfile extends JPanel implements ActionListener
 
 				baseFrame.getNetSkillList();
 				tempASkill = baseFrame.data_skillList;
-				System.out.println("tempASkill skill list ------------>>>>>>>  " + tempASkill);
-
+				
 				for (int m = 0; m < tempASkill.size(); m++)
 				{
 					allSkillVect.add(tempASkill.elementAt(m).getSkillName());
 				}
-				System.out.println("all skills vector --------------->>>>>>>>>>> " + allSkillVect);
 				int index = allSkillVect.indexOf(comboBoxSkills.getSelectedItem().toString());
-				System.out.println("index of skill from vector ------------------>>>>>>>>>>>  " + index);
-
+				
 				skillIDAdd = tempASkill.get(index).getSkillID();
-
-				System.out.println("skill id to add  ---------------------->>>>>>>>>>>>> " + skillIDAdd);
 
 				getSkill.addUserSkills(tmpUser, skillIDAdd);
 				setupSkillsTable();
