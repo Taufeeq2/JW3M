@@ -34,10 +34,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import java.awt.BorderLayout;
 
 public class PanelReporting extends JPanel implements ActionListener, ListSelectionListener
 {
 	static SkillsClient baseFrame;
+	private JPanel centerP = null, southP = null, northP = null;
 	private JPanel panel;
 	MyTableModel a;
 	JTable table;
@@ -57,57 +59,32 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	public PanelReporting(SkillsClient frame)
 	{
 		baseFrame = frame;
+		centerP = new JPanel();
+		northP = new JPanel();
+		southP = new JPanel();
 		
 		Object[] values = { "", "" , "" , "" , "" , "" , "" , "" };
 		data = new Vector();
 		panel = new JPanel();
+		panel.setLayout(new GridLayout(1, 1, 0, 0));
+		//centerP.add(panel);
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setLayout(new GridLayout(2, 5, 0, 0));
+		centerP.add(panel_1);
+		centerP.add(panel);
 		
 		titleLabel = new JLabel("People per Skill");
 		titleLabel.setFont(baseFrame.getFont());
+		northP.add(titleLabel);
 		
 		buttonHobbies = new JButton("Hobbies");
 		buttonHobbies.addActionListener(this);
 		
 		buttonSkills = new JButton("Skills");
 		buttonSkills.addActionListener(this);
-		
-		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(34)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(panel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
-								.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
-								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-									.addComponent(buttonHobbies)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(buttonSkills))))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(362)
-							.addComponent(titleLabel)))
-					.addGap(2))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(19)
-					.addComponent(titleLabel)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
-					.addGap(138)
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 252, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(buttonHobbies)
-						.addComponent(buttonSkills))
-					.addContainerGap())
-		);
-		panel_1.setLayout(new GridLayout(2, 5, 0, 0));
+		panel_1.setLayout(new GridLayout(4, 1, 0, 0));
+		centerP.setLayout(new GridLayout(2,1,0,0 ));
 		
 		Vector<Skill> skillNames = new Vector<Skill>();
 		try 
@@ -139,8 +116,18 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 
 		// Create the scroll pane and add the table to it.
 		scrollPane = new JScrollPane(table);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		panel.add(scrollPane);
-		setLayout(groupLayout);
+		setLayout(new BorderLayout(0, 0));
+		//add(panel_1);
+		//add(panel);
+		southP.add(buttonHobbies);
+		southP.add(buttonSkills);
+		//add(titleLabel);
+		
+		this.add(centerP, BorderLayout.CENTER);
+		this.add(southP, BorderLayout.SOUTH);
+		this.add(northP, BorderLayout.NORTH);
 	}
 
 	class MyTableModel extends AbstractTableModel
