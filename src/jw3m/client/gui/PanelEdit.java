@@ -60,6 +60,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 	Vector<Hobby> hobbyList = new Vector<Hobby>();
 	User temp = new User();
 	String returnedValue;
+	private JButton btnNewButton;
 	
 	public PanelEdit(SkillsClient frame) {
 		baseFrame = frame;
@@ -168,8 +169,8 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 			rdbtnNo.setSelected(true);
 		}
 		
-		lblMyHobbies = new JLabel("My Hobbies");
-		lblMyHobbies.setBounds(650, 71, 101, 16);
+		lblMyHobbies = new JLabel("Hobbies and Interests");
+		lblMyHobbies.setBounds(593, 60, 213, 16);
 		lblMyHobbies.setFont(new Font("Tahoma", Font.BOLD, 16));
 		add(lblMyHobbies);
 		
@@ -179,7 +180,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		add(label);
 		
 		btnAddHobby = new JButton("Add Hobby");
-		btnAddHobby.setBounds(766, 418, 121, 25);
+		btnAddHobby.setBounds(766, 418, 147, 25);
 		btnAddHobby.setFont(new Font("Tahoma", Font.BOLD, 16));
 		add(btnAddHobby);
 		btnAddHobby.addActionListener(this);
@@ -241,6 +242,11 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		list = new JList(dobby1);
 		list.addListSelectionListener(this);
 		scrollPane.setViewportView(list);
+		
+		btnNewButton = new JButton("Create new Hobby/Interest");
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnNewButton.setBounds(582, 472, 257, 25);
+		add(btnNewButton);
 		
 	}
 

@@ -190,6 +190,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		
 		
 		
+		
 		{
 			public void setValueAt(Object aValue, int row, int column)
 			{
@@ -199,6 +200,19 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 				fireTableCellUpdated(row, column);
 
 				setCustomTableElement(aValue, row, column);
+				
+				TableColumn cm = table.getColumnModel().getColumn(column);
+
+				Vector<String> rateVect = new Vector<String>();
+				rateVect.addElement("1");
+				rateVect.addElement("2");
+				rateVect.addElement("3");
+				rateVect.addElement("4");
+				rateVect.addElement("5");
+				
+				JComboBox ratings = new JComboBox(rateVect);
+
+				cm.setCellEditor(new DefaultCellEditor(ratings));
 
 				
 			}
@@ -231,28 +245,6 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 	{
 
 		Skill skl = skillList.get(row);
-		
-		TableColumnModel cm = table.getColumnModel();
-		
-		
-		Vector<String> rateVect = new Vector<String>();
-		rateVect.addElement("1");
-		rateVect.addElement("2");
-		rateVect.addElement("3");
-		rateVect.addElement("4");
-		rateVect.addElement("5");
-		
-		JComboBox ratings = new JComboBox(rateVect);
-
-		cm.getColumn(column).setCellEditor(new DefaultCellEditor(ratings));
-		
-		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-		renderer.setToolTipText("Click for combo box");
-		cm.getColumn(column).setCellRenderer(renderer);
-
-		
-		    
-
 
 		switch (column)
 		{
