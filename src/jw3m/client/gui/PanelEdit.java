@@ -61,6 +61,10 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 	User temp = new User();
 	String returnedValue;
 	private JButton btnNewButton;
+	private JPanel panel_1;
+	private JLabel lblAddNewHobby_1;
+	private JTextField newField;
+	private JButton btnAdd_1;
 	
 	public PanelEdit(SkillsClient frame) {
 		baseFrame = frame;
@@ -245,9 +249,21 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		btnNewButton = new JButton("Create new Hobby/Interest");
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnNewButton.setBounds(582, 472, 257, 25);
+		btnNewButton.setBounds(582, 472, 303, 25);
 		add(btnNewButton);
 		btnNewButton.addActionListener(this);
+		
+		panel_1 = new JPanel();
+		panel_1.setBounds(417, 533, 582, 275);
+		add(panel_1);
+		panel_1.setLayout(null);
+		
+		
+		
+	
+
+		
+		
 		
 	}
 
@@ -379,23 +395,77 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		if(source == btnNewButton)
 		{
-			lblHobby = new JLabel("Hobby/Interest");
-			lblHobby.setBounds(546, 194, 80, 16);
-			panel.add(lblHobby);
+			lblAddNewHobby_1 = new JLabel("Add new Hobby or Interest");
+			lblAddNewHobby_1.setFont(new Font("Tahoma", Font.BOLD, 16));
+			lblAddNewHobby_1.setBounds(28, 31, 262, 16);
+			panel_1.add(lblAddNewHobby_1);
+			
+			newField = new JTextField();
+			newField.setFont(new Font("Tahoma", Font.BOLD, 16));
+			newField.setBounds(321, 29, 226, 22);
+			panel_1.add(newField);
+			newField.setColumns(10);
+			
+			btnAdd_1 = new JButton("Add");
+			btnAdd_1.setFont(new Font("Tahoma", Font.BOLD, 16));
+			btnAdd_1.setBounds(240, 89, 97, 25);
+			panel_1.add(btnAdd_1);
+			btnAdd_1.addActionListener(this);
+			
+			this.panel_1.validate();
+			this.panel_1.repaint();
+		}
+		
+		if(source == btnAdd_1)
+		{
+			Vector<Hobby> hobby = new Vector<Hobby>();
+            Vector<Hobby> newHobby = new Vector<Hobby>();
 
-			textFieldHobby = new JTextField();
-			textFieldHobby.setBounds(669, 191, 326, 22);
-			panel.add(textFieldHobby);
-			textFieldHobby.setColumns(10);
-
-
-			btnAdd = new JButton("Add");
-			btnAdd.setBounds(669, 292, 97, 25);
-			panel.add(btnAdd);
-			btnAdd.addActionListener(this);
-
-			this.panel.validate();
-			this.panel.repaint();
+            Hobby tempHobby = new Hobby();
+            tempHobby.setHobbyID(0);
+            tempHobby.setHobbyName(newField.getText());
+            baseFrame.setNetAddHobbyList(tempHobby);
+            hobby = baseFrame.data_hobbyList;                     
+            String checkHobby = (newField.getText().toString());
+            
+            for (int j = 0; j < hobby.size(); j++)
+            {
+                  if(hobby.get(j).getHobbyName().equals(checkHobby))
+                  {
+                         tempHobby.setHobbyID(hobby.get(j).getHobbyID());
+                         tempHobby.setHobbyName(hobby.get(j).getHobbyName());
+                  }
+            }
+            
+            newHobby.add(tempHobby);
+            boolean alreadyAdded = true;
+            
+            for (int i = 0; i < dobby1.size(); i++)
+            {
+                  System.out.println("Sting Hobby: " + dobby1.get(i) + "IF Check = " + dobby1.get(i).equals(checkHobby));
+                  if (dobby1.get(i).equals(checkHobby))
+                  {
+                         alreadyAdded = false;
+                         break;
+                  }
+                  else
+                  {
+                         alreadyAdded = true;
+                  }
+            }
+            if (alreadyAdded)
+            {
+                  list.removeListSelectionListener(this);
+                  dobby1.add(newField.getText().toString());
+                  list.setListData(dobby1);
+                  list.addListSelectionListener(this);
+                  baseFrame.setNetUserHobby(baseFrame.authenticatedUser, newHobby);
+                  JOptionPane.showMessageDialog(this, "Hobby added");                       
+            }
+            else
+            {
+                  JOptionPane.showMessageDialog(this, "You already have this hobby added");
+            }
 		}
 		
 	}
