@@ -906,4 +906,16 @@ public class SkillsClient extends JFrame implements ActionListener
 		
 	//	logger.debug(" getNetUserList() call invoked");	
 	}
+	
+	public void setNetAddHobbyList(Hobby hobbyIn)
+	{
+		Comms commsSend = new Comms();
+			commsSend.setText("add hobbyList");
+			commsSend.setObj(hobbyIn);
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+		
+		
+	//	logger.debug(" getNetUserList() call invoked");	
+	}
 }
