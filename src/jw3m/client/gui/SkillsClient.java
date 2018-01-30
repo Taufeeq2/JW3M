@@ -841,5 +841,69 @@ public class SkillsClient extends JFrame implements ActionListener
 	//	logger.debug(" getNetUserList() call invoked");	
 	}
 	
+	public Vector<User> setNetRemoveUser(String userID)
+	{
+		Comms commsSend = new Comms();
+			commsSend.setText("remove user");
+			commsSend.setObj(userID);
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+		this.data_userList = (Vector<User>)commsRec.getObj();
+		return (Vector<User>) commsRec.getObj();
+		
+	//	logger.debug(" getNetUserList() call invoked");	
+	}
 	
+	public Vector<Skill> setNetRemoveSkill(Skill skillIn)
+	{
+		Comms commsSend = new Comms();
+			commsSend.setText("remove skillList");
+			commsSend.setObj(skillIn);
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+		
+		logger.info(commsRec.getText());
+		this.data_skillList = (Vector<Skill>)commsRec.getObj();
+		return (Vector<Skill>)commsRec.getObj();
+	//	logger.debug(" getNetUserList() call invoked");	
+	}
+
+	public Vector<UserSkill> setNetRemoveUserSkills(User userIn, Vector<Skill> skillsSet)
+	{
+		// This is what we do
+		// We make a MultiBean with User as the first Object and create a vector of Skills
+		// The Server wants [ User , <1,2,3,4> ] 
+		
+		MultiBean multiBean = new MultiBean();
+		
+		multiBean.setObj(userIn);
+		
+		for (int i = 0; i < skillsSet.size()   ;  i++   )
+		{
+			multiBean.addMulti(skillsSet.get(i).getSkillID());
+		}
+		
+		Comms commsSend = new Comms();
+			commsSend.setText("remove userSkills");
+			commsSend.setObj(multiBean);
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+			
+		return (Vector<UserSkill>)commsRec.getObj();
+		
+	//	logger.debug(" getNetUserList() call invoked");
+
+	}
+	
+	public void setNetRemoveHobby(Hobby hobbyIn)
+	{
+		Comms commsSend = new Comms();
+			commsSend.setText("remove hobbyList");
+			commsSend.setObj(hobbyIn);
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+		
+		
+	//	logger.debug(" getNetUserList() call invoked");	
+	}
 }
