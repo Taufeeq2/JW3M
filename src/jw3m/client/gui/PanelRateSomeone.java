@@ -9,6 +9,7 @@ import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.rmi.server.SocketSecurityException;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import javax.swing.JButton;
@@ -18,7 +19,12 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.MouseInputListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.events.MouseEvent;
 import org.w3c.dom.views.AbstractView;
@@ -27,6 +33,8 @@ import jw3m.dao.DAO;
 import jw3m.widgets.SeparatorComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
@@ -46,7 +54,6 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 	private Vector<Skill> skillList = new Vector<Skill>();
 	private Vector<Skill> skillNames = new Vector<Skill>();
 	private JLabel lblSearch;
-	private JButton btnRate;
 	private Rating ratee;
 	private JComboBox separatorComboBox ;
 	
@@ -82,11 +89,6 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		lblSearch.setBounds(326, 110, 60, 20);
 		lblSearch.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
-		btnRate = new JButton("Rate");
-		btnRate.setBounds(441, 173, 102, 29);
-		btnRate.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnRate.addActionListener(this);
-		
 		setupSkillsTable();
 		setLayout(null);
 
@@ -104,7 +106,6 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		add(lblRateSomeone);
 		add(lblSearch);
 		add(btnSubmit);
-		add(btnRate);
 		
 		// moved to global variable
 //		Vector itemsText = new Vector();
@@ -150,6 +151,8 @@ public class PanelRateSomeone extends JPanel implements ActionListener
         itemsText.addElement(separator );
         itemsName.addElement("seperator"); // as this index will be unselectable it does not matter what we put here
         
+        
+        
         Vector<User> allUsers = baseFrame.data_userList;
         
         
@@ -171,6 +174,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
         separatorComboBox.setFont(new Font("Tahoma", Font.BOLD, 16));
         separatorComboBox .setBounds(409, 109, 412, 22);
 		add(separatorComboBox );
+		separatorComboBox.addActionListener(this);
         
 	}
 	
@@ -183,16 +187,37 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		{ "User ID", "Name", "Surname", "Skill ID", "Skill Name", "Knowledgeable", "Standard of Work", "Autonomy", "Coping with Complexity", "Perception of Context",
 				"Growing Capability", "Purposeful Collaboration", "Overall Rating" };
 		model = new DefaultTableModel(str, 0)
+		
+		
+		
+		
 		{
 			public void setValueAt(Object aValue, int row, int column)
 			{
+
 				Vector rowVector = (Vector) dataVector.elementAt(row);
 				rowVector.setElementAt(aValue, column);
 				fireTableCellUpdated(row, column);
 
 				setCustomTableElement(aValue, row, column);
+				
+				TableColumn cm = table.getColumnModel().getColumn(column);
 
+				Vector<String> rateVect = new Vector<String>();
+				rateVect.addElement("1");
+				rateVect.addElement("2");
+				rateVect.addElement("3");
+				rateVect.addElement("4");
+				rateVect.addElement("5");
+				
+				JComboBox ratings = new JComboBox(rateVect);
+
+				cm.setCellEditor(new DefaultCellEditor(ratings));
+
+				
 			}
+			
+			
 
 			public boolean isCellEditable(int row, int column)
 			{
@@ -248,6 +273,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 
 		// skillList.SaveToDisk();
 	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e)
@@ -263,51 +289,56 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		
 		if(source == btnSubmit)
 		{
+			
+			
 			for (int i = 0; i < model.getRowCount(); i++)
 			{
 				System.out.println("number of rows: " + model.getRowCount());
 				
-				for(int count = 0; count < model.getColumnCount(); count++)
+				
+				if(model.getValueAt(i, 5) != null)
 				{
-					rating[count] = model.getValueAt(i, count);	
+					for(int count = 0; count < model.getColumnCount(); count++)
+					{
+						rating[count] = model.getValueAt(i, count);	
+					}
+					
+					 
+					ratee.setKnowledge(Integer.parseInt((String)rating[5]));	
+					ratee.setWorkStandard(Integer.parseInt((String)rating[6]));
+					ratee.setAutonomy(Integer.parseInt((String)rating[7]));
+					ratee.setComplexityCoping(Integer.parseInt((String)rating[8]));
+					ratee.setContextPerception(Integer.parseInt((String)rating[9]));
+					ratee.setCapabilityGrowing(Integer.parseInt((String)rating[10]));
+					ratee.setCollaboration(Integer.parseInt((String)rating[11]));
+					
+//					System.out.println("value of knowledge: " + (String)rating[5]);
+
+					ratee.setRaterID(baseFrame.authenticatedUser.getUserName());
+					ratee.setSkillID((int)rating[3]); 
+					ratee.setUserID((String)rating[0]);
+
+					int level = 0; 
+//					level = (ratee.getKnowledge() + ratee.getWorkStandard() + ratee.getAutonomy() + ratee.getComplexityCoping() + ratee.getContextPerception() 
+//							+ ratee.getCapabilityGrowing() + ratee.getCollaboration()) / 7;
+					level = (Integer.parseInt((String)rating[5]) + Integer.parseInt((String)rating[6]) + Integer.parseInt((String)rating[7]) + Integer.parseInt((String)rating[8]) + 
+							Integer.parseInt((String)rating[9]) + Integer.parseInt((String)rating[10]) + Integer.parseInt((String)rating[11])) / 7 ;
+					ratee.setLevel(level);
+					System.out.println("Level is: " + (ratee.getKnowledge() + ratee.getWorkStandard() + ratee.getAutonomy() + ratee.getComplexityCoping() + ratee.getContextPerception() 
+							+ ratee.getCapabilityGrowing() + ratee.getCollaboration()) / 7);
+					System.out.println("level: " + level + " skill id: " + ratee.getSkillID());
+					table.setValueAt(level, i, 12);
+					baseFrame.setNetAddRating(ratee);
+					
 				}
 				
-				 
-				ratee.setKnowledge(Integer.parseInt((String)rating[5]));	
-				ratee.setWorkStandard(Integer.parseInt((String)rating[6]));
-				ratee.setAutonomy(Integer.parseInt((String)rating[7]));
-				ratee.setComplexityCoping(Integer.parseInt((String)rating[8]));
-				ratee.setContextPerception(Integer.parseInt((String)rating[9]));
-				ratee.setCapabilityGrowing(Integer.parseInt((String)rating[10]));
-				ratee.setCollaboration(Integer.parseInt((String)rating[11]));
-
-				ratee.setRaterID(baseFrame.authenticatedUser.getUserName());
-				ratee.setSkillID((int)rating[3]); 
-				ratee.setUserID((String)rating[0]);
-
-				int level = 0; 
-//				level = (ratee.getKnowledge() + ratee.getWorkStandard() + ratee.getAutonomy() + ratee.getComplexityCoping() + ratee.getContextPerception() 
-//						+ ratee.getCapabilityGrowing() + ratee.getCollaboration()) / 7;
-				level = (Integer.parseInt((String)rating[5]) + Integer.parseInt((String)rating[6]) + Integer.parseInt((String)rating[7]) + Integer.parseInt((String)rating[8]) + 
-						Integer.parseInt((String)rating[9]) + Integer.parseInt((String)rating[10]) + Integer.parseInt((String)rating[11])) / 7 ;
-				ratee.setLevel(level);
-				System.out.println("Level is: " + (ratee.getKnowledge() + ratee.getWorkStandard() + ratee.getAutonomy() + ratee.getComplexityCoping() + ratee.getContextPerception() 
-						+ ratee.getCapabilityGrowing() + ratee.getCollaboration()) / 7);
-				System.out.println("level: " + level + " skill id: " + ratee.getSkillID());
-				table.setValueAt(level, i, 12);
-				baseFrame.setNetAddRating(ratee);
+				
 		
-			}
-			
-
-			
-			
-			 
-//			baseFrame.setNetAddRating(ratee);
+			}	 
 			JOptionPane.showMessageDialog(this, "Rating submitted");
 		}
 		
-		if(source == btnRate)
+		if(source == separatorComboBox)
 		{
 			Vector<Rating> userRatings1 = new Vector<Rating>();
 //			tempUser = baseFrame.getNetUser(searchField.getText());
@@ -423,4 +454,6 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 			e1.printStackTrace();
 		}
 	}
+
+
 }

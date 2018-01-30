@@ -559,6 +559,87 @@ public class Server
 					break;
 				}
 				
+				case "remove user" : 
+				{
+					logger.info(strPrefix + " remove user");
+					
+					if (  dao.removeUserList( (String)comms.getObj()  )      )
+					{ 
+						logger.info(strPrefixAdd + " removed " + (String)comms.getObj()  );
+					}
+					else
+					{
+						logger.error(strPrefixAdd + " Critical failure");
+					}
+					
+					oos.writeObject(new Comms("removed User",   dao.getUserList()  )  )   ;
+					break;
+					
+				}
+				
+				case "remove skillList" : 
+				{
+					logger.info(strPrefix + " remove skillList");
+
+					// Actually process the add
+					if (  dao.removeSkillList( (Skill)comms.getObj()  )      )
+					{ 
+						logger.info(strPrefixAdd + " removed " + (Skill)(comms.getObj()) );
+					}
+					else
+					{
+						logger.error(strPrefixAdd + " Critical failure");
+					}
+
+					oos.writeObject(new Comms("remove skillList",   dao.getSkillList()  )  )   ;
+					break;
+				}
+				
+				case "remove userSkills" : 
+				{
+					logger.info(strPrefix + " remove userSkills");
+					
+					MultiBean mb = (MultiBean)comms.getObj() ;
+					User tempUser = (User)mb.getObj();
+					Vector<Object> vo = (Vector<Object>)mb.getMulti();
+					Integer skillInt = 0;
+
+					for (int i = 0; i < vo.size() ; i++)
+					{
+						
+						skillInt  = (Integer)vo.get(i);
+						if (dao.removeUserSkills(tempUser.getUserName(), skillInt ) )
+						{
+							 logger.info(strPrefixAdd + " removed skillID " + skillInt + " to " + tempUser.getUserName() );
+	
+						}
+						else
+						{
+							logger.error(strPrefixAdd + " Critical failure");
+						}			
+					}
+					oos.writeObject(new Comms("removed userSkills",   dao.getUserSkills(  tempUser   )  )  )   ;
+					break;
+				}
+				
+				case "remove hobbyList" : 
+				{
+					logger.info(strPrefix + " remove hobbyList");
+
+					// Actually process the add
+					if (  dao.removeHobby( (Hobby)comms.getObj()  )      )
+					{ 
+						logger.info(strPrefixAdd + " removed " + (Hobby)(comms.getObj()) );
+					}
+					else
+					{
+						logger.error(strPrefixAdd + " Critical failure");
+					}
+
+					oos.writeObject(new Comms("removed hobbyList",   dao.getHobbyList()  )  )   ;
+					break;
+				}
+				
 				case "remove userHobby" : 
 				{
 					logger.info(strPrefix + " remove userHobby");
