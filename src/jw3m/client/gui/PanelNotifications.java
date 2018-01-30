@@ -69,6 +69,7 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		btnCancelNotification.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnCancelNotification.setBounds(330, 364, 249, 23);
 		add(btnCancelNotification);
+		btnCancelNotification.addActionListener(this);
 		
 		btnInv = new JButton("Invite rating");
 		btnInv.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -90,7 +91,7 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		// Here we set up the model
 
 		String str[] =
-			{ "Notification", "date" };
+			{ "Date", "Notification"};
 		model = new DefaultTableModel(str, 0)
 		{
 			public void setValueAt(Object aValue, int row, int column)
@@ -153,7 +154,7 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 				
 			}
 			Object obj[] =
-				{ requester, notification.getDate() };
+				{ notification.getDate(), requester };
 			model.addRow(obj);
 
 		}
@@ -225,8 +226,7 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		
 		if (source == btnRateUser)
 		{
-			String userName = (String) model.getValueAt(table.getSelectedRow(), 0);
-			System.out.println("Requester = " + userName);
+			String userName = (String) model.getValueAt(table.getSelectedRow(), 1);
 			
 			StringTokenizer tokenizer = new StringTokenizer(userName, " ");
 			String token1;
@@ -235,10 +235,8 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 
 			tokenizer.hasMoreTokens();
 		    token1 = tokenizer.nextToken();
-		    System.out.println("NAME " + token1);
 		    tokenizer.hasMoreTokens();
 		    token2 = tokenizer.nextToken();
-		    System.out.println("SURNAME " + token2);
 		    
 		    for (int i = 0; i < baseFrame.data_userList.size(); i++)
 			{
@@ -284,10 +282,45 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 				JOptionPane.showMessageDialog(this, "You have invited " + tempUserRator.getFirstName() + " " + tempUserRator.getSurname() + " ("+ tempUserRator.getUserName()+ ") to rate you.");
 				
 			}
+		}
+			
+			if (source == btnCancelNotification)
+			{
+				System.out.println("Cancel Notification Botton pressed");
+				Notification notify = new Notification();
+				String userName = (String) model.getValueAt(table.getSelectedRow(), 1);
+				
+				StringTokenizer tokenizer = new StringTokenizer(userName, " ");
+				String token1;
+				String token2;
+				
+
+				tokenizer.hasMoreTokens();
+			    token1 = tokenizer.nextToken();
+			    System.out.println("NAME " + token1);
+			    tokenizer.hasMoreTokens();
+			    token2 = tokenizer.nextToken();
+			    System.out.println("SURNAME " + token2);
+			    
+			    for (int i = 0; i < baseFrame.data_userList.size(); i++)
+				{
+					if ((baseFrame.data_userList.get(i).getFirstName().equals(token1)) && (baseFrame.data_userList.get(i).getSurname().equals(token2)))
+					{
+						userName = baseFrame.data_userList.get(i).getUserName();
+					}
+				}
+			    
+			    notify.setRatorID(baseFrame.authenticatedUser.getUserName());
+			    notify.setRequestorID(userName);
+			    baseFrame.setNetRemoveUserNotification(notify);
+			    model.removeRow(table.getSelectedRow());
+			    // create the server/client call to remove notification
+			    
+			}
 			
 
 			
 			
-		}
+		
 	}
 }

@@ -93,6 +93,7 @@ public class PanelLogin extends JPanel implements ActionListener
 		
 		passwordField = new JPasswordField();
 		passwordField.setFont(new Font("Tahoma", Font.BOLD, 16));
+		passwordField.addActionListener(this);
 		
 		labelPassword = new JLabel("Password");
 		labelPassword.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -249,6 +250,12 @@ public class PanelLogin extends JPanel implements ActionListener
 	{
 		Object source = e.getSource();
 		Boolean okToAuth = false;
+		
+		if(source == passwordField)
+		{
+			buttonSubmit.doClick();
+		}
+		
 		
 		if (source == buttonSubmit)
 		{

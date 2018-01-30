@@ -50,6 +50,9 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 	private Rating ratee;
 	private JComboBox separatorComboBox ;
 	
+	private Vector itemsText = new Vector();
+	private Vector<String> itemsName = new Vector<String>();
+	
 	@SuppressWarnings("unchecked")
 	public PanelRateSomeone(SkillsClient frame) {
 		
@@ -103,10 +106,13 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		add(btnSubmit);
 		add(btnRate);
 		
-
-
+		// moved to global variable
+//		Vector itemsText = new Vector();
+//	    Vector itemsName = new Vector();
+		
+		
         JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
-        Vector items = new Vector();
+      
         
         Vector<Notification> notify = baseFrame.getNetUserNotifications(baseFrame.authenticatedUser);
         		
@@ -120,13 +126,17 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		{
         	if(baseFrame.authenticatedUser.getUserName().equals(notify.get(i).getRatorID()))
         	{
+        		
         		requestUser = baseFrame.getNetUser(notify.get(i).getRequestorID()); 
         		
-        		
-        		
+        		if (requestUser!=null)
+        		{
+        			System.out.println("request user is : " + requestUser.toStringFull());
+        		}
         		
         		str = requestUser.getFirstName() + " " + requestUser.getSurname() + " (" + requestUser.getUserName() + ")" ;
-        		items.addElement("Rate request - " + str );
+        		itemsText.addElement("Rate request - " + str );
+        		itemsName.addElement(requestUser.getUserName());   // so we will fill this with UserNames only!!!
         		
         		// or other order
 //        		str = requestUser.getFirstName() + " " + requestUser.getSurname() + " (" + requestUser.getUserName() + ")" ;
@@ -137,7 +147,8 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		}
        
 
-        items.addElement(separator );
+        itemsText.addElement(separator );
+        itemsName.addElement("seperator"); // as this index will be unselectable it does not matter what we put here
         
         Vector<User> allUsers = baseFrame.data_userList;
         
@@ -149,14 +160,14 @@ public class PanelRateSomeone extends JPanel implements ActionListener
         	
         	// for this to always work nicely do not rely on toStrings!!!!
     
-        	items.addElement(allUsers.get(i).getFirstName() + " " + allUsers.get(i).getSurname() + " (" +  allUsers.get(i).getUserName() + ")" );
-			
+        	itemsText.addElement(allUsers.get(i).getFirstName() + " " + allUsers.get(i).getSurname() + " (" +  allUsers.get(i).getUserName() + ")" );
+			itemsName.addElement(allUsers.get(i).getUserName());
 		}
         
 
 
 		// Changed this to a SeperatorComboBox (which is a custom class jw3m.widgets.SeparatorComboBox
-        separatorComboBox  = new SeparatorComboBox(items);
+        separatorComboBox  = new SeparatorComboBox(itemsText);
         separatorComboBox.setFont(new Font("Tahoma", Font.BOLD, 16));
         separatorComboBox .setBounds(409, 109, 412, 22);
 		add(separatorComboBox );
@@ -300,26 +311,32 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		{
 			Vector<Rating> userRatings1 = new Vector<Rating>();
 //			tempUser = baseFrame.getNetUser(searchField.getText());
-  
-			String userName = (String)separatorComboBox.getSelectedItem();
-
-			StringTokenizer tokenizer = new StringTokenizer(userName, " ");
-			String token1;
-			String token2; 
-			tokenizer.hasMoreTokens();
-			token1 = tokenizer.nextToken();
-			System.out.println("NAME " + token1);
-			tokenizer.hasMoreTokens();
-			token2 = tokenizer.nextToken();
-			System.out.println("SURNAME " + token2); 
-			for (int i = 0; i < baseFrame.data_userList.size(); i++)
-			{
-				if ((baseFrame.data_userList.get(i).getFirstName().equals(token1)) && (baseFrame.data_userList.get(i).getSurname().equals(token2)))
-				{
-					userName = baseFrame.data_userList.get(i).getUserName();
-				}
-			} 
-			tempUser = baseFrame.getNetUser(userName);
+ 
+// this between stars replaced by....
+//			************************************************************
+//			String userName = (String)separatorComboBox.getSelectedItem();
+//
+//			StringTokenizer tokenizer = new StringTokenizer(userName, " ");
+//			String token1;
+//			String token2; 
+//			tokenizer.hasMoreTokens();
+//			token1 = tokenizer.nextToken();
+//			System.out.println("NAME " + token1);
+//			tokenizer.hasMoreTokens();
+//			token2 = tokenizer.nextToken();
+//			System.out.println("SURNAME " + token2); 
+//			for (int i = 0; i < baseFrame.data_userList.size(); i++)
+//			{
+//				if ((baseFrame.data_userList.get(i).getFirstName().equals(token1)) && (baseFrame.data_userList.get(i).getSurname().equals(token2)))
+//				{
+//					userName = baseFrame.data_userList.get(i).getUserName();
+//				}
+//			} 
+//			tempUser = baseFrame.getNetUser(userName);
+//  ************************************************************
+			
+			// get me a user from get me the correct selection
+			tempUser = baseFrame.getNetUser (   itemsName.get(   separatorComboBox.getSelectedIndex() )   );
 			
 //			userRatings1 = baseFrame.getNetUserRating(tempUser);
 //			System.out.println("ratings " + userRatings1);

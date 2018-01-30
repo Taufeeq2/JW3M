@@ -582,6 +582,28 @@ public class Server
 					
 				}
 				
+				case "remove userNotification" : 
+				{
+					logger.info(strPrefix + " remove userNotification");
+					
+					Notification tempNotification = (Notification)comms.getObj();
+					
+					if (  dao.removeNotification( (Notification)comms.getObj()   )   )
+					{ 
+						logger.info(strPrefixAdd + " removed " + (Notification)comms.getObj()  );
+					}
+					else
+					{
+						logger.error(strPrefixAdd + " Critical failure");
+					}
+					
+					User tempUser = new User();
+					tempUser = dao.getUser(tempNotification.getRatorID());
+
+					oos.writeObject(new Comms("removed UserHobby",   dao.getNotification(tempUser)  )  )   ;
+					break;
+					
+				}
 				
 				
 //				case ""request auth"" : 
