@@ -247,6 +247,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnNewButton.setBounds(582, 472, 257, 25);
 		add(btnNewButton);
+		btnNewButton.addActionListener(this);
 		
 	}
 
@@ -374,6 +375,27 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 //			baseFrame.setNetUserHobby(baseFrame.authenticatedUser, hobby1);
 			
 			
+		}
+		
+		if(source == btnNewButton)
+		{
+			lblHobby = new JLabel("Hobby/Interest");
+			lblHobby.setBounds(546, 194, 80, 16);
+			panel.add(lblHobby);
+
+			textFieldHobby = new JTextField();
+			textFieldHobby.setBounds(669, 191, 326, 22);
+			panel.add(textFieldHobby);
+			textFieldHobby.setColumns(10);
+
+
+			btnAdd = new JButton("Add");
+			btnAdd.setBounds(669, 292, 97, 25);
+			panel.add(btnAdd);
+			btnAdd.addActionListener(this);
+
+			this.panel.validate();
+			this.panel.repaint();
 		}
 		
 	}

@@ -426,7 +426,7 @@ public class PanelProfile extends JPanel implements ActionListener
 			panel.add(textFieldSkillDesc);
 			textFieldSkillDesc.setColumns(10);
 
-			btnAddSkill = new JButton("Add Skill");
+			btnAddSkill = new JButton("Add");
 			btnAddSkill.setBounds(669, 292, 97, 25);
 			panel.add(btnAddSkill);
 			btnAddSkill.addActionListener(this);
