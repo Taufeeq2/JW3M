@@ -2,38 +2,62 @@ package jw3m.client.gui;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
+import javax.swing.JTextField;
+import javax.swing.RowSorter;
 import javax.swing.JButton;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import javax.swing.JRadioButton;
+import javax.swing.UIManager;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
 import jw3m.beans.Hobby;
+import jw3m.beans.Rating;
 import jw3m.beans.Skill;
 import jw3m.beans.User;
 import jw3m.beans.UserHobby;
 import jw3m.beans.UserSkill;
+import jw3m.client.gui.SkillsClient;
 import jw3m.dao.DAO;
 
-import javax.swing.JScrollPane;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JTextField;
-import javax.swing.RowSorter;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JTable;
-import javax.swing.table.TableColumn;
+import javax.swing.JTextArea;
 import javax.swing.JComboBox;
+import javax.swing.JScrollPane;
+import javax.swing.JList;
+import java.awt.GridLayout;
+import java.awt.FlowLayout;
 import java.awt.Dimension;
+import javax.swing.JTable;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+import javax.swing.ScrollPaneConstants;
 
 public class PanelProfile extends JPanel implements ActionListener
 {
+	final static Logger logger = Logger.getLogger(PanelProfile.class);
+
+	private Font primaryFont, secondaryFont;
+
 	private static final long serialVersionUID = 1L;
 	private SkillsClient baseFrame;
-	private JPanel panel;
+	private JPanel centrePanel, northPanel, westPanel;
 	private JTable table;
 	private DefaultTableModel model = null;
 	private JLabel lblMySkills;
@@ -62,31 +86,82 @@ public class PanelProfile extends JPanel implements ActionListener
 	private JButton btnAddSkill;
 	private int skill = 0;
 	private int skillIDAdd = 0;
+	private int knowledge = 0;
+	private int workStandard = 0;
+	private int autonomy = 0;
+	private int complexityCoping = 0;
+	private int contextPerception = 0;
+	private int capabilityGrowing = 0;
+	private int collaboration = 0;
+	private int aveSelfRating = 0;
+	private int aveColleagueRating = 0;
 	private String skillName = null;
-	private Skill newSkill = null;;
+	private Skill newSkill = null;
+	private Skill selectedSkill = null;
+	private Vector<Rating> ratingVect = new Vector<Rating>();
+	private Vector<Rating> allRatingVect = new Vector<Rating>();
 
 	public PanelProfile(SkillsClient frame)
 	{
-		setPreferredSize(new Dimension(1700, 650));
 		baseFrame = frame;
 
-		setLayout(null);
+		primaryFont = baseFrame.getPrimaryFont();
+		secondaryFont = baseFrame.getSecondaryFont();
 
-		panel = new JPanel();
-		panel.setBounds(0, 13, 1688, 641);
-		add(panel);
-		panel.setLayout(null);
+		setBackground(UIManager.getColor("Button.background"));
+		setForeground(Color.LIGHT_GRAY);
+
+		northPanel = new JPanel();
+		centrePanel = new JPanel();
+		westPanel = new JPanel();
 
 		lblMySkills = new JLabel("My Skills");
-		lblMySkills.setFont(new Font("Calibri", Font.BOLD, 22));
-		// lblMySkills.setFont(baseFrame.getFont());
-		lblMySkills.setBounds(468, 0, 88, 30);
-		panel.add(lblMySkills);
+		lblMySkills.setBounds(335, 13, 114, 16);
+		lblMySkills.setFont(primaryFont);
+		northPanel.add(lblMySkills);
+		setLayout(new BorderLayout(0, 0));
 
-		btnRemoveSelectedSkill = new JButton("Remove selected skill from table below");
-		btnRemoveSelectedSkill.setBounds(22, 66, 308, 25);
-		panel.add(btnRemoveSelectedSkill);
-		btnRemoveSelectedSkill.addActionListener(this);
+		lblSkillSummary = new JLabel("Skill Summary");
+		lblSkillSummary.setFont(primaryFont);
+
+		scrollPane = new JScrollPane();
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		
+		setupSkillsTable();
+		
+		table = new JTable(model);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		centrePanel.add(scrollPane);
+		scrollPane.setViewportView(table);
+		centrePanel.add(scrollPane);
+		
+		//****************************************************************
+
+		RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
+		table.setRowSorter(sorter);
+		
+		//****************************************************************
+
+		this.add(northPanel, BorderLayout.NORTH);
+		this.add(centrePanel, BorderLayout.CENTER);
+		GroupLayout gl_centrePanel = new GroupLayout(centrePanel);
+		gl_centrePanel.setHorizontalGroup(gl_centrePanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_centrePanel.createSequentialGroup().addGap(385).addComponent(lblSkillSummary,
+						GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_centrePanel.createSequentialGroup().addGap(12).addComponent(scrollPane,
+						GroupLayout.PREFERRED_SIZE, 816, GroupLayout.PREFERRED_SIZE)));
+		gl_centrePanel.setVerticalGroup(gl_centrePanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_centrePanel.createSequentialGroup().addGap(13)
+						.addComponent(lblSkillSummary, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+						.addGap(23)
+						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 422, GroupLayout.PREFERRED_SIZE)));
+		centrePanel.setLayout(gl_centrePanel);
+		this.add(westPanel, BorderLayout.WEST);
+
+		btnAddSelectedSkill = new JButton("Add Selected Skill from DropDown");
+		btnAddSelectedSkill.setFont(new Font("Calibri", Font.ITALIC, 15));
+		//btnAddSelectedSkill.setFont(secondaryFont);
+		btnAddSelectedSkill.addActionListener(this);
 
 		tempUser = baseFrame.authenticatedUser;
 
@@ -114,54 +189,20 @@ public class PanelProfile extends JPanel implements ActionListener
 		}
 
 		comboBoxSkills = new JComboBox(comboSkillNames);
-		comboBoxSkills.setBounds(546, 67, 308, 22);
-		panel.add(comboBoxSkills);
 
-		btnAddSelectedSkill = new JButton("Add selected skill from dropdown");
-		btnAddSelectedSkill.setBounds(546, 102, 308, 25);
-		panel.add(btnAddSelectedSkill);
-		btnAddSelectedSkill.addActionListener(this);
-
-		// JScrollPane scrollpane = new JScrollPane(table);
-		// scrollpane.setPreferredSize(new Dimension(480, 300));
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(22, 344, 1654, 284);
-		// panel.add(scrollPane);
-		// add(scrollPane);
-		// scrollPane.setViewportView(table);
-
-		setupSkillsTable();
-		setLayout(null);
-
-		// Set up the columns of the Jtable to be sortable
-		table = new JTable(model);
-
-		panel.add(scrollPane);
-		scrollPane.setViewportView(table);
-		// add(scrollPane);
-
-		RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
-		table.setRowSorter(sorter);
-
-		lblAddSkills = new JLabel("Add Skills");
-		lblAddSkills.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblAddSkills.setBounds(701, 37, 112, 16);
-		panel.add(lblAddSkills);
-
-		lblRemoveSkills = new JLabel("Remove Skills");
-		lblRemoveSkills.setFont(new Font("Calibri", Font.BOLD, 18));
-		lblRemoveSkills.setBounds(121, 37, 120, 16);
-		panel.add(lblRemoveSkills);
-
-		lblSkillSummary = new JLabel("Skill Summary");
-		lblSkillSummary.setFont(new Font("Calibri", Font.BOLD, 22));
-		lblSkillSummary.setBounds(401, 288, 141, 30);
-		panel.add(lblSkillSummary);
-
-		btnCaptureSkill = new JButton("Click to capture a skill not on the dropdown");
-		btnCaptureSkill.setBounds(546, 140, 308, 25);
-		panel.add(btnCaptureSkill);
-		btnCaptureSkill.addActionListener(this);
+		GroupLayout gl_westPanel = new GroupLayout(westPanel);
+		gl_westPanel.setHorizontalGroup(gl_westPanel.createParallelGroup(Alignment.LEADING).addGroup(gl_westPanel
+				.createSequentialGroup().addGap(21)
+				.addGroup(gl_westPanel.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_westPanel.createSequentialGroup()
+								.addComponent(comboBoxSkills, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGap(12))
+						.addComponent(btnAddSelectedSkill))));
+		gl_westPanel.setVerticalGroup(gl_westPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_westPanel.createSequentialGroup().addGap(6)
+						.addComponent(comboBoxSkills, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addGap(41).addComponent(btnAddSelectedSkill).addContainerGap(623, Short.MAX_VALUE)));
+		westPanel.setLayout(gl_westPanel);
 
 	}
 
@@ -189,9 +230,9 @@ public class PanelProfile extends JPanel implements ActionListener
 
 			public boolean isCellEditable(int row, int column)
 			{
-				// make read only field column 0 - other column is directly
-				// editable
-				if (column == 0 || column == 1 || column == 2)
+				// make read only field columns 0, 1, 2, 10, 11 - other columns
+				// directly editable
+				if (column == 0 || column == 1 || column == 2 || column == 10 || column == 11)
 				{
 					return false;
 				} else
@@ -222,9 +263,45 @@ public class PanelProfile extends JPanel implements ActionListener
 					if (skill == skillList.get(j).getSkillID())
 					{
 						skillName = skillList.get(j).getSkillName();
+						// *******************************************************************
+
+						newSkill = new Skill();
+						newSkill.setSkillID(skillList.get(j).getSkillID());
+						newSkill.setSkillName(skillList.get(j).getSkillName());
+						newSkill.setSkillDescription(skillList.get(j).getSkillDescription());
+						newSkill.setSkillVendor(skillList.get(j).getSkillVendor());
+						ratingVect = baseFrame.getNetSkillRating(newSkill);
+
+						// *******************************************************************
+						if (ratingVect.size() > 0)
+						{
+							knowledge = ratingVect.firstElement().getKnowledge();
+							workStandard = ratingVect.firstElement().getWorkStandard();
+							autonomy = ratingVect.firstElement().getAutonomy();
+							complexityCoping = ratingVect.firstElement().getComplexityCoping();
+							contextPerception = ratingVect.firstElement().getContextPerception();
+							capabilityGrowing = ratingVect.firstElement().getCapabilityGrowing();
+							collaboration = ratingVect.firstElement().getCollaboration();
+							aveSelfRating = (int) ((knowledge + workStandard + autonomy + complexityCoping
+									+ contextPerception + capabilityGrowing + collaboration) / 7 + 0.5);
+							aveColleagueRating = 0;
+						} else
+						{
+							knowledge = 0;
+							workStandard = 0;
+							autonomy = 0;
+							complexityCoping = 0;
+							contextPerception = 0;
+							capabilityGrowing = 0;
+							collaboration = 0;
+							aveSelfRating = 0;
+							aveColleagueRating = 0;
+						}
 
 						Object obj[] =
-						{ tempUser.getUserName(), skill, skillName };
+						{ tempUser.getUserName(), skill, skillName, knowledge, workStandard, autonomy, complexityCoping,
+								contextPerception, capabilityGrowing, collaboration, aveSelfRating,
+								aveColleagueRating };
 						model.addRow(obj);
 
 					}
@@ -242,32 +319,92 @@ public class PanelProfile extends JPanel implements ActionListener
 	public void setCustomTableElement(Object aValue, int row, int column)
 	{
 
-		Skill skl = skillList.get(row);
+		row = table.getSelectedRow();
+
+		selectedSkill = new Skill();
+		selectedSkill.setSkillID(skillList.get(row).getSkillID());
+		selectedSkill.setSkillName(skillList.get(row).getSkillName());
+		selectedSkill.setSkillDescription(skillList.get(row).getSkillDescription());
+		selectedSkill.setSkillVendor(skillList.get(row).getSkillVendor());
+		allRatingVect = baseFrame.getNetSkillRating(selectedSkill);
+
+		Rating rt1 = allRatingVect.get(row);
 
 		switch (column)
 		{
-		case 0:
+		case 3:
 			try
 			{
-				skl.setSkillID(Integer.parseInt(aValue.toString()));
+				rt1.setKnowledge(Integer.parseInt(aValue.toString()));
 			} catch (NumberFormatException e)
 			{
-				model.setValueAt(skl.getSkillID(), row, column);
+				model.setValueAt(rt1.getKnowledge(), row, column);
 
 			}
 			break;
-		case 1:
-			skl.setSkillName(aValue.toString());
+		case 4:
+			try
+			{
+				rt1.setWorkStandard(column);
+			} catch (NumberFormatException e)
+			{
+				model.setValueAt(rt1.getWorkStandard(), row, column);
+
+			}
 			break;
-		// case 2:
-		// skl.setSkillVendor(aValue.toString());
-		// break;
-		// case 3:
-		// skl.setSkillDescription(aValue.toString());
-		// break;
+		case 5:
+			try
+			{
+				rt1.setAutonomy(column);
+			} catch (NumberFormatException e)
+			{
+				model.setValueAt(rt1.getAutonomy(), row, column);
+
+			}
+			break;
+		case 6:
+			try
+			{
+				rt1.setComplexityCoping(column);
+			} catch (NumberFormatException e)
+			{
+				model.setValueAt(rt1.getComplexityCoping(), row, column);
+
+			}
+			break;
+		case 7:
+			try
+			{
+				rt1.setContextPerception(column);
+			} catch (NumberFormatException e)
+			{
+				model.setValueAt(rt1.getContextPerception(), row, column);
+
+			}
+			break;
+		case 8:
+			try
+			{
+				rt1.setCapabilityGrowing(column);
+			} catch (NumberFormatException e)
+			{
+				model.setValueAt(rt1.getCapabilityGrowing(), row, column);
+
+			}
+			break;
+		case 9:
+			try
+			{
+				rt1.setCollaboration(column);
+				;
+			} catch (NumberFormatException e)
+			{
+				model.setValueAt(rt1.getCollaboration(), row, column);
+
+			}
+			break;
 
 		}
-		// System.out.println(aValue + " " + row + " " + column);
 
 	}
 
@@ -315,8 +452,26 @@ public class PanelProfile extends JPanel implements ActionListener
 		tempUser = baseFrame.authenticatedUser;
 
 		int i = table.getSelectedRow(); // set index for selected row
+		int j = table.getSelectedColumn(); // set index for selected column
 
-		// System.out.println("selected row index -------->>>>>>> " + i);
+		// *****************************************************************************
+
+		// Add prompt text where ratings are not populated
+
+		// get current value
+
+		/*
+		 * int k = table.getHeight(); int l = table.getWidth();
+		 * 
+		 * String value = table.getValueAt(8, 3).toString();
+		 * 
+		 * System.out.println("selected value ----- >>>> " + value);
+		 * 
+		 * // append new value value = "1 to 5"; // set prompt text
+		 * table.setValueAt(value, 9, 3);
+		 */
+
+		// *****************************************************************************
 
 		if (source == btnRemoveSelectedSkill && i >= 0) // if nothing selected
 														// its -1
@@ -343,8 +498,8 @@ public class PanelProfile extends JPanel implements ActionListener
 
 				scrollPane.setViewportView(table);
 
-				// this.panel.validate();
-				// this.panel.repaint();
+				// this.centrePanel.validate();
+				// this.centrePanel.repaint();
 
 				populateComboBox();
 
@@ -356,7 +511,8 @@ public class PanelProfile extends JPanel implements ActionListener
 
 		} // end remove button
 
-		if (source == btnAddSelectedSkill) // top skill always selected
+		if (source == btnAddSelectedSkill) // top skill selected by default
+											// unless changed
 		{
 			try
 			{
@@ -365,19 +521,14 @@ public class PanelProfile extends JPanel implements ActionListener
 
 				baseFrame.getNetSkillList();
 				tempASkill = baseFrame.data_skillList;
-				System.out.println("tempASkill skill list ------------>>>>>>>  " + tempASkill);
 
 				for (int m = 0; m < tempASkill.size(); m++)
 				{
 					allSkillVect.add(tempASkill.elementAt(m).getSkillName());
 				}
-				System.out.println("all skills vector --------------->>>>>>>>>>> " + allSkillVect);
 				int index = allSkillVect.indexOf(comboBoxSkills.getSelectedItem().toString());
-				System.out.println("index of skill from vector ------------------>>>>>>>>>>>  " + index);
 
 				skillIDAdd = tempASkill.get(index).getSkillID();
-
-				System.out.println("skill id to add  ---------------------->>>>>>>>>>>>> " + skillIDAdd);
 
 				getSkill.addUserSkills(tmpUser, skillIDAdd);
 				setupSkillsTable();
@@ -401,41 +552,42 @@ public class PanelProfile extends JPanel implements ActionListener
 		{
 			lblSkillName = new JLabel("Skill Name");
 			lblSkillName.setBounds(546, 194, 80, 16);
-			panel.add(lblSkillName);
+			centrePanel.add(lblSkillName);
 
 			lblVendor = new JLabel("Vendor");
 			lblVendor.setBounds(546, 252, 56, 16);
-			panel.add(lblVendor);
+			centrePanel.add(lblVendor);
 
 			lblSkillDescription = new JLabel("Skill Description");
 			lblSkillDescription.setBounds(546, 223, 101, 16);
-			panel.add(lblSkillDescription);
+			centrePanel.add(lblSkillDescription);
 
 			textFieldSkillName = new JTextField();
 			textFieldSkillName.setBounds(669, 191, 326, 22);
-			panel.add(textFieldSkillName);
+			centrePanel.add(textFieldSkillName);
 			textFieldSkillName.setColumns(10);
 
 			textFieldVendor = new JTextField();
 			textFieldVendor.setBounds(669, 255, 326, 22);
-			panel.add(textFieldVendor);
+			centrePanel.add(textFieldVendor);
 			textFieldVendor.setColumns(10);
 
 			textFieldSkillDesc = new JTextField();
 			textFieldSkillDesc.setBounds(669, 223, 326, 22);
-			panel.add(textFieldSkillDesc);
+			centrePanel.add(textFieldSkillDesc);
 			textFieldSkillDesc.setColumns(10);
 
 			btnAddSkill = new JButton("Add");
 			btnAddSkill.setBounds(669, 292, 97, 25);
-			panel.add(btnAddSkill);
+			centrePanel.add(btnAddSkill);
 			btnAddSkill.addActionListener(this);
 
-			this.panel.validate();
-			this.panel.repaint();
+			this.centrePanel.validate();
+			this.centrePanel.repaint();
 		} // end capture skill button
 
-		if (source == btnAddSkill) // add a skill not on the dropdown (new skill)
+		if (source == btnAddSkill) // add a skill not on the dropdown (new
+									// skill)
 		{
 			try
 			{
@@ -447,40 +599,46 @@ public class PanelProfile extends JPanel implements ActionListener
 				newSkill.setSkillDescription(textFieldSkillDesc.getText());
 				newSkill.setSkillVendor(textFieldVendor.getText());
 
-				getSkill.addSkillList(newSkill);
-
-				Vector<Skill> tempASkill = new Vector<Skill>();
-
-				baseFrame.getNetSkillList();
-				tempASkill = baseFrame.data_skillList;
-
-				for (int m = 0; m < tempASkill.size(); m++)
+				if (textFieldSkillName.getText().equals("") || textFieldSkillDesc.getText().equals("")
+						|| textFieldVendor.getText().equals(""))
 				{
-					allSkillVect.add(tempASkill.elementAt(m).getSkillName());
+					JOptionPane.showMessageDialog(this, "Fill in all the fields!");
+				} else
+				{
+					getSkill.addSkillList(newSkill);
+
+					Vector<Skill> tempASkill = new Vector<Skill>();
+
+					baseFrame.getNetSkillList();
+					tempASkill = baseFrame.data_skillList;
+
+					for (int m = 0; m < tempASkill.size(); m++)
+					{
+						allSkillVect.add(tempASkill.elementAt(m).getSkillName());
+					}
+
+					int index = allSkillVect.indexOf(textFieldSkillName.getText());
+
+					skillIDAdd = tempASkill.get(index).getSkillID();
+
+					getSkill.addUserSkills(tmpUser, skillIDAdd);
+					setupSkillsTable();
+
+					table = new JTable(model);
+
+					add(scrollPane);
+
+					scrollPane.setViewportView(table);
+
+					populateComboBox();
+
+					lblSkillName.setVisible(false);
+					lblVendor.setVisible(false);
+					lblSkillDescription.setVisible(false);
+					textFieldSkillName.setVisible(false);
+					textFieldSkillDesc.setVisible(false);
+					textFieldVendor.setVisible(false);
 				}
-				
-				int index = allSkillVect.indexOf(textFieldSkillName.getText());
-
-				skillIDAdd = tempASkill.get(index).getSkillID();
-
-				getSkill.addUserSkills(tmpUser, skillIDAdd);
-				setupSkillsTable();
-
-				table = new JTable(model);
-
-				add(scrollPane);
-
-				scrollPane.setViewportView(table);
-
-				populateComboBox();
-
-				lblSkillName.setVisible(false);
-				lblVendor.setVisible(false);
-				lblSkillDescription.setVisible(false);
-				textFieldSkillName.setVisible(false);
-				textFieldSkillDesc.setVisible(false);
-				textFieldVendor.setVisible(false);
-
 			} catch (Exception e)
 			{
 				// TODO Auto-generated catch block
@@ -488,4 +646,5 @@ public class PanelProfile extends JPanel implements ActionListener
 			}
 		}
 	}
+
 }
