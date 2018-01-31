@@ -53,6 +53,7 @@ import javax.swing.GroupLayout.Alignment;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class PanelProfile extends JPanel implements ActionListener
 {
@@ -78,17 +79,8 @@ public class PanelProfile extends JPanel implements ActionListener
 	private Vector<String> allSkillVect = new Vector<String>();
 	private JScrollPane scrollPane;
 	private JLabel lblAddSkills;
-	private JLabel lblRemoveSkills;
 	private JLabel lblSkillSummary;
 	private User tempUser = new User();
-	private JButton btnCaptureSkill;
-	private JLabel lblSkillName;
-	private JLabel lblVendor;
-	private JLabel lblSkillDescription;
-	private JTextField textFieldSkillName;
-	private JTextField textFieldVendor;
-	private JTextField textFieldSkillDesc;
-	private JButton btnAddSkill;
 	private int skill = 0;
 	private int skillIDAdd = 0;
 	private int knowledge = 0;
@@ -106,7 +98,13 @@ public class PanelProfile extends JPanel implements ActionListener
 	private Vector<Rating> ratingVect = new Vector<Rating>();
 	private Vector<Rating> allRatingVect = new Vector<Rating>();
 	private JButton btnAddNewSkill;
-	private JLabel lblSkillName_1;
+	private JLabel lblSkillName;
+	private JTextField textFieldSkillName;
+	private JLabel lblVendor;
+	private JTextField textFieldVendor;
+	private JLabel lblSkillDescription;
+	private JTextField textFieldSkillDesc;
+	private JButton btnAddSkill;
 
 	public PanelProfile(SkillsClient frame)
 	{
@@ -212,24 +210,49 @@ public class PanelProfile extends JPanel implements ActionListener
 
 		comboBoxSkills = new JComboBox(comboSkillNames);
 		
-		btnAddNewSkill = new JButton("Add NEW skill not on dropdown");
+		btnAddNewSkill = new JButton("Add NEW skill NOT on dropdown");
 		btnAddNewSkill.setFont(new Font("Calibri", Font.ITALIC, 16));
+		btnAddNewSkill.addActionListener(this);
 		
-		lblSkillName_1 = new JLabel("Skill Name");
-
+		lblSkillName = new JLabel("Skill Name");
+		
+		textFieldSkillName = new JTextField();
+		textFieldSkillName.setColumns(10);
+		
+		lblVendor = new JLabel("Vendor");
+		
+		textFieldVendor = new JTextField();
+		textFieldVendor.setColumns(10);
+		
+		lblSkillDescription = new JLabel("Skill Description");
+		
+		textFieldSkillDesc = new JTextField();
+		textFieldSkillDesc.setColumns(10);
+		
+		btnAddSkill = new JButton("Add Skill");
+		btnAddSkill.addActionListener(this);
+		
 		GroupLayout gl_westPanel = new GroupLayout(westPanel);
 		gl_westPanel.setHorizontalGroup(
 			gl_westPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_westPanel.createSequentialGroup()
 					.addGap(21)
 					.addGroup(gl_westPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblSkillName_1)
-						.addComponent(btnAddNewSkill)
+						.addComponent(btnAddSkill)
+						.addComponent(textFieldVendor, 241, 241, 241)
+						.addComponent(lblVendor)
+						.addComponent(textFieldSkillDesc, 241, 241, 241)
+						.addComponent(lblSkillDescription)
+						.addComponent(lblSkillName)
 						.addGroup(gl_westPanel.createParallelGroup(Alignment.LEADING, false)
 							.addGroup(gl_westPanel.createSequentialGroup()
 								.addComponent(comboBoxSkills, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addGap(12))
-							.addComponent(btnAddSelectedSkill))))
+							.addComponent(btnAddSelectedSkill))
+						.addGroup(gl_westPanel.createParallelGroup(Alignment.TRAILING, false)
+							.addComponent(textFieldSkillName, Alignment.LEADING)
+							.addComponent(btnAddNewSkill, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+					.addContainerGap())
 		);
 		gl_westPanel.setVerticalGroup(
 			gl_westPanel.createParallelGroup(Alignment.LEADING)
@@ -241,11 +264,30 @@ public class PanelProfile extends JPanel implements ActionListener
 					.addGap(40)
 					.addComponent(btnAddNewSkill)
 					.addGap(52)
-					.addComponent(lblSkillName_1)
-					.addContainerGap(419, Short.MAX_VALUE))
+					.addComponent(lblSkillName)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textFieldSkillName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(lblSkillDescription)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textFieldSkillDesc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(lblVendor)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textFieldVendor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(btnAddSkill)
+					.addContainerGap(221, Short.MAX_VALUE))
 		);
 		westPanel.setLayout(gl_westPanel);
-
+		
+		lblSkillName.setVisible(false);
+		lblVendor.setVisible(false);
+		lblSkillDescription.setVisible(false);
+		textFieldSkillName.setVisible(false);
+		textFieldSkillDesc.setVisible(false);
+		textFieldVendor.setVisible(false);
+		btnAddSkill.setVisible(false);
 	}
 
 	public void setupSkillsTable()
@@ -695,47 +737,91 @@ public class PanelProfile extends JPanel implements ActionListener
 			}
 		} // end add button
 
-		if (source == btnCaptureSkill)
+		if (source == btnAddNewSkill)
 		{
+			
 			lblSkillName = new JLabel("Skill Name");
-			lblSkillName.setBounds(546, 194, 80, 16);
-			centrePanel.add(lblSkillName);
-
-			lblVendor = new JLabel("Vendor");
-			lblVendor.setBounds(546, 252, 56, 16);
-			centrePanel.add(lblVendor);
-
-			lblSkillDescription = new JLabel("Skill Description");
-			lblSkillDescription.setBounds(546, 223, 101, 16);
-			centrePanel.add(lblSkillDescription);
-
+			
 			textFieldSkillName = new JTextField();
-			textFieldSkillName.setBounds(669, 191, 326, 22);
-			centrePanel.add(textFieldSkillName);
 			textFieldSkillName.setColumns(10);
-
+			
+			lblVendor = new JLabel("Vendor");
+			
 			textFieldVendor = new JTextField();
-			textFieldVendor.setBounds(669, 255, 326, 22);
-			centrePanel.add(textFieldVendor);
 			textFieldVendor.setColumns(10);
-
+			
+			lblSkillDescription = new JLabel("Skill Description");
+			
 			textFieldSkillDesc = new JTextField();
-			textFieldSkillDesc.setBounds(669, 223, 326, 22);
-			centrePanel.add(textFieldSkillDesc);
 			textFieldSkillDesc.setColumns(10);
-
-			btnAddSkill = new JButton("Add");
-			btnAddSkill.setBounds(669, 292, 97, 25);
-			centrePanel.add(btnAddSkill);
+			
+			btnAddSkill = new JButton("Add Skill");
 			btnAddSkill.addActionListener(this);
-
-			this.centrePanel.validate();
-			this.centrePanel.repaint();
-		} // end capture skill button
+			
+			GroupLayout gl_westPanel = new GroupLayout(westPanel);
+			gl_westPanel.setHorizontalGroup(
+				gl_westPanel.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_westPanel.createSequentialGroup()
+						.addGap(21)
+						.addGroup(gl_westPanel.createParallelGroup(Alignment.LEADING)
+							.addComponent(btnAddSkill)
+							.addComponent(textFieldVendor, 241, 241, 241)
+							.addComponent(lblVendor)
+							.addComponent(textFieldSkillDesc, 241, 241, 241)
+							.addComponent(lblSkillDescription)
+							.addComponent(lblSkillName)
+							.addGroup(gl_westPanel.createParallelGroup(Alignment.LEADING, false)
+								.addGroup(gl_westPanel.createSequentialGroup()
+									.addComponent(comboBoxSkills, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addGap(12))
+								.addComponent(btnAddSelectedSkill))
+							.addGroup(gl_westPanel.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(textFieldSkillName, Alignment.LEADING)
+								.addComponent(btnAddNewSkill, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+						.addContainerGap())
+			);
+			gl_westPanel.setVerticalGroup(
+				gl_westPanel.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_westPanel.createSequentialGroup()
+						.addGap(6)
+						.addComponent(comboBoxSkills, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addGap(41)
+						.addComponent(btnAddSelectedSkill)
+						.addGap(40)
+						.addComponent(btnAddNewSkill)
+						.addGap(52)
+						.addComponent(lblSkillName)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(textFieldSkillName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addGap(18)
+						.addComponent(lblSkillDescription)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(textFieldSkillDesc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addGap(18)
+						.addComponent(lblVendor)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(textFieldVendor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addGap(18)
+						.addComponent(btnAddSkill)
+						.addContainerGap(221, Short.MAX_VALUE))
+			);
+			westPanel.setLayout(gl_westPanel);
+			
+			this.westPanel.validate();
+			this.westPanel.repaint();
+		} // end add new skill button
 
 		if (source == btnAddSkill) // add a skill not on the dropdown (new
 									// skill)
 		{
+			lblSkillName.setVisible(true);
+			lblVendor.setVisible(true);
+			lblSkillDescription.setVisible(true);
+			textFieldSkillName.setVisible(true);
+			textFieldSkillDesc.setVisible(true);
+			textFieldVendor.setVisible(true);
+			btnAddSkill.setVisible(true);
+			
 			try
 			{
 				DAO getSkill = new DAO();
@@ -785,6 +871,7 @@ public class PanelProfile extends JPanel implements ActionListener
 					textFieldSkillName.setVisible(false);
 					textFieldSkillDesc.setVisible(false);
 					textFieldVendor.setVisible(false);
+					btnAddSkill.setVisible(false);
 				}
 			} catch (Exception e)
 			{
