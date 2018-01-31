@@ -46,6 +46,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.JComboBox;
 import jw3m.widgets.SeparatorComboBox;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class PanelRateSomeone extends JPanel implements ActionListener
 {
@@ -219,6 +221,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		btnClear.setBounds(920, 484, 110, 25);
 		btnClear.setFont(primaryFont);
 		cPanel.add(btnClear);
+		
 		separatorComboBox.addActionListener(this);
 		btnClear.addActionListener(this);
         
