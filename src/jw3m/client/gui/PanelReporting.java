@@ -13,6 +13,8 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.log4j.Logger;
+
 import jw3m.beans.Rating;
 import jw3m.beans.Skill;
 import jw3m.beans.User;
@@ -37,6 +39,7 @@ import javax.swing.JComboBox;
 
 public class PanelReporting extends JPanel implements ActionListener, ListSelectionListener
 {
+	final static Logger logger = Logger.getLogger(PanelReporting.class);
 	static SkillsClient baseFrame;
 	private JPanel panel;
 	MyTableModel a;
@@ -53,10 +56,17 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	private JScrollPane scrollPane = null;
 	private JButton buttonSkills;
 	
+	private Font primaryFont, secondaryFont;
+	
 
 	public PanelReporting(SkillsClient frame)
 	{
+		
 		baseFrame = frame;
+		primaryFont = baseFrame.getPrimaryFont();
+		secondaryFont = baseFrame.getSecondaryFont();
+		
+		
 		
 		Object[] values = { "", "" , "" , "" , "" , "" , "" , "" };
 		data = new Vector();
@@ -68,9 +78,11 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		titleLabel.setFont(baseFrame.getFont());
 		
 		buttonHobbies = new JButton("Hobbies");
+		buttonHobbies.setFont(primaryFont);
 		buttonHobbies.addActionListener(this);
 		
 		buttonSkills = new JButton("Skills");
+		buttonSkills.setFont(primaryFont);
 		buttonSkills.addActionListener(this);
 		
 		GroupLayout groupLayout = new GroupLayout(this);
@@ -123,15 +135,16 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		
 		
 		comboBox = new JComboBox(baseFrame.data_skillList);
+		comboBox.setFont(primaryFont);
 		comboBox.addActionListener(this);
 		panel_1.add(comboBox);
 		panel.setLayout(new GridLayout(1, 1, 0, 0));
 		
 		myModel = new MyTableModel();
 		table = new JTable(myModel);
-		table.setFont(baseFrame.standardFont);
+		table.setFont(primaryFont);
 		table.setRowHeight(28);
-		table.getTableHeader().setFont(baseFrame.standardFont);
+		table.getTableHeader().setFont(primaryFont);
 		table.setPreferredScrollableViewportSize(new Dimension(1200, 70));
 		table.setFillsViewportHeight(true);
 //		a = (MyTableModel) table.getModel();
