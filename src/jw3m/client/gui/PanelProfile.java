@@ -105,6 +105,8 @@ public class PanelProfile extends JPanel implements ActionListener
 	private Skill selectedSkill = null;
 	private Vector<Rating> ratingVect = new Vector<Rating>();
 	private Vector<Rating> allRatingVect = new Vector<Rating>();
+	private JButton btnAddNewSkill;
+	private JLabel lblSkillName_1;
 
 	public PanelProfile(SkillsClient frame)
 	{
@@ -179,7 +181,7 @@ public class PanelProfile extends JPanel implements ActionListener
 		this.add(westPanel, BorderLayout.WEST);
 
 		btnAddSelectedSkill = new JButton("Add Selected Skill from DropDown");
-		btnAddSelectedSkill.setFont(new Font("Calibri", Font.ITALIC, 15));
+		btnAddSelectedSkill.setFont(new Font("Calibri", Font.ITALIC, 16));
 		// btnAddSelectedSkill.setFont(secondaryFont);
 		btnAddSelectedSkill.addActionListener(this);
 
@@ -209,19 +211,39 @@ public class PanelProfile extends JPanel implements ActionListener
 		}
 
 		comboBoxSkills = new JComboBox(comboSkillNames);
+		
+		btnAddNewSkill = new JButton("Add NEW skill not on dropdown");
+		btnAddNewSkill.setFont(new Font("Calibri", Font.ITALIC, 16));
+		
+		lblSkillName_1 = new JLabel("Skill Name");
 
 		GroupLayout gl_westPanel = new GroupLayout(westPanel);
-		gl_westPanel.setHorizontalGroup(gl_westPanel.createParallelGroup(Alignment.LEADING).addGroup(gl_westPanel
-				.createSequentialGroup().addGap(21)
-				.addGroup(gl_westPanel.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_westPanel.createSequentialGroup()
-								.addComponent(comboBoxSkills, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGap(12))
-						.addComponent(btnAddSelectedSkill))));
-		gl_westPanel.setVerticalGroup(gl_westPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_westPanel.createSequentialGroup().addGap(6)
-						.addComponent(comboBoxSkills, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(41).addComponent(btnAddSelectedSkill).addContainerGap(623, Short.MAX_VALUE)));
+		gl_westPanel.setHorizontalGroup(
+			gl_westPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_westPanel.createSequentialGroup()
+					.addGap(21)
+					.addGroup(gl_westPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblSkillName_1)
+						.addComponent(btnAddNewSkill)
+						.addGroup(gl_westPanel.createParallelGroup(Alignment.LEADING, false)
+							.addGroup(gl_westPanel.createSequentialGroup()
+								.addComponent(comboBoxSkills, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addGap(12))
+							.addComponent(btnAddSelectedSkill))))
+		);
+		gl_westPanel.setVerticalGroup(
+			gl_westPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_westPanel.createSequentialGroup()
+					.addGap(6)
+					.addComponent(comboBoxSkills, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(41)
+					.addComponent(btnAddSelectedSkill)
+					.addGap(40)
+					.addComponent(btnAddNewSkill)
+					.addGap(52)
+					.addComponent(lblSkillName_1)
+					.addContainerGap(419, Short.MAX_VALUE))
+		);
 		westPanel.setLayout(gl_westPanel);
 
 	}
@@ -771,5 +793,4 @@ public class PanelProfile extends JPanel implements ActionListener
 			}
 		}
 	}
-
 }
