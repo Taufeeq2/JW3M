@@ -21,6 +21,7 @@ import jw3m.beans.User;
 import jw3m.beans.UserHobby;
 import jw3m.beans.UserSkill;
 import jw3m.widgets.BarChart;
+import jw3m.widgets.BarChart2;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -36,11 +37,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import java.awt.BorderLayout;
 
 public class PanelReporting extends JPanel implements ActionListener, ListSelectionListener
 {
 	final static Logger logger = Logger.getLogger(PanelReporting.class);
 	static SkillsClient baseFrame;
+	private JPanel centerP = null, southP = null, northP = null;
 	private JPanel panel;
 	MyTableModel a;
 	JTable table;
@@ -55,6 +58,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	private Vector<User> userList = null;
 	private JScrollPane scrollPane = null;
 	private JButton buttonSkills;
+	private JButton buttonUsers;
 	
 	private Font primaryFont, secondaryFont;
 	
@@ -63,6 +67,10 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	{
 		
 		baseFrame = frame;
+		centerP = new JPanel();
+		northP = new JPanel();
+		southP = new JPanel();
+
 		primaryFont = baseFrame.getPrimaryFont();
 		secondaryFont = baseFrame.getSecondaryFont();
 		
@@ -71,11 +79,17 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		Object[] values = { "", "" , "" , "" , "" , "" , "" , "" };
 		data = new Vector();
 		panel = new JPanel();
+		panel.setLayout(new GridLayout(1, 1, 0, 0));
+		//centerP.add(panel);
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setLayout(new GridLayout(2, 5, 0, 0));
+		centerP.add(panel_1);
+		centerP.add(panel);
 		
 		titleLabel = new JLabel("People per Skill");
 		titleLabel.setFont(baseFrame.getFont());
+		northP.add(titleLabel);
 		
 		buttonHobbies = new JButton("Hobbies");
 		buttonHobbies.setFont(primaryFont);
@@ -85,41 +99,12 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		buttonSkills.setFont(primaryFont);
 		buttonSkills.addActionListener(this);
 		
-		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(34)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(panel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
-								.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
-								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-									.addComponent(buttonHobbies)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(buttonSkills))))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(362)
-							.addComponent(titleLabel)))
-					.addGap(2))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(19)
-					.addComponent(titleLabel)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
-					.addGap(138)
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 252, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(buttonHobbies)
-						.addComponent(buttonSkills))
-					.addContainerGap())
-		);
-		panel_1.setLayout(new GridLayout(2, 5, 0, 0));
+		buttonUsers = new JButton("Users");
+		buttonUsers.setFont(primaryFont);
+		buttonUsers.addActionListener(this);
+		
+		panel_1.setLayout(new GridLayout(4, 1, 0, 0));
+		centerP.setLayout(new GridLayout(2,1,0,0 ));
 		
 		Vector<Skill> skillNames = new Vector<Skill>();
 		try 
@@ -152,8 +137,19 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 
 		// Create the scroll pane and add the table to it.
 		scrollPane = new JScrollPane(table);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		panel.add(scrollPane);
-		setLayout(groupLayout);
+		setLayout(new BorderLayout(0, 0));
+		//add(panel_1);
+		//add(panel);
+		southP.add(buttonHobbies);
+		southP.add(buttonSkills);
+		southP.add(buttonUsers);
+		//add(titleLabel);
+		
+		this.add(centerP, BorderLayout.CENTER);
+		this.add(southP, BorderLayout.SOUTH);
+		this.add(northP, BorderLayout.NORTH);
 	}
 
 	class MyTableModel extends AbstractTableModel
@@ -295,7 +291,8 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 					colors[i] = Color.blue;
 				}
 			}
-			BarChart barChart = new BarChart(values, labels, colors, barChartTitle);
+			//BarChart barChart = new BarChart(values, labels, colors, barChartTitle);
+			BarChart2 barChart = new BarChart2(values, labels, barChartTitle);
 			panel.removeAll();
 			panel.validate();
 			panel.repaint();
@@ -340,6 +337,80 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 				}
 			}
 			BarChart barChart = new BarChart(values, labels, colors, barChartTitle);
+			panel.removeAll();
+			panel.validate();
+			panel.repaint();
+			panel.add(barChart);
+			panel.validate();
+			panel.repaint();
+		}
+		
+		if (source == buttonUsers)
+		{
+			Vector<Skill> skillList = baseFrame.data_skillList;
+			double[] values = new double [skillList.size()];
+			String[] labels = new String[skillList.size()];
+			Color[] colors = new Color[skillList.size()];
+			String barChartTitle = "Users";
+			for (int i=0; i<skillList.size(); i++)
+			{
+				Skill thisSkill = skillList.get(i);
+				labels[i] = thisSkill.getSkillName();
+				Vector<User> userSkillList = baseFrame.getNetSkillsUser(thisSkill);
+				values[i] = userSkillList.size();
+				
+			}
+			//the graph cant handle too many skills at once, so going to sort by size
+			//and only display a few
+			char sorted = 'n';
+			while (sorted == 'n')
+			{
+				sorted = 'y';
+				for (int i=1; i<skillList.size(); i++)
+				{
+					if(values[i]>values[i-1])
+					{
+						sorted = 'n';
+						int tempValue = (int)(values[i-1]);
+						String tempLabel = labels[i-1];
+						values[i-1] = values[i];
+						labels[i-1] = labels[i];
+						values[i] = tempValue;
+						labels[i] = tempLabel;
+					}
+				}
+			}
+			double[] valuesTop6 = new double [6];
+			String[] labelsTop6 = new String[6];
+			Color[] colorsTop6 = new Color[6];
+			for (int i=0; i<6; i++)
+			{
+				valuesTop6[i] = values[i];
+				labelsTop6[i] = labels[i];
+				int rem = i%5;
+				if (rem == 0)
+				{
+					colorsTop6[i] = Color.red;
+				}
+				if (rem == 1)
+				{
+					colorsTop6[i] = Color.orange; 
+				}
+				if (rem == 2)
+				{
+					colorsTop6[i] = Color.yellow;
+				}
+				if (rem == 3)
+				{
+					colorsTop6[i] = Color.green;
+				}
+				if (rem == 4)
+				{
+					colorsTop6[i] = Color.blue;
+				}
+				
+			}
+			BarChart barChart = new BarChart(valuesTop6, labelsTop6, colorsTop6, barChartTitle);
 			panel.removeAll();
 			panel.validate();
 			panel.repaint();
