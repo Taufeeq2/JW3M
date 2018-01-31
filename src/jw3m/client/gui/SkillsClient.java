@@ -63,7 +63,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	
 	
 	private PanelProfile profileP;
-	private	PanelEdit editP;
+	private	PanelMyProfile editP;
 	private PanelNotifications notificationP;
 	public PanelRateSomeone rateSomeoneP;
 	private PanelNewProfile newProfile;
@@ -241,7 +241,7 @@ public class SkillsClient extends JFrame implements ActionListener
 		profileP = new PanelProfile(this);
 		rateSomeoneP = new PanelRateSomeone(this);
 		notificationP = new PanelNotifications(this);
-		editP = new PanelEdit(this);
+		editP = new PanelMyProfile(this);
 //		newProfile = new PanelNewProfile(this);
 		panelReporting = new PanelReporting(this);
 		demoPanel = new PanelDemo(this);

@@ -49,7 +49,7 @@ import jw3m.widgets.SeparatorComboBox;
 
 public class PanelRateSomeone extends JPanel implements ActionListener
 {
-	final static Logger logger = Logger.getLogger(PanelEdit.class);
+	final static Logger logger = Logger.getLogger(PanelMyProfile.class);
 	private SkillsClient baseFrame;
 	private JLabel lblRateSomeone;
 	private JButton btnSubmit;

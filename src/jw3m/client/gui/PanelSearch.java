@@ -107,6 +107,13 @@ public class PanelSearch extends JPanel implements ActionListener
 		
 	}
 	
+	public void setupCenterPanel()
+	{
+		
+		
+		
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
