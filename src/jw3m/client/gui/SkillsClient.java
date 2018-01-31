@@ -68,8 +68,8 @@ public class SkillsClient extends JFrame implements ActionListener
 	public PanelRateSomeone rateSomeoneP;
 	private PanelNewProfile newProfile;
 	private PanelReporting panelReporting;
-//	private PanelSearch searchPanel;
-//	private PanelDemo examplePanel;
+	private PanelSearch searchPanel;
+	private PanelDemo demoPanel;
 	private PanelTests testPanel;
 	
 	
@@ -244,8 +244,8 @@ public class SkillsClient extends JFrame implements ActionListener
 		editP = new PanelEdit(this);
 //		newProfile = new PanelNewProfile(this);
 		panelReporting = new PanelReporting(this);
-	//	examplePanel = new PanelDemo(this);
-	//	searchPanel = new PanelSearch(this);
+		demoPanel = new PanelDemo(this);
+		searchPanel = new PanelSearch(this);
 	//	testPanel = new PanelTests(this);
 		
 		
@@ -261,9 +261,9 @@ public class SkillsClient extends JFrame implements ActionListener
 		tabbedPane.add("Rate Someone", rateSomeoneP);
 //		tabbedPane.add("Create New Profile", newProfile);
 		tabbedPane.add("People-Skill finder", panelReporting);
-//		tabbedPane.add("Searches", searchPanel);
+		tabbedPane.add("Searches", searchPanel);
 //		tabbedPane.add("Example (GUI layout)", examplePanel);
-//		tabbedPane.addTab("Test Panel", testPanel);
+		tabbedPane.addTab("Demo Panel", demoPanel);
 
 		
 	}
