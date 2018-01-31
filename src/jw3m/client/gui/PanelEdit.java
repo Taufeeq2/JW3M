@@ -18,6 +18,8 @@ import javax.swing.JRadioButton;
 import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import jw3m.beans.Hobby;
 import jw3m.beans.User;
@@ -34,7 +36,7 @@ import java.awt.FlowLayout;
 
 public class PanelEdit extends JPanel implements ActionListener, ListSelectionListener
 {
-	
+	final static Logger logger = Logger.getLogger(PanelEdit.class);
 	private SkillsClient baseFrame;
 	private JLabel lblEditProfile;
 	private JLabel label_1;
@@ -104,10 +106,16 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 	private JLabel label_37;
 	private JLabel label_38;
 	private JLabel label_39;
+	private Font primaryFont, secondaryFont;
+	
 	
 	public PanelEdit(SkillsClient frame) {
 		baseFrame = frame;
-		
+		primaryFont = baseFrame.getPrimaryFont();
+        secondaryFont = baseFrame.getSecondaryFont();
+        PropertyConfigurator.configure("log4j.properties");
+        
+        
 		setBackground(UIManager.getColor("Button.background"));
 		setForeground(Color.LIGHT_GRAY);
 		
@@ -355,7 +363,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		cPanel.add(label_30);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(691, 75, 258, 225);
+		scrollPane.setBounds(691, 75, 257, 225);
 		cPanel.add(scrollPane);
 		
 		list = new JList(dobby1);
@@ -411,7 +419,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		cPanel.add(label_34);
 		
 		btnNewButton = new JButton("Create new Hobby/Interest");
-		btnNewButton.setBounds(651, 417, 257, 29);
+		btnNewButton.setBounds(651, 417, 297, 29);
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
 		cPanel.add(btnNewButton);
 		btnNewButton.addActionListener(this);
@@ -441,7 +449,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		panel_1 = new JPanel();
 		cPanel.add(panel_1);
-		panel_1.setBounds(553, 472, 443, 225);
+		panel_1.setBounds(488, 472, 508, 225);
 		panel_1.setLayout(null);
 
 		
