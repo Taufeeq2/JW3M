@@ -32,7 +32,7 @@ public class PanelDemo extends JPanel implements ActionListener
 		primaryFont = baseFrame.getPrimaryFont();
 		secondaryFont = baseFrame.getSecondaryFont();
 		
-		// this.setBorder(border);
+		//Create the panels (comment ones you don't need)
 		
 		JPanel panelNorth = new JPanel();
 		JPanel panelSouth = new JPanel();
@@ -50,42 +50,51 @@ public class PanelDemo extends JPanel implements ActionListener
 		
 
 		
-		
+		// Create all north elements
 		northTitleLabel = new JLabel("Title Demo");
 		northTitleLabel.setFont(baseFrame.getSecondaryFont());
-		
+				
+		// Create all south elements
 		southTitleLabel = new JLabel("south");
 		southTitleLabel.setFont(baseFrame.getPrimaryFont());
 		
-		
+		// Create all east elements
 		eastTitleLabel = new JLabel("east");
 		eastTitleLabel.setFont(baseFrame.getPrimaryFont());
 		
+		// Create all west elements
 		westTitleLabel = new JLabel("west");
 		westTitleLabel.setFont(baseFrame.getPrimaryFont());
 		
+		// Create all center elements
 		centerTitleLabel = new JLabel("center");
 		centerTitleLabel.setFont(baseFrame.getPrimaryFont());
 		
 		
+		// Add north elements
 		panelNorth.add(northTitleLabel);
+		
+		// Add south elements
 		panelSouth.add(southTitleLabel);
+		
+		// Add east elements
 		panelEast.add(eastTitleLabel);
+		
+		// Add west elements
 		panelWest.add(westTitleLabel);
+		
+		// Add center elements
 		panelCenter.add(centerTitleLabel);
 		
 		
-	//	this.setLayout(layoutMgr);
 		
+		// Setup layout and add all panels (comment out ones not used)
 		setLayout(new BorderLayout(0, 0));
-		
 		this.add(panelCenter, BorderLayout.CENTER);
 		this.add(panelNorth, BorderLayout.NORTH);
 		this.add(panelSouth, BorderLayout.SOUTH);
 		this.add(panelEast, BorderLayout.EAST);
 		this.add(panelWest, BorderLayout.WEST);
-		
-	
 		this.setVisible(true);
 		
 	}
