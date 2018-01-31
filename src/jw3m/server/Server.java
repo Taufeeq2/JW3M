@@ -334,6 +334,14 @@ public class Server
 					break;
 				}
 				
+				case "send skillReturnUser" : 
+				{
+					logger.info(strPrefix + " send skillReturnUser");
+					oos.writeObject(new Comms("reply user", dao.getSkillReturnUser(    (Skill)comms.getObj()  )     )   );
+					break;
+				}
+				
+				
 				case "send userHobby" : 
 				{
 					logger.info(strPrefix + " send userHobby");

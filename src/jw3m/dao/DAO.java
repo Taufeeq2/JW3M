@@ -365,6 +365,40 @@ public class DAO
 			
 		}
 		
+		public Vector<User> getSkillReturnUser(Skill inSkill)
+		{
+			logger.info(strPrefix + " getUserSkill()");
+			Vector<User> userVect = new Vector<User>();
+			ResultSet rs1 = null;
+			int inSkillID = inSkill.getSkillID();
+			try
+			{
+				ps = con.prepareStatement("SELECT * FROM userSkills WHERE skillID = ?");
+				ps.setInt(1, inSkillID);
+				
+				rs1 = ps.executeQuery();
+				
+				User tempUser = null;
+				
+		
+				while (rs1.next())
+				{
+					
+					String userID = rs1.getString("userID");
+					tempUser = this.getUser(userID);
+					userVect.add(tempUser);
+									
+				}
+							
+								
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return userVect;
+		}
+		
 		public boolean removeUserSkills(String inUserID, int inSkillID)
 		{
 			logger.info(strPrefix + " removeUserSkills()");
