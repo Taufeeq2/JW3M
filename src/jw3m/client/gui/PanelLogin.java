@@ -61,6 +61,9 @@ public class PanelLogin extends JPanel implements ActionListener
 	private PanelNewProfile newProfile;
 	private JLabel lblUserDetails;
 	private JLabel labelConnectionStatusHeading;
+	private Font primaryFont, secondaryFont;
+	
+	
 
 	/**
 	 * Create the panel.
@@ -69,6 +72,10 @@ public class PanelLogin extends JPanel implements ActionListener
 	{
 		PropertyConfigurator.configure("log4j.properties");
 		this.baseFrame = frame;
+		primaryFont = baseFrame.getPrimaryFont();
+		secondaryFont = baseFrame.getSecondaryFont();
+		
+		
 		
 		try
 		{
@@ -82,63 +89,72 @@ public class PanelLogin extends JPanel implements ActionListener
 		}
 		
 		
-		
+		lblStandardBank = new JLabel("Standard Bank Skills Matrix");
+		lblStandardBank.setFont(secondaryFont);
 		
 		labelUserID = new JLabel("User ID");
-		labelUserID.setFont(new Font("Tahoma", Font.BOLD, 16));
+		labelUserID.setFont(primaryFont);
 		
 		textFieldUserID = new JTextField();
-		textFieldUserID.setFont(new Font("Tahoma", Font.BOLD, 16));
+		textFieldUserID.setFont(primaryFont);
 		textFieldUserID.setColumns(10);
 		
 		passwordField = new JPasswordField();
-		passwordField.setFont(new Font("Tahoma", Font.BOLD, 16));
+		passwordField.setFont(primaryFont);
 		passwordField.addActionListener(this);
 		
 		labelPassword = new JLabel("Password");
-		labelPassword.setFont(new Font("Tahoma", Font.BOLD, 16));
+		labelPassword.setFont(primaryFont);
+		labelPassword.setFont(primaryFont);
 		
 		buttonSubmit = new JButton("Submit");
+		buttonSubmit.setFont(primaryFont);
 		buttonSubmit.addActionListener(this);
 		
 		buttonCancel = new JButton("Cancel");
+		buttonCancel.setFont(primaryFont);
 		buttonCancel.addActionListener(this);
 		
 		buttonChangePassword = new JButton("Change Password");
+		buttonChangePassword.setFont(primaryFont);
 		buttonChangePassword.addActionListener(this);
 		
-		lblStandardBank = new JLabel("Standard Bank Skills Matrix");
-		lblStandardBank.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
+		
 		
 		labelServer = new JLabel("Server");
-		labelServer.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		labelServer.setFont(primaryFont);
+		
 		
 		textFieldServer = new JTextField();
+		textFieldServer.setFont(primaryFont);
 		textFieldServer.setText(baseFrame.getServerAddress());
 		textFieldServer.setColumns(10);
 		
 		labelPort = new JLabel("Port");
-		labelPort.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		labelPort.setFont(primaryFont);
+		labelPort.setFont(primaryFont);
 		
 		textFieldPort = new JTextField();
+		textFieldPort.setFont(primaryFont);
 		textFieldPort.setText(""+baseFrame.getServerPort());
 		textFieldPort.setColumns(10);
 		
 		buttonConnect = new JButton("Connect");
-		buttonConnect.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		buttonConnect.setFont(primaryFont);
 		buttonConnect.addActionListener(this);
 		
 		labelConnectStatus = new JLabel("No connection");
-		labelConnectStatus.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		labelConnectStatus.setFont(primaryFont);
 		
 		btnRegister = new JButton("Register");
+		btnRegister.setFont(primaryFont);
 		btnRegister.addActionListener(this);
 		
 		lblUserDetails = new JLabel("User details");
-		lblUserDetails.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblUserDetails.setFont(primaryFont);
 		
 		labelConnectionStatusHeading = new JLabel("Connection status");
-		labelConnectionStatusHeading.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		labelConnectionStatusHeading.setFont(primaryFont);
 		
 		
 		// this should try connect on start up

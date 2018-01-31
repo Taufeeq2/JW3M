@@ -38,6 +38,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel basePanel;
+	public JFrame tempFrame; // for dreyfus pop out  page
 	// Main "screens"
 	private PanelLogin logonP;
  
@@ -48,7 +49,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	/// All the menu items
 	private JMenuBar menuBar = null;
 	private JMenu fileMenu = null, mediaMenu = null, loanMenu  = null, userMenu = null,  helpMenu = null, subMenu = null;
-	private JMenuItem exitMenu_exitItem = null, fileMenu_openItem = null, fileMenu_logoutItem = null, helpMenu_aboutItem = null;
+	private JMenuItem helpMenu_dreyfusItem = null, exitMenu_exitItem = null, fileMenu_openItem = null, fileMenu_logoutItem = null, helpMenu_aboutItem = null;
 	private JMenuItem mediaMenu_Open = null, loanMenu_Open = null, userMenu_Open = null;
 	
 	//South Panel
@@ -67,7 +68,10 @@ public class SkillsClient extends JFrame implements ActionListener
 	public PanelRateSomeone rateSomeoneP;
 	private PanelNewProfile newProfile;
 	private PanelReporting panelReporting;
+//	private PanelSearch searchPanel;
+//	private PanelDemo examplePanel;
 	private PanelTests testPanel;
+	
 	
 	
 	// DIRECT DAO ACCESS - MUST BE CHANGED LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -90,7 +94,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	
 	// Style objects
 	
-	public Font standardFont;
+	private Font primaryFont, secondaryFont;
 
 	// Networking stuff
 	
@@ -104,7 +108,8 @@ public class SkillsClient extends JFrame implements ActionListener
 	{
 		PropertyConfigurator.configure("log4j.properties");
 		
-		standardFont = new Font ("THAHOMA",Font.PLAIN, 16);
+		primaryFont = new Font ("THAHOMA",Font.ITALIC, 16); // Normal Use
+		secondaryFont = new Font ("THAHOMA",Font.ITALIC, 20); // Headings ??
 		
 		
 	//	Font.ITALIC|Font.BOLD
@@ -136,6 +141,7 @@ public class SkillsClient extends JFrame implements ActionListener
 		
 		//Now lets do the graphics
 		this.setTitle("Skills Client");
+		this.setFont(primaryFont);
 //		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setBounds(100,100,1000,700);
 		MyWindowListner mwl = new MyWindowListner();
@@ -238,7 +244,9 @@ public class SkillsClient extends JFrame implements ActionListener
 		editP = new PanelEdit(this);
 //		newProfile = new PanelNewProfile(this);
 		panelReporting = new PanelReporting(this);
-		testPanel = new PanelTests(this);
+	//	examplePanel = new PanelDemo(this);
+	//	searchPanel = new PanelSearch(this);
+	//	testPanel = new PanelTests(this);
 		
 		
 		//wtf
@@ -253,35 +261,52 @@ public class SkillsClient extends JFrame implements ActionListener
 		tabbedPane.add("Rate Someone", rateSomeoneP);
 //		tabbedPane.add("Create New Profile", newProfile);
 		tabbedPane.add("People-Skill finder", panelReporting);
-		tabbedPane.addTab("Test Panel", testPanel);
+//		tabbedPane.add("Searches", searchPanel);
+//		tabbedPane.add("Example (GUI layout)", examplePanel);
+//		tabbedPane.addTab("Test Panel", testPanel);
 
 		
 	}
 	
 	public void setupMenuBar()
 	{
+		//indentation here shows the menu flow
 		menuBar= new JMenuBar();
 			
-		fileMenu = new JMenu("File");
-		fileMenu.setMnemonic('F');
-		fileMenu_logoutItem = new JMenuItem("Log out");
-		fileMenu_logoutItem.addActionListener(this);
+			fileMenu = new JMenu("File");
+			fileMenu.setFont(primaryFont);
+			fileMenu.setMnemonic('F');
+				fileMenu_logoutItem = new JMenuItem("Log out");
+				fileMenu_logoutItem.setFont(primaryFont);
+				fileMenu_logoutItem.addActionListener(this);
+			
+			
+			helpMenu = new JMenu("Help");
+			helpMenu.setFont(primaryFont);
+			
+				helpMenu_dreyfusItem = new JMenuItem("Drefus Model");
+				helpMenu_dreyfusItem.setFont(primaryFont);
+				helpMenu_dreyfusItem.addActionListener(this);
+			
+				helpMenu_aboutItem = new JMenuItem("About");
+				helpMenu_aboutItem.setFont(primaryFont);
+				helpMenu_aboutItem.addActionListener(this);
+				
+				
+				exitMenu_exitItem = new JMenuItem("Exit");
+				exitMenu_exitItem.setFont(primaryFont);
+				exitMenu_exitItem.addActionListener(this);
 		
 		
-		helpMenu = new JMenu("Help");
-		helpMenu_aboutItem = new JMenuItem("About");
-		helpMenu_aboutItem.addActionListener(this);
-		helpMenu.add(helpMenu_aboutItem);
-		
-		exitMenu_exitItem = new JMenuItem("Exit");
-		exitMenu_exitItem.addActionListener(this);
-		
-//		subMenu = new JMenu("Submenu");
+		// adding everything to the right place
 
 		fileMenu.add(fileMenu_logoutItem);
 		fileMenu.addSeparator();
 		fileMenu.add(exitMenu_exitItem);
 		
+		helpMenu.add(helpMenu_dreyfusItem);
+		helpMenu.addSeparator();
+		helpMenu.add(helpMenu_aboutItem);
 		
 		// Add all the menus to the menu bar
 		menuBar.add(fileMenu);
@@ -302,36 +327,25 @@ public class SkillsClient extends JFrame implements ActionListener
 	public void setupSouthPanel()
 	{
 		
+		// South Panel setup
 		sPanelConnectionStatus = new JLabel("Connected to " + this.getNetworkClient().getServerAddress() + ":" +this.getNetworkClient().getServerPort() );
-		
+		sPanelConnectionStatus.setFont(primaryFont);
 		
 		sPanelLoggedOnAs = new JLabel( "Logged on as '" + this.authenticatedUser.getUserName() + "' " );
-	//	sPanelMessagesLabel = new JLabel ("Messages:");
-		
-		//this.getNetUserNotifications(this.authenticatedUser).size()
-		
+		sPanelLoggedOnAs.setFont(primaryFont);
+				
 		sPanelMessagesBut = new JButton("Messages : " + this.getNetUserNotifications(this.authenticatedUser).size());
-		
+		sPanelMessagesBut.setFont(primaryFont);
 		sPanelMessagesBut.addActionListener(this);
-		
-	//	sPanelMessagesBut.setSize(200,50);
-		//sPanelMessagesBut.setText("3");
-		
-		// South Panel setup
+
 		sPanel = new JPanel();
 		sPanel.setLayout(new GridLayout(1,3));
 		
-	//	sPanel.setAlignmentX(CENTER_ALIGNMENT);
-		
 		sPanel.add(sPanelConnectionStatus);
 		sPanel.add(sPanelLoggedOnAs);
-	//	sPanel.add(sPanelMessagesLabel);
 		sPanel.add(sPanelMessagesBut);
 		
-		
-		//checkout?
 		sPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-		
 		this.add(sPanel, BorderLayout.SOUTH);
 		
 	}
@@ -421,8 +435,9 @@ public class SkillsClient extends JFrame implements ActionListener
 			
 			Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
 			Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()]);
-			System.out.println(threadSet.toString());
-			System.out.println(); 
+			
+			logger.debug(threadSet.toString());
+			
 		
 			disconnectToServer();
 			
@@ -435,26 +450,26 @@ public class SkillsClient extends JFrame implements ActionListener
 		
 		}
 
+		if (source == helpMenu_dreyfusItem)
+		{
+			// show the drefus model diagrams or something
+			logger.info("dreyfus model menu item clicked");
+			
+			JPanel dreyfusPanel = new PanelDreyfus(this);
+			
+			tempFrame = new JFrame();
+			tempFrame.getContentPane().add(dreyfusPanel);
+			tempFrame.setSize(800,600);
+			tempFrame.setVisible(true);
+			tempFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			
+			
+		}
+		
 		if (source == sPanelMessagesBut)
 		{
-			logger.info("messages butt pressed");
+			//logger.info("messages butt pressed");
 			tabbedPane.setSelectedComponent(notificationP);
-
-//			// Tests to come out
-//			this.getNetUserList(); 	//data_UserList
-//			this.getNetSkillList(); 	//data_SkillList
-//			this.getNetHobbyList(); //data_HobbyList
-//			this.getNetLevels();	//data_Levels
-//			
-//			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserSkills(authenticatedUser) );
-//			System.out.println();
-//			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserHobby(authenticatedUser) );
-//			System.out.println();
-//			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserRating(authenticatedUser) );
-//			System.out.println();
-//			System.out.println("!!!!!!!!!!!!!!!!!" + this.getNetUserNotifications(authenticatedUser) );
-//			System.out.println();
-//			
 
 			
 		}
@@ -554,10 +569,16 @@ public class SkillsClient extends JFrame implements ActionListener
 		}
 	}
 	
-	public Font getFont()
+	public Font getPrimaryFont()
 	{
-		return this.standardFont;
+		return this.primaryFont;
 	}
+	
+	public Font getSecondaryFont()
+	{
+		return this.secondaryFont;
+	}
+	
 
 	// Network client calls
 	
@@ -597,6 +618,20 @@ public class SkillsClient extends JFrame implements ActionListener
 		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
 			
 		this.data_skillList = (Vector<Skill>)commsRec.getObj();
+		
+	//	logger.debug(" getNetUserList() call invoked");
+
+	}
+	
+	public Vector<User> getNetSkillsUser(Skill SkillIn)
+	{
+		Comms commsSend = new Comms();
+			commsSend.setText("send skillReturnUser");
+			commsSend.setObj(SkillIn);
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+			
+		return (Vector<User>)commsRec.getObj();
 		
 	//	logger.debug(" getNetUserList() call invoked");
 

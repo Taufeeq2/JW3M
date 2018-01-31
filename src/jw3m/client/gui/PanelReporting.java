@@ -13,6 +13,8 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.log4j.Logger;
+
 import jw3m.beans.Rating;
 import jw3m.beans.Skill;
 import jw3m.beans.User;
@@ -38,6 +40,7 @@ import java.awt.BorderLayout;
 
 public class PanelReporting extends JPanel implements ActionListener, ListSelectionListener
 {
+	final static Logger logger = Logger.getLogger(PanelReporting.class);
 	static SkillsClient baseFrame;
 	private JPanel centerP = null, southP = null, northP = null;
 	private JPanel panel;
@@ -54,14 +57,23 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	private Vector<User> userList = null;
 	private JScrollPane scrollPane = null;
 	private JButton buttonSkills;
+	private JButton buttonUsers;
+	
+	private Font primaryFont, secondaryFont;
 	
 
 	public PanelReporting(SkillsClient frame)
 	{
+		
 		baseFrame = frame;
 		centerP = new JPanel();
 		northP = new JPanel();
 		southP = new JPanel();
+
+		primaryFont = baseFrame.getPrimaryFont();
+		secondaryFont = baseFrame.getSecondaryFont();
+		
+		
 		
 		Object[] values = { "", "" , "" , "" , "" , "" , "" , "" };
 		data = new Vector();
@@ -79,10 +91,17 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		northP.add(titleLabel);
 		
 		buttonHobbies = new JButton("Hobbies");
+		buttonHobbies.setFont(primaryFont);
 		buttonHobbies.addActionListener(this);
 		
 		buttonSkills = new JButton("Skills");
+		buttonSkills.setFont(primaryFont);
 		buttonSkills.addActionListener(this);
+		
+		buttonUsers = new JButton("Users");
+		buttonUsers.setFont(primaryFont);
+		buttonUsers.addActionListener(this);
+		
 		panel_1.setLayout(new GridLayout(4, 1, 0, 0));
 		centerP.setLayout(new GridLayout(2,1,0,0 ));
 		
@@ -100,15 +119,16 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		
 		
 		comboBox = new JComboBox(baseFrame.data_skillList);
+		comboBox.setFont(primaryFont);
 		comboBox.addActionListener(this);
 		panel_1.add(comboBox);
 		panel.setLayout(new GridLayout(1, 1, 0, 0));
 		
 		myModel = new MyTableModel();
 		table = new JTable(myModel);
-		table.setFont(baseFrame.standardFont);
+		table.setFont(primaryFont);
 		table.setRowHeight(28);
-		table.getTableHeader().setFont(baseFrame.standardFont);
+		table.getTableHeader().setFont(primaryFont);
 		table.setPreferredScrollableViewportSize(new Dimension(1200, 70));
 		table.setFillsViewportHeight(true);
 //		a = (MyTableModel) table.getModel();
@@ -123,6 +143,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		//add(panel);
 		southP.add(buttonHobbies);
 		southP.add(buttonSkills);
+		southP.add(buttonUsers);
 		//add(titleLabel);
 		
 		this.add(centerP, BorderLayout.CENTER);
@@ -314,6 +335,80 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 				}
 			}
 			BarChart barChart = new BarChart(values, labels, colors, barChartTitle);
+			panel.removeAll();
+			panel.validate();
+			panel.repaint();
+			panel.add(barChart);
+			panel.validate();
+			panel.repaint();
+		}
+		
+		if (source == buttonUsers)
+		{
+			Vector<Skill> skillList = baseFrame.data_skillList;
+			double[] values = new double [skillList.size()];
+			String[] labels = new String[skillList.size()];
+			Color[] colors = new Color[skillList.size()];
+			String barChartTitle = "Users";
+			for (int i=0; i<skillList.size(); i++)
+			{
+				Skill thisSkill = skillList.get(i);
+				labels[i] = thisSkill.getSkillName();
+				Vector<User> userSkillList = baseFrame.getNetSkillsUser(thisSkill);
+				values[i] = userSkillList.size();
+				
+			}
+			//the graph cant handle too many skills at once, so going to sort by size
+			//and only display a few
+			char sorted = 'n';
+			while (sorted == 'n')
+			{
+				sorted = 'y';
+				for (int i=1; i<skillList.size(); i++)
+				{
+					if(values[i]>values[i-1])
+					{
+						sorted = 'n';
+						int tempValue = (int)(values[i-1]);
+						String tempLabel = labels[i-1];
+						values[i-1] = values[i];
+						labels[i-1] = labels[i];
+						values[i] = tempValue;
+						labels[i] = tempLabel;
+					}
+				}
+			}
+			double[] valuesTop6 = new double [6];
+			String[] labelsTop6 = new String[6];
+			Color[] colorsTop6 = new Color[6];
+			for (int i=0; i<6; i++)
+			{
+				valuesTop6[i] = values[i];
+				labelsTop6[i] = labels[i];
+				int rem = i%5;
+				if (rem == 0)
+				{
+					colorsTop6[i] = Color.red;
+				}
+				if (rem == 1)
+				{
+					colorsTop6[i] = Color.orange; 
+				}
+				if (rem == 2)
+				{
+					colorsTop6[i] = Color.yellow;
+				}
+				if (rem == 3)
+				{
+					colorsTop6[i] = Color.green;
+				}
+				if (rem == 4)
+				{
+					colorsTop6[i] = Color.blue;
+				}
+				
+			}
+			BarChart barChart = new BarChart(valuesTop6, labelsTop6, colorsTop6, barChartTitle);
 			panel.removeAll();
 			panel.validate();
 			panel.repaint();
