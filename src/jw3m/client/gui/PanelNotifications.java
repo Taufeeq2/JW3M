@@ -4,10 +4,11 @@ import javax.swing.JPanel;
 
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
-import java.time.LocalDateTime;
+
 import java.util.StringTokenizer;
 import java.util.Vector;
 import javax.swing.JScrollPane;
@@ -16,17 +17,21 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import jw3m.beans.Notification;
 import jw3m.beans.User;
-import jw3m.beans.Rating;
-import jw3m.dao.DAO;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import javax.swing.*;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
 
 public class PanelNotifications extends JPanel implements ActionListener, ListSelectionListener
 {
-	
+	final static Logger logger = Logger.getLogger(PanelNotifications.class);
+	private Font primaryFont, secondaryFont;
 	private SkillsClient baseFrame;
 	DefaultTableModel model = null;
 	private Vector<Notification> notificationList = null;
@@ -40,13 +45,18 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 	private JComboBox comboBox;
 	private JPanel northP, centerP;
 	
-	public PanelNotifications(SkillsClient frame) {
-		baseFrame = frame;
+	public PanelNotifications(SkillsClient frame) 
+	{
+		PropertyConfigurator.configure("log4j.properties");
+		this.baseFrame = frame;
+		primaryFont = baseFrame.getPrimaryFont();
+		secondaryFont = baseFrame.getSecondaryFont();
+		
 		setLayout(new BorderLayout(0, 0));
 		
 		northP = new JPanel();
 		lblNotifications = new JLabel("Notifications");
-		lblNotifications.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
+		lblNotifications.setFont(secondaryFont);
 		northP.add(lblNotifications);
 		
 		centerP = new JPanel();
@@ -56,9 +66,12 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		
 		setupNotificationsTable();
 		centerP.setLayout(null);
-
+		
+		
 		table = new JTable(model);
-	
+		table.setFont(primaryFont);
+
+		
 		scrollPaneT = new JScrollPane(table);
 		scrollPaneT.setBounds(20, 10, 900, 300);
 		scrollPaneT.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -68,26 +81,26 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		
 		btnRateUser = new JButton("RATE USER");
 		btnRateUser.setBounds(50, 361, 225, 30);
-		btnRateUser.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnRateUser.setFont(primaryFont);
 		centerP.add(btnRateUser);
 		btnRateUser.addActionListener(this);
 		
 		btnCancelNotification = new JButton("CANCEL NOTIFICATION");
 		btnCancelNotification.setBounds(499, 362, 225, 30);
-		btnCancelNotification.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnCancelNotification.setFont(primaryFont);
 		centerP.add(btnCancelNotification);
 		btnCancelNotification.addActionListener(this);
 		
 		btnInv = new JButton("INVITE RATING");
 		btnInv.setBounds(50, 420, 225, 30);
-		btnInv.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnInv.setFont(primaryFont);
 		btnInv.addActionListener(this);
 		centerP.add(btnInv);
 		
 		
 		comboBox = new JComboBox(baseFrame.data_userList);
 		comboBox.setBounds(499, 420, 225, 30);
-		
+		comboBox.setFont(primaryFont);
 		centerP.add(comboBox);
 		
 		this.add(northP, BorderLayout.NORTH);

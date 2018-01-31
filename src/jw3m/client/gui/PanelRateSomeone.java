@@ -25,6 +25,8 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.events.MouseEvent;
 import org.w3c.dom.views.AbstractView;
@@ -39,12 +41,15 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.JComboBox;
 import jw3m.widgets.SeparatorComboBox;
 
 public class PanelRateSomeone extends JPanel implements ActionListener
 {
+	final static Logger logger = Logger.getLogger(PanelEdit.class);
 	private SkillsClient baseFrame;
 	private JLabel lblRateSomeone;
 	private JButton btnSubmit;
@@ -56,21 +61,31 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 	private JLabel lblSearch;
 	private Rating ratee;
 	private JComboBox separatorComboBox ;
-	
+	private JPanel nPanel, cPanel;
 	private Vector itemsText = new Vector();
 	private Vector<String> itemsName = new Vector<String>();
+	private Font primaryFont, secondaryFont;
 	
 	@SuppressWarnings("unchecked")
 	public PanelRateSomeone(SkillsClient frame) {
 		
 		baseFrame = frame;
+		primaryFont = baseFrame.getPrimaryFont();
+        secondaryFont = baseFrame.getSecondaryFont();
+        PropertyConfigurator.configure("log4j.properties");
+        
+        nPanel = new JPanel();
+		cPanel = new JPanel();
+        
 		lblRateSomeone = new JLabel("Rate Someone");
-		lblRateSomeone.setBounds(409, 26, 134, 27);
-		lblRateSomeone.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
+		lblRateSomeone.setFont(secondaryFont);
+
+		
+		
 		
 		btnSubmit = new JButton("Submit");
-		btnSubmit.setBounds(603, 173, 97, 29);
-		btnSubmit.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnSubmit.setBounds(765, 484, 73, 25);
+		btnSubmit.setFont(primaryFont);
 		btnSubmit.addActionListener(this);
 		btnSubmit.setEnabled(false);
 		Vector<Skill> skillNms = new Vector<Skill>();
@@ -86,26 +101,31 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		}
 		
 		lblSearch = new JLabel("Search ");
-		lblSearch.setBounds(326, 110, 60, 20);
-		lblSearch.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblSearch.setBounds(542, 71, 44, 16);
+		lblSearch.setFont(primaryFont);
 		
 		setupSkillsTable();
-		setLayout(null);
+		setLayout(new BorderLayout(0, 0));
+		cPanel.setLayout(null);
 
 		table = new JTable(model);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		
 
 		scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(39, 273, 1653, 300);
+		scrollPane.setBounds(60, 143, 1620, 293);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		add(scrollPane);
+		cPanel.add(scrollPane);
 		scrollPane.setViewportView(table);
-		add(scrollPane);
-		add(lblRateSomeone);
-		add(lblSearch);
-		add(btnSubmit);
+		cPanel.add(scrollPane);
+		nPanel.add(lblRateSomeone);
+		cPanel.add(lblSearch);
+		cPanel.add(btnSubmit);
+		
+		
+		this.add(nPanel, BorderLayout.NORTH);
+		this.add(cPanel, BorderLayout.CENTER);
 		
 		// moved to global variable
 //		Vector itemsText = new Vector();
@@ -171,9 +191,9 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 
 		// Changed this to a SeperatorComboBox (which is a custom class jw3m.widgets.SeparatorComboBox
         separatorComboBox  = new SeparatorComboBox(itemsText);
-        separatorComboBox.setFont(new Font("Tahoma", Font.BOLD, 16));
-        separatorComboBox .setBounds(409, 109, 412, 22);
-		add(separatorComboBox );
+        separatorComboBox.setBounds(630, 68, 367, 22);
+        separatorComboBox.setFont(primaryFont);
+		cPanel.add(separatorComboBox );
 		separatorComboBox.addActionListener(this);
         
 	}
@@ -194,6 +214,8 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		{
 			public void setValueAt(Object aValue, int row, int column)
 			{
+				cPanel.add(table);
+				table.setFont(primaryFont);
 
 				Vector rowVector = (Vector) dataVector.elementAt(row);
 				rowVector.setElementAt(aValue, column);
