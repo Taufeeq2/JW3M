@@ -21,6 +21,7 @@ import jw3m.beans.User;
 import jw3m.beans.UserHobby;
 import jw3m.beans.UserSkill;
 import jw3m.widgets.BarChart;
+import jw3m.widgets.BarChart2;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -290,7 +291,8 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 					colors[i] = Color.blue;
 				}
 			}
-			BarChart barChart = new BarChart(values, labels, colors, barChartTitle);
+			//BarChart barChart = new BarChart(values, labels, colors, barChartTitle);
+			BarChart2 barChart = new BarChart2(values, labels, barChartTitle);
 			panel.removeAll();
 			panel.validate();
 			panel.repaint();

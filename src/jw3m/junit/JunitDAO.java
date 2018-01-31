@@ -65,6 +65,7 @@ public class JunitDAO
 		 {
 			 String email = user.getEmailAddress();
 			 System.out.println("Email a126317 = " + email);
+			 assertTrue(email.equals("michaelf@dinersclub.co.za"));
 			 
 		  }
 		 
@@ -85,6 +86,7 @@ public class JunitDAO
 		 userList = dao.getUserList();
 		 int listSize = userList.size();
 		 System.out.println("the userList has " + listSize + " entries");
+		 assertTrue(listSize == 5);
 		 
 		 System.out.println("Testing the method addUserList");
 		 newUser = new User();
@@ -101,6 +103,7 @@ public class JunitDAO
 		 userList = dao.getUserList();
 		 listSize = userList.size();
 		 System.out.println("the userList has " + listSize + " entries");
+		 assertTrue(listSize == 6);
 		 
 		 System.out.println("Testing the method removeUserList");
 		 dao.removeUserList("a1234567");
