@@ -4,7 +4,9 @@ import javax.swing.JPanel;
 
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +29,11 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class PanelNotifications extends JPanel implements ActionListener, ListSelectionListener
 {
@@ -43,7 +50,7 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 	private JButton btnCancelNotification;
 	private JButton btnInv;
 	private JComboBox comboBox;
-	private JPanel northP, centerP;
+	private JPanel northP, centerP, southP, panel, dummyP1, dummyP2;
 	
 	public PanelNotifications(SkillsClient frame) 
 	{
@@ -55,17 +62,19 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		setLayout(new BorderLayout(0, 0));
 		
 		northP = new JPanel();
+//		northP.setBorder(new LineBorder(Color.RED, 2));
 		lblNotifications = new JLabel("Notifications");
 		lblNotifications.setFont(secondaryFont);
 		northP.add(lblNotifications);
 		
 		centerP = new JPanel();
+//		centerP.setBorder(new LineBorder(Color.BLACK, 2));
 		
 		
 		
 		
 		setupNotificationsTable();
-		centerP.setLayout(null);
+		centerP.setLayout(new GridLayout(1, 1));
 		
 		
 		table = new JTable(model);
@@ -79,32 +88,56 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 
 		scrollPaneT.setViewportView(table);
 		
+		southP = new JPanel();
+//		southP.setBorder(new LineBorder(Color.GREEN, 2));
+		GridLayout gl_southP = new GridLayout(1, 3);
+		southP.setLayout(gl_southP);
+		
+		
+		panel = new JPanel();
+//		panel.setBorder(new LineBorder(Color.BLUE, 2));
+		
+
+		
 		btnRateUser = new JButton("RATE USER");
-		btnRateUser.setBounds(50, 361, 225, 30);
 		btnRateUser.setFont(primaryFont);
-		centerP.add(btnRateUser);
+		btnRateUser.setBounds(50, 100, 225, 30);
 		btnRateUser.addActionListener(this);
+		panel.setLayout(new GridLayout(4, 2, 20, 20));
+		panel.add(btnRateUser);
 		
 		btnCancelNotification = new JButton("CANCEL NOTIFICATION");
-		btnCancelNotification.setBounds(499, 362, 225, 30);
+		btnCancelNotification.setSize(225, 30);
+		btnCancelNotification.setLocation(400, 100);
 		btnCancelNotification.setFont(primaryFont);
-		centerP.add(btnCancelNotification);
 		btnCancelNotification.addActionListener(this);
+		panel.add(btnCancelNotification);
 		
 		btnInv = new JButton("INVITE RATING");
-		btnInv.setBounds(50, 420, 225, 30);
+		btnInv.setSize(225, 30);
+		btnInv.setLocation(50, 200);
 		btnInv.setFont(primaryFont);
 		btnInv.addActionListener(this);
-		centerP.add(btnInv);
-		
 		
 		comboBox = new JComboBox(baseFrame.data_userList);
-		comboBox.setBounds(499, 420, 225, 30);
+		comboBox.setSize(225, 30);
+		comboBox.setLocation(400, 200);
 		comboBox.setFont(primaryFont);
-		centerP.add(comboBox);
+		panel.add(comboBox);
+		panel.add(btnInv);
+		
+		
+		dummyP1 = new JPanel();
+		dummyP2 = new JPanel();
+		
+		southP.add(dummyP1);
+		southP.add(panel);
+		southP.add(dummyP2);
 		
 		this.add(northP, BorderLayout.NORTH);
 		this.add(centerP, BorderLayout.CENTER);
+		this.add(southP, BorderLayout.SOUTH);
+
 	} 
 	
 	public void setupNotificationsTable()
