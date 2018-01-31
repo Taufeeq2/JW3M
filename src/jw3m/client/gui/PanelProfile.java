@@ -12,14 +12,18 @@ import java.util.Vector;
 import javax.swing.JTextField;
 import javax.swing.RowSorter;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JRadioButton;
 import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -33,6 +37,7 @@ import jw3m.client.gui.SkillsClient;
 import jw3m.dao.DAO;
 
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
@@ -125,42 +130,57 @@ public class PanelProfile extends JPanel implements ActionListener
 		lblSkillSummary.setFont(primaryFont);
 
 		scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		
+
 		setupSkillsTable();
-		
+
 		table = new JTable(model);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		centrePanel.add(scrollPane);
 		scrollPane.setViewportView(table);
 		centrePanel.add(scrollPane);
-		
-		//****************************************************************
+
+		table.getColumn("Button").setCellRenderer(new ButtonRenderer());
+		table.getColumn("Button").setCellEditor(new ButtonEditor(new JCheckBox()));
+
+		setVisible(true);
+
+		// ****************************************************************
 
 		RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
 		table.setRowSorter(sorter);
-		
-		//****************************************************************
+
+		// ****************************************************************
 
 		this.add(northPanel, BorderLayout.NORTH);
 		this.add(centrePanel, BorderLayout.CENTER);
 		GroupLayout gl_centrePanel = new GroupLayout(centrePanel);
-		gl_centrePanel.setHorizontalGroup(gl_centrePanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_centrePanel.createSequentialGroup().addGap(385).addComponent(lblSkillSummary,
-						GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_centrePanel.createSequentialGroup().addGap(12).addComponent(scrollPane,
-						GroupLayout.PREFERRED_SIZE, 816, GroupLayout.PREFERRED_SIZE)));
-		gl_centrePanel.setVerticalGroup(gl_centrePanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_centrePanel.createSequentialGroup().addGap(13)
-						.addComponent(lblSkillSummary, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-						.addGap(23)
-						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 422, GroupLayout.PREFERRED_SIZE)));
+		gl_centrePanel.setHorizontalGroup(
+			gl_centrePanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_centrePanel.createSequentialGroup()
+					.addGap(385)
+					.addComponent(lblSkillSummary, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_centrePanel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 986, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_centrePanel.setVerticalGroup(
+			gl_centrePanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_centrePanel.createSequentialGroup()
+					.addGap(13)
+					.addComponent(lblSkillSummary, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+					.addGap(23)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 422, GroupLayout.PREFERRED_SIZE)
+					.addGap(176))
+		);
 		centrePanel.setLayout(gl_centrePanel);
 		this.add(westPanel, BorderLayout.WEST);
 
 		btnAddSelectedSkill = new JButton("Add Selected Skill from DropDown");
 		btnAddSelectedSkill.setFont(new Font("Calibri", Font.ITALIC, 15));
-		//btnAddSelectedSkill.setFont(secondaryFont);
+		// btnAddSelectedSkill.setFont(secondaryFont);
 		btnAddSelectedSkill.addActionListener(this);
 
 		tempUser = baseFrame.authenticatedUser;
@@ -214,7 +234,7 @@ public class PanelProfile extends JPanel implements ActionListener
 		String str[] =
 		{ "User ID", "Skill ID", "Skill Name", "Knowledgeable", "Standard of Work", "Autonomy",
 				"Coping with Complexity", "Perception of Context", "Growing Capability", "Purposeful Collaboration",
-				"Average Self-Rating", "Ave. Colleague Rating" };
+				"Average Self-Rating", "Ave. Colleague Rating", "Button" };
 
 		model = new DefaultTableModel(str, 0)
 		{
@@ -224,7 +244,7 @@ public class PanelProfile extends JPanel implements ActionListener
 				rowVector.setElementAt(aValue, column);
 				fireTableCellUpdated(row, column);
 
-				setCustomTableElement(aValue, row, column);
+				// setCustomTableElement(aValue, row, column);
 
 			}
 
@@ -300,8 +320,8 @@ public class PanelProfile extends JPanel implements ActionListener
 
 						Object obj[] =
 						{ tempUser.getUserName(), skill, skillName, knowledge, workStandard, autonomy, complexityCoping,
-								contextPerception, capabilityGrowing, collaboration, aveSelfRating,
-								aveColleagueRating };
+								contextPerception, capabilityGrowing, collaboration, aveSelfRating, aveColleagueRating,
+								"Delete" };
 						model.addRow(obj);
 
 					}
@@ -316,97 +336,55 @@ public class PanelProfile extends JPanel implements ActionListener
 
 	}
 
-	public void setCustomTableElement(Object aValue, int row, int column)
-	{
-
-		row = table.getSelectedRow();
-
-		selectedSkill = new Skill();
-		selectedSkill.setSkillID(skillList.get(row).getSkillID());
-		selectedSkill.setSkillName(skillList.get(row).getSkillName());
-		selectedSkill.setSkillDescription(skillList.get(row).getSkillDescription());
-		selectedSkill.setSkillVendor(skillList.get(row).getSkillVendor());
-		allRatingVect = baseFrame.getNetSkillRating(selectedSkill);
-
-		Rating rt1 = allRatingVect.get(row);
-
-		switch (column)
-		{
-		case 3:
-			try
-			{
-				rt1.setKnowledge(Integer.parseInt(aValue.toString()));
-			} catch (NumberFormatException e)
-			{
-				model.setValueAt(rt1.getKnowledge(), row, column);
-
-			}
-			break;
-		case 4:
-			try
-			{
-				rt1.setWorkStandard(column);
-			} catch (NumberFormatException e)
-			{
-				model.setValueAt(rt1.getWorkStandard(), row, column);
-
-			}
-			break;
-		case 5:
-			try
-			{
-				rt1.setAutonomy(column);
-			} catch (NumberFormatException e)
-			{
-				model.setValueAt(rt1.getAutonomy(), row, column);
-
-			}
-			break;
-		case 6:
-			try
-			{
-				rt1.setComplexityCoping(column);
-			} catch (NumberFormatException e)
-			{
-				model.setValueAt(rt1.getComplexityCoping(), row, column);
-
-			}
-			break;
-		case 7:
-			try
-			{
-				rt1.setContextPerception(column);
-			} catch (NumberFormatException e)
-			{
-				model.setValueAt(rt1.getContextPerception(), row, column);
-
-			}
-			break;
-		case 8:
-			try
-			{
-				rt1.setCapabilityGrowing(column);
-			} catch (NumberFormatException e)
-			{
-				model.setValueAt(rt1.getCapabilityGrowing(), row, column);
-
-			}
-			break;
-		case 9:
-			try
-			{
-				rt1.setCollaboration(column);
-				;
-			} catch (NumberFormatException e)
-			{
-				model.setValueAt(rt1.getCollaboration(), row, column);
-
-			}
-			break;
-
-		}
-
-	}
+	/*
+	 * public void setCustomTableElement(Object aValue, int row, int column) {
+	 * 
+	 * row = table.getSelectedRow();
+	 * 
+	 * selectedSkill = new Skill();
+	 * selectedSkill.setSkillID(skillList.get(row).getSkillID());
+	 * selectedSkill.setSkillName(skillList.get(row).getSkillName());
+	 * selectedSkill.setSkillDescription(skillList.get(row).getSkillDescription(
+	 * )); selectedSkill.setSkillVendor(skillList.get(row).getSkillVendor());
+	 * allRatingVect = baseFrame.getNetSkillRating(selectedSkill);
+	 * 
+	 * Rating rt1 = allRatingVect.get(row);
+	 * 
+	 * switch (column) { case 3: try {
+	 * rt1.setKnowledge(Integer.parseInt(aValue.toString())); } catch
+	 * (NumberFormatException e) { model.setValueAt(rt1.getKnowledge(), row,
+	 * column);
+	 * 
+	 * } break; case 4: try { rt1.setWorkStandard(column); } catch
+	 * (NumberFormatException e) { model.setValueAt(rt1.getWorkStandard(), row,
+	 * column);
+	 * 
+	 * } break; case 5: try { rt1.setAutonomy(column); } catch
+	 * (NumberFormatException e) { model.setValueAt(rt1.getAutonomy(), row,
+	 * column);
+	 * 
+	 * } break; case 6: try { rt1.setComplexityCoping(column); } catch
+	 * (NumberFormatException e) { model.setValueAt(rt1.getComplexityCoping(),
+	 * row, column);
+	 * 
+	 * } break; case 7: try { rt1.setContextPerception(column); } catch
+	 * (NumberFormatException e) { model.setValueAt(rt1.getContextPerception(),
+	 * row, column);
+	 * 
+	 * } break; case 8: try { rt1.setCapabilityGrowing(column); } catch
+	 * (NumberFormatException e) { model.setValueAt(rt1.getCapabilityGrowing(),
+	 * row, column);
+	 * 
+	 * } break; case 9: try { rt1.setCollaboration(column); ; } catch
+	 * (NumberFormatException e) { model.setValueAt(rt1.getCollaboration(), row,
+	 * column);
+	 * 
+	 * } break;
+	 * 
+	 * }
+	 * 
+	 * }
+	 */
 
 	public void populateComboBox()
 	{
@@ -438,6 +416,153 @@ public class PanelProfile extends JPanel implements ActionListener
 		DefaultComboBoxModel cboNewModel = new DefaultComboBoxModel(comboSkillNames);
 		comboBoxSkills.setModel(cboNewModel);
 
+	}
+
+	class ButtonRenderer extends JButton implements TableCellRenderer
+	{
+
+		/**
+		* 
+		*/
+		private static final long serialVersionUID = 1L;
+
+		public ButtonRenderer()
+		{
+			setOpaque(true);
+		}
+
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column)
+		{
+			if (isSelected)
+			{
+				setForeground(table.getSelectionForeground());
+				setBackground(table.getSelectionBackground());
+			} else
+			{
+				setForeground(table.getForeground());
+				setBackground(UIManager.getColor("Button.background"));
+			}
+			setText((value == null) ? "" : value.toString());
+			return this;
+		}
+	}
+
+	class ButtonEditor extends DefaultCellEditor
+	{
+		/**
+		* 
+		*/
+		private static final long serialVersionUID = 1L;
+
+		protected JButton button;
+
+		private String label;
+
+		private boolean isPushed;
+
+		public ButtonEditor(JCheckBox checkBox)
+		{
+			super(checkBox);
+			button = new JButton();
+			button.setOpaque(true);
+			button.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					fireEditingStopped();
+				}
+			});
+		}
+
+		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+				int column)
+		{
+			if (isSelected)
+			{
+				button.setForeground(table.getSelectionForeground());
+				button.setBackground(table.getSelectionBackground());
+			} else
+			{
+				button.setForeground(table.getForeground());
+				button.setBackground(table.getBackground());
+			}
+			label = (value == null) ? "" : value.toString();
+			button.setText(label);
+			isPushed = true;
+			return button;
+		}
+
+		public Object getCellEditorValue()
+		{
+			if (isPushed)
+			{
+				//
+				// JOptionPane.showMessageDialog(button, label + ": Ouch!");
+				//
+				
+				int skill, rating = 0;
+				String skillName = null, skillDesc = null;
+				User tempUser = new User();
+				String tmpUser = null;
+				tmpUser = baseFrame.authenticatedUser.getUserName();
+				tempUser = baseFrame.authenticatedUser;
+				
+				int i = table.getSelectedRow(); // set index for selected row
+				int j = table.getSelectedColumn(); // set index for selected column
+				
+				try
+				{
+					DAO getSkill = new DAO();
+
+					userSkills = baseFrame.getNetUserSkills(tempUser);
+					skill = userSkills.get(i).getSkillID();
+
+					getSkill.removeUserSkills(tmpUser, skill);
+
+					setupSkillsTable();
+
+					table = new JTable(model);
+					// Set up the columns of the Jtable to be sortable
+					table = new JTable(model);
+					RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
+					table.setRowSorter(sorter);
+
+					add(scrollPane);
+
+					scrollPane.setViewportView(table);
+					
+					table.getColumn("Button").setCellRenderer(new ButtonRenderer());
+					table.getColumn("Button").setCellEditor(new ButtonEditor(new JCheckBox()));
+
+					setVisible(true);
+
+					// this.centrePanel.validate();
+					// this.centrePanel.repaint();
+
+					populateComboBox();
+
+				} catch (Exception e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			isPushed = false;
+			return new String(label);
+		}
+
+		public boolean stopCellEditing()
+		{
+			isPushed = false;
+			return super.stopCellEditing();
+		}
+
+		protected void fireEditingStopped()
+		{
+			super.fireEditingStopped();
+		}
 	}
 
 	@Override
