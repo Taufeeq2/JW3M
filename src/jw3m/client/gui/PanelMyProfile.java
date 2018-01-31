@@ -16,7 +16,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JRadioButton;
 import javax.swing.UIManager;
-import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.apache.log4j.Logger;
@@ -28,7 +27,6 @@ import jw3m.beans.UserHobby;
 import jw3m.dao.DAO;
 
 import javax.swing.ButtonGroup;
-import javax.swing.GroupLayout;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
@@ -60,6 +58,7 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 	private JLabel label;
 	private JButton btnAddHobby;
 	private JComboBox comboBox;
+	private JButton btnRemove;
 	private JScrollPane scrollPane;
 	private JList list;
 	Vector<UserHobby> dobby = new Vector<UserHobby>();
@@ -68,211 +67,200 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 	User temp = new User();
 	String returnedValue;
 	private JButton btnNewButton;
-	private JPanel panel_1, panelNorth;
+	private JPanel panel_1, nPanel, cPanel;
 	private JLabel lblAddNewHobby_1;
 	private JTextField newField;
 	private JButton btnAdd_1;
-
-
-	private JLabel label_50;
-	
-	JPanel panelWest, panelEast , panelCenter;
+	private JLabel label_2;
+	private JLabel label_5;
+	private JLabel label_6;
+	private JLabel label_8;
+	private JLabel label_9;
+	private JLabel label_10;
+	private JLabel label_11;
+	private JLabel label_12;
+	private JLabel label_13;
+	private JLabel label_14;
+	private JLabel label_15;
+	private JLabel label_16;
+	private JLabel label_17;
+	private JLabel label_18;
+	private JLabel label_19;
+	private JLabel label_20;
+	private JLabel label_21;
+	private JLabel label_22;
+	private JLabel label_23;
+	private JLabel label_24;
+	private JLabel label_25;
+	private JLabel label_26;
+	private JLabel label_27;
+	private JLabel label_28;
+	private JLabel label_29;
+	private JLabel label_30;
+	private JLabel label_31;
+	private JLabel label_32;
+	private JLabel label_33;
+	private JLabel label_34;
+	private JLabel label_35;
+	private JLabel label_36;
+	private JLabel label_37;
+	private JLabel label_38;
+	private JLabel label_39;
 	private Font primaryFont, secondaryFont;
-	private JScrollPane scrollPane_1;
 	
 	
-	public PanelMyProfile(SkillsClient frame) 
-	{
-		PropertyConfigurator.configure("log4j.properties");
+	public PanelMyProfile(SkillsClient frame) {
 		baseFrame = frame;
 		primaryFont = baseFrame.getPrimaryFont();
         secondaryFont = baseFrame.getSecondaryFont();
+        PropertyConfigurator.configure("log4j.properties");
         
-        
-        
-		//Create the panels (comment ones you don't need)
-		
-		JPanel panelNorth = new JPanel();
-		JPanel panelSouth = new JPanel();
-		panelEast = new JPanel();
-//		panelWest = new JPanel();
-//		panelCenter = new JPanel();
-        
-	
-        
-		panelNorth.setBorder(new LineBorder(Color.red, 2));
-		panelSouth.setBorder(new LineBorder(Color.green, 2));
-		panelEast.setBorder(new LineBorder(Color.yellow, 2));
-//		panelWest.setBorder(new LineBorder(Color.blue, 2));
-//		panelCenter.setBorder(new LineBorder(Color.black, 2));
         
 		setBackground(UIManager.getColor("Button.background"));
 		setForeground(Color.LIGHT_GRAY);
 		
-		
-		//North Panel (all of it)
+		nPanel = new JPanel();
+		cPanel = new JPanel();
 		
 		lblEditProfile = new JLabel("My Profile");
-//		lblEditProfile.setBounds(335, 13, 114, 16);
+		lblEditProfile.setBounds(335, 13, 114, 16);
 		lblEditProfile.setFont(secondaryFont);
-		panelNorth.add(lblEditProfile);
-		
-		// West Panel (all of it)
-		
-//		setupWestPanel();
-		
-		
-		// East Panel (all of it)
-		
-		setupEastPanel();
-		
-//		panelCenter.setLayout(null);
-		
-		
-
-//		panelWest.setBounds(0, 0, 300, 300);
-//		
-//		panelEast.setBounds(0, 0, 300, 300);
-		
-//		panelCenter.setBounds(0,0 , 1, 1);
-		
-		
-		// Setup layout and add all panels (comment out ones not used)
+		nPanel.add(lblEditProfile);
 		setLayout(new BorderLayout(0, 0));
-//		this.add(panelCenter, BorderLayout.CENTER);
-		this.add(panelNorth, BorderLayout.NORTH);
-//		this.add(panelSouth, BorderLayout.SOUTH);
-		this.add(panelEast, BorderLayout.EAST);
-//		this.add(panelWest, BorderLayout.WEST);
-		this.setSize(800,600);
-		setLayout(new BorderLayout(0, 0));
-		add(panelNorth);
-		add(panelEast);
-		
-
-		this.validate();
-		this.setVisible(true);
-		
-		
-		
-	}
-
-	public void setupWestPanel()
-	{
-	//	panelWest.setLayout(null);
-		
-		GroupLayout groupLayout = new GroupLayout(this);
-		panelWest.setLayout(null);
-		
-//		panelWest.setLayout(      new GridLayout(7,2, 50, 30)      );
-		
-		label_7 = new JLabel("Name");
-		label_7.setBounds(7, 11, 33, 16);
-		label_7.setFont(primaryFont);
-		panelWest.add(label_7);
-		
-		
-			name = new JTextField();
-			name.setBounds(45, 8, 116, 22);
-			name.setFont(primaryFont);
-			panelWest.add(name);
-			name.setColumns(10);
-		
-		label_50 = new JLabel("Surname");
-		label_50.setBounds(166, 11, 52, 16);
-//			label_50.setBounds(28, 30, 47, 20);
-		label_50.setFont(primaryFont);
-		panelWest.add(label_50);
-		
-			surname = new JTextField();
-			surname.setBounds(223, 8, 116, 22);
-	//		surname.setBounds(155, 75, 267, 26);
-			surname.setFont(primaryFont);
-			panelWest.add(surname);
-			surname.setColumns(10);
-		
-			
-		lblAlias = new JLabel("Alias");
-		lblAlias.setBounds(344, 11, 27, 16);
-//			lblAlias.setBounds(33, 127, 40, 20);
-		lblAlias.setFont(primaryFont);
-		panelWest.add(lblAlias);
-			
-			alias = new JTextField();
-			alias.setBounds(376, 8, 116, 22);
-	//			alias.setBounds(155, 124, 267, 26);
-			alias.setFont(primaryFont);
-			alias.setColumns(10);
-			panelWest.add(alias);
-			
-
-			
+		cPanel.setLayout(null);
 		
 		label_1 = new JLabel("Email");
-		label_1.setBounds(497, 11, 31, 16);
-//		label_1.setBounds(30, 185, 45, 20);
+		label_1.setBounds(30, 185, 45, 20);
 		label_1.setFont(primaryFont);
-		panelWest.add(label_1);
-		
-			email = new JTextField();
-			email.setBounds(533, 8, 116, 22);
-	//		email.setBounds(155, 182, 267, 26);
-			email.setFont(primaryFont);
-			panelWest.add(email);
-			email.setColumns(10);
+		cPanel.add(label_1);
 		
 		label_3 = new JLabel("Mobile");
-		label_3.setBounds(654, 11, 37, 16);
-//		label_3.setBounds(32, 242, 54, 20);
+		label_3.setBounds(32, 242, 54, 20);
 		label_3.setFont(primaryFont);
-		panelWest.add(label_3);
+		cPanel.add(label_3);
 		
+		label_7 = new JLabel("Name");
+		label_7.setBounds(28, 30, 47, 20);
+		label_7.setFont(primaryFont);
+		cPanel.add(label_7);
 		
-			mobile = new JTextField();
-			mobile.setBounds(696, 8, 116, 22);
-	//		mobile.setBounds(155, 239, 267, 26);
-			mobile.setFont(primaryFont);
-			panelWest.add(mobile);
-			mobile.setColumns(10);
+		label_2 = new JLabel("");
+		label_2.setBounds(178, 18, 0, 0);
+		cPanel.add(label_2);
 		
-			
-			lblMentor = new JLabel("Mentor");
-			lblMentor.setBounds(817, 11, 40, 16);
-//			lblMentor.setBounds(30, 302, 58, 20);
-			lblMentor.setFont(primaryFont);
-			panelWest.add(lblMentor);
-			
-				rdbtnYes = new JRadioButton("Yes");
-				rdbtnYes.setBounds(862, 7, 49, 25);
-	//			rdbtnYes.setBounds(155, 300, 53, 25);
-				rdbtnYes.setFont(primaryFont);
-				buttonGroup.add(rdbtnYes);
-				panelWest.add(rdbtnYes);
-			
-
-			
-			rdbtnNo = new JRadioButton("No");
-			rdbtnNo.setBounds(916, 7, 43, 25);
-//			rdbtnNo.setBounds(239, 300, 49, 25);
-			rdbtnNo.setFont(primaryFont);
-			buttonGroup.add(rdbtnNo);
-			panelWest.add(rdbtnNo);
-
+		name = new JTextField();
+		name.setBounds(155, 27, 267, 26);
+		name.setFont(primaryFont);
+		cPanel.add(name);
+		name.setColumns(10);
+		
+		label_5 = new JLabel("");
+		label_5.setBounds(344, 18, 0, 0);
+		cPanel.add(label_5);
+		
+		label_6 = new JLabel("");
+		label_6.setBounds(349, 18, 0, 0);
+		cPanel.add(label_6);
+		
+		label_8 = new JLabel("");
+		label_8.setBounds(354, 18, 0, 0);
+		cPanel.add(label_8);
+		
+		label_9 = new JLabel("");
+		label_9.setBounds(359, 18, 0, 0);
+		cPanel.add(label_9);
+		
+		surname = new JTextField();
+		surname.setBounds(155, 75, 267, 26);
+		surname.setFont(primaryFont);
+		cPanel.add(surname);
+		surname.setColumns(10);
+		
+		label_10 = new JLabel("");
+		label_10.setBounds(525, 18, 0, 0);
+		cPanel.add(label_10);
+		
+		email = new JTextField();
+		email.setBounds(155, 182, 267, 26);
+		email.setFont(primaryFont);
+		cPanel.add(email);
+		email.setColumns(10);
+		
+		label_11 = new JLabel("");
+		label_11.setBounds(691, 18, 0, 0);
+		cPanel.add(label_11);
+		
+		label_12 = new JLabel("");
+		label_12.setBounds(696, 18, 0, 0);
+		cPanel.add(label_12);
+		
+		mobile = new JTextField();
+		mobile.setBounds(155, 239, 267, 26);
+		mobile.setFont(primaryFont);
+		cPanel.add(mobile);
+		mobile.setColumns(10);
+		
+		label_13 = new JLabel("");
+		label_13.setBounds(862, 18, 0, 0);
+		cPanel.add(label_13);
+		
+		label_14 = new JLabel("");
+		label_14.setBounds(867, 18, 0, 0);
+		cPanel.add(label_14);
 		
 		btnUpdateProfile = new JButton("Update Profile");
-		btnUpdateProfile.setBounds(964, 7, 113, 25);
-//		btnUpdateProfile.setBounds(155, 354, 129, 25);
+		btnUpdateProfile.setBounds(155, 354, 129, 25);
 		btnUpdateProfile.setFont(primaryFont);
-		panelWest.add(btnUpdateProfile);
+		cPanel.add(btnUpdateProfile);
 		btnUpdateProfile.addActionListener(this);
 		
-
+		label_15 = new JLabel("");
+		label_15.setBounds(1006, 18, 0, 0);
+		cPanel.add(label_15);
 		
-
+		alias = new JTextField();
+		alias.setBounds(155, 124, 267, 26);
+		alias.setFont(primaryFont);
+		alias.setColumns(10);
+		cPanel.add(alias);
 		
-
+		label_16 = new JLabel("");
+		label_16.setBounds(193, 50, 0, 0);
+		cPanel.add(label_16);
 		
-
+		label_17 = new JLabel("");
+		label_17.setBounds(198, 50, 0, 0);
+		cPanel.add(label_17);
+		
+		lblAlias = new JLabel("Alias");
+		lblAlias.setBounds(33, 127, 40, 20);
+		lblAlias.setFont(primaryFont);
+		cPanel.add(lblAlias);
+		
+		label_18 = new JLabel("");
+		label_18.setBounds(248, 50, 0, 0);
+		cPanel.add(label_18);
+		
+		lblMentor = new JLabel("Mentor");
+		lblMentor.setBounds(30, 302, 58, 20);
+		lblMentor.setFont(primaryFont);
+		cPanel.add(lblMentor);
+		
+		rdbtnYes = new JRadioButton("Yes");
+		rdbtnYes.setBounds(155, 300, 53, 25);
+		rdbtnYes.setFont(primaryFont);
+		buttonGroup.add(rdbtnYes);
+		cPanel.add(rdbtnYes);
+		
+		label_19 = new JLabel("");
+		label_19.setBounds(374, 50, 0, 0);
+		cPanel.add(label_19);
+		
+		rdbtnNo = new JRadioButton("No");
+		rdbtnNo.setBounds(239, 300, 49, 25);
+		rdbtnNo.setFont(primaryFont);
+		buttonGroup.add(rdbtnNo);
+		cPanel.add(rdbtnNo);
 		
 		// Mo seriously why not add the current values in edit???? Love Warren
 		name.setText(baseFrame.authenticatedUser.getFirstName());
@@ -290,11 +278,110 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 		{
 			rdbtnNo.setSelected(true);
 		}
-	}
-	
-	public void setupEastPanel()
-	{
-	
+		
+		label_20 = new JLabel("");
+		label_20.setBounds(433, 50, 0, 0);
+		cPanel.add(label_20);
+		
+		lblMyHobbies = new JLabel("Hobbies and Interests");
+		lblMyHobbies.setBounds(711, 30, 179, 20);
+		lblMyHobbies.setFont(primaryFont);
+		cPanel.add(lblMyHobbies);
+		
+		label_21 = new JLabel("");
+		label_21.setBounds(622, 50, 0, 0);
+		cPanel.add(label_21);
+		
+		label = new JLabel("Hobby");
+		label.setBounds(571, 369, 51, 20);
+		label.setFont(primaryFont);
+		cPanel.add(label);
+		
+		btnAddHobby = new JButton("Add Hobby");
+		btnAddHobby.setBounds(865, 365, 121, 29);
+		btnAddHobby.setFont(primaryFont);
+		cPanel.add(btnAddHobby);
+		btnAddHobby.addActionListener(this);
+		
+		
+		hobbyList = baseFrame.data_hobbyList;
+		
+		label_22 = new JLabel("");
+		label_22.setBounds(809, 50, 0, 0);
+		cPanel.add(label_22);
+		
+		comboBox = new JComboBox(hobbyList);
+		comboBox.setBounds(675, 366, 167, 26);
+		
+		comboBox.setFont(primaryFont);
+		cPanel.add(comboBox);
+		comboBox.addActionListener(this);
+		comboBox.setEditable(true);
+		
+		label_23 = new JLabel("");
+		label_23.setBounds(986, 50, 0, 0);
+		cPanel.add(label_23);
+		
+		label_24 = new JLabel("");
+		label_24.setBounds(991, 50, 0, 0);
+		cPanel.add(label_24);
+		
+		label_4 = new JLabel("Surname");
+		label_4.setBounds(28, 78, 72, 20);
+		label_4.setFont(primaryFont);
+		cPanel.add(label_4);
+		
+		label_25 = new JLabel("");
+		label_25.setBounds(177, 135, 0, 0);
+		cPanel.add(label_25);
+		
+		label_26 = new JLabel("");
+		label_26.setBounds(182, 135, 0, 0);
+		cPanel.add(label_26);
+		
+		label_27 = new JLabel("");
+		label_27.setBounds(187, 135, 0, 0);
+		cPanel.add(label_27);
+		
+		btnRemove = new JButton("Remove Hobby");
+		btnRemove.setBounds(739, 313, 139, 25);
+		btnRemove.setFont(primaryFont);
+		cPanel.add(btnRemove);
+		btnRemove.addActionListener(this);
+		
+		label_28 = new JLabel("");
+		label_28.setBounds(336, 135, 0, 0);
+		cPanel.add(label_28);
+		
+		label_29 = new JLabel("");
+		label_29.setBounds(341, 135, 0, 0);
+		cPanel.add(label_29);
+		
+		label_30 = new JLabel("");
+		label_30.setBounds(346, 135, 0, 0);
+		cPanel.add(label_30);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(691, 75, 257, 225);
+		cPanel.add(scrollPane);
+		
+		list = new JList(dobby1);
+		scrollPane.setRowHeaderView(list);
+		list.setFont(primaryFont);
+		list.addListSelectionListener(this);
+		
+		
+		
+		
+		// sort out mentor
+		
+		
+//		
+//		for(int i = 0; i < hobbyList.size(); i++)
+//		{
+//			dobby1.addElement(hobbyList.get(i).to);
+//		}
+		
 		
 		baseFrame.getNetHobbyList();
 		
@@ -314,68 +401,67 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 			}
 
 		}
-		panelEast.setLayout(null);
-//		panelEast.setLayout(      new GridLayout(5,2, 50, 30)      );
 		
-		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(17, 40, 286, 160);
-		panelEast.add(scrollPane_1);
+		label_31 = new JLabel("");
+		label_31.setBounds(614, 135, 0, 0);
+		cPanel.add(label_31);
 		
+		label_32 = new JLabel("");
+		label_32.setBounds(619, 135, 0, 0);
+		cPanel.add(label_32);
 		
+		label_33 = new JLabel("");
+		label_33.setBounds(624, 135, 0, 0);
+		cPanel.add(label_33);
 		
-		lblMyHobbies = new JLabel("Hobbies and Interests");
-		lblMyHobbies.setBounds(7, 11, 124, 16);
-//		lblMyHobbies.setBounds(711, 30, 179, 20);
-		lblMyHobbies.setFont(primaryFont);
-		panelEast.add(lblMyHobbies);
-		
-		
-		
-		list = new JList(dobby1);
-		list.setBounds(141, 77, 139, -58);
-		panelEast.add(list);
-		scrollPane_1.setRowHeaderView(list);
-		list.setFont(primaryFont);
-		list.addListSelectionListener(this);
-
-		
-			
-//			label = new JLabel("Hobby");
-//			label.setBounds(571, 369, 51, 20);
-//			label.setFont(primaryFont);
-//			panelEast.add(label);
-			
-			
-		hobbyList = baseFrame.data_hobbyList;
-		comboBox = new JComboBox(hobbyList);
-		comboBox.setBounds(157, 213, 127, 22);
-//		comboBox.setBounds(675, 366, 167, 26);
-		comboBox.setFont(primaryFont);
-		panelEast.add(comboBox);
-		comboBox.addActionListener(this);
-		comboBox.setEditable(true);
-		
-
-			
-			btnAddHobby = new JButton("Add Hobby");
-			btnAddHobby.setBounds(27, 212, 93, 25);
-	//		btnAddHobby.setBounds(865, 365, 121, 29);
-			btnAddHobby.setFont(primaryFont);
-			panelEast.add(btnAddHobby);
-			btnAddHobby.addActionListener(this);
-		
-		
+		label_34 = new JLabel("");
+		label_34.setBounds(629, 135, 0, 0);
+		cPanel.add(label_34);
 		
 		btnNewButton = new JButton("Create new Hobby/Interest");
-		btnNewButton.setBounds(12, 368, 187, 25);
-//		btnNewButton.setBounds(651, 417, 257, 29);
+		btnNewButton.setBounds(651, 417, 257, 29);
 		btnNewButton.setFont(primaryFont);
-		panelEast.add(btnNewButton);
+		cPanel.add(btnNewButton);
 		btnNewButton.addActionListener(this);
+		
+		label_35 = new JLabel("");
+		label_35.setBounds(896, 135, 0, 0);
+		cPanel.add(label_35);
+		
+		label_36 = new JLabel("");
+		label_36.setBounds(901, 135, 0, 0);
+		cPanel.add(label_36);
+		
+		label_37 = new JLabel("");
+		label_37.setBounds(906, 135, 0, 0);
+		cPanel.add(label_37);
+		
+		this.add(nPanel, BorderLayout.NORTH);
+		this.add(cPanel, BorderLayout.CENTER);
+		
+		label_38 = new JLabel("");
+		label_38.setBounds(917, 135, 0, 0);
+		cPanel.add(label_38);
+		
+		label_39 = new JLabel("");
+		label_39.setBounds(922, 135, 0, 0);
+		cPanel.add(label_39);
+		
+		panel_1 = new JPanel();
+		cPanel.add(panel_1);
+		panel_1.setBounds(488, 472, 508, 225);
+		panel_1.setLayout(null);
+
+		
+		
+		
 	
+
+		
+		
 		
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
@@ -460,6 +546,48 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
             {
                   JOptionPane.showMessageDialog(this, "You already have this hobby added");
             }
+		}
+		
+		if(source == btnRemove)
+		{
+			if(list.getSelectedValue() == null)
+			{
+				return;
+			}
+//			DAO dao;
+			try
+			{
+//				dao = new DAO();
+				UserHobby uHob = new UserHobby();
+				list.removeListSelectionListener(this);
+				dobby1.removeElement(list.getSelectedValue());
+				list.setListData(dobby1);
+				list.addListSelectionListener(this);
+				
+				
+				
+				uHob.setUserID(baseFrame.authenticatedUser.getUserName());
+				for (int i = 0; i < hobbyList.size(); i++)
+				{
+
+					
+					if((returnedValue).equals(hobbyList.get(i).getHobbyName()))
+					{
+						uHob.setHobbyID(hobbyList.get(i).getHobbyID());
+					}
+				}
+				
+//				dao.removeUserHobby(uHob);
+				baseFrame.setNetRemoveUserHobby(uHob);
+			} 
+			catch (Exception e1)
+			{
+				e1.printStackTrace();
+			}
+			
+
+			
+			
 		}
 		
 		if(source == btnNewButton)
