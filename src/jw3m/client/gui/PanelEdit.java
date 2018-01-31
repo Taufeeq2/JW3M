@@ -124,24 +124,24 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		lblEditProfile = new JLabel("My Profile");
 		lblEditProfile.setBounds(335, 13, 114, 16);
-		lblEditProfile.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 22));
+		lblEditProfile.setFont(secondaryFont);
 		nPanel.add(lblEditProfile);
 		setLayout(new BorderLayout(0, 0));
 		cPanel.setLayout(null);
 		
 		label_1 = new JLabel("Email");
 		label_1.setBounds(30, 185, 45, 20);
-		label_1.setFont(new Font("Tahoma", Font.BOLD, 16));
+		label_1.setFont(primaryFont);
 		cPanel.add(label_1);
 		
 		label_3 = new JLabel("Mobile");
 		label_3.setBounds(32, 242, 54, 20);
-		label_3.setFont(new Font("Tahoma", Font.BOLD, 16));
+		label_3.setFont(primaryFont);
 		cPanel.add(label_3);
 		
 		label_7 = new JLabel("Name");
 		label_7.setBounds(28, 30, 47, 20);
-		label_7.setFont(new Font("Tahoma", Font.BOLD, 16));
+		label_7.setFont(primaryFont);
 		cPanel.add(label_7);
 		
 		label_2 = new JLabel("");
@@ -150,7 +150,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		name = new JTextField();
 		name.setBounds(155, 27, 267, 26);
-		name.setFont(new Font("Tahoma", Font.BOLD, 16));
+		name.setFont(primaryFont);
 		cPanel.add(name);
 		name.setColumns(10);
 		
@@ -172,7 +172,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		surname = new JTextField();
 		surname.setBounds(155, 75, 267, 26);
-		surname.setFont(new Font("Tahoma", Font.BOLD, 16));
+		surname.setFont(primaryFont);
 		cPanel.add(surname);
 		surname.setColumns(10);
 		
@@ -182,7 +182,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		email = new JTextField();
 		email.setBounds(155, 182, 267, 26);
-		email.setFont(new Font("Tahoma", Font.BOLD, 16));
+		email.setFont(primaryFont);
 		cPanel.add(email);
 		email.setColumns(10);
 		
@@ -196,7 +196,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		mobile = new JTextField();
 		mobile.setBounds(155, 239, 267, 26);
-		mobile.setFont(new Font("Tahoma", Font.BOLD, 16));
+		mobile.setFont(primaryFont);
 		cPanel.add(mobile);
 		mobile.setColumns(10);
 		
@@ -210,7 +210,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		btnUpdateProfile = new JButton("Update Profile");
 		btnUpdateProfile.setBounds(155, 354, 129, 25);
-		btnUpdateProfile.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnUpdateProfile.setFont(primaryFont);
 		cPanel.add(btnUpdateProfile);
 		btnUpdateProfile.addActionListener(this);
 		
@@ -220,7 +220,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		alias = new JTextField();
 		alias.setBounds(155, 124, 267, 26);
-		alias.setFont(new Font("Tahoma", Font.BOLD, 16));
+		alias.setFont(primaryFont);
 		alias.setColumns(10);
 		cPanel.add(alias);
 		
@@ -234,7 +234,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		lblAlias = new JLabel("Alias");
 		lblAlias.setBounds(33, 127, 40, 20);
-		lblAlias.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblAlias.setFont(primaryFont);
 		cPanel.add(lblAlias);
 		
 		label_18 = new JLabel("");
@@ -243,12 +243,12 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		lblMentor = new JLabel("Mentor");
 		lblMentor.setBounds(30, 302, 58, 20);
-		lblMentor.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblMentor.setFont(primaryFont);
 		cPanel.add(lblMentor);
 		
 		rdbtnYes = new JRadioButton("Yes");
 		rdbtnYes.setBounds(155, 300, 53, 25);
-		rdbtnYes.setFont(new Font("Tahoma", Font.BOLD, 14));
+		rdbtnYes.setFont(primaryFont);
 		buttonGroup.add(rdbtnYes);
 		cPanel.add(rdbtnYes);
 		
@@ -258,7 +258,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		rdbtnNo = new JRadioButton("No");
 		rdbtnNo.setBounds(239, 300, 49, 25);
-		rdbtnNo.setFont(new Font("Tahoma", Font.BOLD, 14));
+		rdbtnNo.setFont(primaryFont);
 		buttonGroup.add(rdbtnNo);
 		cPanel.add(rdbtnNo);
 		
@@ -285,7 +285,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		lblMyHobbies = new JLabel("Hobbies and Interests");
 		lblMyHobbies.setBounds(711, 30, 179, 20);
-		lblMyHobbies.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblMyHobbies.setFont(primaryFont);
 		cPanel.add(lblMyHobbies);
 		
 		label_21 = new JLabel("");
@@ -294,12 +294,12 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		label = new JLabel("Hobby");
 		label.setBounds(571, 369, 51, 20);
-		label.setFont(new Font("Tahoma", Font.BOLD, 16));
+		label.setFont(primaryFont);
 		cPanel.add(label);
 		
 		btnAddHobby = new JButton("Add Hobby");
 		btnAddHobby.setBounds(865, 365, 121, 29);
-		btnAddHobby.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnAddHobby.setFont(primaryFont);
 		cPanel.add(btnAddHobby);
 		btnAddHobby.addActionListener(this);
 		
@@ -312,9 +312,8 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		comboBox = new JComboBox(hobbyList);
 		comboBox.setBounds(675, 366, 167, 26);
-		comboBox.setToolTipText("Select Hobby and click Add Hobby");
 		
-		comboBox.setFont(new Font("Tahoma", Font.BOLD, 16));
+		comboBox.setFont(primaryFont);
 		cPanel.add(comboBox);
 		comboBox.addActionListener(this);
 		comboBox.setEditable(true);
@@ -329,7 +328,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		label_4 = new JLabel("Surname");
 		label_4.setBounds(28, 78, 72, 20);
-		label_4.setFont(new Font("Tahoma", Font.BOLD, 16));
+		label_4.setFont(primaryFont);
 		cPanel.add(label_4);
 		
 		label_25 = new JLabel("");
@@ -346,7 +345,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		btnRemove = new JButton("Remove Hobby");
 		btnRemove.setBounds(739, 313, 139, 25);
-		btnRemove.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnRemove.setFont(primaryFont);
 		cPanel.add(btnRemove);
 		btnRemove.addActionListener(this);
 		
@@ -368,6 +367,7 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		
 		list = new JList(dobby1);
 		scrollPane.setRowHeaderView(list);
+		list.setFont(primaryFont);
 		list.addListSelectionListener(this);
 		
 		
@@ -419,8 +419,8 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		cPanel.add(label_34);
 		
 		btnNewButton = new JButton("Create new Hobby/Interest");
-		btnNewButton.setBounds(651, 417, 297, 29);
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnNewButton.setBounds(651, 417, 257, 29);
+		btnNewButton.setFont(primaryFont);
 		cPanel.add(btnNewButton);
 		btnNewButton.addActionListener(this);
 		
@@ -593,18 +593,18 @@ public class PanelEdit extends JPanel implements ActionListener, ListSelectionLi
 		if(source == btnNewButton)
 		{
 			lblAddNewHobby_1 = new JLabel("Add new Hobby or Interest");
-			lblAddNewHobby_1.setFont(new Font("Tahoma", Font.BOLD, 16));
+			lblAddNewHobby_1.setFont(primaryFont);
 			lblAddNewHobby_1.setBounds(28, 31, 262, 16);
 			panel_1.add(lblAddNewHobby_1);
 			
 			newField = new JTextField();
-			newField.setFont(new Font("Tahoma", Font.BOLD, 16));
+			newField.setFont(primaryFont);
 			newField.setBounds(321, 29, 226, 22);
 			panel_1.add(newField);
 			newField.setColumns(10);
 			
 			btnAdd_1 = new JButton("Add");
-			btnAdd_1.setFont(new Font("Tahoma", Font.BOLD, 16));
+			btnAdd_1.setFont(primaryFont);
 			btnAdd_1.setBounds(240, 89, 97, 25);
 			panel_1.add(btnAdd_1);
 			btnAdd_1.addActionListener(this);
