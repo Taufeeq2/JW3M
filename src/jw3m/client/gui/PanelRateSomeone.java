@@ -118,12 +118,12 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		for (int col = 5; col < table.getColumnCount(); col++)
 		{
 			TableColumn cm = table.getColumnModel().getColumn(col);
-			Vector<String> rateVect = new Vector<String>();
-			rateVect.addElement("1");
-			rateVect.addElement("2");
-			rateVect.addElement("3");
-			rateVect.addElement("4");
-			rateVect.addElement("5");
+			Vector<Integer> rateVect = new Vector<Integer>();
+			rateVect.addElement(1);
+			rateVect.addElement(2);
+			rateVect.addElement(3);
+			rateVect.addElement(4);
+			rateVect.addElement(5);
 			
 			JComboBox ratings = new JComboBox(rateVect);
 
@@ -342,14 +342,13 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 						rating[count] = model.getValueAt(i, count);	
 					}
 					
-					 
-					ratee.setKnowledge(Integer.parseInt((String)rating[5]));	
-					ratee.setWorkStandard(Integer.parseInt((String)rating[6]));
-					ratee.setAutonomy(Integer.parseInt((String)rating[7]));
-					ratee.setComplexityCoping(Integer.parseInt((String)rating[8]));
-					ratee.setContextPerception(Integer.parseInt((String)rating[9]));
-					ratee.setCapabilityGrowing(Integer.parseInt((String)rating[10]));
-					ratee.setCollaboration(Integer.parseInt((String)rating[11]));
+					ratee.setKnowledge((int)rating[5]);	
+					ratee.setWorkStandard((int)rating[6]);
+					ratee.setAutonomy((int)rating[7]);
+					ratee.setComplexityCoping((int)rating[8]);
+					ratee.setContextPerception((int)rating[9]);
+					ratee.setCapabilityGrowing((int)rating[10]);
+					ratee.setCollaboration((int)rating[11]);
 
 					ratee.setRaterID(baseFrame.authenticatedUser.getUserName());
 					ratee.setSkillID((int)rating[3]); 
@@ -357,8 +356,8 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 
 					int level = 0; 
 
-					level = (Integer.parseInt((String)rating[5]) + Integer.parseInt((String)rating[6]) + Integer.parseInt((String)rating[7]) + Integer.parseInt((String)rating[8]) + 
-							Integer.parseInt((String)rating[9]) + Integer.parseInt((String)rating[10]) + Integer.parseInt((String)rating[11])) / 7 ;
+					level = ((int)rating[5] + (int)rating[6] + (int)rating[7] + (int)rating[8] + 
+							(int)rating[9] + (int)rating[10] + (int)rating[11]) / 7 ;
 					ratee.setLevel(level);
 					System.out.println("Level is: " + (ratee.getKnowledge() + ratee.getWorkStandard() + ratee.getAutonomy() + ratee.getComplexityCoping() + ratee.getContextPerception() 
 							+ ratee.getCapabilityGrowing() + ratee.getCollaboration()) / 7);
