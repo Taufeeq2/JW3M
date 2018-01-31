@@ -64,6 +64,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	
 	private PanelProfile profileP;
 	private	PanelMyProfile myProfile;
+	private PanelMyProfileNew myProfile_new;
 	private PanelNotifications notificationP;
 	public PanelRateSomeone rateSomeoneP;
 	private PanelNewProfile newProfile;
@@ -242,6 +243,7 @@ public class SkillsClient extends JFrame implements ActionListener
 		rateSomeoneP = new PanelRateSomeone(this);
 		notificationP = new PanelNotifications(this);
 		myProfile = new PanelMyProfile(this);
+		myProfile_new = new PanelMyProfileNew(this);
 //		newProfile = new PanelNewProfile(this);
 		panelReporting = new PanelReporting(this);
 		demoPanel = new PanelDemo(this);
@@ -255,6 +257,7 @@ public class SkillsClient extends JFrame implements ActionListener
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setFont(primaryFont);
 		tabbedPane.add("My Profile", myProfile); // this is my basic details which are edditable by default
+		tabbedPane.add("My Profile (new)", myProfile_new);
 		
 		tabbedPane.add("My Skills", profileP); // this should change to my skills
 		
