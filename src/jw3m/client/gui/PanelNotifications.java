@@ -4,7 +4,9 @@ import javax.swing.JPanel;
 
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,6 +31,9 @@ import java.awt.Container;
 import java.awt.Dimension;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class PanelNotifications extends JPanel implements ActionListener, ListSelectionListener
 {
@@ -45,7 +50,7 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 	private JButton btnCancelNotification;
 	private JButton btnInv;
 	private JComboBox comboBox;
-	private JPanel northP, centerP, southP;
+	private JPanel northP, centerP, southP, panel, dummyP1, dummyP2;
 	
 	public PanelNotifications(SkillsClient frame) 
 	{
@@ -57,17 +62,19 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		setLayout(new BorderLayout(0, 0));
 		
 		northP = new JPanel();
+//		northP.setBorder(new LineBorder(Color.RED, 2));
 		lblNotifications = new JLabel("Notifications");
 		lblNotifications.setFont(secondaryFont);
 		northP.add(lblNotifications);
 		
 		centerP = new JPanel();
+//		centerP.setBorder(new LineBorder(Color.BLACK, 2));
 		
 		
 		
 		
 		setupNotificationsTable();
-		centerP.setLayout(new GridLayout(2, 1));
+		centerP.setLayout(new GridLayout(1, 1));
 		
 		
 		table = new JTable(model);
@@ -82,17 +89,29 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		scrollPaneT.setViewportView(table);
 		
 		southP = new JPanel();
+//		southP.setBorder(new LineBorder(Color.GREEN, 2));
+		GridLayout gl_southP = new GridLayout(1, 3);
+		southP.setLayout(gl_southP);
+		
+		
+		panel = new JPanel();
+//		panel.setBorder(new LineBorder(Color.BLUE, 2));
+		
+
 		
 		btnRateUser = new JButton("RATE USER");
 		btnRateUser.setFont(primaryFont);
 		btnRateUser.setBounds(50, 100, 225, 30);
 		btnRateUser.addActionListener(this);
+		panel.setLayout(new GridLayout(4, 2, 20, 20));
+		panel.add(btnRateUser);
 		
 		btnCancelNotification = new JButton("CANCEL NOTIFICATION");
 		btnCancelNotification.setSize(225, 30);
 		btnCancelNotification.setLocation(400, 100);
 		btnCancelNotification.setFont(primaryFont);
 		btnCancelNotification.addActionListener(this);
+		panel.add(btnCancelNotification);
 		
 		btnInv = new JButton("INVITE RATING");
 		btnInv.setSize(225, 30);
@@ -100,47 +119,25 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		btnInv.setFont(primaryFont);
 		btnInv.addActionListener(this);
 		
-		
 		comboBox = new JComboBox(baseFrame.data_userList);
 		comboBox.setSize(225, 30);
 		comboBox.setLocation(400, 200);
 		comboBox.setFont(primaryFont);
+		panel.add(comboBox);
+		panel.add(btnInv);
+		
+		
+		dummyP1 = new JPanel();
+		dummyP2 = new JPanel();
+		
+		southP.add(dummyP1);
+		southP.add(panel);
+		southP.add(dummyP2);
 		
 		this.add(northP, BorderLayout.NORTH);
 		this.add(centerP, BorderLayout.CENTER);
-		centerP.add(southP, BorderLayout.CENTER);
-		GroupLayout gl_southP = new GroupLayout(southP);
-		gl_southP.setHorizontalGroup(
-			gl_southP.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_southP.createSequentialGroup()
-					.addGap(50)
-					.addGroup(gl_southP.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnInv, GroupLayout.PREFERRED_SIZE, 225, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_southP.createSequentialGroup()
-							.addComponent(btnRateUser, GroupLayout.PREFERRED_SIZE, 225, GroupLayout.PREFERRED_SIZE)
-							.addGap(224)
-							.addComponent(btnCancelNotification, GroupLayout.PREFERRED_SIZE, 225, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_southP.createSequentialGroup()
-							.addGap(250)
-							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 225, GroupLayout.PREFERRED_SIZE)))
-					.addGap(209))
-		);
-		gl_southP.setVerticalGroup(
-			gl_southP.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_southP.createSequentialGroup()
-					.addGap(361)
-					.addGroup(gl_southP.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnRateUser, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_southP.createSequentialGroup()
-							.addGap(1)
-							.addComponent(btnCancelNotification, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)))
-					.addGap(28)
-					.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-					.addGap(77)
-					.addComponent(btnInv, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(86, Short.MAX_VALUE))
-		);
-		southP.setLayout(null);
+		this.add(southP, BorderLayout.SOUTH);
+
 	} 
 	
 	public void setupNotificationsTable()
