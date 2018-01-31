@@ -68,7 +68,10 @@ public class SkillsClient extends JFrame implements ActionListener
 	public PanelRateSomeone rateSomeoneP;
 	private PanelNewProfile newProfile;
 	private PanelReporting panelReporting;
+	private PanelSearch searchPanel;
+	private PanelDemo demoPanel;
 	private PanelTests testPanel;
+	
 	
 	
 	// DIRECT DAO ACCESS - MUST BE CHANGED LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -241,7 +244,9 @@ public class SkillsClient extends JFrame implements ActionListener
 		editP = new PanelEdit(this);
 //		newProfile = new PanelNewProfile(this);
 		panelReporting = new PanelReporting(this);
-		testPanel = new PanelTests(this);
+		demoPanel = new PanelDemo(this);
+		searchPanel = new PanelSearch(this);
+	//	testPanel = new PanelTests(this);
 		
 		
 		//wtf
@@ -256,7 +261,9 @@ public class SkillsClient extends JFrame implements ActionListener
 		tabbedPane.add("Rate Someone", rateSomeoneP);
 //		tabbedPane.add("Create New Profile", newProfile);
 		tabbedPane.add("People-Skill finder", panelReporting);
-		tabbedPane.addTab("Test Panel", testPanel);
+		tabbedPane.add("Searches", searchPanel);
+//		tabbedPane.add("Example (GUI layout)", examplePanel);
+		tabbedPane.addTab("Demo Panel", demoPanel);
 
 		
 	}
@@ -611,6 +618,20 @@ public class SkillsClient extends JFrame implements ActionListener
 		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
 			
 		this.data_skillList = (Vector<Skill>)commsRec.getObj();
+		
+	//	logger.debug(" getNetUserList() call invoked");
+
+	}
+	
+	public Vector<User> getNetSkillsUser(Skill SkillIn)
+	{
+		Comms commsSend = new Comms();
+			commsSend.setText("send skillReturnUser");
+			commsSend.setObj(SkillIn);
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+			
+		return (Vector<User>)commsRec.getObj();
 		
 	//	logger.debug(" getNetUserList() call invoked");
 
