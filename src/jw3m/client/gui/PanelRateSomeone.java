@@ -112,6 +112,25 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		table = new JTable(model);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		
+		
+		for (int col = 5; col < table.getColumnCount(); col++)
+		{
+			TableColumn cm = table.getColumnModel().getColumn(col);
+			Vector<String> rateVect = new Vector<String>();
+			rateVect.addElement("1");
+			rateVect.addElement("2");
+			rateVect.addElement("3");
+			rateVect.addElement("4");
+			rateVect.addElement("5");
+			
+			JComboBox ratings = new JComboBox(rateVect);
+
+			cm.setCellEditor(new DefaultCellEditor(ratings));
+		}
+		
+
+		
+		
 
 		scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(60, 143, 1620, 293);
@@ -230,18 +249,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 
 				setCustomTableElement(aValue, row, column);
 				
-				TableColumn cm = table.getColumnModel().getColumn(column);
-
-				Vector<String> rateVect = new Vector<String>();
-				rateVect.addElement("1");
-				rateVect.addElement("2");
-				rateVect.addElement("3");
-				rateVect.addElement("4");
-				rateVect.addElement("5");
 				
-				JComboBox ratings = new JComboBox(rateVect);
-
-				cm.setCellEditor(new DefaultCellEditor(ratings));
 
 				
 			}
