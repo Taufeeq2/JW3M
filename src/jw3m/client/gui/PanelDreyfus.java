@@ -49,12 +49,12 @@ public class PanelDreyfus extends JPanel
 		cPanel = new JPanel();
 		setLayout(new BorderLayout(0, 0));
 		
-		ii = new ImageIcon("resources/Drefus_Model.PNG");
-		pic = new JLabel(new ImageIcon("C:\\Users\\a124788\\Documents\\Drefus_Model.PNG"));
+//		ii = new ImageIcon("resources/DrefusModel.jpg");
+		pic = new JLabel(new ImageIcon("resources/DreyfusModel.jpg"));
 		pic.setBounds(10, 10, 614, 143);
 		nPanel.add(pic);
 		this.add(nPanel, BorderLayout.NORTH);
-		
+//		
 //		lblDreyfusModel_1 = new JLabel("Dreyfus Model");
 //		lblDreyfusModel_1.setFont(secondaryFont);
 //		nPanel.add(lblDreyfusModel_1);
