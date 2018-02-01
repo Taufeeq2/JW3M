@@ -217,7 +217,7 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 		cPanel.add(label_4);
 		
 		btnRemove = new JButton("Remove Hobby");
-		btnRemove.setBounds(711, 300, 139, 25);
+		btnRemove.setBounds(711, 300, 153, 25);
 		btnRemove.setFont(primaryFont);
 		cPanel.add(btnRemove);
 		btnRemove.addActionListener(this);
