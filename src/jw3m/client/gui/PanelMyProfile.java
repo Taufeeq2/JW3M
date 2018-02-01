@@ -274,7 +274,7 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 		
 		panel_1 = new JPanel();
 		cPanel.add(panel_1);
-		panel_1.setBounds(553, 457, 408, 225);
+		panel_1.setBounds(553, 457, 462, 225);
 		panel_1.setLayout(null);
 
 		
@@ -419,12 +419,12 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 		{
 			lblAddNewHobby_1 = new JLabel("Add new Hobby or Interest");
 			lblAddNewHobby_1.setFont(primaryFont);
-			lblAddNewHobby_1.setBounds(28, 31, 262, 16);
+			lblAddNewHobby_1.setBounds(28, 31, 262, 26);
 			panel_1.add(lblAddNewHobby_1);
 			
 			newField = new JTextField();
 			newField.setFont(primaryFont);
-			newField.setBounds(321, 29, 226, 22);
+			newField.setBounds(245, 29, 200, 30);
 			panel_1.add(newField);
 			newField.setColumns(10);
 			
