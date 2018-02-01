@@ -134,7 +134,7 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 		mobile.setColumns(10);
 		
 		btnUpdateProfile = new JButton("Update Profile");
-		btnUpdateProfile.setBounds(170, 354, 129, 25);
+		btnUpdateProfile.setBounds(170, 354, 167, 25);
 		btnUpdateProfile.setFont(primaryFont);
 		cPanel.add(btnUpdateProfile);
 		btnUpdateProfile.addActionListener(this);
