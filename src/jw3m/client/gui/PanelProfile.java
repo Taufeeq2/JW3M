@@ -44,6 +44,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ImageIcon;
 
 public class PanelProfile extends JPanel implements ActionListener
 {
@@ -56,8 +57,6 @@ public class PanelProfile extends JPanel implements ActionListener
 	private JPanel centrePanel, northPanel, westPanel;
 	private JTable table;
 	private DefaultTableModel model = null;
-	private JLabel lblMySkills;
-	private JButton btnRemoveSelectedSkill;
 	private JComboBox comboBoxSkills;
 	private JButton btnAddSelectedSkill;
 	private Vector<Skill> skillList = new Vector<Skill>();
@@ -68,7 +67,6 @@ public class PanelProfile extends JPanel implements ActionListener
 	private Vector<UserSkill> tmpUserSkills = new Vector<UserSkill>();
 	private Vector<String> allSkillVect = new Vector<String>();
 	private JScrollPane scrollPane;
-	private JLabel lblAddSkills;
 	private User tempUser = new User();
 	private int skill = 0;
 	private int skillIDAdd = 0;
@@ -83,9 +81,7 @@ public class PanelProfile extends JPanel implements ActionListener
 	private int aveColleagueRating = 0;
 	private String skillName = null;
 	private Skill newSkill = null;
-	private Skill selectedSkill = null;
 	private Vector<Rating> ratingVect = new Vector<Rating>();
-	private Vector<Rating> allRatingVect = new Vector<Rating>();
 	private JButton btnAddNewSkill;
 	private JLabel lblSkillName;
 	private JTextField textFieldSkillName;
@@ -95,6 +91,7 @@ public class PanelProfile extends JPanel implements ActionListener
 	private JTextField textFieldSkillDesc;
 	private JButton btnAddSkill;
 	private Rating ratee;
+	private JLabel lblImgLabel;
 
 	public PanelProfile(SkillsClient frame)
 	{
@@ -109,11 +106,6 @@ public class PanelProfile extends JPanel implements ActionListener
 		northPanel = new JPanel();
 		centrePanel = new JPanel();
 		westPanel = new JPanel();
-
-		lblMySkills = new JLabel("My Skills");
-		lblMySkills.setBounds(335, 13, 114, 16);
-		lblMySkills.setFont(primaryFont);
-		northPanel.add(lblMySkills);
 		setLayout(new BorderLayout(0, 0));
 
 		scrollPane = new JScrollPane();
@@ -159,6 +151,9 @@ public class PanelProfile extends JPanel implements ActionListener
 		// ****************************************************************
 
 		this.add(northPanel, BorderLayout.NORTH);
+		
+		lblImgLabel = new JLabel(new ImageIcon("C:\\JW3M\\MySkills.gif"));
+		northPanel.add(lblImgLabel);
 		this.add(centrePanel, BorderLayout.CENTER);
 		GroupLayout gl_centrePanel = new GroupLayout(centrePanel);
 		gl_centrePanel.setHorizontalGroup(gl_centrePanel.createParallelGroup(Alignment.LEADING)
@@ -706,7 +701,7 @@ public class PanelProfile extends JPanel implements ActionListener
 			try
 			{
 				DAO getSkill = new DAO();
-				Vector<Skill> tempASkill = new Vector<Skill>();
+				tempASkill = new Vector<Skill>();
 
 				baseFrame.getNetSkillList();
 				tempASkill = baseFrame.data_skillList;
@@ -792,6 +787,7 @@ public class PanelProfile extends JPanel implements ActionListener
 					JOptionPane.showMessageDialog(this, "Fill in all the fields!");
 				} else
 				{
+					
 					getSkill.addSkillList(newSkill);
 
 					Vector<Skill> tempASkill = new Vector<Skill>();
