@@ -58,6 +58,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	private Vector<User> userList = null;
 	private JScrollPane scrollPane = null;
 	private JButton buttonSkillsUp;
+	private JButton buttonSkillsDown;
 	private JButton buttonUsers;
 	
 	private Font primaryFont, secondaryFont;
@@ -97,6 +98,10 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		buttonHobbies = new JButton("Hobbies");
 		buttonHobbies.setFont(primaryFont);
 		buttonHobbies.addActionListener(this);
+		
+		buttonSkillsDown = new JButton("<-Skills");
+		buttonSkillsDown.setFont(primaryFont);
+		buttonSkillsDown.addActionListener(this);
 		
 		buttonSkillsUp = new JButton("Skills->");
 		buttonSkillsUp.setFont(primaryFont);
@@ -146,6 +151,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		//add(panel_1);
 		//add(panel);
 		southP.add(buttonHobbies);
+		southP.add(buttonSkillsDown);
 		southP.add(buttonSkillsUp);
 		southP.add(buttonUsers);
 		//add(titleLabel);
@@ -372,24 +378,25 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 			}
 			//the graph cant handle too many skills at once, so going to sort by size
 			//and only display a few
-			char sorted = 'n';
-			while (sorted == 'n')
-			{
-				sorted = 'y';
-				for (int i=1; i<skillList.size(); i++)
-				{
-					if(values[i]>values[i-1])
-					{
-						sorted = 'n';
-						int tempValue = (int)(values[i-1]);
-						String tempLabel = labels[i-1];
-						values[i-1] = values[i];
-						labels[i-1] = labels[i];
-						values[i] = tempValue;
-						labels[i] = tempLabel;
-					}
-				}
-			}
+			//Taking out the sort so the order of skills is the same as the table
+			//char sorted = 'n';
+			//while (sorted == 'n')
+			//{
+			//	sorted = 'y';
+			//	for (int i=1; i<skillList.size(); i++)
+			//	{
+			//		if(values[i]>values[i-1])
+			//		{
+			//			sorted = 'n';
+			//			int tempValue = (int)(values[i-1]);
+			//			String tempLabel = labels[i-1];
+			//			values[i-1] = values[i];
+			//			labels[i-1] = labels[i];
+			//			values[i] = tempValue;
+			//			labels[i] = tempLabel;
+			//		}
+			//	}
+			//}
 			int sizeOfArray = skillList.size();
 			int sizeOfDisplay = skillArrayDisplay;
 			double[] valuesTop6 = new double [sizeOfDisplay];
@@ -417,6 +424,113 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 				if (skillArrayStart < 0)
 				{
 					skillArrayStart = 0;
+					skillArrayEnd = skillArrayDisplay;
+				}	
+			}
+			System.out.println("Array Start = " + skillArrayStart + " Array End = " + skillArrayEnd +
+					 " Array Size " + sizeOfArray);
+			
+			for (int i=0; i<skillArrayDisplay; i++)
+			{
+				valuesTop6[i] = values[skillArrayStart + i];
+				labelsTop6[i] = labels[skillArrayStart + i];
+				int rem = i%5;
+				if (rem == 0)
+				{
+					colorsTop6[i] = Color.red;
+				}
+				if (rem == 1)
+				{
+					colorsTop6[i] = Color.orange; 
+				}
+				if (rem == 2)
+				{
+					colorsTop6[i] = Color.yellow;
+				}
+				if (rem == 3)
+				{
+					colorsTop6[i] = Color.green;
+				}
+				if (rem == 4)
+				{
+					colorsTop6[i] = Color.blue;
+				}
+				
+			}
+			BarChart barChart = new BarChart(valuesTop6, labelsTop6, colorsTop6, barChartTitle);
+			panel.removeAll();
+			panel.validate();
+			panel.repaint();
+			panel.add(barChart);
+			panel.validate();
+			panel.repaint();
+		}
+		
+		if (source == buttonSkillsDown)
+		{
+			Vector<Skill> skillList = baseFrame.data_skillList;
+			double[] values = new double [skillList.size()];
+			String[] labels = new String[skillList.size()];
+			Color[] colors = new Color[skillList.size()];
+			String barChartTitle = "Users";
+			for (int i=0; i<skillList.size(); i++)
+			{
+				Skill thisSkill = skillList.get(i);
+				//labels[i] = thisSkill.getSkillName();
+				Vector<User> userSkillList = baseFrame.getNetSkillsUser(thisSkill);
+				values[i] = userSkillList.size();
+				labels[i] = thisSkill.getSkillName() + " [" + (int)values[i] + "]";
+				
+			}
+			//the graph cant handle too many skills at once, so going to sort by size
+			//and only display a few
+			//taking out the sort so the skills will be in the same order as the table
+			//char sorted = 'n';
+			//while (sorted == 'n')
+			//{
+			//	sorted = 'y';
+			//	for (int i=1; i<skillList.size(); i++)
+			//	{
+			//		if(values[i]>values[i-1])
+			//		{
+			//			sorted = 'n';
+			//			int tempValue = (int)(values[i-1]);
+			//			String tempLabel = labels[i-1];
+			//			values[i-1] = values[i];
+			//			labels[i-1] = labels[i];
+			//			values[i] = tempValue;
+			//			labels[i] = tempLabel;
+			//		}
+			//	}
+			//}
+			int sizeOfArray = skillList.size();
+			int sizeOfDisplay = skillArrayDisplay;
+			double[] valuesTop6 = new double [sizeOfDisplay];
+			String[] labelsTop6 = new String[sizeOfDisplay];
+			Color[] colorsTop6 = new Color[sizeOfDisplay];
+			
+			if(skillArrayEnd == 0)
+			{
+				skillArrayEnd = skillArrayDisplay;
+				skillArrayStart = 0;
+				if (skillArrayEnd > sizeOfArray)
+				{
+					skillArrayEnd = sizeOfArray;
+				}
+			}
+			else
+			{
+				skillArrayEnd = skillArrayEnd - skillArrayDisplay;
+				skillArrayStart = skillArrayEnd - skillArrayDisplay;
+				if (skillArrayEnd > sizeOfArray)
+				{
+					skillArrayEnd = sizeOfArray;
+					skillArrayStart = skillArrayEnd - skillArrayDisplay;
+				}	
+				if (skillArrayStart < 0)
+				{
+					skillArrayStart = 0;
+					skillArrayEnd = skillArrayDisplay;
 				}	
 			}
 			System.out.println("Array Start = " + skillArrayStart + " Array End = " + skillArrayEnd +
