@@ -24,6 +24,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -104,6 +105,7 @@ public class PanelProfile extends JPanel implements ActionListener
 	private JLabel lblSkillDescription;
 	private JTextField textFieldSkillDesc;
 	private JButton btnAddSkill;
+	private Rating ratee;
 
 	public PanelProfile(SkillsClient frame)
 	{
@@ -136,6 +138,21 @@ public class PanelProfile extends JPanel implements ActionListener
 		centrePanel.add(scrollPane);
 		scrollPane.setViewportView(table);
 		centrePanel.add(scrollPane);
+		
+		for (int col = 3; col < 10; col++)
+		{
+			TableColumn cm = table.getColumnModel().getColumn(col);
+			Vector<Integer> rateVect = new Vector<Integer>();
+			rateVect.addElement(1);
+			rateVect.addElement(2);
+			rateVect.addElement(3);
+			rateVect.addElement(4);
+			rateVect.addElement(5);
+			
+			JComboBox ratings = new JComboBox(rateVect);
+
+			cm.setCellEditor(new DefaultCellEditor(ratings));
+		}
 
 		table.getColumn("Rating").setCellRenderer(new ButtonRenderer());
 		table.getColumn("Rating").setCellEditor(new ButtonEditor1(new JCheckBox()));
@@ -289,7 +306,7 @@ public class PanelProfile extends JPanel implements ActionListener
 		// Here we set up the model
 
 		String str[] =
-		{ "User ID", "Skill Name", "Knowledgeable", "Standard of Work", "Autonomy",
+		{ "User ID", "Skill ID", "Skill Name", "Knowledgeable", "Standard of Work", "Autonomy",
 				"Coping with Complexity", "Perception of Context", "Growing Capability", "Purposeful Collaboration",
 				"Average Self-Rating", "Ave. Colleague Rating", "Rating", "Skill"};
 
@@ -307,7 +324,7 @@ public class PanelProfile extends JPanel implements ActionListener
 
 			public boolean isCellEditable(int row, int column)
 			{
-				// make read only field columns 0, 1, 2, 10, 11 - other columns
+				// make read only field columns 0, 1, 9, 10, 11 - other columns
 				// directly editable
 				if (column == 0 || column == 1 || column == 2 || column == 10 || column == 11)
 				{
@@ -376,7 +393,7 @@ public class PanelProfile extends JPanel implements ActionListener
 						}
 
 						Object obj[] =
-						{ tempUser.getUserName(), skillName, knowledge, workStandard, autonomy, complexityCoping,
+						{ tempUser.getUserName(), skill, skillName, knowledge, workStandard, autonomy, complexityCoping,
 								contextPerception, capabilityGrowing, collaboration, aveSelfRating, aveColleagueRating,
 								"Update", "Delete" };
 						model.addRow(obj);
@@ -555,13 +572,53 @@ public class PanelProfile extends JPanel implements ActionListener
 		{
 			if (isPushed1)
 			{
-				//
-				// JOptionPane.showMessageDialog(button, label + ": Ouch!");
-				//
-				
-				
+				Object rating [] = new Object[model.getColumnCount()];
+				ratee = new Rating();
+								
+				for (int i = 0; i < model.getRowCount(); i++)
+				{
+					//System.out.println("number of rows: " + model.getRowCount());
+					
+					
+					if(model.getValueAt(i, 2) != null)
+					{
+						for(int count = 0; count < model.getColumnCount(); count++)
+						{
+							rating[count] = model.getValueAt(i, count);	
+						}
+						
+						ratee.setKnowledge((int)rating[3]);	
+						ratee.setWorkStandard((int)rating[4]);
+						ratee.setAutonomy((int)rating[5]);
+						ratee.setComplexityCoping((int)rating[6]);
+						ratee.setContextPerception((int)rating[7]);
+						ratee.setCapabilityGrowing((int)rating[8]);
+						ratee.setCollaboration((int)rating[9]);
+
+						ratee.setRaterID(baseFrame.authenticatedUser.getUserName());
+						ratee.setSkillID((int)rating[1]); 
+						ratee.setUserID(baseFrame.authenticatedUser.getUserName());
+						
+						int level = 0; 
+
+						level = ((int)rating[3] + (int)rating[4] + (int)rating[5] + (int)rating[6] + 
+								(int)rating[7] + (int)rating[8] + (int)rating[9]) / 7 ;
+						ratee.setLevel(level);
+						System.out.println("Level is: " + (ratee.getKnowledge() + ratee.getWorkStandard() + ratee.getAutonomy() + ratee.getComplexityCoping() + ratee.getContextPerception() 
+								+ ratee.getCapabilityGrowing() + ratee.getCollaboration()) / 7);
+						System.out.println("level: " + level + " skill id: " + ratee.getSkillID());
+						table.setValueAt(level, i, 10);
+						
+						baseFrame.setNetAddRating(ratee);
+						
+					}
+					
+					
+			
+				}	 
 				
 			}
+			
 			isPushed1 = false;
 			return new String(label);
 		}
