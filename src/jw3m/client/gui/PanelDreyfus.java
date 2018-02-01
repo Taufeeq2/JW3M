@@ -21,8 +21,9 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.FlowLayout;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import java.awt.Dimension;
 
-public class PanelDreyfus extends JPanel implements ActionListener
+public class PanelDreyfus extends JPanel 
 {
 	final static Logger logger = Logger.getLogger(PanelLogin.class);
 	private SkillsClient baseFrame;
@@ -32,6 +33,7 @@ public class PanelDreyfus extends JPanel implements ActionListener
 	private JLabel lblDreyfusModel_1;
 	private JTable table;
 	private JScrollPane scrollPane;
+	private JTextArea textArea;
 
 	public PanelDreyfus(SkillsClient frame)
 	{
@@ -62,6 +64,7 @@ public class PanelDreyfus extends JPanel implements ActionListener
 		
 		
 		table = new JTable();
+
 		
 		
 		table.setFont(primaryFont);
@@ -82,21 +85,21 @@ public class PanelDreyfus extends JPanel implements ActionListener
 				false, false, false, false, false, false, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
-				
 				return columnEditables[column];
-				
 			}
 		});
+		table.getColumnModel().getColumn(0).setPreferredWidth(135);
+		table.getColumnModel().getColumn(1).setPreferredWidth(160);
+		table.getColumnModel().getColumn(2).setPreferredWidth(161);
+		table.getColumnModel().getColumn(3).setPreferredWidth(135);
+		table.getColumnModel().getColumn(4).setPreferredWidth(160);
+		table.getColumnModel().getColumn(5).setPreferredWidth(156);
+		table.getColumnModel().getColumn(6).setPreferredWidth(187);
+		table.getColumnModel().getColumn(7).setPreferredWidth(194);
 
 		
 		
 		scrollPane.setViewportView(table);
-	}
-	
-	
-	@Override
-	public void actionPerformed(ActionEvent e)
-	{
-		Object source = e.getSource();
+		
 	}
 }
