@@ -57,10 +57,13 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	private JButton buttonHobbies;
 	private Vector<User> userList = null;
 	private JScrollPane scrollPane = null;
-	private JButton buttonSkills;
+	private JButton buttonSkillsUp;
 	private JButton buttonUsers;
 	
 	private Font primaryFont, secondaryFont;
+	private int skillArrayStart = 0;
+	private int skillArrayEnd = 0;
+	private int skillArrayDisplay = 7;
 	
 
 	public PanelReporting(SkillsClient frame)
@@ -95,9 +98,9 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		buttonHobbies.setFont(primaryFont);
 		buttonHobbies.addActionListener(this);
 		
-		buttonSkills = new JButton("Skills");
-		buttonSkills.setFont(primaryFont);
-		buttonSkills.addActionListener(this);
+		buttonSkillsUp = new JButton("Skills->");
+		buttonSkillsUp.setFont(primaryFont);
+		buttonSkillsUp.addActionListener(this);
 		
 		buttonUsers = new JButton("Users");
 		buttonUsers.setFont(primaryFont);
@@ -143,7 +146,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		//add(panel_1);
 		//add(panel);
 		southP.add(buttonHobbies);
-		southP.add(buttonSkills);
+		southP.add(buttonSkillsUp);
 		southP.add(buttonUsers);
 		//add(titleLabel);
 		
@@ -258,6 +261,8 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		
 		if (source == buttonHobbies)
 		{
+			skillArrayEnd = 0;
+			skillArrayStart = 0;
 			userList = baseFrame.data_userList;
 			double[] values = new double [userList.size()];
 			String[] labels = new String[userList.size()];
@@ -304,6 +309,8 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		
 		if (source == buttonUsers)
 		{
+			skillArrayEnd = 0;
+			skillArrayStart = 0;
 			userList = baseFrame.data_userList;
 			double[] values = new double [userList.size()];
 			String[] labels = new String[userList.size()];
@@ -347,7 +354,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 			panel.repaint();
 		}
 		
-		if (source == buttonSkills)
+		if (source == buttonSkillsUp)
 		{
 			Vector<Skill> skillList = baseFrame.data_skillList;
 			double[] values = new double [skillList.size()];
@@ -384,13 +391,41 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 				}
 			}
 			int sizeOfArray = skillList.size();
-			double[] valuesTop6 = new double [sizeOfArray];
-			String[] labelsTop6 = new String[sizeOfArray];
-			Color[] colorsTop6 = new Color[sizeOfArray];
-			for (int i=0; i<sizeOfArray; i++)
+			int sizeOfDisplay = skillArrayDisplay;
+			double[] valuesTop6 = new double [sizeOfDisplay];
+			String[] labelsTop6 = new String[sizeOfDisplay];
+			Color[] colorsTop6 = new Color[sizeOfDisplay];
+			
+			if(skillArrayEnd == 0)
 			{
-				valuesTop6[i] = values[i];
-				labelsTop6[i] = labels[i];
+				skillArrayEnd = skillArrayDisplay;
+				skillArrayStart = 0;
+				if (skillArrayEnd > sizeOfArray)
+				{
+					skillArrayEnd = sizeOfArray;
+				}
+			}
+			else
+			{
+				skillArrayEnd = skillArrayEnd + skillArrayDisplay;
+				skillArrayStart = skillArrayEnd - skillArrayDisplay;
+				if (skillArrayEnd > sizeOfArray)
+				{
+					skillArrayEnd = sizeOfArray;
+					skillArrayStart = skillArrayEnd - skillArrayDisplay;
+				}	
+				if (skillArrayStart < 0)
+				{
+					skillArrayStart = 0;
+				}	
+			}
+			System.out.println("Array Start = " + skillArrayStart + " Array End = " + skillArrayEnd +
+					 " Array Size " + sizeOfArray);
+			
+			for (int i=0; i<skillArrayDisplay; i++)
+			{
+				valuesTop6[i] = values[skillArrayStart + i];
+				labelsTop6[i] = labels[skillArrayStart + i];
 				int rem = i%5;
 				if (rem == 0)
 				{
@@ -425,6 +460,8 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		
 		if (source == comboBox)
 		{
+			skillArrayEnd = 0;
+			skillArrayStart = 0;
 			panel.removeAll();
 			panel.validate();
 			panel.repaint();
