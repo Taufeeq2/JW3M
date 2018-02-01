@@ -302,7 +302,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 			panel.repaint();
 		}
 		
-		if (source == buttonSkills)
+		if (source == buttonUsers)
 		{
 			userList = baseFrame.data_userList;
 			double[] values = new double [userList.size()];
@@ -347,7 +347,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 			panel.repaint();
 		}
 		
-		if (source == buttonUsers)
+		if (source == buttonSkills)
 		{
 			Vector<Skill> skillList = baseFrame.data_skillList;
 			double[] values = new double [skillList.size()];
@@ -383,10 +383,11 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 					}
 				}
 			}
-			double[] valuesTop6 = new double [6];
-			String[] labelsTop6 = new String[6];
-			Color[] colorsTop6 = new Color[6];
-			for (int i=0; i<6; i++)
+			int sizeOfArray = skillList.size();
+			double[] valuesTop6 = new double [sizeOfArray];
+			String[] labelsTop6 = new String[sizeOfArray];
+			Color[] colorsTop6 = new Color[sizeOfArray];
+			for (int i=0; i<sizeOfArray; i++)
 			{
 				valuesTop6[i] = values[i];
 				labelsTop6[i] = labels[i];
