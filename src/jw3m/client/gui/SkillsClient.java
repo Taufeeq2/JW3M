@@ -251,7 +251,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	//	testPanel = new PanelTests(this);
 		
 		
-		//wtf
+		
 	//	userMaintenanceP = new PanelUserMaintenance(this);
 		
 		tabbedPane = new JTabbedPane();
