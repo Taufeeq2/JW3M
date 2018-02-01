@@ -79,7 +79,6 @@ public class PanelProfile extends JPanel implements ActionListener
 	private Vector<String> allSkillVect = new Vector<String>();
 	private JScrollPane scrollPane;
 	private JLabel lblAddSkills;
-	private JLabel lblSkillSummary;
 	private User tempUser = new User();
 	private int skill = 0;
 	private int skillIDAdd = 0;
@@ -126,9 +125,6 @@ public class PanelProfile extends JPanel implements ActionListener
 		northPanel.add(lblMySkills);
 		setLayout(new BorderLayout(0, 0));
 
-		lblSkillSummary = new JLabel("Skill Summary");
-		lblSkillSummary.setFont(primaryFont);
-
 		scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -141,8 +137,10 @@ public class PanelProfile extends JPanel implements ActionListener
 		scrollPane.setViewportView(table);
 		centrePanel.add(scrollPane);
 
-		table.getColumn("Button").setCellRenderer(new ButtonRenderer());
-		table.getColumn("Button").setCellEditor(new ButtonEditor(new JCheckBox()));
+		table.getColumn("Rating").setCellRenderer(new ButtonRenderer());
+		table.getColumn("Rating").setCellEditor(new ButtonEditor1(new JCheckBox()));
+		table.getColumn("Skill").setCellRenderer(new ButtonRenderer());
+		table.getColumn("Skill").setCellEditor(new ButtonEditor2(new JCheckBox()));
 
 		setVisible(true);
 
@@ -159,20 +157,15 @@ public class PanelProfile extends JPanel implements ActionListener
 		gl_centrePanel.setHorizontalGroup(
 			gl_centrePanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_centrePanel.createSequentialGroup()
-					.addGap(385)
-					.addComponent(lblSkillSummary, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_centrePanel.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 986, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 960, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		gl_centrePanel.setVerticalGroup(
 			gl_centrePanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_centrePanel.createSequentialGroup()
-					.addGap(13)
-					.addComponent(lblSkillSummary, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-					.addGap(23)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 422, GroupLayout.PREFERRED_SIZE)
+				.addGroup(Alignment.TRAILING, gl_centrePanel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 465, GroupLayout.PREFERRED_SIZE)
 					.addGap(176))
 		);
 		centrePanel.setLayout(gl_centrePanel);
@@ -296,9 +289,9 @@ public class PanelProfile extends JPanel implements ActionListener
 		// Here we set up the model
 
 		String str[] =
-		{ "User ID", "Skill ID", "Skill Name", "Knowledgeable", "Standard of Work", "Autonomy",
+		{ "User ID", "Skill Name", "Knowledgeable", "Standard of Work", "Autonomy",
 				"Coping with Complexity", "Perception of Context", "Growing Capability", "Purposeful Collaboration",
-				"Average Self-Rating", "Ave. Colleague Rating", "Button" };
+				"Average Self-Rating", "Ave. Colleague Rating", "Rating", "Skill"};
 
 		model = new DefaultTableModel(str, 0)
 		{
@@ -383,9 +376,9 @@ public class PanelProfile extends JPanel implements ActionListener
 						}
 
 						Object obj[] =
-						{ tempUser.getUserName(), skill, skillName, knowledge, workStandard, autonomy, complexityCoping,
+						{ tempUser.getUserName(), skillName, knowledge, workStandard, autonomy, complexityCoping,
 								contextPerception, capabilityGrowing, collaboration, aveSelfRating, aveColleagueRating,
-								"Delete" };
+								"Update", "Delete" };
 						model.addRow(obj);
 
 					}
@@ -512,25 +505,26 @@ public class PanelProfile extends JPanel implements ActionListener
 		}
 	}
 
-	class ButtonEditor extends DefaultCellEditor
+	class ButtonEditor1 extends DefaultCellEditor
 	{
 		/**
 		* 
 		*/
 		private static final long serialVersionUID = 1L;
 
-		protected JButton button;
-
+		protected JButton button1;
+		
 		private String label;
 
-		private boolean isPushed;
+		private boolean isPushed1;
 
-		public ButtonEditor(JCheckBox checkBox)
+		public ButtonEditor1(JCheckBox checkBox)
 		{
 			super(checkBox);
-			button = new JButton();
-			button.setOpaque(true);
-			button.addActionListener(new ActionListener()
+			button1 = new JButton();
+			button1.setOpaque(true);
+			button1.addActionListener(new ActionListener()
+			
 			{
 				public void actionPerformed(ActionEvent e)
 				{
@@ -538,33 +532,102 @@ public class PanelProfile extends JPanel implements ActionListener
 				}
 			});
 		}
-
+		
 		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
 				int column)
 		{
 			if (isSelected)
 			{
-				button.setForeground(table.getSelectionForeground());
-				button.setBackground(table.getSelectionBackground());
+				button1.setForeground(table.getSelectionForeground());
+				button1.setBackground(table.getSelectionBackground());
 			} else
 			{
-				button.setForeground(table.getForeground());
-				button.setBackground(table.getBackground());
+				button1.setForeground(table.getForeground());
+				button1.setBackground(table.getBackground());
 			}
 			label = (value == null) ? "" : value.toString();
-			button.setText(label);
-			isPushed = true;
-			return button;
+			button1.setText(label);
+			isPushed1 = true;
+			return button1;
 		}
-
+		
 		public Object getCellEditorValue()
 		{
-			if (isPushed)
+			if (isPushed1)
 			{
 				//
 				// JOptionPane.showMessageDialog(button, label + ": Ouch!");
 				//
 				
+				
+				
+			}
+			isPushed1 = false;
+			return new String(label);
+		}
+
+		public boolean stopCellEditing()
+		{
+			isPushed1 = false;
+			return super.stopCellEditing();
+		}
+
+		protected void fireEditingStopped()
+		{
+			super.fireEditingStopped();
+		}
+	}
+
+	class ButtonEditor2 extends DefaultCellEditor
+	{
+		/**
+		* 
+		*/
+		private static final long serialVersionUID = 1L;
+
+		protected JButton button2;
+		
+		private String label;
+
+		private boolean isPushed2;
+
+		public ButtonEditor2(JCheckBox checkBox)
+		{
+			super(checkBox);
+			button2 = new JButton();
+			button2.setOpaque(true);
+			button2.addActionListener(new ActionListener()
+			
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					fireEditingStopped();
+				}
+			});
+		}
+		
+		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+				int column)
+		{
+			if (isSelected)
+			{
+				button2.setForeground(table.getSelectionForeground());
+				button2.setBackground(table.getSelectionBackground());
+			} else
+			{
+				button2.setForeground(table.getForeground());
+				button2.setBackground(table.getBackground());
+			}
+			label = (value == null) ? "" : value.toString();
+			button2.setText(label);
+			isPushed2 = true;
+			return button2;
+		}
+		
+		public Object getCellEditorValue()
+		{
+			if (isPushed2)
+			{
 				int skill, rating = 0;
 				String skillName = null, skillDesc = null;
 				User tempUser = new User();
@@ -596,8 +659,10 @@ public class PanelProfile extends JPanel implements ActionListener
 
 					scrollPane.setViewportView(table);
 					
-					table.getColumn("Button").setCellRenderer(new ButtonRenderer());
-					table.getColumn("Button").setCellEditor(new ButtonEditor(new JCheckBox()));
+					table.getColumn("Rating").setCellRenderer(new ButtonRenderer());
+					table.getColumn("Rating").setCellEditor(new ButtonEditor1(new JCheckBox()));
+					table.getColumn("Skill").setCellRenderer(new ButtonRenderer());
+					table.getColumn("Skill").setCellEditor(new ButtonEditor2(new JCheckBox()));
 
 					setVisible(true);
 
@@ -613,13 +678,13 @@ public class PanelProfile extends JPanel implements ActionListener
 				}
 				
 			}
-			isPushed = false;
+			isPushed2 = false;
 			return new String(label);
 		}
 
 		public boolean stopCellEditing()
 		{
-			isPushed = false;
+			isPushed2 = false;
 			return super.stopCellEditing();
 		}
 
@@ -628,7 +693,7 @@ public class PanelProfile extends JPanel implements ActionListener
 			super.fireEditingStopped();
 		}
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent ae)
 	{
@@ -727,6 +792,11 @@ public class PanelProfile extends JPanel implements ActionListener
 				add(scrollPane);
 
 				scrollPane.setViewportView(table);
+				
+				table.getColumn("Rating").setCellRenderer(new ButtonRenderer());
+				table.getColumn("Rating").setCellEditor(new ButtonEditor1(new JCheckBox()));
+				table.getColumn("Skill").setCellRenderer(new ButtonRenderer());
+				table.getColumn("Skill").setCellEditor(new ButtonEditor2(new JCheckBox()));
 
 				populateComboBox();
 
@@ -739,81 +809,6 @@ public class PanelProfile extends JPanel implements ActionListener
 
 		if (source == btnAddNewSkill)
 		{
-			
-			lblSkillName = new JLabel("Skill Name");
-			
-			textFieldSkillName = new JTextField();
-			textFieldSkillName.setColumns(10);
-			
-			lblVendor = new JLabel("Vendor");
-			
-			textFieldVendor = new JTextField();
-			textFieldVendor.setColumns(10);
-			
-			lblSkillDescription = new JLabel("Skill Description");
-			
-			textFieldSkillDesc = new JTextField();
-			textFieldSkillDesc.setColumns(10);
-			
-			btnAddSkill = new JButton("Add Skill");
-			btnAddSkill.addActionListener(this);
-			
-			GroupLayout gl_westPanel = new GroupLayout(westPanel);
-			gl_westPanel.setHorizontalGroup(
-				gl_westPanel.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_westPanel.createSequentialGroup()
-						.addGap(21)
-						.addGroup(gl_westPanel.createParallelGroup(Alignment.LEADING)
-							.addComponent(btnAddSkill)
-							.addComponent(textFieldVendor, 241, 241, 241)
-							.addComponent(lblVendor)
-							.addComponent(textFieldSkillDesc, 241, 241, 241)
-							.addComponent(lblSkillDescription)
-							.addComponent(lblSkillName)
-							.addGroup(gl_westPanel.createParallelGroup(Alignment.LEADING, false)
-								.addGroup(gl_westPanel.createSequentialGroup()
-									.addComponent(comboBoxSkills, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addGap(12))
-								.addComponent(btnAddSelectedSkill))
-							.addGroup(gl_westPanel.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(textFieldSkillName, Alignment.LEADING)
-								.addComponent(btnAddNewSkill, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-						.addContainerGap())
-			);
-			gl_westPanel.setVerticalGroup(
-				gl_westPanel.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_westPanel.createSequentialGroup()
-						.addGap(6)
-						.addComponent(comboBoxSkills, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGap(41)
-						.addComponent(btnAddSelectedSkill)
-						.addGap(40)
-						.addComponent(btnAddNewSkill)
-						.addGap(52)
-						.addComponent(lblSkillName)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(textFieldSkillName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGap(18)
-						.addComponent(lblSkillDescription)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(textFieldSkillDesc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGap(18)
-						.addComponent(lblVendor)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(textFieldVendor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGap(18)
-						.addComponent(btnAddSkill)
-						.addContainerGap(221, Short.MAX_VALUE))
-			);
-			westPanel.setLayout(gl_westPanel);
-			
-			this.westPanel.validate();
-			this.westPanel.repaint();
-		} // end add new skill button
-
-		if (source == btnAddSkill) // add a skill not on the dropdown (new
-									// skill)
-		{
 			lblSkillName.setVisible(true);
 			lblVendor.setVisible(true);
 			lblSkillDescription.setVisible(true);
@@ -822,6 +817,12 @@ public class PanelProfile extends JPanel implements ActionListener
 			textFieldVendor.setVisible(true);
 			btnAddSkill.setVisible(true);
 			
+		} // end add new skill button
+
+		if (source == btnAddSkill) // add a skill not on the dropdown (new
+									// skill)
+		{
+						
 			try
 			{
 				DAO getSkill = new DAO();
@@ -862,6 +863,11 @@ public class PanelProfile extends JPanel implements ActionListener
 					add(scrollPane);
 
 					scrollPane.setViewportView(table);
+					
+					table.getColumn("Rating").setCellRenderer(new ButtonRenderer());
+					table.getColumn("Rating").setCellEditor(new ButtonEditor1(new JCheckBox()));
+					table.getColumn("Skill").setCellRenderer(new ButtonRenderer());
+					table.getColumn("Skill").setCellEditor(new ButtonEditor2(new JCheckBox()));
 
 					populateComboBox();
 
