@@ -266,9 +266,10 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 			for (int i=0; i<userList.size(); i++)
 			{
 				thisUser = userList.get(i);
-				labels[i] = thisUser.getSurname();
+				//labels[i] = thisUser.getSurname();
 				Vector<UserHobby> userHobbyList = baseFrame.getNetUserHobby(thisUser);
 				values[i] = userHobbyList.size();
+				labels[i] = thisUser.getSurname() + " [" + (int)values[i] + "]";
 				int rem = i%5;
 				if (rem == 0)
 				{
@@ -291,8 +292,8 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 					colors[i] = Color.blue;
 				}
 			}
-			//BarChart barChart = new BarChart(values, labels, colors, barChartTitle);
-			BarChart2 barChart = new BarChart2(values, labels, barChartTitle);
+			BarChart barChart = new BarChart(values, labels, colors, barChartTitle);
+			//BarChart2 barChart = new BarChart2(values, labels, barChartTitle);
 			panel.removeAll();
 			panel.validate();
 			panel.repaint();
@@ -311,9 +312,10 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 			for (int i=0; i<userList.size(); i++)
 			{
 				thisUser = userList.get(i);
-				labels[i] = thisUser.getSurname();
+				//labels[i] = thisUser.getSurname();
 				Vector<UserSkill> userSkillsList = baseFrame.getNetUserSkills(thisUser);
 				values[i] = userSkillsList.size();
+				labels[i] = thisUser.getSurname() + " [" + (int)values[i] + "]";
 				int rem = i%5;
 				if (rem == 0)
 				{
@@ -355,9 +357,10 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 			for (int i=0; i<skillList.size(); i++)
 			{
 				Skill thisSkill = skillList.get(i);
-				labels[i] = thisSkill.getSkillName();
+				//labels[i] = thisSkill.getSkillName();
 				Vector<User> userSkillList = baseFrame.getNetSkillsUser(thisSkill);
 				values[i] = userSkillList.size();
+				labels[i] = thisSkill.getSkillName() + " [" + (int)values[i] + "]";
 				
 			}
 			//the graph cant handle too many skills at once, so going to sort by size
