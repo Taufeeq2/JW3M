@@ -221,6 +221,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	public void changeToTabbedPane()
 	{
 		this.setSize(1400,800);
+		// bleh
 		
 	//	this.setBounds(0, 0,1600,1000);
 	//	this.setBounds(100,100,1200,1000);
