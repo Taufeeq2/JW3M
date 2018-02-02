@@ -58,7 +58,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	private JLabel sPanelLoggedOnAs;
 	private JLabel sPanelConnectionStatus;
 	private JLabel sPanelMessagesLabel;
-	private JButton sPanelMessagesBut;
+	public JButton sPanelMessagesBut;
 	
 	
 	
@@ -109,8 +109,8 @@ public class SkillsClient extends JFrame implements ActionListener
 	{
 		PropertyConfigurator.configure("log4j.properties");
 		
-		primaryFont = new Font ("THAHOMA",Font.ITALIC, 16); // Normal Use
-		secondaryFont = new Font ("THAHOMA",Font.ITALIC, 20); // Headings ??
+		primaryFont = new Font ("THAHOMA",Font.PLAIN, 16); // Normal Use
+		secondaryFont = new Font ("THAHOMA",Font.BOLD|Font.ITALIC, 20); // Headings ??
 		
 		
 	//	Font.ITALIC|Font.BOLD
@@ -344,6 +344,7 @@ public class SkillsClient extends JFrame implements ActionListener
 				
 		sPanelMessagesBut = new JButton("Messages : " + this.getNetUserNotifications(this.authenticatedUser).size());
 		sPanelMessagesBut.setFont(primaryFont);
+		sPanelMessagesBut.setToolTipText("Click here to goto ratings page");
 		sPanelMessagesBut.addActionListener(this);
 
 		sPanel = new JPanel();
@@ -355,6 +356,8 @@ public class SkillsClient extends JFrame implements ActionListener
 		
 		sPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		this.add(sPanel, BorderLayout.SOUTH);
+//		sPanel.validate();
+//		logger.info("Number of notifications " + this.getNetUserNotifications(this.authenticatedUser).size());
 		
 	}
 	

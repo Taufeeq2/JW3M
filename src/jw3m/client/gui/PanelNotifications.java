@@ -112,6 +112,9 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		comboBox.setSize(225, 30);
 		comboBox.setLocation(400, 200);
 		comboBox.setFont(primaryFont);
+	//	comboBox.
+	//	comboBox.setAlignmentX(CENTER_ALIGNMENT);
+		comboBox.setAlignmentY(CENTER_ALIGNMENT);
 		panel.add(comboBox);
 		panel.add(btnInv);
 		
@@ -354,9 +357,12 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 					}
 				}
 			    
+			
+			    
 			    notify.setRatorID(baseFrame.authenticatedUser.getUserName());
 			    notify.setRequestorID(userName);
 			    baseFrame.setNetRemoveUserNotification(notify);
+			    baseFrame.sPanelMessagesBut.setText( "Messages : " + baseFrame.getNetUserNotifications(baseFrame.authenticatedUser).size() );
 			    model.removeRow(table.getSelectedRow());
 			    // create the server/client call to remove notification
 			    
