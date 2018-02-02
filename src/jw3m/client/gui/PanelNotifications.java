@@ -1,39 +1,21 @@
 package jw3m.client.gui;
 
-import javax.swing.JPanel;
-
-import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.util.StringTokenizer;
 import java.util.Vector;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import jw3m.beans.Notification;
 import jw3m.beans.User;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-
 import javax.swing.*;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
+
 
 public class PanelNotifications extends JPanel implements ActionListener, ListSelectionListener
 {
@@ -51,6 +33,7 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 	private JButton btnInv;
 	private JComboBox comboBox;
 	private JPanel northP, centerP, southP, panel, dummyP1, dummyP2;
+	private JLabel lblImgLabel = null;
 	
 	public PanelNotifications(SkillsClient frame) 
 	{
@@ -59,19 +42,22 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		primaryFont = baseFrame.getPrimaryFont();
 		secondaryFont = baseFrame.getSecondaryFont();
 		
+		this.setupPanels();
+
+	} 
+	
+	public void setupPanels()
+	{
 		setLayout(new BorderLayout(0, 0));
 		
 		northP = new JPanel();
-//		northP.setBorder(new LineBorder(Color.RED, 2));
-		lblNotifications = new JLabel("Notifications");
-		lblNotifications.setFont(secondaryFont);
-		northP.add(lblNotifications);
+
 		
-		centerP = new JPanel();
-//		centerP.setBorder(new LineBorder(Color.BLACK, 2));
+		lblImgLabel = new JLabel(new ImageIcon("resources/MySkills.gif"));
+		northP.add(lblImgLabel);
 		
 		
-		
+		centerP = new JPanel();		
 		
 		setupNotificationsTable();
 		centerP.setLayout(new GridLayout(1, 1));
@@ -137,8 +123,8 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		this.add(northP, BorderLayout.NORTH);
 		this.add(centerP, BorderLayout.CENTER);
 		this.add(southP, BorderLayout.SOUTH);
-
-	} 
+		
+	}
 	
 	public void setupNotificationsTable()
 	{

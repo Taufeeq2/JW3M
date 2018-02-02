@@ -75,7 +75,7 @@ public class PanelLogin extends JPanel implements ActionListener
 		primaryFont = baseFrame.getPrimaryFont();
 		secondaryFont = baseFrame.getSecondaryFont();
 		
-		
+		frame.setBounds(100,100,800,600);
 		
 		try
 		{

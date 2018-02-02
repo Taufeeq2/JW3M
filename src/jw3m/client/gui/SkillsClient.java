@@ -144,7 +144,9 @@ public class SkillsClient extends JFrame implements ActionListener
 		this.setTitle("Skills Client");
 		this.setFont(primaryFont);
 //		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setBounds(100,100,1000,700);
+		// size set at first for logon P
+		this.setBounds(100,100,800,600);
+//		this.setBounds(100,100,1600,1000);
 		MyWindowListner mwl = new MyWindowListner();
 		this.addWindowListener(mwl);
 		
@@ -218,7 +220,11 @@ public class SkillsClient extends JFrame implements ActionListener
 	
 	public void changeToTabbedPane()
 	{
+		this.setSize(1400,800);
+		// bleh
 		
+	//	this.setBounds(0, 0,1600,1000);
+	//	this.setBounds(100,100,1200,1000);
 		
 		basePanel.removeAll();
 		basePanel.validate();
