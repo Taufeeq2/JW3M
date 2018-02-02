@@ -20,6 +20,7 @@ import java.awt.Component;
 
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
@@ -120,7 +121,9 @@ public class PanelProfile extends JPanel implements ActionListener
 		table.setFont(primaryFont);;
 		centrePanel.add(scrollPane);
 		scrollPane.setViewportView(table);
-		//centrePanel.add(scrollPane);
+		
+		JTableHeader header = table.getTableHeader();
+	    header.setFont(primaryFont);
 
 		for (int col = 3; col < 10; col++)
 		{
@@ -153,7 +156,7 @@ public class PanelProfile extends JPanel implements ActionListener
 
 		this.add(northPanel, BorderLayout.NORTH);
 		
-		lblImgLabel = new JLabel(new ImageIcon("resources/MySkills.gif"));
+		lblImgLabel = new JLabel(new ImageIcon("resources/MySkills_Full.jpg"));
 		northPanel.add(lblImgLabel);
 		this.add(centrePanel, BorderLayout.CENTER);
 		GroupLayout gl_centrePanel = new GroupLayout(centrePanel);
@@ -419,6 +422,7 @@ public class PanelProfile extends JPanel implements ActionListener
 		public ButtonRenderer()
 		{
 			setOpaque(true);
+			setFont(primaryFont);
 		}
 
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
@@ -456,6 +460,7 @@ public class PanelProfile extends JPanel implements ActionListener
 			super(checkBox);
 			button1 = new JButton();
 			button1.setOpaque(true);
+			button1.setFont(primaryFont);
 			button1.addActionListener(new ActionListener()
 
 			{
@@ -480,6 +485,7 @@ public class PanelProfile extends JPanel implements ActionListener
 			}
 			label = (value == null) ? "" : value.toString();
 			button1.setText(label);
+			button1.setFont(primaryFont);
 			isPushed1 = true;
 			return button1;
 		}
@@ -568,6 +574,7 @@ public class PanelProfile extends JPanel implements ActionListener
 			super(checkBox);
 			button2 = new JButton();
 			button2.setOpaque(true);
+			button2.setFont(primaryFont);
 			button2.addActionListener(new ActionListener()
 
 			{
@@ -592,6 +599,7 @@ public class PanelProfile extends JPanel implements ActionListener
 			}
 			label = (value == null) ? "" : value.toString();
 			button2.setText(label);
+			button2.setFont(primaryFont);
 			isPushed2 = true;
 			return button2;
 		}
