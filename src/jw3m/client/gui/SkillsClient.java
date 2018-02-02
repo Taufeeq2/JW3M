@@ -51,6 +51,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	private JMenu fileMenu = null, viewMenu = null,   helpMenu = null, subMenu = null;
 	private JMenuItem helpMenu_dreyfusItem = null, exitMenu_exitItem = null, fileMenu_openItem = null, fileMenu_logoutItem = null, helpMenu_aboutItem = null;
 	private JMenuItem viewMenu_goBold = null, viewMenu_goPlain = null;
+	private JMenuItem viewMenu_goBigger = null,  viewMenu_goSmaller = null;
 	
 	//South Panel
 	
@@ -96,6 +97,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	// Style objects
 	
 	private Font primaryFont, secondaryFont;
+	private int primaryFontSize = 16;
 
 	// Networking stuff
 	
@@ -109,7 +111,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	{
 		PropertyConfigurator.configure("log4j.properties");
 		
-		primaryFont = new Font ("THAHOMA",Font.PLAIN, 16); // Normal Use
+		primaryFont = new Font ("THAHOMA",Font.PLAIN, primaryFontSize); // Normal Use
 		secondaryFont = new Font ("THAHOMA",Font.BOLD|Font.ITALIC, 20); // Headings ??
 		
 		
@@ -298,6 +300,15 @@ public class SkillsClient extends JFrame implements ActionListener
 				viewMenu_goPlain = new JMenuItem("Go plain");
 				viewMenu_goPlain.setFont(primaryFont);
 				viewMenu_goPlain.addActionListener(this);
+				
+				viewMenu_goBigger = new JMenuItem("Go bigger");
+				viewMenu_goBigger.setFont(primaryFont);
+				viewMenu_goBigger.addActionListener(this);
+				viewMenu_goSmaller = new JMenuItem("Go smaller");
+				viewMenu_goSmaller.setFont(primaryFont);
+				viewMenu_goSmaller.addActionListener(this);
+				
+				
 			
 			helpMenu = new JMenu("Help");
 			helpMenu.setFont(primaryFont);
@@ -324,6 +335,8 @@ public class SkillsClient extends JFrame implements ActionListener
 		
 		viewMenu.add(viewMenu_goBold);
 		viewMenu.add(viewMenu_goPlain);
+		viewMenu.add(viewMenu_goBigger);
+		viewMenu.add(viewMenu_goSmaller);
 		
 		helpMenu.add(helpMenu_dreyfusItem);
 		helpMenu.addSeparator();
@@ -518,7 +531,7 @@ public class SkillsClient extends JFrame implements ActionListener
 		{
 		
 		//	setupTabs()
-			this.setPrimryFont( new Font ("THAHOMA",Font.BOLD, 16) ); // Normal Use
+			this.setPrimryFont( new Font ("THAHOMA",Font.BOLD, primaryFontSize) ); // Normal Use
 			this.setupTabs();
 			this.setupMenuBar();
 			this.setupSouthPanel();
@@ -533,9 +546,9 @@ public class SkillsClient extends JFrame implements ActionListener
 		
 		if (source == viewMenu_goPlain)
 		{
-		
 			
-			this.setPrimryFont(  new Font ("THAHOMA",Font.PLAIN, 16) ); // Normal Use
+			
+			this.setPrimryFont(  new Font ("THAHOMA",Font.PLAIN, primaryFontSize) ); // Normal Use
 			
 			this.setupTabs();
 			this.setupMenuBar();
@@ -550,8 +563,55 @@ public class SkillsClient extends JFrame implements ActionListener
 		//	secondaryFont = new Font ("THAHOMA",Font.BOLD|Font.ITALIC, 20); // Headings ??
 		}
 		
+		if (source == viewMenu_goBigger)
+		{
+			
+			if (primaryFontSize < 30 )
+			{
+				primaryFontSize++;
+				int tempStyle = primaryFont.getStyle();
+				
+				this.setPrimryFont( new Font ("THAHOMA",tempStyle, primaryFontSize) ); // Normal Use
+				this.setupTabs();
+				this.setupMenuBar();
+				this.setupSouthPanel();
+
+				this.changeToTabbedPane();
+				this.validate();
+				this.repaint();
+			}
+			else
+			{
+				logger.info("Font cannot be over 30");
+			}
+			
+	
+	
+
+		}
 		
 		
+		if (source == viewMenu_goSmaller)
+		{
+		
+			if (primaryFontSize < 10 )
+			{
+				primaryFontSize--;
+				int tempStyle = primaryFont.getStyle();
+				this.setPrimryFont( new Font ("THAHOMA",tempStyle, primaryFontSize) ); // Normal Use
+				this.setupTabs();
+				this.setupMenuBar();
+				this.setupSouthPanel();
+	
+				this.changeToTabbedPane();
+				this.validate();
+				this.repaint();
+			}
+			else
+			{
+				logger.info("Font not allowewd lower than 10");
+			}
+		}
 		
 	}
 
