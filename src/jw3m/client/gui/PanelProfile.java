@@ -26,6 +26,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import jw3m.beans.Hobby;
 import jw3m.beans.Rating;
 import jw3m.beans.Skill;
 import jw3m.beans.User;
@@ -116,15 +117,20 @@ public class PanelProfile extends JPanel implements ActionListener
 		setupSkillsTable();
 
 		table = new JTable(model);
-							
+
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		table.setFont(primaryFont);;
+		table.setFont(primaryFont);
+		;
 		centrePanel.add(scrollPane);
 		scrollPane.setViewportView(table);
-		
-		JTableHeader header = table.getTableHeader();
-	    header.setFont(primaryFont);
 
+		JTableHeader header = table.getTableHeader();
+		header.setFont(primaryFont);
+
+		// ***************************************************************************************
+		// Set up the table to have a level (1 to 5) combobox on each field to
+		// enter the ratings
+		// ***************************************************************************************
 		for (int col = 3; col < 10; col++)
 		{
 			TableColumn cm = table.getColumnModel().getColumn(col);
@@ -140,6 +146,11 @@ public class PanelProfile extends JPanel implements ActionListener
 			cm.setCellEditor(new DefaultCellEditor(ratings));
 		}
 
+		// ***************************************************************************************
+		// Set up the buttons (rating update and skill delete) on the Jtable for
+		// each row
+		// ***************************************************************************************
+
 		table.getColumn("Rating").setCellRenderer(new ButtonRenderer());
 		table.getColumn("Rating").setCellEditor(new ButtonEditor1(new JCheckBox()));
 		table.getColumn("Skill").setCellRenderer(new ButtonRenderer());
@@ -147,18 +158,19 @@ public class PanelProfile extends JPanel implements ActionListener
 
 		setVisible(true);
 
-		// ****************************************************************
+		// ***************************************************************************************
+		// Set up the table sorter functionality to allow each column to be
+		// sorted
+		// ***************************************************************************************
 
 		RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
 		table.setRowSorter(sorter);
 
-		// ****************************************************************
-
 		this.add(northPanel, BorderLayout.NORTH);
-		
+
 		lblImgLabel = new JLabel(new ImageIcon("resources/MySkills_Full.jpg"));
 		northPanel.add(lblImgLabel);
-		
+
 		this.add(centrePanel, BorderLayout.CENTER);
 		GroupLayout gl_centrePanel = new GroupLayout(centrePanel);
 		gl_centrePanel.setHorizontalGroup(gl_centrePanel.createParallelGroup(Alignment.LEADING)
@@ -175,6 +187,10 @@ public class PanelProfile extends JPanel implements ActionListener
 		btnAddSelectedSkill = new JButton("Add Selected Skill from DropDown");
 		btnAddSelectedSkill.setFont(primaryFont);
 		btnAddSelectedSkill.addActionListener(this);
+
+		// ***************************************************************************************
+		// Set up the initial population of the skill names combobox
+		// ***************************************************************************************
 
 		tempUser = baseFrame.authenticatedUser;
 
@@ -204,7 +220,7 @@ public class PanelProfile extends JPanel implements ActionListener
 		comboBoxSkills = new JComboBox(comboSkillNames);
 		comboBoxSkills.setFont(primaryFont);
 
-		btnAddNewSkill = new JButton("Add NEW skill NOT on dropdown");
+		btnAddNewSkill = new JButton("Add Skill NOT on Registry");
 		btnAddNewSkill.setFont(primaryFont);
 		btnAddNewSkill.addActionListener(this);
 
@@ -273,7 +289,9 @@ public class PanelProfile extends JPanel implements ActionListener
 	public void setupSkillsTable()
 	{
 
-		// Here we set up the model
+		// ***************************************************************************************
+		// Set up the table model
+		// ***************************************************************************************
 
 		String str[] =
 		{ "User ID", "Skill ID", "Skill Name", "Knowledgeable", "Standard of Work", "Autonomy",
@@ -308,7 +326,9 @@ public class PanelProfile extends JPanel implements ActionListener
 
 		};
 
-		// populate the model for the table
+		// ***************************************************************************************
+		// Populate the table model
+		// ***************************************************************************************
 		tempUser = baseFrame.authenticatedUser;
 		model.setRowCount(0);
 		try
@@ -380,6 +400,10 @@ public class PanelProfile extends JPanel implements ActionListener
 
 	}
 
+	// ************************************************************************************************************
+	// Method to repopulate the skill names combobox to only contain skills not
+	// already added to the user profile
+	// ************************************************************************************************************
 	public void populateComboBox()
 	{
 		comboSkillNames.removeAllElements();
@@ -412,6 +436,9 @@ public class PanelProfile extends JPanel implements ActionListener
 
 	}
 
+	// ************************************************************************************************************
+	// Method to render the JTable buttons
+	// ************************************************************************************************************
 	class ButtonRenderer extends JButton implements TableCellRenderer
 	{
 
@@ -443,6 +470,9 @@ public class PanelProfile extends JPanel implements ActionListener
 		}
 	}
 
+	// ************************************************************************************************************
+	// Method to set up the Update Skill Rating JTable button
+	// ************************************************************************************************************
 	class ButtonEditor1 extends DefaultCellEditor
 	{
 		/**
@@ -557,6 +587,9 @@ public class PanelProfile extends JPanel implements ActionListener
 		}
 	}
 
+	// ************************************************************************************************************
+	// Method to set up the Delete Skill JTable button
+	// ************************************************************************************************************
 	class ButtonEditor2 extends DefaultCellEditor
 	{
 		/**
@@ -620,60 +653,84 @@ public class PanelProfile extends JPanel implements ActionListener
 				int j = table.getSelectedColumn(); // set index for selected
 													// column
 
-				try
+				// userSkills = baseFrame.getNetUserSkills(tempUser);
+				// skill = userSkills.get(i).getSkillID();
+
+				// getSkill.removeUserSkills(tmpUser, skill);
+
+				// *********************************************************************************
+				
+				Vector<Skill> removeUserSkill = new Vector<Skill>();
+
+				Skill tempSkill = new Skill();
+				userSkills = baseFrame.getNetUserSkills(tempUser);
+				int checkSkill = ((int)model.getValueAt(table.getSelectedRow(), 2));
+
+				for (int k = 0; k < userSkills.size(); k++)
 				{
-					DAO getSkill = new DAO();
-
-					userSkills = baseFrame.getNetUserSkills(tempUser);
-					skill = userSkills.get(i).getSkillID();
-
-					getSkill.removeUserSkills(tmpUser, skill);
-
-					setupSkillsTable();
-					
-					centrePanel.remove(table);
-					table = new JTable(model);
-					table.setFont(primaryFont);;
-					
-					centrePanel.add(scrollPane);
-					scrollPane.setViewportView(table);
-					
-					RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
-					table.setRowSorter(sorter);
-
-					
-					for (int col = 3; col < 10; col++)
+					if (userSkills.get(k).getSkillID().equals(checkSkill))
 					{
-						TableColumn cm = table.getColumnModel().getColumn(col);
-						Vector<Integer> rateVect = new Vector<Integer>();
-						rateVect.addElement(1);
-						rateVect.addElement(2);
-						rateVect.addElement(3);
-						rateVect.addElement(4);
-						rateVect.addElement(5);
-
-						JComboBox ratings = new JComboBox(rateVect);
-
-						cm.setCellEditor(new DefaultCellEditor(ratings));
+						removeUserSkill.addElement(userSkills.get(k).getSkillID());
+						tempSkill.setSkillName(skillAdd.get(k).getSkillName());
 					}
-
-					table.getColumn("Rating").setCellRenderer(new ButtonRenderer());
-					table.getColumn("Rating").setCellEditor(new ButtonEditor1(new JCheckBox()));
-					table.getColumn("Skill").setCellRenderer(new ButtonRenderer());
-					table.getColumn("Skill").setCellEditor(new ButtonEditor2(new JCheckBox()));
-
-					setVisible(true);
-
-					// this.centrePanel.validate();
-					// this.centrePanel.repaint();
-
-					populateComboBox();
-
-				} catch (Exception e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
+
+				removeUserSkill.add(tempSkill);
+								
+				
+				removeUserSkill.addElement(userSkills);
+				removeUserSkill.setSkillID(userSkills.get(i).getSkillID());
+				newSkill.setSkillName(skillList.get(j).getSkillName());
+
+				
+				for (int n = 0; n < userSkills.size(); n++)
+				{
+					if ((returnedValue).equals(userSkills.get(n).getSkillName()))
+					{
+						uHob.setHobbyID(hobbyList.get(i).getHobbyID());
+					}
+				}
+
+				// *********************************************************************************
+
+				baseFrame.setNetRemoveUserSkills(tempUser, removeUserSkill);
+
+				setupSkillsTable();
+
+				centrePanel.remove(table);
+				table = new JTable(model);
+				table.setFont(primaryFont);
+				;
+
+				centrePanel.add(scrollPane);
+				scrollPane.setViewportView(table);
+
+				RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
+				table.setRowSorter(sorter);
+
+				for (int col = 3; col < 10; col++)
+				{
+					TableColumn cm = table.getColumnModel().getColumn(col);
+					Vector<Integer> rateVect = new Vector<Integer>();
+					rateVect.addElement(1);
+					rateVect.addElement(2);
+					rateVect.addElement(3);
+					rateVect.addElement(4);
+					rateVect.addElement(5);
+
+					JComboBox ratings = new JComboBox(rateVect);
+
+					cm.setCellEditor(new DefaultCellEditor(ratings));
+				}
+
+				table.getColumn("Rating").setCellRenderer(new ButtonRenderer());
+				table.getColumn("Rating").setCellEditor(new ButtonEditor1(new JCheckBox()));
+				table.getColumn("Skill").setCellRenderer(new ButtonRenderer());
+				table.getColumn("Skill").setCellEditor(new ButtonEditor2(new JCheckBox()));
+
+				setVisible(true);
+
+				populateComboBox();
 
 			}
 			isPushed2 = false;
@@ -706,67 +763,92 @@ public class PanelProfile extends JPanel implements ActionListener
 		int i = table.getSelectedRow(); // set index for selected row
 		int j = table.getSelectedColumn(); // set index for selected column
 
-		if (source == btnAddSelectedSkill) // top skill selected by default
-											// unless changed
+		// *********************************************************************************************************************************
+		// Action to take when the add selected skill from Combobox button is
+		// clicked. Skill at the top selected by default until changed
+		// *********************************************************************************************************************************
+		if (source == btnAddSelectedSkill)
 		{
-			try
+			Vector<Skill> skillAdd = new Vector<Skill>();
+			Vector<Skill> newSkill = new Vector<Skill>();
+
+			Skill tempSkill = new Skill();
+			skillAdd = baseFrame.data_skillList;
+			String checkSkill = (comboBoxSkills.getSelectedItem().toString());
+
+			for (int k = 0; k < skillAdd.size(); k++)
 			{
-				DAO getSkill = new DAO();
-				tempASkill = new Vector<Skill>();
-
-				baseFrame.getNetSkillList();
-				tempASkill = baseFrame.data_skillList;
-
-				for (int m = 0; m < tempASkill.size(); m++)
+				if (skillAdd.get(k).getSkillName().equals(checkSkill))
 				{
-					allSkillVect.add(tempASkill.elementAt(m).getSkillName());
+					tempSkill.setSkillID(skillAdd.get(k).getSkillID());
+					tempSkill.setSkillName(skillAdd.get(k).getSkillName());
 				}
-				int index = allSkillVect.indexOf(comboBoxSkills.getSelectedItem().toString());
-
-				skillIDAdd = tempASkill.get(index).getSkillID();
-
-				getSkill.addUserSkills(tmpUser, skillIDAdd);
-				setupSkillsTable();
-
-				centrePanel.remove(table);
-				table = new JTable(model);
-				table.setFont(primaryFont);;
-				
-				centrePanel.add(scrollPane);
-				scrollPane.setViewportView(table);
-				
-				RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
-				table.setRowSorter(sorter);
-				
-				for (int col = 3; col < 10; col++)
-				{
-					TableColumn cm = table.getColumnModel().getColumn(col);
-					Vector<Integer> rateVect = new Vector<Integer>();
-					rateVect.addElement(1);
-					rateVect.addElement(2);
-					rateVect.addElement(3);
-					rateVect.addElement(4);
-					rateVect.addElement(5);
-
-					JComboBox ratings = new JComboBox(rateVect);
-
-					cm.setCellEditor(new DefaultCellEditor(ratings));
-				}
-
-				table.getColumn("Rating").setCellRenderer(new ButtonRenderer());
-				table.getColumn("Rating").setCellEditor(new ButtonEditor1(new JCheckBox()));
-				table.getColumn("Skill").setCellRenderer(new ButtonRenderer());
-				table.getColumn("Skill").setCellEditor(new ButtonEditor2(new JCheckBox()));
-
-				populateComboBox();
-
-			} catch (Exception e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+
+			newSkill.add(tempSkill);
+			boolean alreadyAdded = true;
+
+			for (int m = 0; m < comboSkillNames.size(); m++)
+			{
+				if (comboSkillNames.get(m).equals(checkSkill))
+				{
+					alreadyAdded = false;
+					break;
+				} else
+				{
+					alreadyAdded = true;
+				}
+			}
+			if (!alreadyAdded)
+			{
+				baseFrame.setNetUserSkills(baseFrame.authenticatedUser, newSkill);
+				JOptionPane.showMessageDialog(this, "Skill added");
+			} else
+			{
+				JOptionPane.showMessageDialog(this, "You already have this skill added");
+			}
+
+			setupSkillsTable();
+
+			centrePanel.remove(table);
+			table = new JTable(model);
+			table.setFont(primaryFont);
+			;
+
+			centrePanel.add(scrollPane);
+			scrollPane.setViewportView(table);
+
+			RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
+			table.setRowSorter(sorter);
+
+			for (int col = 3; col < 10; col++)
+			{
+				TableColumn cm = table.getColumnModel().getColumn(col);
+				Vector<Integer> rateVect = new Vector<Integer>();
+				rateVect.addElement(1);
+				rateVect.addElement(2);
+				rateVect.addElement(3);
+				rateVect.addElement(4);
+				rateVect.addElement(5);
+
+				JComboBox ratings = new JComboBox(rateVect);
+
+				cm.setCellEditor(new DefaultCellEditor(ratings));
+			}
+
+			table.getColumn("Rating").setCellRenderer(new ButtonRenderer());
+			table.getColumn("Rating").setCellEditor(new ButtonEditor1(new JCheckBox()));
+			table.getColumn("Skill").setCellRenderer(new ButtonRenderer());
+			table.getColumn("Skill").setCellEditor(new ButtonEditor2(new JCheckBox()));
+
+			populateComboBox();
+
 		} // end add button
 
+		// ************************************************************************************************************
+		// Action to take when the add new skill not on Combobox button is
+		// clicked
+		// ************************************************************************************************************
 		if (source == btnAddNewSkill)
 		{
 			lblSkillName.setVisible(true);
@@ -779,91 +861,98 @@ public class PanelProfile extends JPanel implements ActionListener
 
 		} // end add new skill button
 
-		if (source == btnAddSkill) // add a skill not on the dropdown (new
-									// skill)
+		// ************************************************************************************************************
+		// Action to take when the add skill button is clicked to add a
+		// completely new skill
+		// ************************************************************************************************************
+		if (source == btnAddSkill)
 		{
 
-			try
+			Vector<Skill> skillAdd = new Vector<Skill>();
+			Vector<Skill> newSkill = new Vector<Skill>();
+
+			Skill tempSkill = new Skill();
+			tempSkill.setSkillID(0);
+			tempSkill.setSkillName(lblSkillName.getText());
+			baseFrame.setNetAddSkillList(tempSkill);
+			skillAdd = baseFrame.data_skillList;
+			String checkSkill = (lblSkillName.getText().toString());
+
+			for (int k = 0; k < skillAdd.size(); k++)
 			{
-				DAO getSkill = new DAO();
-
-				newSkill = new Skill();
-				newSkill.setSkillID(100);
-				newSkill.setSkillName(textFieldSkillName.getText());
-				newSkill.setSkillDescription(textFieldSkillDesc.getText());
-				newSkill.setSkillVendor(textFieldVendor.getText());
-
-				if (textFieldSkillName.getText().equals("") || textFieldSkillDesc.getText().equals("")
-						|| textFieldVendor.getText().equals(""))
+				if (skillAdd.get(k).getSkillName().equals(checkSkill))
 				{
-					JOptionPane.showMessageDialog(this, "Fill in all the fields!");
+					tempSkill.setSkillID(skillAdd.get(k).getSkillID());
+					tempSkill.setSkillName(skillAdd.get(k).getSkillName());
+				}
+			}
+
+			newSkill.add(tempSkill);
+			boolean alreadyAdded = true;
+
+			for (int m = 0; m < comboSkillNames.size(); m++)
+			{
+				if (comboSkillNames.get(m).equals(checkSkill))
+				{
+					alreadyAdded = false;
+					break;
 				} else
 				{
-					
-					getSkill.addSkillList(newSkill);
-
-					Vector<Skill> tempASkill = new Vector<Skill>();
-
-					baseFrame.getNetSkillList();
-					tempASkill = baseFrame.data_skillList;
-
-					for (int m = 0; m < tempASkill.size(); m++)
-					{
-						allSkillVect.add(tempASkill.elementAt(m).getSkillName());
-					}
-
-					int index = allSkillVect.indexOf(textFieldSkillName.getText());
-
-					skillIDAdd = tempASkill.get(index).getSkillID();
-
-					getSkill.addUserSkills(tmpUser, skillIDAdd);
-					setupSkillsTable();
-
-					centrePanel.remove(table);
-					table = new JTable(model);
-					table.setFont(primaryFont);;
-					
-					centrePanel.add(scrollPane);
-					scrollPane.setViewportView(table);
-					
-					RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
-					table.setRowSorter(sorter);
-					
-					for (int col = 3; col < 10; col++)
-					{
-						TableColumn cm = table.getColumnModel().getColumn(col);
-						Vector<Integer> rateVect = new Vector<Integer>();
-						rateVect.addElement(1);
-						rateVect.addElement(2);
-						rateVect.addElement(3);
-						rateVect.addElement(4);
-						rateVect.addElement(5);
-
-						JComboBox ratings = new JComboBox(rateVect);
-
-						cm.setCellEditor(new DefaultCellEditor(ratings));
-					}
-
-					table.getColumn("Rating").setCellRenderer(new ButtonRenderer());
-					table.getColumn("Rating").setCellEditor(new ButtonEditor1(new JCheckBox()));
-					table.getColumn("Skill").setCellRenderer(new ButtonRenderer());
-					table.getColumn("Skill").setCellEditor(new ButtonEditor2(new JCheckBox()));
-
-					populateComboBox();
-
-					lblSkillName.setVisible(false);
-					lblVendor.setVisible(false);
-					lblSkillDescription.setVisible(false);
-					textFieldSkillName.setVisible(false);
-					textFieldSkillDesc.setVisible(false);
-					textFieldVendor.setVisible(false);
-					btnAddSkill.setVisible(false);
+					alreadyAdded = true;
 				}
-			} catch (Exception e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+			if (!alreadyAdded)
+			{
+				baseFrame.setNetUserSkills(baseFrame.authenticatedUser, newSkill);
+				JOptionPane.showMessageDialog(this, "Skill added");
+			} else
+			{
+				JOptionPane.showMessageDialog(this, "You already have this skill added");
+			}
+
+			setupSkillsTable();
+
+			centrePanel.remove(table);
+			table = new JTable(model);
+			table.setFont(primaryFont);
+			;
+
+			centrePanel.add(scrollPane);
+			scrollPane.setViewportView(table);
+
+			RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
+			table.setRowSorter(sorter);
+
+			for (int col = 3; col < 10; col++)
+			{
+				TableColumn cm = table.getColumnModel().getColumn(col);
+				Vector<Integer> rateVect = new Vector<Integer>();
+				rateVect.addElement(1);
+				rateVect.addElement(2);
+				rateVect.addElement(3);
+				rateVect.addElement(4);
+				rateVect.addElement(5);
+
+				JComboBox ratings = new JComboBox(rateVect);
+
+				cm.setCellEditor(new DefaultCellEditor(ratings));
+			}
+
+			table.getColumn("Rating").setCellRenderer(new ButtonRenderer());
+			table.getColumn("Rating").setCellEditor(new ButtonEditor1(new JCheckBox()));
+			table.getColumn("Skill").setCellRenderer(new ButtonRenderer());
+			table.getColumn("Skill").setCellEditor(new ButtonEditor2(new JCheckBox()));
+
+			populateComboBox();
+
+			lblSkillName.setVisible(false);
+			lblVendor.setVisible(false);
+			lblSkillDescription.setVisible(false);
+			textFieldSkillName.setVisible(false);
+			textFieldSkillDesc.setVisible(false);
+			textFieldVendor.setVisible(false);
+			btnAddSkill.setVisible(false);
 		}
+
 	}
 }
