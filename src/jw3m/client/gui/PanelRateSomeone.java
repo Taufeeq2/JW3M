@@ -40,6 +40,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
@@ -54,7 +55,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 {
 	final static Logger logger = Logger.getLogger(PanelMyProfile.class);
 	private SkillsClient baseFrame;
-	private JLabel lblRateSomeone;
+	private JLabel lblRateSomeone, lblBanner;
 	private JButton btnSubmit;
 	private DefaultTableModel model = null;
 	private JScrollPane scrollPane;
@@ -82,11 +83,23 @@ public class PanelRateSomeone extends JPanel implements ActionListener
         nPanel = new JPanel();
 		cPanel = new JPanel();
         
+<<<<<<< HEAD
 		lblImgLabel = new JLabel(new ImageIcon("resources/RateSomeone_Full.jpg"));
 		nPanel.add(lblImgLabel);
+=======
+//		lblRateSomeone = new JLabel("Rate Someone");
+//		lblRateSomeone.setFont(secondaryFont);
+>>>>>>> branch 'master' of https://github.com/Taufeeq2/JW3M.git
 
+<<<<<<< HEAD
+=======
+		lblBanner = new JLabel(new ImageIcon("resources/"));
+		nPanel.add(lblBanner);
+		
+		
+>>>>>>> branch 'master' of https://github.com/Taufeeq2/JW3M.git
 		btnSubmit = new JButton("Submit");
-		btnSubmit.setBounds(765, 484, 110, 25);
+		btnSubmit.setBounds(690, 484, 110, 25);
 		btnSubmit.setFont(primaryFont);
 		btnSubmit.addActionListener(this);
 		btnSubmit.setEnabled(false);
@@ -112,6 +125,8 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 
 		table = new JTable(model);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		table.setFont(primaryFont);
+
 		
 		
 		for (int col = 5; col < table.getColumnCount(); col++)
@@ -134,13 +149,13 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		
 
 		scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(60, 143, 1620, 293);
+		scrollPane.setBounds(12, 143, 1668, 293);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		cPanel.add(scrollPane);
 		scrollPane.setViewportView(table);
 		cPanel.add(scrollPane);
-		nPanel.add(lblRateSomeone);
+//		nPanel.add(lblRateSomeone);
 		cPanel.add(lblSearch);
 		cPanel.add(btnSubmit);
 		
@@ -217,7 +232,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		cPanel.add(separatorComboBox );
 		
 		btnClear = new JButton("Clear");
-		btnClear.setBounds(920, 484, 110, 25);
+		btnClear.setBounds(847, 484, 110, 25);
 		btnClear.setFont(primaryFont);
 		cPanel.add(btnClear);
 		
@@ -243,7 +258,6 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 			public void setValueAt(Object aValue, int row, int column)
 			{
 				
-				table.setFont(primaryFont);
 
 				Vector rowVector = (Vector) dataVector.elementAt(row);
 				rowVector.setElementAt(aValue, column);

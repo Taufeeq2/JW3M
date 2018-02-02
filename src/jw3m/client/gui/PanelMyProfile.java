@@ -39,7 +39,7 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 {
 	final static Logger logger = Logger.getLogger(PanelMyProfile.class);
 	private SkillsClient baseFrame;
-	private JLabel lblEditProfile;
+	private JLabel lblEditProfile, lblBanner;
 	private JLabel label_1;
 	private JLabel label_3;
 	private JLabel label_4;
@@ -56,7 +56,6 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 	private JButton btnUpdateProfile;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JLabel lblMyHobbies;
-	private JLabel label;
 	private JButton btnAddHobby;
 	private JComboBox comboBox;
 	private JButton btnRemove;
@@ -89,9 +88,19 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 		nPanel = new JPanel();
 		cPanel = new JPanel();
 		
+<<<<<<< HEAD
 		lblImgLabel = new JLabel(new ImageIcon("resources/MyProfile_Full.jpg"));
 		nPanel.add(lblImgLabel);
 		
+=======
+		lblBanner = new JLabel(new ImageIcon("resources/"));
+		nPanel.add(lblBanner);
+		
+//		lblEditProfile = new JLabel("My Profile");
+//		lblEditProfile.setBounds(335, 13, 114, 16);
+//		lblEditProfile.setFont(secondaryFont);
+//		nPanel.add(lblEditProfile);
+>>>>>>> branch 'master' of https://github.com/Taufeeq2/JW3M.git
 		setLayout(new BorderLayout(0, 0));
 		cPanel.setLayout(null);
 		
@@ -190,13 +199,8 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 		lblMyHobbies.setFont(primaryFont);
 		cPanel.add(lblMyHobbies);
 		
-		label = new JLabel("Hobby");
-		label.setBounds(570, 356, 51, 20);
-		label.setFont(primaryFont);
-		cPanel.add(label);
-		
 		btnAddHobby = new JButton("Add Hobby");
-		btnAddHobby.setBounds(830, 352, 121, 29);
+		btnAddHobby.setBounds(651, 352, 123, 29);
 		btnAddHobby.setFont(primaryFont);
 		cPanel.add(btnAddHobby);
 		btnAddHobby.addActionListener(this);
@@ -205,12 +209,11 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 		hobbyList = baseFrame.data_hobbyList;
 		
 		comboBox = new JComboBox(hobbyList);
-		comboBox.setBounds(651, 353, 167, 26);
+		comboBox.setBounds(786, 353, 122, 26);
 		
 		comboBox.setFont(primaryFont);
 		cPanel.add(comboBox);
 		comboBox.addActionListener(this);
-		comboBox.setEditable(true);
 		
 		label_4 = new JLabel("Surname");
 		label_4.setBounds(12, 87, 72, 20);
@@ -218,7 +221,7 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 		cPanel.add(label_4);
 		
 		btnRemove = new JButton("Remove Hobby");
-		btnRemove.setBounds(711, 300, 153, 25);
+		btnRemove.setBounds(651, 300, 257, 25);
 		btnRemove.setFont(primaryFont);
 		cPanel.add(btnRemove);
 		btnRemove.addActionListener(this);
