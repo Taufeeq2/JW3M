@@ -152,7 +152,7 @@ public class PanelProfile extends JPanel implements ActionListener
 
 		this.add(northPanel, BorderLayout.NORTH);
 		
-		lblImgLabel = new JLabel(new ImageIcon("C:\\JW3M\\MySkills.gif"));
+		lblImgLabel = new JLabel(new ImageIcon("resources/MySkills.gif"));
 		northPanel.add(lblImgLabel);
 		this.add(centrePanel, BorderLayout.CENTER);
 		GroupLayout gl_centrePanel = new GroupLayout(centrePanel);
