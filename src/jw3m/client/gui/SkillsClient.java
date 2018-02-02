@@ -1101,4 +1101,16 @@ public class SkillsClient extends JFrame implements ActionListener
 		
 	//	logger.debug(" getNetUserList() call invoked");	
 	}
+	
+	public void setNetAddSkillList(Skill skillIn)
+	{
+		Comms commsSend = new Comms();
+			commsSend.setText("add skillList");
+			commsSend.setObj(skillIn);
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+		
+		
+	//	logger.debug(" getNetUserList() call invoked");	
+	}
 }
