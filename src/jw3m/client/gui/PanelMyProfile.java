@@ -452,6 +452,7 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
             tempHobby.setHobbyID(0);
             tempHobby.setHobbyName(newField.getText());
             baseFrame.setNetAddHobbyList(tempHobby);
+            baseFrame.getNetHobbyList();
             hobby = baseFrame.data_hobbyList;                     
             String checkHobby = (newField.getText().toString());
             
@@ -469,7 +470,6 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
             
             for (int i = 0; i < dobby1.size(); i++)
             {
-                  System.out.println("Sting Hobby: " + dobby1.get(i) + "IF Check = " + dobby1.get(i).equals(checkHobby));
                   if (dobby1.get(i).equals(checkHobby))
                   {
                          alreadyAdded = false;
