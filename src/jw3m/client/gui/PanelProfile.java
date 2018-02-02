@@ -225,21 +225,28 @@ public class PanelProfile extends JPanel implements ActionListener
 		btnAddNewSkill.addActionListener(this);
 
 		lblSkillName = new JLabel("Skill Name");
+		lblSkillName.setFont(primaryFont);
 
 		textFieldSkillName = new JTextField();
+		textFieldSkillName.setFont(primaryFont);
 		textFieldSkillName.setColumns(10);
 
 		lblVendor = new JLabel("Vendor");
+		lblVendor.setFont(primaryFont);
 
 		textFieldVendor = new JTextField();
+		textFieldVendor.setFont(primaryFont);
 		textFieldVendor.setColumns(10);
 
 		lblSkillDescription = new JLabel("Skill Description");
+		lblSkillDescription.setFont(primaryFont);
 
 		textFieldSkillDesc = new JTextField();
+		textFieldSkillDesc.setFont(primaryFont);
 		textFieldSkillDesc.setColumns(10);
 
 		btnAddSkill = new JButton("Add Skill");
+		btnAddSkill.setFont(primaryFont);
 		btnAddSkill.addActionListener(this);
 
 		GroupLayout gl_westPanel = new GroupLayout(westPanel);
@@ -652,47 +659,29 @@ public class PanelProfile extends JPanel implements ActionListener
 				int i = table.getSelectedRow(); // set index for selected row
 				int j = table.getSelectedColumn(); // set index for selected
 													// column
-
-				// userSkills = baseFrame.getNetUserSkills(tempUser);
-				// skill = userSkills.get(i).getSkillID();
-
-				// getSkill.removeUserSkills(tmpUser, skill);
-
-				// *********************************************************************************
-				
-				Vector<Skill> removeUserSkill = new Vector<Skill>();
-
 				Skill tempSkill = new Skill();
+				Vector<Skill> removeUserSkill = new Vector<Skill>();
+				
+				baseFrame.getNetSkillList();
+				skillList = baseFrame.data_skillList;
+				
 				userSkills = baseFrame.getNetUserSkills(tempUser);
-				int checkSkill = ((int)model.getValueAt(table.getSelectedRow(), 2));
+				Object obj2 = model.getValueAt(table.getSelectedRow(), 1);
+				
 
-				for (int k = 0; k < userSkills.size(); k++)
+			   for (int k = 0; k < skillList.size(); k++)
 				{
-					if (userSkills.get(k).getSkillID().equals(checkSkill))
+					if (skillList.get(k).getSkillID().equals(obj2))
 					{
-						removeUserSkill.addElement(userSkills.get(k).getSkillID());
-						tempSkill.setSkillName(skillAdd.get(k).getSkillName());
+						tempSkill.setSkillID(skillList.get(k).getSkillID());
+						tempSkill.setSkillName(skillList.get(k).getSkillName());
+						tempSkill.setSkillVendor(skillList.get(k).getSkillVendor());
+						tempSkill.setSkillDescription(skillList.get(k).getSkillDescription());
 					}
 				}
 
 				removeUserSkill.add(tempSkill);
 								
-				
-				removeUserSkill.addElement(userSkills);
-				removeUserSkill.setSkillID(userSkills.get(i).getSkillID());
-				newSkill.setSkillName(skillList.get(j).getSkillName());
-
-				
-				for (int n = 0; n < userSkills.size(); n++)
-				{
-					if ((returnedValue).equals(userSkills.get(n).getSkillName()))
-					{
-						uHob.setHobbyID(hobbyList.get(i).getHobbyID());
-					}
-				}
-
-				// *********************************************************************************
-
 				baseFrame.setNetRemoveUserSkills(tempUser, removeUserSkill);
 
 				setupSkillsTable();
@@ -700,7 +689,6 @@ public class PanelProfile extends JPanel implements ActionListener
 				centrePanel.remove(table);
 				table = new JTable(model);
 				table.setFont(primaryFont);
-				;
 
 				centrePanel.add(scrollPane);
 				scrollPane.setViewportView(table);
@@ -867,49 +855,50 @@ public class PanelProfile extends JPanel implements ActionListener
 		// ************************************************************************************************************
 		if (source == btnAddSkill)
 		{
-
 			Vector<Skill> skillAdd = new Vector<Skill>();
+			Vector<Skill> skillAdd2 = new Vector<Skill>();
 			Vector<Skill> newSkill = new Vector<Skill>();
 
 			Skill tempSkill = new Skill();
-			tempSkill.setSkillID(0);
-			tempSkill.setSkillName(lblSkillName.getText());
-			baseFrame.setNetAddSkillList(tempSkill);
+			baseFrame.getNetSkillList();
 			skillAdd = baseFrame.data_skillList;
-			String checkSkill = (lblSkillName.getText().toString());
+			
+			String checkSkill = (textFieldSkillName.getText().toString());
 
-			for (int k = 0; k < skillAdd.size(); k++)
-			{
-				if (skillAdd.get(k).getSkillName().equals(checkSkill))
+			if (skillAdd.contains(checkSkill))
 				{
-					tempSkill.setSkillID(skillAdd.get(k).getSkillID());
-					tempSkill.setSkillName(skillAdd.get(k).getSkillName());
+				JOptionPane.showMessageDialog(this, "This skill already exists on the register.  Select from the dropdown to add");
 				}
-			}
-
-			newSkill.add(tempSkill);
-			boolean alreadyAdded = true;
-
-			for (int m = 0; m < comboSkillNames.size(); m++)
+			else
 			{
-				if (comboSkillNames.get(m).equals(checkSkill))
+				tempSkill.setSkillID(0);
+				tempSkill.setSkillName(textFieldSkillName.getText());
+				tempSkill.setSkillDescription(textFieldSkillDesc.getText());
+				tempSkill.setSkillVendor(textFieldVendor.getText());
+				
+				baseFrame.setNetAddSkillList(tempSkill);
+			}
+				
+				Skill tempSkill2 = new Skill();
+				baseFrame.getNetSkillList();
+				skillAdd2 = baseFrame.data_skillList;
+				String checkSkill2 = (textFieldSkillName.getText());
+
+				for (int k = 0; k < skillAdd2.size(); k++)
 				{
-					alreadyAdded = false;
-					break;
-				} else
-				{
-					alreadyAdded = true;
+					if (skillAdd2.get(k).getSkillName().equals(checkSkill2))
+					{
+						tempSkill2.setSkillID(skillAdd2.get(k).getSkillID());
+						tempSkill2.setSkillName(skillAdd2.get(k).getSkillName());
+					}
 				}
-			}
-			if (!alreadyAdded)
-			{
+
+				newSkill.add(tempSkill2);
+				
 				baseFrame.setNetUserSkills(baseFrame.authenticatedUser, newSkill);
 				JOptionPane.showMessageDialog(this, "Skill added");
-			} else
-			{
-				JOptionPane.showMessageDialog(this, "You already have this skill added");
-			}
-
+			
+			
 			setupSkillsTable();
 
 			centrePanel.remove(table);
