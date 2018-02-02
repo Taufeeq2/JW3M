@@ -88,19 +88,14 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 		nPanel = new JPanel();
 		cPanel = new JPanel();
 		
-<<<<<<< HEAD
 		lblImgLabel = new JLabel(new ImageIcon("resources/MyProfile_Full.jpg"));
 		nPanel.add(lblImgLabel);
-		
-=======
-		lblBanner = new JLabel(new ImageIcon("resources/"));
-		nPanel.add(lblBanner);
-		
+			
 //		lblEditProfile = new JLabel("My Profile");
 //		lblEditProfile.setBounds(335, 13, 114, 16);
 //		lblEditProfile.setFont(secondaryFont);
 //		nPanel.add(lblEditProfile);
->>>>>>> branch 'master' of https://github.com/Taufeeq2/JW3M.git
+
 		setLayout(new BorderLayout(0, 0));
 		cPanel.setLayout(null);
 		
