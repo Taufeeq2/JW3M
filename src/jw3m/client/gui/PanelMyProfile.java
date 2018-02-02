@@ -191,7 +191,7 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 		}
 		
 		lblMyHobbies = new JLabel("Hobbies and Interests");
-		lblMyHobbies.setBounds(711, 30, 179, 20);
+		lblMyHobbies.setBounds(711, 32, 179, 20);
 		lblMyHobbies.setFont(primaryFont);
 		cPanel.add(lblMyHobbies);
 		
@@ -278,7 +278,7 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 		panel_1.setLayout(null);
 		
 		lblMyProfile = new JLabel("My Profile");
-		lblMyProfile.setBounds(207, 32, 107, 16);
+		lblMyProfile.setBounds(207, 32, 107, 21);
 		lblMyProfile.setFont(primaryFont);
 		cPanel.add(lblMyProfile);
 

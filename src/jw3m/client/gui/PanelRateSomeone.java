@@ -223,6 +223,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
         separatorComboBox.setFont(primaryFont);
 		cPanel.add(separatorComboBox );
 		
+		separatorComboBox.setSelectedIndex(-1);
 		
 		
 		
@@ -377,8 +378,17 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 				
 				
 		
-			}	 
+			}
+			
+			Notification notice = new Notification();
+			notice.setNoticeID(0);
+			notice.setRatorID(baseFrame.authenticatedUser.getUserName());
+			notice.setRequestorID(ratee.getUserID());
+			notice.setDate(null);
+			
+			baseFrame.setNetRemoveUserNotification(notice);
 			JOptionPane.showMessageDialog(this, "Rating submitted");
+			
 		}
 		
 		if(source == separatorComboBox)
