@@ -237,37 +237,35 @@ public class SkillsClient extends JFrame implements ActionListener
 	
 	public void setupTabs()
 	{
+		logger.info("Tabbed panels initializing");
 		// This creates everything we need for the tabs
 		
 		profileP = new PanelProfile(this);
 		rateSomeoneP = new PanelRateSomeone(this);
 		notificationP = new PanelNotifications(this);
 		myProfile = new PanelMyProfile(this);
-		myProfile_new = new PanelMyProfileNew(this);
+//		myProfile_new = new PanelMyProfileNew(this);
 //		newProfile = new PanelNewProfile(this);
 		panelReporting = new PanelReporting(this);
-		demoPanel = new PanelDemo(this);
+	//	demoPanel = new PanelDemo(this);
 		searchPanel = new PanelSearch(this);
 	//	testPanel = new PanelTests(this);
 		
 		
-		
-	//	userMaintenanceP = new PanelUserMaintenance(this);
-		
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setFont(primaryFont);
 		tabbedPane.add("My Profile", myProfile); // this is my basic details which are edditable by default
-		tabbedPane.add("My Profile (new)", myProfile_new);
+//		tabbedPane.add("My Profile (new)", myProfile_new);
 		
 		tabbedPane.add("My Skills", profileP); // this should change to my skills
 		
-		tabbedPane.add("Notification", notificationP);
+		tabbedPane.add("Notifications", notificationP);
 		tabbedPane.add("Rate Someone", rateSomeoneP);
 //		tabbedPane.add("Create New Profile", newProfile);
 		tabbedPane.add("People-Skill finder", panelReporting);
 		tabbedPane.add("Searches", searchPanel);
 //		tabbedPane.add("Example (GUI layout)", examplePanel);
-		tabbedPane.addTab("Demo Panel", demoPanel);
+//		tabbedPane.addTab("Demo Panel", demoPanel);
 
 		
 	}
