@@ -48,9 +48,9 @@ public class SkillsClient extends JFrame implements ActionListener
 	
 	/// All the menu items
 	private JMenuBar menuBar = null;
-	private JMenu fileMenu = null, mediaMenu = null, loanMenu  = null, userMenu = null,  helpMenu = null, subMenu = null;
+	private JMenu fileMenu = null, viewMenu = null,   helpMenu = null, subMenu = null;
 	private JMenuItem helpMenu_dreyfusItem = null, exitMenu_exitItem = null, fileMenu_openItem = null, fileMenu_logoutItem = null, helpMenu_aboutItem = null;
-	private JMenuItem mediaMenu_Open = null, loanMenu_Open = null, userMenu_Open = null;
+	private JMenuItem viewMenu_goBold = null, viewMenu_goPlain = null;
 	
 	//South Panel
 	
@@ -155,6 +155,7 @@ public class SkillsClient extends JFrame implements ActionListener
 		basePanel.setBorder(new EmptyBorder(15,15,15,15));
 		basePanel.setLayout(new GridLayout(1,1));
 	
+		sPanel = new JPanel();
 		
 		// The logon panel goes into the base panel
 		logonP = new PanelLogin(this);
@@ -288,6 +289,15 @@ public class SkillsClient extends JFrame implements ActionListener
 				fileMenu_logoutItem.setFont(primaryFont);
 				fileMenu_logoutItem.addActionListener(this);
 			
+			viewMenu = new JMenu("View");
+			viewMenu.setFont(primaryFont);
+			viewMenu.setMnemonic('V');
+				viewMenu_goBold = new JMenuItem("Go bold");
+				viewMenu_goBold.setFont(primaryFont);
+				viewMenu_goBold.addActionListener(this);
+				viewMenu_goPlain = new JMenuItem("Go plain");
+				viewMenu_goPlain.setFont(primaryFont);
+				viewMenu_goPlain.addActionListener(this);
 			
 			helpMenu = new JMenu("Help");
 			helpMenu.setFont(primaryFont);
@@ -312,12 +322,16 @@ public class SkillsClient extends JFrame implements ActionListener
 		fileMenu.addSeparator();
 		fileMenu.add(exitMenu_exitItem);
 		
+		viewMenu.add(viewMenu_goBold);
+		viewMenu.add(viewMenu_goPlain);
+		
 		helpMenu.add(helpMenu_dreyfusItem);
 		helpMenu.addSeparator();
 		helpMenu.add(helpMenu_aboutItem);
 		
 		// Add all the menus to the menu bar
 		menuBar.add(fileMenu);
+		menuBar.add(viewMenu);
 		menuBar.add(helpMenu);
 
 		this.setJMenuBar(menuBar);
@@ -335,7 +349,18 @@ public class SkillsClient extends JFrame implements ActionListener
 	public void setupSouthPanel()
 	{
 		
-		// South Panel setup
+		try
+		{
+			sPanel.removeAll();
+	//		logger.debug("tring to remove all from south panel");
+		} catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+	//		logger.debug("nothing to remove from south panel");
+		//	e.printStackTrace();
+		}
+		
+//		sPanelConnectionStatus.setText("Connected to " + this.getNetworkClient().getServerAddress() + ":" +this.getNetworkClient().getServerPort());
 		sPanelConnectionStatus = new JLabel("Connected to " + this.getNetworkClient().getServerAddress() + ":" +this.getNetworkClient().getServerPort() );
 		sPanelConnectionStatus.setFont(primaryFont);
 		
@@ -347,7 +372,7 @@ public class SkillsClient extends JFrame implements ActionListener
 		sPanelMessagesBut.setToolTipText("Click here to goto ratings page");
 		sPanelMessagesBut.addActionListener(this);
 
-		sPanel = new JPanel();
+		
 		sPanel.setLayout(new GridLayout(1,3));
 		
 		sPanel.add(sPanelConnectionStatus);
@@ -355,8 +380,12 @@ public class SkillsClient extends JFrame implements ActionListener
 		sPanel.add(sPanelMessagesBut);
 		
 		sPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		sPanel.setFont(primaryFont);
+
 		this.add(sPanel, BorderLayout.SOUTH);
 //		sPanel.validate();
+//		sPanel.repaint();
+
 //		logger.info("Number of notifications " + this.getNetUserNotifications(this.authenticatedUser).size());
 		
 	}
@@ -485,6 +514,44 @@ public class SkillsClient extends JFrame implements ActionListener
 			
 		}
 			
+		if (source == viewMenu_goBold)
+		{
+		
+		//	setupTabs()
+			this.setPrimryFont( new Font ("THAHOMA",Font.BOLD, 16) ); // Normal Use
+			this.setupTabs();
+			this.setupMenuBar();
+			this.setupSouthPanel();
+	//		sPanel.setVisible(true);
+			this.changeToTabbedPane();
+			this.validate();
+			this.repaint();
+			
+	//		logger.info("Font checker bold " + this.sPanelConnectionStatus.getFont() );
+		//	secondaryFont = new Font ("THAHOMA",Font.BOLD|Font.ITALIC, 20); // Headings ??
+		}
+		
+		if (source == viewMenu_goPlain)
+		{
+		
+			
+			this.setPrimryFont(  new Font ("THAHOMA",Font.PLAIN, 16) ); // Normal Use
+			
+			this.setupTabs();
+			this.setupMenuBar();
+			this.setupSouthPanel();
+	//		sPanel.setVisible(true);
+			this.changeToTabbedPane();
+			
+			this.validate();
+			this.repaint();
+			
+	//		logger.info("Font checker plain " + this.sPanelConnectionStatus.getFont() );
+		//	secondaryFont = new Font ("THAHOMA",Font.BOLD|Font.ITALIC, 20); // Headings ??
+		}
+		
+		
+		
 		
 	}
 
@@ -585,9 +652,19 @@ public class SkillsClient extends JFrame implements ActionListener
 		return this.primaryFont;
 	}
 	
+	public void setPrimryFont(Font fontIn)
+	{
+		this.primaryFont=fontIn;
+	}
+	
 	public Font getSecondaryFont()
 	{
 		return this.secondaryFont;
+	}
+	
+	public void setSecondaryFont(Font fontIn)
+	{
+		this.secondaryFont=fontIn;
 	}
 	
 
