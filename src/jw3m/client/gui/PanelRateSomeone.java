@@ -167,9 +167,10 @@ public class PanelRateSomeone extends JPanel implements ActionListener
         String str = new String();
         User requestUser = new User();
         
+   
         
-        System.out.println("size of notify" + notify.size());
-        
+//        System.out.println("size of notify" + notify.size());
+
         for (int i = 0; i < notify.size(); i++)
 		{
         	if(baseFrame.authenticatedUser.getUserName().equals(notify.get(i).getRatorID()))
@@ -221,6 +222,9 @@ public class PanelRateSomeone extends JPanel implements ActionListener
         separatorComboBox.setBounds(630, 68, 367, 22);
         separatorComboBox.setFont(primaryFont);
 		cPanel.add(separatorComboBox );
+		
+		
+		
 		
 		btnClear = new JButton("Clear");
 		btnClear.setBounds(847, 484, 110, 25);
@@ -379,6 +383,9 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 		
 		if(source == separatorComboBox)
 		{
+			
+			
+			
 			Vector<Rating> userRatings = new Vector<Rating>();
 
 			// get me a user from get me the correct selection

@@ -73,6 +73,7 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 	private JButton btnAdd_1;
 	private Font primaryFont, secondaryFont;
 	private JLabel lblImgLabel;
+	private JLabel lblMyProfile;
 	
 	
 	public PanelMyProfile(SkillsClient frame) {
@@ -100,74 +101,74 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 		cPanel.setLayout(null);
 		
 		label_1 = new JLabel("Email");
-		label_1.setBounds(12, 197, 45, 20);
+		label_1.setBounds(14, 233, 45, 20);
 		label_1.setFont(primaryFont);
 		cPanel.add(label_1);
 		
 		label_3 = new JLabel("Mobile");
-		label_3.setBounds(12, 248, 54, 20);
+		label_3.setBounds(14, 284, 54, 20);
 		label_3.setFont(primaryFont);
 		cPanel.add(label_3);
 		
 		label_7 = new JLabel("Name");
-		label_7.setBounds(12, 33, 47, 20);
+		label_7.setBounds(14, 69, 47, 20);
 		label_7.setFont(primaryFont);
 		cPanel.add(label_7);
 		
 		name = new JTextField();
-		name.setBounds(122, 30, 298, 26);
+		name.setBounds(122, 66, 298, 26);
 		name.setFont(primaryFont);
 		cPanel.add(name);
 		name.setColumns(10);
 		
 		surname = new JTextField();
-		surname.setBounds(122, 84, 298, 26);
+		surname.setBounds(122, 121, 298, 26);
 		surname.setFont(primaryFont);
 		cPanel.add(surname);
 		surname.setColumns(10);
 		
 		email = new JTextField();
-		email.setBounds(122, 194, 298, 26);
+		email.setBounds(122, 230, 298, 26);
 		email.setFont(primaryFont);
 		cPanel.add(email);
 		email.setColumns(10);
 		
 		mobile = new JTextField();
-		mobile.setBounds(122, 245, 298, 26);
+		mobile.setBounds(122, 281, 298, 26);
 		mobile.setFont(primaryFont);
 		cPanel.add(mobile);
 		mobile.setColumns(10);
 		
 		btnUpdateProfile = new JButton("Update Profile");
-		btnUpdateProfile.setBounds(170, 354, 167, 25);
+		btnUpdateProfile.setBounds(122, 389, 167, 25);
 		btnUpdateProfile.setFont(primaryFont);
 		cPanel.add(btnUpdateProfile);
 		btnUpdateProfile.addActionListener(this);
 		
 		alias = new JTextField();
-		alias.setBounds(122, 137, 298, 26);
+		alias.setBounds(122, 177, 298, 26);
 		alias.setFont(primaryFont);
 		alias.setColumns(10);
 		cPanel.add(alias);
 		
 		lblAlias = new JLabel("Alias");
-		lblAlias.setBounds(12, 140, 40, 20);
+		lblAlias.setBounds(14, 180, 40, 20);
 		lblAlias.setFont(primaryFont);
 		cPanel.add(lblAlias);
 		
 		lblMentor = new JLabel("Mentor");
-		lblMentor.setBounds(12, 302, 58, 20);
+		lblMentor.setBounds(14, 336, 58, 20);
 		lblMentor.setFont(primaryFont);
 		cPanel.add(lblMentor);
 		
 		rdbtnYes = new JRadioButton("Yes");
-		rdbtnYes.setBounds(122, 300, 53, 25);
+		rdbtnYes.setBounds(122, 334, 53, 25);
 		rdbtnYes.setFont(primaryFont);
 		buttonGroup.add(rdbtnYes);
 		cPanel.add(rdbtnYes);
 		
 		rdbtnNo = new JRadioButton("No");
-		rdbtnNo.setBounds(193, 300, 49, 25);
+		rdbtnNo.setBounds(207, 334, 49, 25);
 		rdbtnNo.setFont(primaryFont);
 		buttonGroup.add(rdbtnNo);
 		cPanel.add(rdbtnNo);
@@ -211,7 +212,7 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 		comboBox.addActionListener(this);
 		
 		label_4 = new JLabel("Surname");
-		label_4.setBounds(12, 87, 72, 20);
+		label_4.setBounds(14, 124, 72, 20);
 		label_4.setFont(primaryFont);
 		cPanel.add(label_4);
 		
@@ -275,6 +276,11 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 		cPanel.add(panel_1);
 		panel_1.setBounds(553, 457, 462, 225);
 		panel_1.setLayout(null);
+		
+		lblMyProfile = new JLabel("My Profile");
+		lblMyProfile.setBounds(207, 32, 107, 16);
+		lblMyProfile.setFont(primaryFont);
+		cPanel.add(lblMyProfile);
 
 		
 		
