@@ -14,6 +14,8 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
 import java.awt.BorderLayout;
 
 
@@ -64,6 +66,8 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		
 		table = new JTable(model);
 		table.setFont(primaryFont);
+		JTableHeader header = table.getTableHeader();
+	    header.setFont(primaryFont);
 
 		
 		scrollPaneT = new JScrollPane(table);
