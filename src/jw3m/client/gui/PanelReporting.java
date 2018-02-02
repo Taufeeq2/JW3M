@@ -25,6 +25,7 @@ import jw3m.widgets.BarChart2;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -91,8 +92,8 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		centerP.add(panel_1);
 		centerP.add(panel);
 		
-		titleLabel = new JLabel("People per Skill");
-		titleLabel.setFont(baseFrame.getFont());
+		titleLabel = new JLabel(new ImageIcon("Resources/MySkills.gif"));
+		//titleLabel.setFont(baseFrame.getFont());
 		northP.add(titleLabel);
 		
 		buttonHobbies = new JButton("Hobbies");
@@ -427,8 +428,8 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 					skillArrayEnd = skillArrayDisplay;
 				}	
 			}
-			System.out.println("Array Start = " + skillArrayStart + " Array End = " + skillArrayEnd +
-					 " Array Size " + sizeOfArray);
+		//	System.out.println("Array Start = " + skillArrayStart + " Array End = " + skillArrayEnd +
+		//			 " Array Size " + sizeOfArray);
 			
 			for (int i=0; i<skillArrayDisplay; i++)
 			{
@@ -533,8 +534,8 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 					skillArrayEnd = skillArrayDisplay;
 				}	
 			}
-			System.out.println("Array Start = " + skillArrayStart + " Array End = " + skillArrayEnd +
-					 " Array Size " + sizeOfArray);
+		//	System.out.println("Array Start = " + skillArrayStart + " Array End = " + skillArrayEnd +
+		//			 " Array Size " + sizeOfArray);
 			
 			for (int i=0; i<skillArrayDisplay; i++)
 			{
