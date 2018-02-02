@@ -294,17 +294,17 @@ public class SkillsClient extends JFrame implements ActionListener
 			viewMenu = new JMenu("View");
 			viewMenu.setFont(primaryFont);
 			viewMenu.setMnemonic('V');
-				viewMenu_goBold = new JMenuItem("Go bold");
+				viewMenu_goBold = new JMenuItem("Set Font bold");
 				viewMenu_goBold.setFont(primaryFont);
 				viewMenu_goBold.addActionListener(this);
-				viewMenu_goPlain = new JMenuItem("Go plain");
+				viewMenu_goPlain = new JMenuItem("Set Font plain");
 				viewMenu_goPlain.setFont(primaryFont);
 				viewMenu_goPlain.addActionListener(this);
 				
-				viewMenu_goBigger = new JMenuItem("Go bigger");
+				viewMenu_goBigger = new JMenuItem("Set Font bigger");
 				viewMenu_goBigger.setFont(primaryFont);
 				viewMenu_goBigger.addActionListener(this);
-				viewMenu_goSmaller = new JMenuItem("Go smaller");
+				viewMenu_goSmaller = new JMenuItem("Set Font smaller");
 				viewMenu_goSmaller.setFont(primaryFont);
 				viewMenu_goSmaller.addActionListener(this);
 				

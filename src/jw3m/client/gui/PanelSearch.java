@@ -6,104 +6,166 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+
+import jw3m.beans.Notification;
+import jw3m.beans.Rating;
+import jw3m.beans.Skill;
+import jw3m.beans.User;
 import jw3m.widgets.*;
+import javax.swing.GroupLayout.Alignment;
+import java.awt.GridLayout;
 
 public class PanelSearch extends JPanel implements ActionListener
 {
 	final static Logger logger = Logger.getLogger(PanelSearch.class);
 	private SkillsClient baseFrame;
 	
-	private Font primaryFont, secondaryFont;
-	
-	private JLabel northTitleLabel, southTitleLabel, eastTitleLabel, westTitleLabel, centerTitleLabel;
+
+	private JLabel northTitleLabel, southTitleLabel, eastTitleLabel, westTitleLabel;
 	private JButton centerButtonSearch;
-	private JTextArea southStuff;
+
+	private JPanel nPanel, cPanel;
+
+	private JLabel lblRateSomeone, lblBanner;
+	private JButton btnSubmit;
+	private DefaultTableModel model = null;
+	private JScrollPane scrollPane;
+	private JTable table;
+	private Vector<Skill> skillList = new Vector<Skill>();
+	private Vector<Skill> skillNames = new Vector<Skill>();
+	private JLabel lblSearch;
+	private Rating ratee;
+	private JComboBox separatorComboBox ;
+	
+	private Vector itemsText = new Vector();
+	private Vector<String> itemsName = new Vector<String>();
+	private Font primaryFont, secondaryFont;
+	private JButton btnClear;
+	private JLabel lblImgLabel;
 
 	public PanelSearch(SkillsClient frame)
 	{
-		PropertyConfigurator.configure("log4j.properties");
-		this.baseFrame = frame;
+		baseFrame = frame;
 		primaryFont = baseFrame.getPrimaryFont();
-		secondaryFont = baseFrame.getSecondaryFont();
-		
-		//Create the panels (comment ones you don't need)
-		
-		JPanel panelNorth = new JPanel();
-		JPanel panelSouth = new JPanel();
-//		JPanel panelEast = new JPanel();
-//		JPanel panelWest = new JPanel();
-		JPanel panelCenter = new JPanel();
-		
-		
-		// these colors to help you get it setup - remove later
-		panelNorth.setBorder(new LineBorder(Color.red, 2));
-		panelSouth.setBorder(new LineBorder(Color.green, 2));
-//		panelEast.setBorder(new LineBorder(Color.yellow, 2));
-//		panelWest.setBorder(new LineBorder(Color.blue, 2));
-		panelCenter.setBorder(new LineBorder(Color.black, 2));
-		
-
-		
-		// Create all north elements
-		northTitleLabel = new JLabel("Title Demo");
-		northTitleLabel.setFont(baseFrame.getSecondaryFont());
-				
-		// Create all south elements
-		
-
-		southStuff = new JTextArea("**********************************");
-		southTitleLabel = new JLabel("just using example table i could find");
-		southTitleLabel.setFont(baseFrame.getPrimaryFont());
-		
-		// Create all east elements
-//		eastTitleLabel = new JLabel("east");
-//		eastTitleLabel.setFont(baseFrame.getPrimaryFont());
-		
-		// Create all west elements
-//		westTitleLabel = new JLabel("west");
-//		westTitleLabel.setFont(baseFrame.getPrimaryFont());
-		
-		// Create all center elements
-		centerButtonSearch = new JButton ("Search");
-		centerTitleLabel = new JLabel("center");
-		centerTitleLabel.setFont(baseFrame.getPrimaryFont());
+        secondaryFont = baseFrame.getSecondaryFont();
+        PropertyConfigurator.configure("log4j.properties");
+        
+        nPanel = new JPanel();
+		cPanel = new JPanel();
+        
+		lblImgLabel = new JLabel(new ImageIcon("resources/RateSomeone_Full.jpg"));
+		nPanel.add(lblImgLabel);
+	
+//		btnSubmit = new JButton("Submit");
+//		btnSubmit.setBounds(690, 484, 110, 25);
+//		btnSubmit.setFont(primaryFont);
+//		btnSubmit.addActionListener(this);
+//		btnSubmit.setEnabled(false);
 		
 		
-		// Add north elements
-		panelNorth.add(northTitleLabel);
-		
-		// Add south elements
-		panelSouth.add(southTitleLabel);
-		panelSouth.add(southStuff);
+		Vector<Skill> skillNms = new Vector<Skill>();
+		baseFrame.getNetSkillList();
+		skillNms = baseFrame.data_skillList;
 		
 		
-		// Add east elements
-//		panelEast.add(eastTitleLabel);
+		//System.out.println(skillNms);
 		
-		// Add west elements
-//		panelWest.add(westTitleLabel);
+		for (int i = 0 ; i < skillNms.size() ; i++)
+		{
+			skillNames.add(skillNms.get(i));
+		}
 		
-		// Add center elements
-		panelCenter.add(centerButtonSearch);
-		panelCenter.add(centerTitleLabel);
+		lblSearch = new JLabel("Search ");
+		lblSearch.setBounds(513, 71, 73, 16);
+		lblSearch.setFont(primaryFont);
 		
-		
-		
-		// Setup layout and add all panels (comment out ones not used)
+	
 		setLayout(new BorderLayout(0, 0));
-		this.add(panelCenter, BorderLayout.CENTER);
-		this.add(panelNorth, BorderLayout.NORTH);
-		this.add(panelSouth, BorderLayout.SOUTH);
-//		this.add(panelEast, BorderLayout.EAST);
-//		this.add(panelWest, BorderLayout.WEST);
-		this.setVisible(true);
+		cPanel.setLayout(null);
+
+		table = new JTable(model);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		table.setFont(primaryFont);
+		JTableHeader header = table.getTableHeader();
+	    header.setFont(primaryFont);
+
+	    JTextArea txtArea = new JTextArea("test");
 		
+
+		
+
+		
+		
+
+		scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(12, 143, 1668, 293);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		cPanel.add(scrollPane);
+		scrollPane.setViewportView(txtArea);
+//		scrollPane.setViewportView(table);
+		cPanel.add(scrollPane);
+//		nPanel.add(lblRateSomeone);
+		cPanel.add(lblSearch);
+//		cPanel.add(btnSubmit);
+		
+		
+		this.add(nPanel, BorderLayout.NORTH);
+		this.add(cPanel, BorderLayout.CENTER);
+		
+		// moved to global variable
+//		Vector itemsText = new Vector();
+//	    Vector itemsName = new Vector();
+		
+		
+        JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
+      
+        
+        Vector<Notification> notify = baseFrame.getNetUserNotifications(baseFrame.authenticatedUser);
+        		
+        String str = new String();
+        User requestUser = new User();
+        
+   
+        
+//        System.out.println("size of notify" + notify.size());
+
+
+       
+
+        itemsText.addElement(separator );
+        itemsName.addElement("seperator"); // as this index will be unselectable it does not matter what we put here
+        
+        
+        
+        Vector<User> allUsers = baseFrame.data_userList;
+        
+        
+
+
+
+		// Changed this to a SeperatorComboBox (which is a custom class jw3m.widgets.SeparatorComboBox
+        separatorComboBox  = new SeparatorComboBox(itemsText);
+        separatorComboBox.setBounds(630, 68, 367, 22);
+        separatorComboBox.setFont(primaryFont);
+		cPanel.add(separatorComboBox );
+		
+		separatorComboBox.setSelectedIndex(-1);
+		
+
+		
+		separatorComboBox.addActionListener(this);
+
 		
 	}
 	
@@ -119,5 +181,4 @@ public class PanelSearch extends JPanel implements ActionListener
 	{
 		Object source = e.getSource();
 	}
-	
 }
