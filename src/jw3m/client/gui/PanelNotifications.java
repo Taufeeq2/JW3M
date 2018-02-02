@@ -43,7 +43,6 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		secondaryFont = baseFrame.getSecondaryFont();
 		
 		this.setupPanels();
-
 	} 
 	
 	public void setupPanels()
