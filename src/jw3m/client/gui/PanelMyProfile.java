@@ -394,7 +394,8 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 				list.setListData(dobby1);
 				list.addListSelectionListener(this);
 				
-				
+				baseFrame.getNetHobbyList();
+				hobbyList = baseFrame.data_hobbyList;
 				
 				uHob.setUserID(baseFrame.authenticatedUser.getUserName());
 				for (int i = 0; i < hobbyList.size(); i++)
@@ -407,7 +408,7 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 					}
 				}
 				
-//				dao.removeUserHobby(uHob);
+
 				baseFrame.setNetRemoveUserHobby(uHob);
 			} 
 			catch (Exception e1)
@@ -432,6 +433,7 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 			newField.setBounds(245, 29, 200, 30);
 			panel_1.add(newField);
 			newField.setColumns(10);
+			newField.addActionListener(this);
 			
 			btnAdd_1 = new JButton("Add");
 			btnAdd_1.setFont(primaryFont);
@@ -493,6 +495,12 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
             {
                   JOptionPane.showMessageDialog(this, "You already have this hobby added");
             }
+		}
+		
+		if(source == newField)
+		{
+			btnAdd_1.doClick();
+			newField.setText("");
 		}
 		
 	}
