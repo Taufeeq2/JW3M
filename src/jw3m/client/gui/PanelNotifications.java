@@ -112,8 +112,7 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		comboBox.setSize(225, 30);
 		comboBox.setLocation(400, 200);
 		comboBox.setFont(primaryFont);
-	//	comboBox.
-	//	comboBox.setAlignmentX(CENTER_ALIGNMENT);
+		((JLabel)comboBox.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 		comboBox.setAlignmentY(CENTER_ALIGNMENT);
 		panel.add(comboBox);
 		panel.add(btnInv);
