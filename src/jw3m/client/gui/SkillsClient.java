@@ -594,7 +594,7 @@ public class SkillsClient extends JFrame implements ActionListener
 		if (source == viewMenu_goSmaller)
 		{
 		
-			if (primaryFontSize < 10 )
+			if (primaryFontSize > 10 )
 			{
 				primaryFontSize--;
 				int tempStyle = primaryFont.getStyle();
