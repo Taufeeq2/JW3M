@@ -115,8 +115,9 @@ public class PanelProfile extends JPanel implements ActionListener
 		setupSkillsTable();
 
 		table = new JTable(model);
-				
+							
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		table.setFont(primaryFont);;
 		centrePanel.add(scrollPane);
 		scrollPane.setViewportView(table);
 		//centrePanel.add(scrollPane);
@@ -168,8 +169,7 @@ public class PanelProfile extends JPanel implements ActionListener
 		this.add(westPanel, BorderLayout.WEST);
 
 		btnAddSelectedSkill = new JButton("Add Selected Skill from DropDown");
-		btnAddSelectedSkill.setFont(new Font("Calibri", Font.ITALIC, 16));
-		// btnAddSelectedSkill.setFont(secondaryFont);
+		btnAddSelectedSkill.setFont(primaryFont);
 		btnAddSelectedSkill.addActionListener(this);
 
 		tempUser = baseFrame.authenticatedUser;
@@ -198,9 +198,10 @@ public class PanelProfile extends JPanel implements ActionListener
 		}
 
 		comboBoxSkills = new JComboBox(comboSkillNames);
+		comboBoxSkills.setFont(primaryFont);
 
 		btnAddNewSkill = new JButton("Add NEW skill NOT on dropdown");
-		btnAddNewSkill.setFont(new Font("Calibri", Font.ITALIC, 16));
+		btnAddNewSkill.setFont(primaryFont);
 		btnAddNewSkill.addActionListener(this);
 
 		lblSkillName = new JLabel("Skill Name");
@@ -623,6 +624,7 @@ public class PanelProfile extends JPanel implements ActionListener
 					
 					centrePanel.remove(table);
 					table = new JTable(model);
+					table.setFont(primaryFont);;
 					
 					centrePanel.add(scrollPane);
 					scrollPane.setViewportView(table);
@@ -719,6 +721,7 @@ public class PanelProfile extends JPanel implements ActionListener
 
 				centrePanel.remove(table);
 				table = new JTable(model);
+				table.setFont(primaryFont);;
 				
 				centrePanel.add(scrollPane);
 				scrollPane.setViewportView(table);
@@ -809,6 +812,7 @@ public class PanelProfile extends JPanel implements ActionListener
 
 					centrePanel.remove(table);
 					table = new JTable(model);
+					table.setFont(primaryFont);;
 					
 					centrePanel.add(scrollPane);
 					scrollPane.setViewportView(table);
