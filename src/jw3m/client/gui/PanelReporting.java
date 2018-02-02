@@ -24,6 +24,7 @@ import jw3m.widgets.BarChart;
 import jw3m.widgets.BarChart2;
 
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -64,6 +65,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	private int skillArrayStart = 0;
 	private int skillArrayEnd = 0;
 	private int skillArrayDisplay = 7;
+	private JLabel lblImgLabel;
 	
 
 	public PanelReporting(SkillsClient frame)
@@ -90,9 +92,8 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		centerP.add(panel_1);
 		centerP.add(panel);
 		
-		titleLabel = new JLabel("People per Skill");
-		titleLabel.setFont(baseFrame.getFont());
-		northP.add(titleLabel);
+		lblImgLabel = new JLabel(new ImageIcon("resources/PeoplePerSkill_Full.jpg"));
+		northP.add(lblImgLabel);
 		
 		buttonHobbies = new JButton("Hobbies");
 		buttonHobbies.setFont(primaryFont);

@@ -27,6 +27,7 @@ import jw3m.beans.UserHobby;
 import jw3m.dao.DAO;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
@@ -72,6 +73,7 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 	private JTextField newField;
 	private JButton btnAdd_1;
 	private Font primaryFont, secondaryFont;
+	private JLabel lblImgLabel;
 	
 	
 	public PanelMyProfile(SkillsClient frame) {
@@ -87,10 +89,9 @@ public class PanelMyProfile extends JPanel implements ActionListener, ListSelect
 		nPanel = new JPanel();
 		cPanel = new JPanel();
 		
-		lblEditProfile = new JLabel("My Profile");
-		lblEditProfile.setBounds(335, 13, 114, 16);
-		lblEditProfile.setFont(secondaryFont);
-		nPanel.add(lblEditProfile);
+		lblImgLabel = new JLabel(new ImageIcon("resources/MyProfile_Full.jpg"));
+		nPanel.add(lblImgLabel);
+		
 		setLayout(new BorderLayout(0, 0));
 		cPanel.setLayout(null);
 		

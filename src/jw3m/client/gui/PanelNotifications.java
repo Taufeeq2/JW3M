@@ -53,7 +53,7 @@ public class PanelNotifications extends JPanel implements ActionListener, ListSe
 		northP = new JPanel();
 
 		
-		lblImgLabel = new JLabel(new ImageIcon("resources/MySkills.gif"));
+		lblImgLabel = new JLabel(new ImageIcon("resources/Notifications_Full.jpg"));
 		northP.add(lblImgLabel);
 		
 		

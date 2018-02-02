@@ -38,6 +38,7 @@ import javax.swing.JSeparator;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -68,6 +69,7 @@ public class PanelRateSomeone extends JPanel implements ActionListener
 	private Vector<String> itemsName = new Vector<String>();
 	private Font primaryFont, secondaryFont;
 	private JButton btnClear;
+	private JLabel lblImgLabel;
 	
 	@SuppressWarnings("unchecked")
 	public PanelRateSomeone(SkillsClient frame) {
@@ -80,12 +82,9 @@ public class PanelRateSomeone extends JPanel implements ActionListener
         nPanel = new JPanel();
 		cPanel = new JPanel();
         
-		lblRateSomeone = new JLabel("Rate Someone");
-		lblRateSomeone.setFont(secondaryFont);
+		lblImgLabel = new JLabel(new ImageIcon("resources/RateSomeone_Full.jpg"));
+		nPanel.add(lblImgLabel);
 
-		
-		
-		
 		btnSubmit = new JButton("Submit");
 		btnSubmit.setBounds(765, 484, 110, 25);
 		btnSubmit.setFont(primaryFont);
