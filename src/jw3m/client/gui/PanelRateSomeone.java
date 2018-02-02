@@ -83,21 +83,9 @@ public class PanelRateSomeone extends JPanel implements ActionListener
         nPanel = new JPanel();
 		cPanel = new JPanel();
         
-<<<<<<< HEAD
 		lblImgLabel = new JLabel(new ImageIcon("resources/RateSomeone_Full.jpg"));
 		nPanel.add(lblImgLabel);
-=======
-//		lblRateSomeone = new JLabel("Rate Someone");
-//		lblRateSomeone.setFont(secondaryFont);
->>>>>>> branch 'master' of https://github.com/Taufeeq2/JW3M.git
-
-<<<<<<< HEAD
-=======
-		lblBanner = new JLabel(new ImageIcon("resources/"));
-		nPanel.add(lblBanner);
-		
-		
->>>>>>> branch 'master' of https://github.com/Taufeeq2/JW3M.git
+	
 		btnSubmit = new JButton("Submit");
 		btnSubmit.setBounds(690, 484, 110, 25);
 		btnSubmit.setFont(primaryFont);
