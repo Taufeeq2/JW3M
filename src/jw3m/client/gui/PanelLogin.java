@@ -281,7 +281,7 @@ public class PanelLogin extends JPanel implements ActionListener
 			
 			//check if Network Class has been established
 			
-			baseFrame.getNetworkClient().reconnect();
+		//	baseFrame.getNetworkClient().reconnect();
 			
 			if (baseFrame.getNetworkClient() == null)
 			{
