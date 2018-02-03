@@ -122,7 +122,7 @@ public class PanelSearch extends JPanel implements ActionListener
         nPanel = new JPanel();
 		cPanel = new JPanel();
         
-		lblImgLabel = new JLabel(new ImageIcon("resources/RateSomeone_Full.jpg"));
+		lblImgLabel = new JLabel(new ImageIcon("resources/Searches_Full.jpg"));
 		nPanel.add(lblImgLabel);
 	
 		setLayout(new BorderLayout(0, 0));
