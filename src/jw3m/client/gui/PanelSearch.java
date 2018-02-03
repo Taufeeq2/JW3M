@@ -56,14 +56,14 @@ public class PanelSearch extends JPanel implements ActionListener
 	private JButton btnClear;
 	private JLabel lblImgLabel;
 	private JLabel lblSearchBy1;
-	private JLabel lblFilterBy2;
-	private JLabel lblFilterBy3;
+	private JLabel lblSearchBy2;
+	private JLabel lblSearchBy3;
 	private JComboBox comboBoxRow1SkillAttrib;
 	private JCheckBox checkBoxRow1;
 	private JComboBox comboBoxRow2SkillAttrib;
 	private JCheckBox checkBoxRow2;
 	private JComboBox comboBoxRow3SkillAttrib;
-	private JCheckBox checkBoxRow3;
+//	private JCheckBox checkBoxRow3;
 	private JComboBox comboBoxRow1Skill;
 	private JComboBox comboBoxRow2Skill;
 	private JComboBox comboBoxRow3Skill;
@@ -79,6 +79,8 @@ public class PanelSearch extends JPanel implements ActionListener
 	private JComboBox comboBoxRow1Value;
 	private JComboBox comboBoxRow2Value;
 	private JComboBox comboBoxRow3Value;
+	
+	private JTextArea txtArea; // will replace with JTable later?
 	
 	// data vars start
 	private Vector<Skill> skillList1 = new Vector<Skill>();
@@ -104,6 +106,17 @@ public class PanelSearch extends JPanel implements ActionListener
         secondaryFont = baseFrame.getSecondaryFont();
         PropertyConfigurator.configure("log4j.properties");
         
+// 		Note to code reviewer 
+// 		The pattern is
+//		Label 			lblSearchBy2					"Search by"
+//		ComboBox		comboBoxRow2Skill				"Java"
+//		Label			lblWhere2						"Where"
+//      ComboBox		comboBoxRow2SkillAttrib			"Knowlegable" 
+//		Label 			lblIs2							"is"
+//		ComboBox		comboBoxRow2Condition			" = " 
+//		ComboBox		comboBoxRow2Value				" 3 " 
+//		checkBoxRow2	checkBox						" <Tick> and then by " 
+        
         this.setupData();
         
         nPanel = new JPanel();
@@ -121,7 +134,8 @@ public class PanelSearch extends JPanel implements ActionListener
 		JTableHeader header = table.getTableHeader();
 	    header.setFont(primaryFont);
 
-	    JTextArea txtArea = new JTextArea("test");
+	    txtArea = new JTextArea("Start off blank");
+	    txtArea.setFont(secondaryFont);
 		
 		
 
@@ -130,7 +144,7 @@ public class PanelSearch extends JPanel implements ActionListener
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		cPanel.add(scrollPane);
-		scrollPane.setColumnHeaderView(txtArea);
+		scrollPane.setViewportView(txtArea);
 //		scrollPane.setViewportView(table);
 		cPanel.add(scrollPane);
 //		cPanel.add(btnSubmit);
@@ -165,28 +179,31 @@ public class PanelSearch extends JPanel implements ActionListener
 		lblSearchBy1.setBounds(53, 56, 133, 29);
 		cPanel.add(lblSearchBy1);
 		
-		lblFilterBy2 = new JLabel("Filter by");
-		lblFilterBy2.setFont(primaryFont);
-		lblFilterBy2.setBounds(53, 110, 133, 29);
-		cPanel.add(lblFilterBy2);
+		lblSearchBy2 = new JLabel("Filter by");
+		lblSearchBy2.setFont(primaryFont);
+		lblSearchBy2.setBounds(53, 110, 133, 29);
+		cPanel.add(lblSearchBy2);
 		
-		lblFilterBy3 = new JLabel("Filter by");
-		lblFilterBy3.setFont(primaryFont);
-		lblFilterBy3.setBounds(53, 165, 133, 29);
-		cPanel.add(lblFilterBy3);
+		lblSearchBy3 = new JLabel("Filter by");
+		lblSearchBy3.setFont(primaryFont);
+		lblSearchBy3.setBounds(53, 165, 133, 29);
+		cPanel.add(lblSearchBy3);
 		
 		comboBoxRow1SkillAttrib = new JComboBox(skillElement);
 		comboBoxRow1SkillAttrib.setFont(primaryFont);
+		comboBoxRow1SkillAttrib.addActionListener(this);
 		comboBoxRow1SkillAttrib.setBounds(420, 60, 175, 22);
 		cPanel.add(comboBoxRow1SkillAttrib);
 		
 		comboBoxRow2SkillAttrib = new JComboBox(skillElement);
 		comboBoxRow2SkillAttrib.setFont(primaryFont);
+		comboBoxRow2SkillAttrib.addActionListener(this);
 		comboBoxRow2SkillAttrib.setBounds(420, 114, 175, 22);
 		cPanel.add(comboBoxRow2SkillAttrib);
 		
 		comboBoxRow3SkillAttrib = new JComboBox(skillElement);
 		comboBoxRow3SkillAttrib.setFont(primaryFont);
+		comboBoxRow3SkillAttrib.addActionListener(this);
 		comboBoxRow3SkillAttrib.setBounds(420, 169, 175, 22);
 		cPanel.add(comboBoxRow3SkillAttrib);
 		
@@ -203,25 +220,28 @@ public class PanelSearch extends JPanel implements ActionListener
 		checkBoxRow2.addActionListener(this);
 		cPanel.add(checkBoxRow2);
 		
-		checkBoxRow3 = new JCheckBox("");
-		checkBoxRow3.setFont(primaryFont);
-		checkBoxRow3.setBounds(905, 169, 113, 25);
-		checkBoxRow3.addActionListener(this);
-		cPanel.add(checkBoxRow3);
+//		checkBoxRow3 = new JCheckBox("");
+//		checkBoxRow3.setFont(primaryFont);
+//		checkBoxRow3.setBounds(905, 169, 113, 25);
+//		checkBoxRow3.addActionListener(this);
+//		cPanel.add(checkBoxRow3);
 		
 		comboBoxRow1Skill = new JComboBox(skillList1);
 		comboBoxRow1Skill.setFont(primaryFont);
 		comboBoxRow1Skill.setBounds(170, 60, 133, 22);
+		comboBoxRow1Skill.addActionListener(this);
 		cPanel.add(comboBoxRow1Skill);
 		
 		comboBoxRow2Skill = new JComboBox(skillList2);
 		comboBoxRow2Skill.setFont(primaryFont);
 		comboBoxRow2Skill.setBounds(170, 114, 133, 22);
+		comboBoxRow2Skill.addActionListener(this);
 		cPanel.add(comboBoxRow2Skill);
 		
 		comboBoxRow3Skill = new JComboBox(skillList3);
 		comboBoxRow3Skill.setFont(primaryFont);
 		comboBoxRow3Skill.setBounds(170, 169, 133, 22);
+		comboBoxRow3Skill.addActionListener(this);
 		cPanel.add(comboBoxRow3Skill);
 		
 		lblWhere1 = new JLabel("where");
@@ -242,16 +262,19 @@ public class PanelSearch extends JPanel implements ActionListener
 		comboBoxRow1Condition = new JComboBox(conditionElement);
 		comboBoxRow1Condition.setFont(primaryFont);
 		comboBoxRow1Condition.setBounds(701, 60, 104, 22);
+		comboBoxRow1Condition.addActionListener(this);
 		cPanel.add(comboBoxRow1Condition);
 		
 		comboBoxRow2Condition = new JComboBox(conditionElement);
 		comboBoxRow2Condition.setFont(primaryFont);
 		comboBoxRow2Condition.setBounds(701, 114, 104, 22);
+		comboBoxRow2Condition.addActionListener(this);
 		cPanel.add(comboBoxRow2Condition);
 		
 		comboBoxRow3Condition = new JComboBox(conditionElement);
 		comboBoxRow3Condition.setFont(primaryFont);
 		comboBoxRow3Condition.setBounds(701, 169, 104, 22);
+		comboBoxRow3Condition.addActionListener(this);
 		cPanel.add(comboBoxRow3Condition);
 		
 		lblIs1 = new JLabel("is");
@@ -272,16 +295,19 @@ public class PanelSearch extends JPanel implements ActionListener
 		comboBoxRow1Value = new JComboBox(valueElement);
 		comboBoxRow1Value.setFont(primaryFont);		
 		comboBoxRow1Value.setBounds(828, 60, 56, 22);
+		comboBoxRow1Value.addActionListener(this);
 		cPanel.add(comboBoxRow1Value);
 		
 		comboBoxRow2Value = new JComboBox(valueElement);
 		comboBoxRow2Value.setFont(primaryFont);		
 		comboBoxRow2Value.setBounds(828, 114, 56, 22);
+		comboBoxRow2Value.addActionListener(this);
 		cPanel.add(comboBoxRow2Value);
 		
 		comboBoxRow3Value = new JComboBox(valueElement);
 		comboBoxRow3Value.setFont(primaryFont);
 		comboBoxRow3Value.setBounds(828, 169, 56, 22);
+		comboBoxRow3Value.addActionListener(this);
 		cPanel.add(comboBoxRow3Value);
 		
 
@@ -291,10 +317,7 @@ public class PanelSearch extends JPanel implements ActionListener
 //		this.validate();
 //		this.repaint();
 
-		logger.info(comboBoxRow1Skill.getSelectedIndex() );
-		logger.info(comboBoxRow2Skill.getSelectedIndex() );
-		logger.info(comboBoxRow1Skill.getSelectedIndex() );
-		
+	
 		
 	}
 	
@@ -355,7 +378,7 @@ public class PanelSearch extends JPanel implements ActionListener
 		
 		checkBoxRow1.setSelected(true);
 		checkBoxRow2.setSelected(false);
-		checkBoxRow3.setSelected(false);
+//		checkBoxRow3.setSelected(false);
 		
 		
 		// first row unticked on start up
@@ -364,7 +387,7 @@ public class PanelSearch extends JPanel implements ActionListener
 		
 		// disable Rows 2 and 3
 		
-		lblFilterBy2.setEnabled(false);
+		lblSearchBy2.setEnabled(false);
 		comboBoxRow2Skill.setEnabled(false);
 		comboBoxRow2SkillAttrib.setEnabled(false);
 		lblWhere2.setEnabled(false);
@@ -374,7 +397,7 @@ public class PanelSearch extends JPanel implements ActionListener
 		comboBoxRow2Value.setEnabled(false);
 		checkBoxRow2.setEnabled(false);
 		
-		lblFilterBy3.setEnabled(false);
+		lblSearchBy3.setEnabled(false);
 		comboBoxRow3Skill.setEnabled(false);
 		comboBoxRow2SkillAttrib.setEnabled(false);
 		lblWhere3.setEnabled(false);
@@ -382,15 +405,52 @@ public class PanelSearch extends JPanel implements ActionListener
 		lblIs3.setEnabled(false);
 		comboBoxRow3Condition.setEnabled(false);
 		comboBoxRow3Value.setEnabled(false);
-		checkBoxRow3.setEnabled(false);
+//		checkBoxRow3.setEnabled(false);
 		
 		
 	}
 	
 	
-	public void setupCenterPanel()
+	public void updateSearchData()
 	{
+		String currentText = txtArea.getText();
 		
+	
+		
+		String row1Str = lblSearchBy1.getText() + " " + 
+				comboBoxRow1Skill.getSelectedItem() + " " + 
+				lblWhere1.getText() + " " + 
+				comboBoxRow1SkillAttrib.getSelectedItem() + " " + 
+				lblIs1.getText() + " " + 
+				comboBoxRow1Condition.getSelectedItem() + " " + 
+				comboBoxRow1Value.getSelectedItem() + " " + 
+				"Next row enabled (" + checkBoxRow1.isSelected() + ").";
+		
+		
+		
+		
+		String row2Str = lblSearchBy2.getText() + " " + 
+					comboBoxRow2Skill.getSelectedItem() + " " + 
+					lblWhere2.getText() + " " + 
+					comboBoxRow2SkillAttrib.getSelectedItem() + " " + 
+					lblIs2.getText() + " " + 
+					comboBoxRow2Condition.getSelectedItem() + " " + 
+					comboBoxRow2Value.getSelectedItem() + " " + 
+					"Next row enabled (" + checkBoxRow2.isSelected() + ").";
+		
+		String row3Str = lblSearchBy3.getText() + " " + 
+				comboBoxRow3Skill.getSelectedItem() + " " + 
+				lblWhere3.getText() + " " + 
+				comboBoxRow3SkillAttrib.getSelectedItem() + " " + 
+				lblIs3.getText() + " " + 
+				comboBoxRow3Condition.getSelectedItem() + " " + 
+				comboBoxRow3Value.getSelectedItem() + " ";
+//		+ "Next row enabled (" + checkBoxRow3.isSelected() + ").";
+		
+		
+		
+		
+		txtArea.setText(row1Str + "\n" + row2Str + "\n" + row3Str + "\n");
 		
 		
 	}
@@ -400,13 +460,79 @@ public class PanelSearch extends JPanel implements ActionListener
 	{
 		Object source = e.getSource();
 		
+		if (source == comboBoxRow1SkillAttrib )
+		{
+			
+		}
+		
+		if (source == comboBoxRow2SkillAttrib )
+		{
+			
+		}
+		
+		if (source == comboBoxRow3SkillAttrib )
+		{
+			
+		}
+		
+		if (source == comboBoxRow1Skill )
+		{
+			
+		}
+		
+		if (source == comboBoxRow2Skill )
+		{
+			
+		}
+		
+		if (source == comboBoxRow3Skill )
+		{
+			
+		}
+		
+		
+		if (source == comboBoxRow1Condition )
+		{
+			
+		}
+		
+		if (source == comboBoxRow2Condition )
+		{
+			
+		}
+		
+		if (source == comboBoxRow3Condition )
+		{
+			
+		}
+		
+		
+		if (source == comboBoxRow1Value )
+		{
+			
+		}
+		
+		if (source == comboBoxRow2Value )
+		{
+			
+		}
+		
+		if (source == comboBoxRow3Value )
+		{
+			
+		}
+		
+		
+		
+		
+		
 		if (source == checkBoxRow1)
 		{
 			// enable row 2
 			
 			Boolean isSelected = checkBoxRow1.isSelected();
 			
-			lblFilterBy2.setEnabled(isSelected);
+			lblSearchBy2.setEnabled(isSelected);
 			comboBoxRow2Skill.setEnabled(isSelected);
 			comboBoxRow2SkillAttrib.setEnabled(isSelected);
 			lblWhere2.setEnabled(isSelected);
@@ -423,7 +549,7 @@ public class PanelSearch extends JPanel implements ActionListener
 			// enable row 3
 			Boolean isSelected = checkBoxRow2.isSelected();
 			
-			lblFilterBy3.setEnabled(isSelected);
+			lblSearchBy3.setEnabled(isSelected);
 			comboBoxRow3Skill.setEnabled(isSelected);
 			comboBoxRow3SkillAttrib.setEnabled(isSelected);
 			lblWhere3.setEnabled(isSelected);
@@ -431,14 +557,20 @@ public class PanelSearch extends JPanel implements ActionListener
 			lblIs3.setEnabled(isSelected);
 			comboBoxRow3Condition.setEnabled(isSelected);
 			comboBoxRow3Value.setEnabled(isSelected);
-			checkBoxRow3.setEnabled(isSelected);
+//			checkBoxRow3.setEnabled(isSelected);
 			
 		}
 		
-		if (source == checkBoxRow2)
-		{
-			// NA
-		}
+//		if (source == checkBoxRow3)
+//		{
+//			// Do nothing for now
+//		}
+		
+		
+		// Default code on any action
+		
+		logger.info("Search panel action taking place");
+		this.updateSearchData();
 		
 		
 	}
