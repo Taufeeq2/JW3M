@@ -747,7 +747,7 @@ public class PanelProfile extends JPanel implements ActionListener
 				baseFrame.setNetRemoveUserSkills(tempUser, removeUserSkill);
 
 				tableRedraw();
-				
+
 				JOptionPane.showMessageDialog(null, "Skill removed");
 
 			}
@@ -861,8 +861,24 @@ public class PanelProfile extends JPanel implements ActionListener
 			skillAdd = baseFrame.data_skillList;
 
 			String checkSkill = (textFieldSkillName.getText().toString());
+			
+			//**************************************************
+			boolean alreadyAdded = true;
 
-			if (skillAdd.contains(checkSkill))
+			for (int n = 0; n < skillAdd.size(); n++)
+			{
+				if (skillAdd.get(n).equals(checkSkill))
+				{
+					alreadyAdded = false;
+					break;
+				} else
+				{
+					alreadyAdded = true;
+				}
+			}
+			if (alreadyAdded)
+			//*************************************************************	
+			//if (skillAdd.contains(checkSkill))
 			{
 				JOptionPane.showMessageDialog(this,
 						"This skill already exists on the register.  Select from the dropdown to add");
@@ -874,40 +890,40 @@ public class PanelProfile extends JPanel implements ActionListener
 				tempSkill.setSkillVendor(textFieldVendor.getText());
 
 				baseFrame.setNetAddSkillList(tempSkill);
-			}
 
-			Skill tempSkill2 = new Skill();
-			baseFrame.getNetSkillList();
-			skillAdd2 = baseFrame.data_skillList;
-			String checkSkill2 = (textFieldSkillName.getText());
+				Skill tempSkill2 = new Skill();
+				baseFrame.getNetSkillList();
+				skillAdd2 = baseFrame.data_skillList;
+				String checkSkill2 = (textFieldSkillName.getText());
 
-			for (int k = 0; k < skillAdd2.size(); k++)
-			{
-				if (skillAdd2.get(k).getSkillName().equals(checkSkill2))
+				for (int k = 0; k < skillAdd2.size(); k++)
 				{
-					tempSkill2.setSkillID(skillAdd2.get(k).getSkillID());
-					tempSkill2.setSkillName(skillAdd2.get(k).getSkillName());
+					if (skillAdd2.get(k).getSkillName().equals(checkSkill2))
+					{
+						tempSkill2.setSkillID(skillAdd2.get(k).getSkillID());
+						tempSkill2.setSkillName(skillAdd2.get(k).getSkillName());
+					}
 				}
+
+				newSkill.add(tempSkill2);
+
+				baseFrame.setNetUserSkills(baseFrame.authenticatedUser, newSkill);
+				JOptionPane.showMessageDialog(this, "Skill added");
+
+				tableRedraw();
+
+				textFieldSkillName.setText(null);
+				textFieldSkillDesc.setText(null);
+				textFieldVendor.setText(null);
+
+				lblSkillName.setVisible(false);
+				lblVendor.setVisible(false);
+				lblSkillDescription.setVisible(false);
+				textFieldSkillName.setVisible(false);
+				textFieldSkillDesc.setVisible(false);
+				textFieldVendor.setVisible(false);
+				btnAddSkill.setVisible(false);
 			}
-
-			newSkill.add(tempSkill2);
-
-			baseFrame.setNetUserSkills(baseFrame.authenticatedUser, newSkill);
-			JOptionPane.showMessageDialog(this, "Skill added");
-
-			tableRedraw();
-			
-			textFieldSkillName.setText(null);
-			textFieldSkillDesc.setText(null);
-			textFieldVendor.setText(null);
-
-			lblSkillName.setVisible(false);
-			lblVendor.setVisible(false);
-			lblSkillDescription.setVisible(false);
-			textFieldSkillName.setVisible(false);
-			textFieldSkillDesc.setVisible(false);
-			textFieldVendor.setVisible(false);
-			btnAddSkill.setVisible(false);
 		}
 
 	}
