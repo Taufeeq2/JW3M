@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collections;
 import java.util.Vector;
 
 import javax.swing.JTextField;
@@ -216,11 +217,12 @@ public class PanelProfile extends JPanel implements ActionListener
 			comboSkillNames.add(tempSkillNames.get(k).getSkillName());
 
 		}
-
+		
+		Collections.sort(comboSkillNames);
 		comboBoxSkills = new JComboBox(comboSkillNames);
 		comboBoxSkills.setFont(primaryFont);
 
-		btnAddNewSkill = new JButton("Add Skill NOT on Registry");
+		btnAddNewSkill = new JButton("Add Skill NOT on the DropDown");
 		btnAddNewSkill.setFont(primaryFont);
 		btnAddNewSkill.addActionListener(this);
 
@@ -250,38 +252,51 @@ public class PanelProfile extends JPanel implements ActionListener
 		btnAddSkill.addActionListener(this);
 
 		GroupLayout gl_westPanel = new GroupLayout(westPanel);
-		gl_westPanel.setHorizontalGroup(gl_westPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_westPanel.createSequentialGroup().addGap(21)
-						.addGroup(gl_westPanel.createParallelGroup(Alignment.LEADING).addComponent(btnAddSkill)
-								.addComponent(textFieldVendor, 241, 241, 241).addComponent(lblVendor)
-								.addComponent(textFieldSkillDesc, 241, 241, 241).addComponent(lblSkillDescription)
-								.addComponent(lblSkillName)
-								.addGroup(gl_westPanel.createParallelGroup(Alignment.LEADING, false)
-										.addGroup(gl_westPanel.createSequentialGroup()
-												.addComponent(comboBoxSkills, 0, GroupLayout.DEFAULT_SIZE,
-														Short.MAX_VALUE)
-												.addGap(12))
-										.addComponent(btnAddSelectedSkill))
-								.addGroup(gl_westPanel.createParallelGroup(Alignment.TRAILING, false)
-										.addComponent(textFieldSkillName, Alignment.LEADING)
-										.addComponent(btnAddNewSkill, Alignment.LEADING, GroupLayout.DEFAULT_SIZE,
-												GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-						.addContainerGap()));
-		gl_westPanel.setVerticalGroup(gl_westPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_westPanel.createSequentialGroup().addGap(6)
-						.addComponent(comboBoxSkills, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(41).addComponent(btnAddSelectedSkill).addGap(40).addComponent(btnAddNewSkill).addGap(52)
-						.addComponent(lblSkillName).addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(textFieldSkillName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(18).addComponent(lblSkillDescription).addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(textFieldSkillDesc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(18).addComponent(lblVendor).addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(textFieldVendor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(18).addComponent(btnAddSkill).addContainerGap(221, Short.MAX_VALUE)));
+		gl_westPanel.setHorizontalGroup(
+			gl_westPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_westPanel.createSequentialGroup()
+					.addGap(21)
+					.addGroup(gl_westPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnAddSkill)
+						.addComponent(textFieldVendor, 241, 241, 241)
+						.addComponent(lblVendor)
+						.addComponent(textFieldSkillDesc, 241, 241, 241)
+						.addComponent(lblSkillDescription)
+						.addComponent(lblSkillName)
+						.addComponent(textFieldSkillName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_westPanel.createParallelGroup(Alignment.TRAILING, false)
+							.addComponent(btnAddNewSkill, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGroup(Alignment.LEADING, gl_westPanel.createSequentialGroup()
+								.addComponent(comboBoxSkills, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addGap(12))
+							.addComponent(btnAddSelectedSkill, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+					.addContainerGap())
+		);
+		gl_westPanel.setVerticalGroup(
+			gl_westPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_westPanel.createSequentialGroup()
+					.addGap(6)
+					.addComponent(comboBoxSkills, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(41)
+					.addComponent(btnAddSelectedSkill)
+					.addGap(40)
+					.addComponent(btnAddNewSkill)
+					.addGap(52)
+					.addComponent(lblSkillName)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textFieldSkillName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(lblSkillDescription)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textFieldSkillDesc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(lblVendor)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textFieldVendor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(btnAddSkill)
+					.addContainerGap(245, Short.MAX_VALUE))
+		);
 		westPanel.setLayout(gl_westPanel);
 
 		lblSkillName.setVisible(false);
@@ -437,6 +452,8 @@ public class PanelProfile extends JPanel implements ActionListener
 			comboSkillNames.add(tempSkillNames.get(k).getSkillName());
 
 		}
+		
+		Collections.sort(comboSkillNames);
 
 		DefaultComboBoxModel cboNewModel = new DefaultComboBoxModel(comboSkillNames);
 		comboBoxSkills.setModel(cboNewModel);
