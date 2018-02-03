@@ -169,7 +169,7 @@ public class PanelProfile extends JPanel implements ActionListener
 
 		this.add(northPanel, BorderLayout.NORTH);
 
-		lblImgLabel = new JLabel(new ImageIcon("resources/MySkills_Full.jpg"));
+		lblImgLabel = new JLabel(new ImageIcon("resources/MySkills_Half.jpg"));
 		northPanel.add(lblImgLabel);
 
 		this.add(centrePanel, BorderLayout.CENTER);
