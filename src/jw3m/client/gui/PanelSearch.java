@@ -86,6 +86,9 @@ public class PanelSearch extends JPanel implements ActionListener
 	private Vector<Skill> skillList1 = new Vector<Skill>();
 	private Vector<Skill> skillList2 = new Vector<Skill>();
 	private Vector<Skill> skillList3 = new Vector<Skill>();
+	private Vector<Rating> rating1List = new Vector<Rating>();
+	private Vector<Rating> rating2List = new Vector<Rating>();
+	private Vector<Rating> rating3List = new Vector<Rating>();
 	private Vector<String> skillElement = new Vector<String>();
 	private Vector<String> conditionElement = new Vector<String>();
 	private Vector<Integer> valueElement = new Vector<Integer>();
@@ -95,6 +98,9 @@ public class PanelSearch extends JPanel implements ActionListener
 	private JLabel lblAttribute;
 	private JLabel lblOperator;
 	private JLabel lblValue;
+	private JLabel label1Text;
+	private JLabel label2Text;
+	private JLabel label3Text;
 	
 	// data vars end
 
@@ -186,7 +192,7 @@ public class PanelSearch extends JPanel implements ActionListener
 		
 		lblSearchBy3 = new JLabel("Filter by");
 		lblSearchBy3.setFont(primaryFont);
-		lblSearchBy3.setBounds(53, 165, 133, 29);
+		lblSearchBy3.setBounds(53, 166, 133, 29);
 		cPanel.add(lblSearchBy3);
 		
 		comboBoxRow1SkillAttrib = new JComboBox(skillElement);
@@ -310,6 +316,21 @@ public class PanelSearch extends JPanel implements ActionListener
 		comboBoxRow3Value.addActionListener(this);
 		cPanel.add(comboBoxRow3Value);
 		
+//		label1Text = new JLabel("Row 1 search");
+//		label1Text.setFont(primaryFont);
+//		label1Text.setBounds(170, 85, 635, 16);
+//		cPanel.add(label1Text);
+//		
+//		label2Text = new JLabel("Row 2 search");
+//		label2Text.setFont(primaryFont);
+//		label2Text.setBounds(170, 140, 714, 16);
+//		cPanel.add(label2Text);
+//		
+//		label3Text = new JLabel("Row 3 search");
+//		label3Text.setFont(primaryFont);
+//		label3Text.setBounds(170, 199, 714, 16);
+//		cPanel.add(label3Text);
+		
 
 		
 		
@@ -329,13 +350,16 @@ public class PanelSearch extends JPanel implements ActionListener
 		skillList2 = baseFrame.data_skillList;
 		skillList3 = baseFrame.data_skillList;
 		
+
+		
+		
 		skillElement.add("Knowledge");
 		skillElement.add("Work Standard");
 		skillElement.add("Autonomy");
-		skillElement.add("Complexity Coping");		
-		skillElement.add("Context Perception");
-		skillElement.add("Capability Growing");
-		skillElement.add("Collaboration");
+		skillElement.add("Coping with Complexity");		
+		skillElement.add("Perception of Context");
+		skillElement.add("Growing Capablity");
+		skillElement.add("Purposeful Collaboration");
 
 		conditionElement.add(" = " );
 		conditionElement.add(" < and = " );
@@ -357,28 +381,34 @@ public class PanelSearch extends JPanel implements ActionListener
 		logger.info("Searches panel setting default values");
 		// Default selection of skills at row 1 to 3
 		comboBoxRow1Skill.setSelectedIndex(0);
-		comboBoxRow2Skill.setSelectedIndex(-1);
-		comboBoxRow3Skill.setSelectedIndex(-1);
+		comboBoxRow2Skill.setSelectedIndex(1);
+		comboBoxRow3Skill.setSelectedIndex(2);
 		
-		// Default is 1 and then unselected , unselected
+		// Default is 0 and then unselected , unselected
 		comboBoxRow1SkillAttrib.setSelectedIndex(0);
-		comboBoxRow2SkillAttrib.setSelectedIndex(-1);
-		comboBoxRow3SkillAttrib.setSelectedIndex(-1);
+		comboBoxRow2SkillAttrib.setSelectedIndex(0);
+		comboBoxRow3SkillAttrib.setSelectedIndex(0);
 		
 		// Default selection is >=
 		comboBoxRow1Condition.setSelectedIndex(2);
-		comboBoxRow2Condition.setSelectedIndex(-1);
-		comboBoxRow3Condition.setSelectedIndex(-1);
+		comboBoxRow2Condition.setSelectedIndex(2);
+		comboBoxRow3Condition.setSelectedIndex(2);
 		
 		
 		// Default skill as 3
 		comboBoxRow1Value.setSelectedIndex(2);
-		comboBoxRow2Value.setSelectedIndex(-1);
-		comboBoxRow3Value.setSelectedIndex(-1);
+		comboBoxRow2Value.setSelectedIndex(2);
+		comboBoxRow3Value.setSelectedIndex(2);
 		
 		checkBoxRow1.setSelected(true);
 		checkBoxRow2.setSelected(false);
 //		checkBoxRow3.setSelected(false);
+		
+		
+//		label1Text.setText("");
+//		label2Text.setText("");
+//		label3Text.setText("");
+		
 		
 		
 		// first row unticked on start up
@@ -424,28 +454,111 @@ public class PanelSearch extends JPanel implements ActionListener
 		return null;
 	}
 	
-	public String searchRow(Skill skillIn, int attribIn, int conditionIn, int value)
+//	public maybe get userObj from UserName?
+//	{
+//		for (int i = 0; i < baseFrame.data_skillList.size();  i++)
+//		{
+//			if (baseFrame.data_skillList.get(i).getSkillID().equals(skillID) )
+//			{
+//				return baseFrame.data_skillList.get(i).getSkillName();
+//			}
+//				
+//		}
+//		
+//		return null;
+//	}
+	
+	
+	public Boolean filterRating(Rating rating, int attribIn, int conditionIn, int valueIn)
 	{
-		// all the comboboxes will be off by 1 comparing ???
-//		skillIn = skillIn++;
-//		attribIn = attribIn++;	
-//		conditionIn = conditionIn++;
-//		value = value++;
+		int valueToTest = -1;
+		valueIn = valueIn+1; // cos vector makes it off by 1
 		
-	//	Skill tempSkill = null;
+		switch (attribIn)
+		{
+			case 0:  valueToTest = rating.getKnowledge(); 			logger.info("Knowledge"); break;
+			case 1:  valueToTest = rating.getWorkStandard();		logger.info("WorkStandard"); break;
+			case 2:  valueToTest = rating.getAutonomy();			logger.info("Autonomy"); break;
+			case 3:  valueToTest = rating.getComplexityCoping();	logger.info("ComplexityCoping"); break;	
+			case 4:  valueToTest = rating.getContextPerception();	logger.info("ContextPerceptio"); break;
+			case 5:  valueToTest = rating.getCapabilityGrowing();	logger.info("CapabilityGrowing"); break;
+			case 6:  valueToTest = rating.getCollaboration();		logger.info("Collaboration"); break;
+			//	skillElement.add("Knowledge");
+			//	skillElement.add("Work Standard");
+			//	skillElement.add("Autonomy");
+			//	skillElement.add("Coping with Complexity");		
+			//	skillElement.add("Perception of Context");
+			//	skillElement.add("Growing Capablity");
+			//	skillElement.add("Purposeful Collaboration");
+			
+			
+		}
+		logger.info("size of list 1 " + rating1List.size() + " list 2 " + rating2List.size() + " list 3 " +  rating3List.size());
 		
-		String returnStr = "";
+		logger.info("condition case " + conditionIn);
+		logger.info("value to test " + valueToTest);
+		logger.info("value in from field  " + valueIn);
+		switch (conditionIn)
+		{
+			case 0 : if (valueToTest == valueIn) 
+						{
+							logger.info(valueToTest + " == " + valueIn);
+							return true;
+						}
+			break;
+			
+			case 1 : if (valueToTest <= valueIn) 
+						{
+							logger.info(valueToTest + " <= " + valueIn);
+							return true;
+						}
+			break;
 		
-		//
-	//	need to get SkillID to SkillName
+			case 2 : if (valueToTest >= valueIn) 
+						{
+							logger.info(valueToTest + " >= " + valueIn);
+							return true;
+						}
+			break;
+			
+			case 3 : if (valueToTest < valueIn) 
+						{
+							logger.info(valueToTest + " < " + valueIn);
+							return true;
+						}
+			break;
+			
+			case 4 : if (valueToTest > valueIn) 
+						{
+							logger.info(valueToTest + " > " + valueIn);
+							return true;
+						}
+			break;
+		}	
+			
+			
+			
+			//		conditionElement.add(" = " );
+			//		conditionElement.add(" < and = " );
+			//		conditionElement.add(" > and = " );
+			//		conditionElement.add(" < " );
+			//		conditionElement.add(" > " );
 		
-	//	getSkillName
+		
+		// So basically we find what to test then how to test it and if we fail all that we return false
+		
+		return false;
+	}
+	
 
+	
+	public String searchRow(int ratingRow, Skill skillIn, int attribIn, int conditionIn, int value)
+	{
 		
+		Vector<Rating> tempRatingList = new Vector<Rating>();
+		String rowStr = "";
 		
-	//	Skill skill = baseFrame.data_skillList.get(skillIn);
-		
-		
+
 		
 		String skillNameStr = "Skill " + skillIn.getSkillName() + "\n";
 		
@@ -454,8 +567,8 @@ public class PanelSearch extends JPanel implements ActionListener
 		Vector<Skill> skillList = baseFrame.data_skillList;
 		
 		
-		String ratingsStr = "";
-		String userNameStr = "";
+		String ratingsStr = "xxx";
+//		String userNameStr = "";
 		
 		
 		for (int i = 0; i < userList.size() ; i ++)
@@ -465,15 +578,10 @@ public class PanelSearch extends JPanel implements ActionListener
 			for (int j = 0; j < ratingVect.size() ; j ++)
 			{
 				Rating rating = ratingVect.get(j);
-	//			userNameStr = "  UserName : " + rating.getUserID() + "\n";
-				
-				// here we get is the skill the same as the filter
-				
-//				getSkillName( rating.getSkillID() );
 				
 				String s1 = skillIn.getSkillName() ;
 				String s2 = getSkillName( rating.getSkillID() );
-				
+				// if the skill matches the filter
 				if ( s1.equals(s2)     ) 
 				{
 					
@@ -481,27 +589,15 @@ public class PanelSearch extends JPanel implements ActionListener
 				// so now we just get the self rating
 					if (     rating.getRaterID().equals(   rating.getUserID()  )    )
 					{
-//						ratingsStr = ratingsStr + "Skill " + rating.getSkillID() + "\n";
-//						ratingsStr = ratingsStr + "RaterID " +	rating.getRaterID() + "\n";
-						ratingsStr = ratingsStr + "  UserID " +	rating.getUserID() + ",";
-						ratingsStr = ratingsStr + "   Knowledge:" + rating.getKnowledge() + ", ";
-						ratingsStr = ratingsStr + "   WorkStandard:" + rating.getWorkStandard() + ", ";
-						ratingsStr = ratingsStr + "   Autonomy:" + rating.getAutonomy() + ", ";
-						ratingsStr = ratingsStr + "   ComplexityCoping:" + rating.getComplexityCoping() + ", ";
-						ratingsStr = ratingsStr + "   CapabilityGrowing:" + rating.getCapabilityGrowing() + ", ";
-						ratingsStr = ratingsStr + "   Collaboration:" + rating.getCollaboration() + "\n";
+
 						
-						// we want this pattern and order
-	//					skillElement.add("Knowledge");
-	//					skillElement.add("Work Standard");
-	//					skillElement.add("Autonomy");
-	//					skillElement.add("Complexity Coping");		
-	//					skillElement.add("Context Perception");
-	//					skillElement.add("Capability Growing");
-	//					skillElement.add("Collaboration");
-								
-								
-								
+						// now switch
+						//Rating tempRatingFromSwitch = switchCases( attribIn,  conditionIn,  value);
+						if ( filterRating( rating, attribIn,  conditionIn,  value) )
+						{
+						
+							tempRatingList.add(rating);
+						}		
 								
 					}
 				} // end of is rating matching skill filter
@@ -515,6 +611,23 @@ public class PanelSearch extends JPanel implements ActionListener
 			
 		}
 		
+		if (ratingRow == 1)
+		{
+			rating1List = tempRatingList;
+			rowStr = "Row 1 (matched " + rating1List.size() + ") :";
+		}
+		
+		if (ratingRow == 2)
+		{
+			rating2List = tempRatingList;
+			rowStr = "Row 2 (matched " + rating2List.size() + ") :";
+		}
+		
+		if (ratingRow == 3)
+		{
+			rating3List = tempRatingList;
+			rowStr = "Row 3 (matched " + rating3List.size() + ") :";
+		}
 		
 		// now make a vector of ratings by taking the vector of this skill ?
 		
@@ -545,20 +658,47 @@ public class PanelSearch extends JPanel implements ActionListener
 //		( comboBoxRow2Value.getSelectedItem() != null )  )
 		
 		
-		return skillNameStr + ratingsStr + "\n";
+		return rowStr + skillNameStr; 
 		
 	}
 	
+	public String ratingListToText(Vector<Rating> ratingListIn)
+	{
+		String result = ""; 
+		
+		User tempUser;
+		
+		
+		for (int i = 0; i < ratingListIn.size();i++)
+		{
+			Rating rating = ratingListIn.get(i);
+			
+			tempUser = baseFrame.getNetUser(rating.getUserID());
+			
+			
+			result = result + "  " + tempUser.getFirstName() + " " + tempUser.getSurname()  + " | ";
+		
+//			result = result + "  UserID " +	rating.getUserID() + ",";
+			result = result + "   Knowledge:" + rating.getKnowledge() + ", ";
+			result = result + "   WorkStandard:" + rating.getWorkStandard() + ", ";
+			result = result + "   Autonomy:" + rating.getAutonomy() + ", ";
+			result = result + "   Coping with Complexity:" + rating.getComplexityCoping() + ", ";
+			result = result + "   Perception of Context:" + rating.getContextPerception() + ", ";
+			result = result + "   Growing Capablity:" + rating.getCapabilityGrowing() + ", ";
+			result = result + "   Purposeful Collaboration:" + rating.getCollaboration() + "\n";
 
-	
-
+		}
+		
+		return result;
+	}
 	
 	public void updateSearchData()
 	{
 		String currentText = txtArea.getText();
-		String result1 = "";
-		String result2 = "";
-		String result3 = "";
+		
+		String result1 = "Row 1 result : ";
+		String result2 = "Row 2 result :";
+		String result3 = "Row 3 result :";
 	
 		
 		String row1Str = lblSearchBy1.getText() + " " + 
@@ -589,6 +729,13 @@ public class PanelSearch extends JPanel implements ActionListener
 				lblIs3.getText() + " " + 
 				comboBoxRow3Condition.getSelectedItem() + " " + 
 				comboBoxRow3Value.getSelectedItem() + " ";
+		
+	
+		lblSearchBy1.setToolTipText(row1Str);
+		lblSearchBy2.setToolTipText(row2Str);
+		lblSearchBy3.setToolTipText(row3Str);
+		
+		
 //		+ "Next row enabled (" + checkBoxRow3.isSelected() + ").";
 		
 		
@@ -601,7 +748,7 @@ public class PanelSearch extends JPanel implements ActionListener
 				( comboBoxRow1Value.getSelectedItem() != null )  )
 		{
 			// row 1 good to search
-			result1 = searchRow( (Skill)comboBoxRow1Skill.getSelectedItem(), 
+			result1 = searchRow(1, (Skill)comboBoxRow1Skill.getSelectedItem(), 
 						comboBoxRow1SkillAttrib.getSelectedIndex() , 
 						comboBoxRow1Condition.getSelectedIndex() ,
 						comboBoxRow1Value.getSelectedIndex() );
@@ -619,7 +766,7 @@ public class PanelSearch extends JPanel implements ActionListener
 				( comboBoxRow2Value.getSelectedItem() != null )  )
 		{
 			// row 2 good to search
-			result2 = searchRow( (Skill)comboBoxRow2Skill.getSelectedItem(), 
+			result2 = searchRow(2, (Skill)comboBoxRow2Skill.getSelectedItem(), 
 					comboBoxRow2SkillAttrib.getSelectedIndex() , 
 					comboBoxRow2Condition.getSelectedIndex() ,
 					comboBoxRow2Value.getSelectedIndex() );
@@ -638,7 +785,7 @@ public class PanelSearch extends JPanel implements ActionListener
 				( comboBoxRow3Value.getSelectedItem() != null )  )
 		{
 			// row 3 good to search
-			result3 = searchRow( (Skill)comboBoxRow3Skill.getSelectedItem(), 
+			result3 = searchRow(3, (Skill)comboBoxRow3Skill.getSelectedItem(), 
 					comboBoxRow3SkillAttrib.getSelectedIndex() , 
 					comboBoxRow3Condition.getSelectedIndex() ,
 					comboBoxRow3Value.getSelectedIndex() );
@@ -648,20 +795,25 @@ public class PanelSearch extends JPanel implements ActionListener
 			// row 3 not good to search
 		}
 		
-
-//		result2 = "faking blank";
-//		result3 = "faking blank";
-//		
 		
-		txtArea.setText(row1Str + "\n" + row2Str + "\n" + row3Str + "\n" + 
-				"--------------------" + "\n" +
+		
+	
+		result1 = result1 + ratingListToText(rating1List);
+		result2 = result2 + ratingListToText(rating2List);
+		result3 = result3 + ratingListToText(rating3List);
+		
+		
+		
+		txtArea.setText(
 				result1 + "\n" +
 				result2 + "\n" +
-				result3 +
-				"--------------------"
+				result3  );
 		
-		);
-		
+//		txtArea.setText(
+//				rating1List + "\n" +
+//				rating2List + "\n" +
+//				rating3List  );
+
 		
 	}
 	
@@ -681,6 +833,12 @@ public class PanelSearch extends JPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
+		
+		//By default i must clear result vectors 1 2 and 3
+		rating1List.removeAllElements();
+		rating2List.removeAllElements();
+		rating3List.removeAllElements();
+		
 		Object source = e.getSource();
 		
 		if (source == comboBoxRow1SkillAttrib )
