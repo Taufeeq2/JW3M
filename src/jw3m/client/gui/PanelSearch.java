@@ -45,8 +45,8 @@ public class PanelSearch extends JPanel implements ActionListener
 	private DefaultTableModel model = null;
 	private JScrollPane scrollPane;
 	private JTable table;
-	private Vector<Skill> skillList = new Vector<Skill>();
-	private Vector<Skill> skillNames = new Vector<Skill>();
+
+	
 	private Rating ratee;
 	private JComboBox separatorComboBox ;
 	
@@ -76,7 +76,23 @@ public class PanelSearch extends JPanel implements ActionListener
 	private JLabel lblIs1;
 	private JLabel lblIs2;
 	private JLabel lblIs3;
+	private JComboBox comboBoxRow1Value;
+	private JComboBox comboBoxRow2Value;
+	private JComboBox comboBoxRow3Value;
+	
+	// data vars start
+	private Vector<Skill> skillList1 = new Vector<Skill>();
+	private Vector<Skill> skillList2 = new Vector<Skill>();
+	private Vector<Skill> skillList3 = new Vector<Skill>();
+	private Vector<String> skillElement = new Vector<String>();
+	private Vector<String> conditionElement = new Vector<String>();
+	private Vector<Integer> valueElement = new Vector<Integer>();
+	
+	private Vector<Skill> skillNames = new Vector<Skill>();
+	
+	// data vars end
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public PanelSearch(SkillsClient frame)
 	{
 		baseFrame = frame;
@@ -84,20 +100,13 @@ public class PanelSearch extends JPanel implements ActionListener
         secondaryFont = baseFrame.getSecondaryFont();
         PropertyConfigurator.configure("log4j.properties");
         
+        this.setupData();
+        
         nPanel = new JPanel();
 		cPanel = new JPanel();
         
 		lblImgLabel = new JLabel(new ImageIcon("resources/RateSomeone_Full.jpg"));
 		nPanel.add(lblImgLabel);
-	
-//		btnSubmit = new JButton("Submit");
-//		btnSubmit.setBounds(690, 484, 110, 25);
-//		btnSubmit.setFont(primaryFont);
-//		btnSubmit.addActionListener(this);
-//		btnSubmit.setEnabled(false);
-		
-		
-		
 	
 		setLayout(new BorderLayout(0, 0));
 		cPanel.setLayout(null);
@@ -109,10 +118,6 @@ public class PanelSearch extends JPanel implements ActionListener
 	    header.setFont(primaryFont);
 
 	    JTextArea txtArea = new JTextArea("test");
-		
-
-		
-
 		
 		
 
@@ -145,7 +150,7 @@ public class PanelSearch extends JPanel implements ActionListener
 		lblFilterBy3.setBounds(53, 165, 133, 29);
 		cPanel.add(lblFilterBy3);
 		
-		comboBoxRow1SkillAttrib = new JComboBox();
+		comboBoxRow1SkillAttrib = new JComboBox(skillElement);
 		comboBoxRow1SkillAttrib.setFont(primaryFont);
 		comboBoxRow1SkillAttrib.setBounds(420, 60, 175, 22);
 		cPanel.add(comboBoxRow1SkillAttrib);
@@ -155,7 +160,7 @@ public class PanelSearch extends JPanel implements ActionListener
 		chckbxRow1.setBounds(879, 59, 113, 25);
 		cPanel.add(chckbxRow1);
 		
-		comboBoxRow2SkillAttrib = new JComboBox();
+		comboBoxRow2SkillAttrib = new JComboBox(skillElement);
 		comboBoxRow2SkillAttrib.setFont(primaryFont);
 		comboBoxRow2SkillAttrib.setBounds(420, 114, 175, 22);
 		cPanel.add(comboBoxRow2SkillAttrib);
@@ -165,7 +170,7 @@ public class PanelSearch extends JPanel implements ActionListener
 		checkBoxRow2.setBounds(879, 113, 113, 25);
 		cPanel.add(checkBoxRow2);
 		
-		comboBoxRow3SkillAttrib = new JComboBox();
+		comboBoxRow3SkillAttrib = new JComboBox(skillElement);
 		comboBoxRow3SkillAttrib.setFont(primaryFont);
 		comboBoxRow3SkillAttrib.setBounds(420, 169, 175, 22);
 		cPanel.add(comboBoxRow3SkillAttrib);
@@ -175,17 +180,17 @@ public class PanelSearch extends JPanel implements ActionListener
 		checkBoxRow3.setBounds(879, 168, 113, 25);
 		cPanel.add(checkBoxRow3);
 		
-		comboBoxRow1Skill = new JComboBox();
+		comboBoxRow1Skill = new JComboBox(skillList1);
 		comboBoxRow1Skill.setFont(primaryFont);
 		comboBoxRow1Skill.setBounds(170, 60, 133, 22);
 		cPanel.add(comboBoxRow1Skill);
 		
-		comboBoxRow2Skill = new JComboBox();
+		comboBoxRow2Skill = new JComboBox(skillList2);
 		comboBoxRow2Skill.setFont(primaryFont);
 		comboBoxRow2Skill.setBounds(170, 114, 133, 22);
 		cPanel.add(comboBoxRow2Skill);
 		
-		comboBoxRow3Skill = new JComboBox();
+		comboBoxRow3Skill = new JComboBox(skillList3);
 		comboBoxRow3Skill.setFont(primaryFont);
 		comboBoxRow3Skill.setBounds(170, 169, 133, 22);
 		cPanel.add(comboBoxRow3Skill);
@@ -205,19 +210,19 @@ public class PanelSearch extends JPanel implements ActionListener
 		lblWhere3.setBounds(321, 172, 56, 16);
 		cPanel.add(lblWhere3);
 		
-		comboBoxRow1Condition = new JComboBox();
+		comboBoxRow1Condition = new JComboBox(conditionElement);
 		comboBoxRow1Condition.setFont(primaryFont);
-		comboBoxRow1Condition.setBounds(701, 60, 139, 22);
+		comboBoxRow1Condition.setBounds(701, 60, 66, 22);
 		cPanel.add(comboBoxRow1Condition);
 		
-		comboBoxRow2Condition = new JComboBox();
+		comboBoxRow2Condition = new JComboBox(conditionElement);
 		comboBoxRow2Condition.setFont(primaryFont);
-		comboBoxRow2Condition.setBounds(701, 114, 139, 22);
+		comboBoxRow2Condition.setBounds(701, 114, 66, 22);
 		cPanel.add(comboBoxRow2Condition);
 		
-		comboBoxRow3Condition = new JComboBox();
+		comboBoxRow3Condition = new JComboBox(conditionElement);
 		comboBoxRow3Condition.setFont(primaryFont);
-		comboBoxRow3Condition.setBounds(701, 169, 139, 22);
+		comboBoxRow3Condition.setBounds(701, 169, 66, 22);
 		cPanel.add(comboBoxRow3Condition);
 		
 		lblIs1 = new JLabel("is");
@@ -235,10 +240,56 @@ public class PanelSearch extends JPanel implements ActionListener
 		lblIs3.setBounds(637, 172, 34, 16);
 		cPanel.add(lblIs3);
 		
+		comboBoxRow1Value = new JComboBox(valueElement);
+		comboBoxRow1Value.setFont(primaryFont);
+		comboBoxRow1Value.setBounds(802, 59, 56, 22);
+		cPanel.add(comboBoxRow1Value);
+		
+		comboBoxRow2Value = new JComboBox(valueElement);
+		comboBoxRow1Value.setFont(primaryFont);
+		comboBoxRow2Value.setBounds(802, 113, 56, 22);
+		cPanel.add(comboBoxRow2Value);
+		
+		comboBoxRow3Value = new JComboBox(valueElement);
+		comboBoxRow1Value.setFont(primaryFont);
+		comboBoxRow3Value.setBounds(802, 168, 56, 22);
+		cPanel.add(comboBoxRow3Value);
+		
 		
 	
  
 
+		
+	}
+	
+	public void setupData()
+	{
+		logger.info("Searches panel setting up data *******************************");
+		
+		skillList1 = baseFrame.data_skillList;
+		skillList2 = baseFrame.data_skillList;
+		skillList3 = baseFrame.data_skillList;
+		
+		skillElement.add("Knowledge");
+		skillElement.add("Work Standard");
+		skillElement.add("Autonomy");
+		skillElement.add("Complexity Coping");		
+		skillElement.add("Context Perception");
+		skillElement.add("Capablity Growing");
+		skillElement.add("Collaboration");
+
+		conditionElement.add(" = " );
+		conditionElement.add(" =< " );
+		conditionElement.add(" => " );
+		conditionElement.add(" < " );
+		conditionElement.add(" > " );
+		
+		valueElement.add(1);
+		valueElement.add(2);
+		valueElement.add(3);
+		valueElement.add(4);
+		valueElement.add(5);
+	
 		
 	}
 	
