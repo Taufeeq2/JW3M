@@ -334,7 +334,7 @@ public class PanelSearch extends JPanel implements ActionListener
 		skillElement.add("Autonomy");
 		skillElement.add("Complexity Coping");		
 		skillElement.add("Context Perception");
-		skillElement.add("Capablity Growing");
+		skillElement.add("Capability Growing");
 		skillElement.add("Collaboration");
 
 		conditionElement.add(" = " );
@@ -410,11 +410,155 @@ public class PanelSearch extends JPanel implements ActionListener
 		
 	}
 	
+	public String getSkillName(int skillID)
+	{
+		for (int i = 0; i < baseFrame.data_skillList.size();  i++)
+		{
+			if (baseFrame.data_skillList.get(i).getSkillID().equals(skillID) )
+			{
+				return baseFrame.data_skillList.get(i).getSkillName();
+			}
+				
+		}
+		
+		return null;
+	}
+	
+	public String searchRow(Skill skillIn, int attribIn, int conditionIn, int value)
+	{
+		// all the comboboxes will be off by 1 comparing ???
+//		skillIn = skillIn++;
+//		attribIn = attribIn++;	
+//		conditionIn = conditionIn++;
+//		value = value++;
+		
+	//	Skill tempSkill = null;
+		
+		String returnStr = "";
+		
+		//
+	//	need to get SkillID to SkillName
+		
+	//	getSkillName
+
+		
+		
+	//	Skill skill = baseFrame.data_skillList.get(skillIn);
+		
+		
+		
+		String skillNameStr = "Skill " + skillIn.getSkillName() + "\n";
+		
+			
+		Vector<User> userList = baseFrame.getNetSkillsUser(skillIn);
+		Vector<Skill> skillList = baseFrame.data_skillList;
+		
+		
+		String ratingsStr = "";
+		String userNameStr = "";
+		
+		
+		for (int i = 0; i < userList.size() ; i ++)
+		{
+			// now i have a vector of rating
+			Vector<Rating> ratingVect = baseFrame.getNetUserRating(userList.get(i));
+			for (int j = 0; j < ratingVect.size() ; j ++)
+			{
+				Rating rating = ratingVect.get(j);
+	//			userNameStr = "  UserName : " + rating.getUserID() + "\n";
+				
+				// here we get is the skill the same as the filter
+				
+//				getSkillName( rating.getSkillID() );
+				
+				String s1 = skillIn.getSkillName() ;
+				String s2 = getSkillName( rating.getSkillID() );
+				
+				if ( s1.equals(s2)     ) 
+				{
+					
+				
+				// so now we just get the self rating
+					if (     rating.getRaterID().equals(   rating.getUserID()  )    )
+					{
+//						ratingsStr = ratingsStr + "Skill " + rating.getSkillID() + "\n";
+//						ratingsStr = ratingsStr + "RaterID " +	rating.getRaterID() + "\n";
+						ratingsStr = ratingsStr + "  UserID " +	rating.getUserID() + ",";
+						ratingsStr = ratingsStr + "   Knowledge:" + rating.getKnowledge() + ", ";
+						ratingsStr = ratingsStr + "   WorkStandard:" + rating.getWorkStandard() + ", ";
+						ratingsStr = ratingsStr + "   Autonomy:" + rating.getAutonomy() + ", ";
+						ratingsStr = ratingsStr + "   ComplexityCoping:" + rating.getComplexityCoping() + ", ";
+						ratingsStr = ratingsStr + "   CapabilityGrowing:" + rating.getCapabilityGrowing() + ", ";
+						ratingsStr = ratingsStr + "   Collaboration:" + rating.getCollaboration() + "\n";
+						
+						// we want this pattern and order
+	//					skillElement.add("Knowledge");
+	//					skillElement.add("Work Standard");
+	//					skillElement.add("Autonomy");
+	//					skillElement.add("Complexity Coping");		
+	//					skillElement.add("Context Perception");
+	//					skillElement.add("Capability Growing");
+	//					skillElement.add("Collaboration");
+								
+								
+								
+								
+					}
+				} // end of is rating matching skill filter
+			}
+			
+			// now i want to get the self ratings only
+			
+			
+			
+		//	ratingsStr = ratingsStr +  ) + "\n";
+			
+		}
+		
+		
+		// now make a vector of ratings by taking the vector of this skill ?
+		
+		
+//		
+//		skillList.get(1).getSkillName() 
+//		
+//		
+//		Vector<User> userList = baseFrame.getNetSkillsUser(   skillIn    );
+		
+//		0) Skill name				
+//		1) Vector of users
+// 	    2) Now filter by atribute where
+//		3) =
+//		4) skill attribute rating of 3
+//		5) return String of users
+
+
+//		skillIn
+//		attribIn
+//		conditionIn
+//		value
+		
+		
+//		( comboBoxRow2Skill.getSelectedItem() != null ) &&
+//		( comboBoxRow2SkillAttrib.getSelectedItem() != null ) && 
+//		( comboBoxRow2Condition.getSelectedItem() != null ) && 
+//		( comboBoxRow2Value.getSelectedItem() != null )  )
+		
+		
+		return skillNameStr + ratingsStr + "\n";
+		
+	}
+	
+
+	
+
 	
 	public void updateSearchData()
 	{
 		String currentText = txtArea.getText();
-		
+		String result1 = "";
+		String result2 = "";
+		String result3 = "";
 	
 		
 		String row1Str = lblSearchBy1.getText() + " " + 
@@ -430,13 +574,13 @@ public class PanelSearch extends JPanel implements ActionListener
 		
 		
 		String row2Str = lblSearchBy2.getText() + " " + 
-					comboBoxRow2Skill.getSelectedItem() + " " + 
-					lblWhere2.getText() + " " + 
-					comboBoxRow2SkillAttrib.getSelectedItem() + " " + 
-					lblIs2.getText() + " " + 
-					comboBoxRow2Condition.getSelectedItem() + " " + 
-					comboBoxRow2Value.getSelectedItem() + " " + 
-					"Next row enabled (" + checkBoxRow2.isSelected() + ").";
+				comboBoxRow2Skill.getSelectedItem() + " " + 
+				lblWhere2.getText() + " " + 
+				comboBoxRow2SkillAttrib.getSelectedItem() + " " + 
+				lblIs2.getText() + " " + 
+				comboBoxRow2Condition.getSelectedItem() + " " + 
+				comboBoxRow2Value.getSelectedItem() + " " + 
+				"Next row enabled (" + checkBoxRow2.isSelected() + ").";
 		
 		String row3Str = lblSearchBy3.getText() + " " + 
 				comboBoxRow3Skill.getSelectedItem() + " " + 
@@ -448,12 +592,91 @@ public class PanelSearch extends JPanel implements ActionListener
 //		+ "Next row enabled (" + checkBoxRow3.isSelected() + ").";
 		
 		
+//		Skill temp = (Skill)comboBoxRow1Skill.getSelectedItem();
 		
+		// If row 1 not null
+		if (  ( comboBoxRow1Skill.getSelectedItem() != null ) &&
+				( comboBoxRow1SkillAttrib.getSelectedItem() != null ) && 
+				( comboBoxRow1Condition.getSelectedItem() != null ) && 
+				( comboBoxRow1Value.getSelectedItem() != null )  )
+		{
+			// row 1 good to search
+			result1 = searchRow( (Skill)comboBoxRow1Skill.getSelectedItem(), 
+						comboBoxRow1SkillAttrib.getSelectedIndex() , 
+						comboBoxRow1Condition.getSelectedIndex() ,
+						comboBoxRow1Value.getSelectedIndex() );
+		}
+			else
+		{
+			// row 2 not good to search
+		}
+ 
+		// If row 1 checked and rest not null from 2 !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		if (  checkBoxRow1.isSelected() &&
+				( comboBoxRow2Skill.getSelectedItem() != null ) &&
+				( comboBoxRow2SkillAttrib.getSelectedItem() != null ) && 
+				( comboBoxRow2Condition.getSelectedItem() != null ) && 
+				( comboBoxRow2Value.getSelectedItem() != null )  )
+		{
+			// row 2 good to search
+			result2 = searchRow( (Skill)comboBoxRow2Skill.getSelectedItem(), 
+					comboBoxRow2SkillAttrib.getSelectedIndex() , 
+					comboBoxRow2Condition.getSelectedIndex() ,
+					comboBoxRow2Value.getSelectedIndex() );
+			
+		}
+			else
+		{
+			// row 2 not good to search
+		}
 		
-		txtArea.setText(row1Str + "\n" + row2Str + "\n" + row3Str + "\n");
+		// If row 2 checked and rest not null from 3   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		if (  checkBoxRow2.isSelected() &&
+				( comboBoxRow3Skill.getSelectedItem() != null ) &&
+				( comboBoxRow3SkillAttrib.getSelectedItem() != null ) && 
+				( comboBoxRow3Condition.getSelectedItem() != null ) && 
+				( comboBoxRow3Value.getSelectedItem() != null )  )
+		{
+			// row 3 good to search
+			result3 = searchRow( (Skill)comboBoxRow3Skill.getSelectedItem(), 
+					comboBoxRow3SkillAttrib.getSelectedIndex() , 
+					comboBoxRow3Condition.getSelectedIndex() ,
+					comboBoxRow3Value.getSelectedIndex() );
+		}
+			else
+		{
+			// row 3 not good to search
+		}
+		
+
+//		result2 = "faking blank";
+//		result3 = "faking blank";
+//		
+		
+		txtArea.setText(row1Str + "\n" + row2Str + "\n" + row3Str + "\n" + 
+				"--------------------" + "\n" +
+				result1 + "\n" +
+				result2 + "\n" +
+				result3 +
+				"--------------------"
+		
+		);
 		
 		
 	}
+	
+//	public String getStuff(Vector<User> userListIn)
+//	{
+//		String resultStr = "";
+//		
+//		for (int i = 0; i < userListIn.size() ; i ++ )
+//		{
+//			resultStr = resultStr + userListIn.get(i) + ":" + baseFrame.getnet;
+//			
+//		}
+//		
+//		return resultStr;
+//	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e)
@@ -462,7 +685,7 @@ public class PanelSearch extends JPanel implements ActionListener
 		
 		if (source == comboBoxRow1SkillAttrib )
 		{
-			
+			System.out.println("!!!!!!!!    index is   " + comboBoxRow1SkillAttrib.getSelectedIndex() );
 		}
 		
 		if (source == comboBoxRow2SkillAttrib )
@@ -569,7 +792,7 @@ public class PanelSearch extends JPanel implements ActionListener
 		
 		// Default code on any action
 		
-		logger.info("Search panel action taking place");
+		//logger.info("Search panel action taking place");
 		this.updateSearchData();
 		
 		
