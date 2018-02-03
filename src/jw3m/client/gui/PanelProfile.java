@@ -896,6 +896,10 @@ public class PanelProfile extends JPanel implements ActionListener
 			JOptionPane.showMessageDialog(this, "Skill added");
 
 			tableRedraw();
+			
+			textFieldSkillName.setText(null);
+			textFieldSkillDesc.setText(null);
+			textFieldVendor.setText(null);
 
 			lblSkillName.setVisible(false);
 			lblVendor.setVisible(false);
