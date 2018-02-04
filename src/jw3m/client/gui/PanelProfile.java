@@ -69,9 +69,11 @@ public class PanelProfile extends JPanel implements ActionListener
 	private Vector<UserSkill> userSkills = new Vector<UserSkill>();
 	private Vector<UserSkill> tmpUserSkills = new Vector<UserSkill>();
 	private Vector<String> allSkillVect = new Vector<String>();
+	private Vector<String> prePopSkill = new Vector<String>();
 	private JScrollPane scrollPane;
 	private User tempUser = new User();
 	private int skill = 0;
+	private int ratingSkill = 0;
 	private int skillIDAdd = 0;
 	private int knowledge = 0;
 	private int workStandard = 0;
@@ -80,7 +82,20 @@ public class PanelProfile extends JPanel implements ActionListener
 	private int contextPerception = 0;
 	private int capabilityGrowing = 0;
 	private int collaboration = 0;
+	
+	private int know1 = 0;
+	private int work1 = 0;
+	private int auto1 = 0;
+	private int comp1 = 0;
+	private int cont1 = 0;
+	private int capa1 = 0;
+	private int coll1 = 0;
+	
 	private int aveSelfRating = 0;
+	private double tmpAveSelfRating = 0;
+	private double tmpColleagueRating = 0;
+	private double tmpCollRat1 = 0;
+	
 	private int aveColleagueRating = 0;
 	private String skillName = null;
 	private Skill newSkill = null;
@@ -195,6 +210,8 @@ public class PanelProfile extends JPanel implements ActionListener
 
 		tempUser = baseFrame.authenticatedUser;
 
+		comboSkillNames.removeAllElements();
+
 		tempSkillNames = baseFrame.data_skillList;
 
 		tmpUserSkills = baseFrame.getNetUserSkills(tempUser);
@@ -219,6 +236,7 @@ public class PanelProfile extends JPanel implements ActionListener
 		}
 
 		Collections.sort(comboSkillNames);
+
 		comboBoxSkills = new JComboBox(comboSkillNames);
 		comboBoxSkills.setFont(primaryFont);
 
@@ -252,50 +270,35 @@ public class PanelProfile extends JPanel implements ActionListener
 		btnAddSkill.addActionListener(this);
 
 		GroupLayout gl_westPanel = new GroupLayout(westPanel);
-		gl_westPanel.setHorizontalGroup(
-			gl_westPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_westPanel.createSequentialGroup()
-					.addGap(21)
-					.addGroup(gl_westPanel.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(btnAddSkill)
-						.addComponent(textFieldVendor, 241, 241, Short.MAX_VALUE)
-						.addComponent(lblVendor)
-						.addComponent(textFieldSkillDesc, 241, 241, Short.MAX_VALUE)
-						.addComponent(lblSkillDescription)
+		gl_westPanel.setHorizontalGroup(gl_westPanel.createParallelGroup(Alignment.LEADING).addGroup(gl_westPanel
+				.createSequentialGroup().addGap(21)
+				.addGroup(gl_westPanel.createParallelGroup(Alignment.LEADING, false).addComponent(btnAddSkill)
+						.addComponent(textFieldVendor, 241, 241, Short.MAX_VALUE).addComponent(lblVendor)
+						.addComponent(textFieldSkillDesc, 241, 241, Short.MAX_VALUE).addComponent(lblSkillDescription)
 						.addComponent(lblSkillName)
-						.addComponent(btnAddNewSkill, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(btnAddNewSkill, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE)
 						.addGroup(gl_westPanel.createSequentialGroup()
-							.addComponent(comboBoxSkills, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addGap(12))
-						.addComponent(btnAddSelectedSkill, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(comboBoxSkills, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGap(12))
+						.addComponent(btnAddSelectedSkill, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE)
 						.addComponent(textFieldSkillName))
-					.addContainerGap())
-		);
-		gl_westPanel.setVerticalGroup(
-			gl_westPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_westPanel.createSequentialGroup()
-					.addGap(6)
-					.addComponent(comboBoxSkills, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(41)
-					.addComponent(btnAddSelectedSkill)
-					.addGap(40)
-					.addComponent(btnAddNewSkill)
-					.addGap(52)
-					.addComponent(lblSkillName)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textFieldSkillName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(lblSkillDescription)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textFieldSkillDesc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(lblVendor)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textFieldVendor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(btnAddSkill)
-					.addContainerGap(245, Short.MAX_VALUE))
-		);
+				.addContainerGap()));
+		gl_westPanel.setVerticalGroup(gl_westPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_westPanel.createSequentialGroup().addGap(6)
+						.addComponent(comboBoxSkills, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addGap(41).addComponent(btnAddSelectedSkill).addGap(40).addComponent(btnAddNewSkill).addGap(52)
+						.addComponent(lblSkillName).addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(textFieldSkillName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addGap(18).addComponent(lblSkillDescription).addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(textFieldSkillDesc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addGap(18).addComponent(lblVendor).addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(textFieldVendor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addGap(18).addComponent(btnAddSkill).addContainerGap(245, Short.MAX_VALUE)));
 		westPanel.setLayout(gl_westPanel);
 
 		lblSkillName.setVisible(false);
@@ -352,71 +355,120 @@ public class PanelProfile extends JPanel implements ActionListener
 		// ***************************************************************************************
 		tempUser = baseFrame.authenticatedUser;
 		model.setRowCount(0);
-		try
+
+		baseFrame.getNetSkillList();
+		skillList = baseFrame.data_skillList;
+
+		userSkills = baseFrame.getNetUserSkills(tempUser);
+
+		for (int t = 0; t < userSkills.size(); t++)
 		{
-			baseFrame.getNetSkillList();
-			skillList = baseFrame.data_skillList;
+			skill = userSkills.get(t).getSkillID();
 
-			userSkills = baseFrame.getNetUserSkills(tempUser);
-
-			for (int t = 0; t < userSkills.size(); t++)
+			// ***************************************************************************
+			int j = 0;
+			while (j < skillList.size())
 			{
-				skill = userSkills.get(t).getSkillID();
-
-				for (int j = 0; j < skillList.size(); j++)
+				if (skill != skillList.get(j).getSkillID())
 				{
-					if (skill == skillList.get(j).getSkillID())
+					j++;
+				} else
+				{
+					skillName = skillList.get(j).getSkillName();
+
+					newSkill = new Skill();
+					newSkill.setSkillID(skillList.get(j).getSkillID());
+					newSkill.setSkillName(skillList.get(j).getSkillName());
+					newSkill.setSkillDescription(skillList.get(j).getSkillDescription());
+					newSkill.setSkillVendor(skillList.get(j).getSkillVendor());
+
+					break;
+				}
+			} // end while
+				// ******************************************************************************
+
+			ratingVect = baseFrame.getNetSkillRating(newSkill);
+
+			// ******************************************************************************
+			knowledge = 0;
+			workStandard = 0;
+			autonomy = 0;
+			complexityCoping = 0;
+			contextPerception = 0;
+			capabilityGrowing = 0;
+			collaboration = 0;
+			aveSelfRating = 0;
+			aveColleagueRating = 0;
+
+			int k = 0;
+			String tmpUserId = null;
+			tmpUserId = baseFrame.authenticatedUser.getUserName();
+
+			while (k < ratingVect.size())
+			{
+				if (ratingVect.get(k).getSkillID() == skill && ratingVect.get(k).getRaterID().equals(tmpUserId)
+						&& ratingVect.get(k).getUserID().equals(tmpUserId))
+				{
+					knowledge = ratingVect.get(k).getKnowledge();
+					workStandard = ratingVect.get(k).getWorkStandard();
+					autonomy = ratingVect.get(k).getAutonomy();
+					complexityCoping = ratingVect.get(k).getComplexityCoping();
+					contextPerception = ratingVect.get(k).getContextPerception();
+					capabilityGrowing = ratingVect.get(k).getCapabilityGrowing();
+					collaboration = ratingVect.get(k).getCollaboration();
+					tmpAveSelfRating = (knowledge + workStandard + autonomy + complexityCoping + contextPerception
+							+ capabilityGrowing + collaboration) / 7 + 0.5;
+					aveSelfRating = (int) (tmpAveSelfRating);
+					//aveColleagueRating = 0;
+					break;
+				} else
+				{
+					k++;
+				}
+			} // end while
+
+			int noColRat = 0;
+			tmpColleagueRating = 0;
+			tmpCollRat1 = 0;
+						
+			for (int z = 0; z < ratingVect.size(); z++)
+			{
+				know1 = 0;
+				work1 = 0;
+				auto1 = 0;
+				comp1 = 0;
+				cont1 = 0;
+				capa1 = 0;
+				coll1 = 0;
+				
+				if (!ratingVect.get(z).getRaterID().equals(tmpUserId))
+				{
+					if (ratingVect.get(z).getSkillID() == skill && ratingVect.get(z).getUserID().equals(tmpUserId))
 					{
-						skillName = skillList.get(j).getSkillName();
-						// *******************************************************************
-
-						newSkill = new Skill();
-						newSkill.setSkillID(skillList.get(j).getSkillID());
-						newSkill.setSkillName(skillList.get(j).getSkillName());
-						newSkill.setSkillDescription(skillList.get(j).getSkillDescription());
-						newSkill.setSkillVendor(skillList.get(j).getSkillVendor());
-						ratingVect = baseFrame.getNetSkillRating(newSkill);
-
-						// *******************************************************************
-						if (ratingVect.size() > 0)
-						{
-							knowledge = ratingVect.firstElement().getKnowledge();
-							workStandard = ratingVect.firstElement().getWorkStandard();
-							autonomy = ratingVect.firstElement().getAutonomy();
-							complexityCoping = ratingVect.firstElement().getComplexityCoping();
-							contextPerception = ratingVect.firstElement().getContextPerception();
-							capabilityGrowing = ratingVect.firstElement().getCapabilityGrowing();
-							collaboration = ratingVect.firstElement().getCollaboration();
-							aveSelfRating = (int) ((knowledge + workStandard + autonomy + complexityCoping
-									+ contextPerception + capabilityGrowing + collaboration) / 7 + 0.5);
-							aveColleagueRating = 0;
-						} else
-						{
-							knowledge = 0;
-							workStandard = 0;
-							autonomy = 0;
-							complexityCoping = 0;
-							contextPerception = 0;
-							capabilityGrowing = 0;
-							collaboration = 0;
-							aveSelfRating = 0;
-							aveColleagueRating = 0;
-						}
-
-						Object obj[] =
-						{ tempUser.getUserName(), skill, skillName, knowledge, workStandard, autonomy, complexityCoping,
-								contextPerception, capabilityGrowing, collaboration, aveSelfRating, aveColleagueRating,
-								"Update", "Delete" };
-						model.addRow(obj);
-
+					noColRat++;
+					know1 = ratingVect.get(z).getKnowledge();
+					work1 = ratingVect.get(z).getWorkStandard();
+					auto1 = ratingVect.get(z).getAutonomy();
+					comp1 = ratingVect.get(z).getComplexityCoping();
+					cont1 = ratingVect.get(z).getContextPerception();
+					capa1 = ratingVect.get(z).getCapabilityGrowing();
+					coll1 = ratingVect.get(z).getCollaboration();
+					tmpCollRat1 = (know1 + work1 + auto1 + comp1 + cont1 + capa1 + coll1) / 7;
+					tmpColleagueRating = (tmpColleagueRating + tmpCollRat1) / noColRat + 0.5;
+					aveColleagueRating = (int) (tmpColleagueRating);
+					System.out.println("%%%%%%%%%%%%% no of colleague ratings: " + noColRat + "avecolrat "  + aveColleagueRating + 
+					                    "temp col rat  " + tmpColleagueRating + "knowledge " + know1);
 					}
-
 				}
 			}
-
-		} catch (Exception e1)
-		{
-			e1.printStackTrace();
+			// *********************************************************************8
+			
+			
+			Object obj[] =
+			{ tempUser.getUserName(), skill, skillName, knowledge, workStandard, autonomy, complexityCoping,
+					contextPerception, capabilityGrowing, collaboration, aveSelfRating, aveColleagueRating, "Update",
+					"Delete" };
+			model.addRow(obj);
 		}
 
 	}
@@ -608,9 +660,6 @@ public class PanelProfile extends JPanel implements ActionListener
 
 				for (int i = 0; i < model.getRowCount(); i++)
 				{
-					// System.out.println("number of rows: " +
-					// model.getRowCount());
-
 					if (model.getValueAt(i, 2) != null)
 					{
 						for (int count = 0; count < model.getColumnCount(); count++)
@@ -635,10 +684,7 @@ public class PanelProfile extends JPanel implements ActionListener
 						level = ((int) rating[3] + (int) rating[4] + (int) rating[5] + (int) rating[6] + (int) rating[7]
 								+ (int) rating[8] + (int) rating[9]) / 7;
 						ratee.setLevel(level);
-						System.out.println("Level is: " + (ratee.getKnowledge() + ratee.getWorkStandard()
-								+ ratee.getAutonomy() + ratee.getComplexityCoping() + ratee.getContextPerception()
-								+ ratee.getCapabilityGrowing() + ratee.getCollaboration()) / 7);
-						System.out.println("level: " + level + " skill id: " + ratee.getSkillID());
+						
 						table.setValueAt(level, i, 10);
 
 						baseFrame.setNetAddRating(ratee);
@@ -818,14 +864,14 @@ public class PanelProfile extends JPanel implements ActionListener
 			{
 				if (comboSkillNames.get(m).equals(checkSkill))
 				{
-					alreadyAdded = false;
+					alreadyAdded = true;
 					break;
 				} else
 				{
-					alreadyAdded = true;
+					alreadyAdded = false;
 				}
 			}
-			if (!alreadyAdded)
+			if (alreadyAdded)
 			{
 				baseFrame.setNetUserSkills(baseFrame.authenticatedUser, newSkill);
 				JOptionPane.showMessageDialog(this, "Skill added");
@@ -869,24 +915,24 @@ public class PanelProfile extends JPanel implements ActionListener
 			skillAdd = baseFrame.data_skillList;
 
 			String checkSkill = (textFieldSkillName.getText().toString());
-			
-			//**************************************************
+
+			// **************************************************
 			boolean alreadyAdded = true;
 
 			for (int n = 0; n < skillAdd.size(); n++)
 			{
-				if (skillAdd.get(n).equals(checkSkill))
+				if (skillAdd.get(n).getSkillName().equals(checkSkill))
 				{
-					alreadyAdded = false;
+					alreadyAdded = true;
 					break;
 				} else
 				{
-					alreadyAdded = true;
+					alreadyAdded = false;
 				}
 			}
 			if (alreadyAdded)
-			//*************************************************************	
-			//if (skillAdd.contains(checkSkill))
+			// *************************************************************
+			// if (skillAdd.contains(checkSkill))
 			{
 				JOptionPane.showMessageDialog(this,
 						"This skill already exists on the register.  Select from the dropdown to add");
