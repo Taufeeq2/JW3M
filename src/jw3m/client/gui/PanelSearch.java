@@ -3,6 +3,7 @@ package jw3m.client.gui;
 import java.awt.BorderLayout;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +13,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import org.apache.log4j.Logger;
@@ -36,18 +38,18 @@ public class PanelSearch extends JPanel implements ActionListener
 	
 
 	private JLabel northTitleLabel, southTitleLabel, eastTitleLabel, westTitleLabel;
-	private JButton centerButtonSearch;
+	
 
 	private JPanel nPanel, cPanel;
 
-	private JLabel lblRateSomeone, lblBanner;
+
 	private JButton btnSubmit;
 	private DefaultTableModel model = null;
 	private JScrollPane scrollPane;
 	private JTable table;
 
 	
-	private Rating ratee;
+
 	private JComboBox separatorComboBox ;
 	
 	private Vector itemsText = new Vector();
@@ -125,6 +127,8 @@ public class PanelSearch extends JPanel implements ActionListener
         
         this.setupData();
         
+        
+        
         nPanel = new JPanel();
 		cPanel = new JPanel();
         
@@ -133,6 +137,10 @@ public class PanelSearch extends JPanel implements ActionListener
 	
 		setLayout(new BorderLayout(0, 0));
 		cPanel.setLayout(null);
+		
+		setupSkillsTable(); // should make the model
+		
+		 
 
 		table = new JTable(model);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -140,19 +148,25 @@ public class PanelSearch extends JPanel implements ActionListener
 		JTableHeader header = table.getTableHeader();
 	    header.setFont(primaryFont);
 
+	 //   TableCellRenderer cr = new TableCellRenderer();
+	    
+//	    TableCellRenderer cr = table.getCellRenderer(1, 1);
+//	    
+//	    System.out.print("table renderer !!!!!!!!11" + cr);
+	    
 	    txtArea = new JTextArea("Start off blank");
 	    txtArea.setFont(secondaryFont);
 		
-		
+	    
 
 		scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(12, 301, 1668, 293);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		cPanel.add(scrollPane);
-		scrollPane.setViewportView(txtArea);
-//		scrollPane.setViewportView(table);
-		cPanel.add(scrollPane);
+//		scrollPane.setViewportView(txtArea);
+		scrollPane.setViewportView(table);
+//		cPanel.add(scrollPane);
 //		cPanel.add(btnSubmit);
 		
 		
@@ -342,6 +356,157 @@ public class PanelSearch extends JPanel implements ActionListener
 		
 	}
 	
+	public void addRowToTable(Vector<Rating> ratingVectIn)
+	{
+		Rating tempRating = new Rating();
+		User tempUser;
+		int skillID;
+		String skillName = "test skill";
+		
+		for (int i = 0; i < ratingVectIn.size(); i++)
+		{
+				
+				
+				tempRating = ratingVectIn.get(i);
+				tempUser = this.getUserFromStr( tempRating.getUserID() );
+				skillName = this.getSkillName(   tempRating.getSkillID()  );
+				skillID = tempRating.getSkillID();
+				
+//				tempRating.setKnowledge(ratingVectIn.get(i).getKnowledge());
+//				tempRating.setWorkStandard(ratingVectIn.get(i).getWorkStandard());
+//				tempRating.setAutonomy(ratingVectIn.get(i).getAutonomy());
+//				tempRating.setComplexityCoping(ratingVectIn.get(i).getComplexityCoping());
+//				tempRating.setContextPerception(ratingVectIn.get(i).getContextPerception());
+//				tempRating.setCapabilityGrowing(ratingVectIn.get(i).getCapabilityGrowing());
+//				tempRating.setCollaboration(ratingVectIn.get(i).getCollaboration());
+//				tempRating.setLevel(ratingVectIn.get(i).getLevel());
+			
+//				logger.info(" temp user " + tempUser);
+//				logger.info(" skill " + skillName);
+//				logger.info(" temp Rating " + tempRating);
+//		
+		
+				Object obj[] =
+					{tempUser.getUserName(), tempUser.getFirstName(), tempUser.getSurname(), skillID, skillName, tempRating.getKnowledge(), 
+							tempRating.getWorkStandard(), tempRating.getAutonomy(), tempRating.getComplexityCoping(), tempRating.getContextPerception(), 
+							tempRating.getCapabilityGrowing(), tempRating.getCollaboration(), tempRating.getLevel()};
+					model.addRow(obj);
+		}	
+	
+		// just adding a blank row
+		Object obj[] =	{" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", 	" ", " ", " " };
+		
+			model.addRow(obj);
+		
+		
+	}
+	
+	public void setupSkillsTable()
+	{
+
+		// Here we set up the model
+
+		String str[] =
+		{ "User ID", "Name", "Surname", "Skill ID", "Skill Name", "Knowledgeable", "Standard of Work", "Autonomy", "Coping with Complexity", "Perception of Context",
+				"Growing Capability", "Purposeful Collaboration", "Overall Rating" };
+		model = new DefaultTableModel(str, 0)
+		
+		
+		
+		
+		{
+			public void setValueAt(Object aValue, int row, int column)
+			{
+				
+				Vector rowVector = (Vector) dataVector.elementAt(row);
+				rowVector.setElementAt(aValue, column);
+				fireTableCellUpdated(row, column);
+
+				setCustomTableElement(aValue, row, column);
+
+			}
+			
+			
+
+			public boolean isCellEditable(int row, int column)
+			{
+				// make read only field column 0 - other column is directly
+				// editable
+//				if (column == 0 || column == 1 || column == 2 || column == 3 || column == 4 ||  column == 12)
+//				{
+					return false;
+//				} 
+//				else
+//				{
+//					return true;
+//				}
+
+			}
+			
+
+
+
+
+//		public Component getTableCellRendererComponent(	JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col)
+//		{
+//		     Component comp = super.getTableCellRendererComponent( table,  value, isSelected, hasFocus, row, col);
+//		 
+//		     String s =  table.getModel().getValueAt(row, VALIDATION_COLUMN ).toString();
+//		 
+//		     if(s.equalsIgnoreCase("Fail")) 
+//		     {
+//		         comp.setForeground(Color.red);
+//		     }
+//		     else
+//		     {
+//		         comp.setForeground(null);
+//		     }
+//		 
+//		     return( comp );
+//		 }
+
+		};
+
+		// Setup the model
+
+		
+	}
+	
+	public void setCustomTableElement(Object aValue, int row, int column)
+	{
+		
+	//	Skill skl = skillList.get(row);
+		Skill skl = skillNames.get(row);
+
+		switch (column)
+		{
+		case 0:
+			try
+			{
+				skl.setSkillID(Integer.parseInt(aValue.toString()));
+			} catch (NumberFormatException e)
+			{
+				model.setValueAt(skl.getSkillID(), row, column);
+
+			}
+			break;
+		case 1:
+			skl.setSkillName(aValue.toString());
+			break;
+//		case 2:
+//			skl.setSkillVendor(aValue.toString());
+//			break;
+//		case 3:
+//			skl.setSkillDescription(aValue.toString());
+//			break;
+
+		}
+		System.out.println(aValue + " " + row + " " + column);
+
+		// skillList.SaveToDisk();
+	}
+	
+	
 	public void setupData()
 	{
 		logger.info("Searches panel setting up data *******************************");
@@ -454,19 +619,19 @@ public class PanelSearch extends JPanel implements ActionListener
 		return null;
 	}
 	
-//	public maybe get userObj from UserName?
-//	{
-//		for (int i = 0; i < baseFrame.data_skillList.size();  i++)
-//		{
-//			if (baseFrame.data_skillList.get(i).getSkillID().equals(skillID) )
-//			{
-//				return baseFrame.data_skillList.get(i).getSkillName();
-//			}
-//				
-//		}
-//		
-//		return null;
-//	}
+	public User getUserFromStr(String userNameStr)
+	{
+		for (int i = 0; i < baseFrame.data_userList.size();  i++)
+		{
+			if (baseFrame.data_userList.get(i).getUserName().equals(userNameStr)     )
+			{
+				return baseFrame.data_userList.get(i);
+			}
+				
+		}
+		
+		return null;
+	}
 	
 	
 	public Boolean filterRating(Rating rating, int attribIn, int conditionIn, int valueIn)
@@ -476,13 +641,20 @@ public class PanelSearch extends JPanel implements ActionListener
 		
 		switch (attribIn)
 		{
-			case 0:  valueToTest = rating.getKnowledge(); 			logger.info("Knowledge"); break;
-			case 1:  valueToTest = rating.getWorkStandard();		logger.info("WorkStandard"); break;
-			case 2:  valueToTest = rating.getAutonomy();			logger.info("Autonomy"); break;
-			case 3:  valueToTest = rating.getComplexityCoping();	logger.info("ComplexityCoping"); break;	
-			case 4:  valueToTest = rating.getContextPerception();	logger.info("ContextPerceptio"); break;
-			case 5:  valueToTest = rating.getCapabilityGrowing();	logger.info("CapabilityGrowing"); break;
-			case 6:  valueToTest = rating.getCollaboration();		logger.info("Collaboration"); break;
+			case 0:  valueToTest = rating.getKnowledge(); 			//logger.debug("Knowledge"); 
+			break;
+			case 1:  valueToTest = rating.getWorkStandard();		//logger.info("WorkStandard"); 
+			break;
+			case 2:  valueToTest = rating.getAutonomy();			//logger.info("Autonomy"); 
+			break;
+			case 3:  valueToTest = rating.getComplexityCoping();	//logger.info("ComplexityCoping"); 
+			break;	
+			case 4:  valueToTest = rating.getContextPerception();	//logger.info("ContextPerceptio"); 
+			break;
+			case 5:  valueToTest = rating.getCapabilityGrowing();	//logger.info("CapabilityGrowing"); 
+			break;
+			case 6:  valueToTest = rating.getCollaboration();		//logger.info("Collaboration"); 
+			break;
 			//	skillElement.add("Knowledge");
 			//	skillElement.add("Work Standard");
 			//	skillElement.add("Autonomy");
@@ -493,44 +665,44 @@ public class PanelSearch extends JPanel implements ActionListener
 			
 			
 		}
-		logger.info("size of list 1 " + rating1List.size() + " list 2 " + rating2List.size() + " list 3 " +  rating3List.size());
-		
-		logger.info("condition case " + conditionIn);
-		logger.info("value to test " + valueToTest);
-		logger.info("value in from field  " + valueIn);
+//		logger.info("size of list 1 " + rating1List.size() + " list 2 " + rating2List.size() + " list 3 " +  rating3List.size());
+//		
+//		logger.info("condition case " + conditionIn);
+//		logger.info("value to test " + valueToTest);
+//		logger.info("value in from field  " + valueIn);
 		switch (conditionIn)
 		{
 			case 0 : if (valueToTest == valueIn) 
 						{
-							logger.info(valueToTest + " == " + valueIn);
+//							logger.info(valueToTest + " == " + valueIn);
 							return true;
 						}
 			break;
 			
 			case 1 : if (valueToTest <= valueIn) 
 						{
-							logger.info(valueToTest + " <= " + valueIn);
+//							logger.info(valueToTest + " <= " + valueIn);
 							return true;
 						}
 			break;
 		
 			case 2 : if (valueToTest >= valueIn) 
 						{
-							logger.info(valueToTest + " >= " + valueIn);
+//							logger.info(valueToTest + " >= " + valueIn);
 							return true;
 						}
 			break;
 			
 			case 3 : if (valueToTest < valueIn) 
 						{
-							logger.info(valueToTest + " < " + valueIn);
+//							logger.info(valueToTest + " < " + valueIn);
 							return true;
 						}
 			break;
 			
 			case 4 : if (valueToTest > valueIn) 
 						{
-							logger.info(valueToTest + " > " + valueIn);
+//							logger.info(valueToTest + " > " + valueIn);
 							return true;
 						}
 			break;
@@ -575,9 +747,11 @@ public class PanelSearch extends JPanel implements ActionListener
 		{
 			// now i have a vector of rating
 			Vector<Rating> ratingVect = baseFrame.getNetUserRating(userList.get(i));
+			
 			for (int j = 0; j < ratingVect.size() ; j ++)
 			{
 				Rating rating = ratingVect.get(j);
+		//		logger.info("Rating recieved " + rating);
 				
 				String s1 = skillIn.getSkillName() ;
 				String s2 = getSkillName( rating.getSkillID() );
@@ -942,17 +1116,15 @@ public class PanelSearch extends JPanel implements ActionListener
 			
 		}
 		
-//		if (source == checkBoxRow3)
-//		{
-//			// Do nothing for now
-//		}
-		
-		
+
 		// Default code on any action
 		
 		//logger.info("Search panel action taking place");
 		this.updateSearchData();
-		
+		model.setRowCount(0);
+		addRowToTable(rating1List);
+		addRowToTable(rating2List);
+		addRowToTable(rating3List);
 		
 	}
 }
