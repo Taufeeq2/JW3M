@@ -456,8 +456,6 @@ public class PanelProfile extends JPanel implements ActionListener
 					tmpCollRat1 = (know1 + work1 + auto1 + comp1 + cont1 + capa1 + coll1) / 7;
 					tmpColleagueRating = (tmpColleagueRating + tmpCollRat1) / noColRat + 0.5;
 					aveColleagueRating = (int) (tmpColleagueRating);
-					System.out.println("%%%%%%%%%%%%% no of colleague ratings: " + noColRat + "avecolrat "  + aveColleagueRating + 
-					                    "temp col rat  " + tmpColleagueRating + "knowledge " + know1);
 					}
 				}
 			}
