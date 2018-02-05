@@ -29,8 +29,6 @@ public class PanelDreyfus extends JPanel
 {
 	final static Logger logger = Logger.getLogger(PanelLogin.class);
 	private SkillsClient baseFrame;
-	private JPanel cPanel;
-	
 	private Font primaryFont, secondaryFont;
 	private JLabel lblDreyfusModel_1, pic;
 	private JTable table;
@@ -44,8 +42,7 @@ public class PanelDreyfus extends JPanel
 		this.baseFrame = frame;
 		primaryFont = baseFrame.getPrimaryFont();
 		secondaryFont = baseFrame.getSecondaryFont();
-		cPanel = new JPanel();
-		setLayout(new BorderLayout(0, 0));
+		
 		
 		pic = new JLabel(new ImageIcon("resources/DreyfusModel.jpg"));
 		pic.setBounds(10, 10, 614, 143);
