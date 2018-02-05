@@ -130,10 +130,15 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		
 		
 		comboBox = new JComboBox(baseFrame.data_skillList);
+		comboBox.setSelectedIndex(-1);
 		comboBox.setFont(primaryFont);
 		comboBox.addActionListener(this);
 		panel_1.add(comboBox);
+		
 		panel.setLayout(new GridLayout(1, 1, 0, 0));
+		
+		
+		
 		
 		myModel = new MyTableModel();
 		table = new JTable(myModel);
