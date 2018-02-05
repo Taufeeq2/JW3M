@@ -133,6 +133,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		comboBox.setFont(primaryFont);
 		comboBox.addActionListener(this);
 		panel_1.add(comboBox);
+		//Causing the panel to crash?? comboBox.setSelectedIndex(-1);
 		panel.setLayout(new GridLayout(1, 1, 0, 0));
 		
 		myModel = new MyTableModel();
