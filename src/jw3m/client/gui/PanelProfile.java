@@ -3,22 +3,10 @@ package jw3m.client.gui;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Collections;
-import java.util.Vector;
-
 import javax.swing.JTextField;
 import javax.swing.RowSorter;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -27,13 +15,22 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import jw3m.beans.Hobby;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+
+import java.util.Collections;
+import java.util.Vector;
+import java.util.Comparator;
+
 import jw3m.beans.Rating;
 import jw3m.beans.Skill;
 import jw3m.beans.User;
 import jw3m.beans.UserSkill;
 import jw3m.client.gui.SkillsClient;
-import jw3m.dao.DAO;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
@@ -42,15 +39,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-
-import java.util.Comparator;
-
 import javax.swing.ScrollPaneConstants;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ImageIcon;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 public class PanelProfile extends JPanel implements ActionListener
 {
@@ -68,16 +62,12 @@ public class PanelProfile extends JPanel implements ActionListener
 	private Vector<Skill> skillList = new Vector<Skill>();
 	private Vector<String> comboSkillNames = new Vector<String>();
 	private Vector<Skill> tempSkillNames = new Vector<Skill>();
-	private Vector<Skill> tempASkill = new Vector<Skill>();
 	private Vector<UserSkill> userSkills = new Vector<UserSkill>();
 	private Vector<UserSkill> tmpUserSkills = new Vector<UserSkill>();
-	private Vector<String> allSkillVect = new Vector<String>();
-	private Vector<String> prePopSkill = new Vector<String>();
 	private JScrollPane scrollPane;
 	private User tempUser = new User();
 	private int skill = 0;
-	private int ratingSkill = 0;
-	private int skillIDAdd = 0;
+	
 	private int knowledge = 0;
 	private int workStandard = 0;
 	private int autonomy = 0;
@@ -85,7 +75,6 @@ public class PanelProfile extends JPanel implements ActionListener
 	private int contextPerception = 0;
 	private int capabilityGrowing = 0;
 	private int collaboration = 0;
-
 	private int know1 = 0;
 	private int work1 = 0;
 	private int auto1 = 0;
@@ -367,10 +356,6 @@ public class PanelProfile extends JPanel implements ActionListener
 
 		userSkills = baseFrame.getNetUserSkills(tempUser);
 		// userSkills.sort(UserSkillIDComparator);
-
-		// *********************************************************************************
-
-		// *********************************************************************************
 
 		for (int t = 0; t < userSkills.size(); t++)
 		{
@@ -814,16 +799,9 @@ public class PanelProfile extends JPanel implements ActionListener
 		{
 			if (isPushed2)
 			{
-				int skill, rating = 0;
-				String skillName = null, skillDesc = null;
 				User tempUser = new User();
-				String tmpUser = null;
-				tmpUser = baseFrame.authenticatedUser.getUserName();
 				tempUser = baseFrame.authenticatedUser;
 
-				int i = table.getSelectedRow(); // set index for selected row
-				int j = table.getSelectedColumn(); // set index for selected
-													// column
 				Skill tempSkill = new Skill();
 				Vector<Skill> removeUserSkill = new Vector<Skill>();
 
@@ -873,15 +851,6 @@ public class PanelProfile extends JPanel implements ActionListener
 	public void actionPerformed(ActionEvent ae)
 	{
 		Object source = ae.getSource();
-		int skill, rating = 0;
-		String skillName = null, skillDesc = null;
-		User tempUser = new User();
-		String tmpUser = null;
-		tmpUser = baseFrame.authenticatedUser.getUserName();
-		tempUser = baseFrame.authenticatedUser;
-
-		int i = table.getSelectedRow(); // set index for selected row
-		int j = table.getSelectedColumn(); // set index for selected column
 
 		// *********************************************************************************************************************************
 		// Action to take when the add selected skill from Combobox button is
