@@ -1120,7 +1120,9 @@ public class PanelSearch extends JPanel implements ActionListener
 		// Default code on any action
 		
 		//logger.info("Search panel action taking place");
+		logger.info("********************************************* search table starting");
 		this.updateSearchData();
+		logger.info("********************************************* search table ending");
 		model.setRowCount(0);
 		addRowToTable(rating1List);
 		addRowToTable(rating2List);
