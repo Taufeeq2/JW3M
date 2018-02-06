@@ -73,6 +73,8 @@ public class SkillsClient extends JFrame implements ActionListener
 	private PanelSearch searchPanel;
 	private PanelDemo demoPanel;
 	private PanelTests testPanel;
+	private PanelHobbies hobbyPanel;
+	
 	
 	
 	
@@ -259,6 +261,7 @@ public class SkillsClient extends JFrame implements ActionListener
 	//	demoPanel = new PanelDemo(this);
 		searchPanel = new PanelSearch(this);
 	//	testPanel = new PanelTests(this);
+		hobbyPanel = new PanelHobbies(this);
 		
 		
 		tabbedPane = new JTabbedPane();
@@ -275,6 +278,7 @@ public class SkillsClient extends JFrame implements ActionListener
 		tabbedPane.add("Searches", searchPanel);
 //		tabbedPane.add("Example (GUI layout)", examplePanel);
 //		tabbedPane.addTab("Demo Panel", demoPanel);
+		tabbedPane.add("Hobby Finder", hobbyPanel);
 
 		
 	}
