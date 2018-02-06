@@ -2,6 +2,7 @@ package jw3m.client.gui;
 
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -31,6 +32,7 @@ import jw3m.beans.Skill;
 import jw3m.beans.User;
 import jw3m.beans.UserHobby;
 import jw3m.beans.UserSkill;
+import javax.swing.SwingConstants;
 
 public class PanelLogin extends JPanel implements ActionListener
 {
@@ -75,7 +77,7 @@ public class PanelLogin extends JPanel implements ActionListener
 		primaryFont = baseFrame.getPrimaryFont();
 		secondaryFont = baseFrame.getSecondaryFont();
 		
-		frame.setBounds(100,100,800,600);
+		frame.setBounds(100,100,1000,900);
 		
 		try
 		{
@@ -89,9 +91,9 @@ public class PanelLogin extends JPanel implements ActionListener
 		}
 		
 		
-		lblStandardBank = new JLabel("Standard Bank Skills Matrix");
-		lblStandardBank.setFont(secondaryFont);
-		
+		lblStandardBank = new JLabel(new ImageIcon("resources/Login_Stacked.jpg"));
+		lblStandardBank.setHorizontalAlignment(SwingConstants.LEFT);
+				
 		labelUserID = new JLabel("User ID");
 		labelUserID.setFont(primaryFont);
 		

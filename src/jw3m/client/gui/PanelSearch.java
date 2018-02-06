@@ -148,11 +148,6 @@ public class PanelSearch extends JPanel implements ActionListener
 		JTableHeader header = table.getTableHeader();
 	    header.setFont(primaryFont);
 
-	 //   TableCellRenderer cr = new TableCellRenderer();
-	    
-//	    TableCellRenderer cr = table.getCellRenderer(1, 1);
-//	    
-//	    System.out.print("table renderer !!!!!!!!11" + cr);
 	    
 	    txtArea = new JTextArea("Start off blank");
 	    txtArea.setFont(secondaryFont);
@@ -164,8 +159,11 @@ public class PanelSearch extends JPanel implements ActionListener
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		cPanel.add(scrollPane);
+		
 //		scrollPane.setViewportView(txtArea);
 		scrollPane.setViewportView(table);
+		
+		
 //		cPanel.add(scrollPane);
 //		cPanel.add(btnSubmit);
 		
@@ -199,12 +197,12 @@ public class PanelSearch extends JPanel implements ActionListener
 		lblSearchBy1.setBounds(53, 56, 133, 29);
 		cPanel.add(lblSearchBy1);
 		
-		lblSearchBy2 = new JLabel("Filter by");
+		lblSearchBy2 = new JLabel("Search for");
 		lblSearchBy2.setFont(primaryFont);
 		lblSearchBy2.setBounds(53, 110, 133, 29);
 		cPanel.add(lblSearchBy2);
 		
-		lblSearchBy3 = new JLabel("Filter by");
+		lblSearchBy3 = new JLabel("Search for");
 		lblSearchBy3.setFont(primaryFont);
 		lblSearchBy3.setBounds(53, 166, 133, 29);
 		cPanel.add(lblSearchBy3);
@@ -734,8 +732,13 @@ public class PanelSearch extends JPanel implements ActionListener
 		
 		String skillNameStr = "Skill " + skillIn.getSkillName() + "\n";
 		
-			
+		
 		Vector<User> userList = baseFrame.getNetSkillsUser(skillIn);
+//		logger.info("We have a vector of users per skill with size " + userList.size() );
+//		logger.info("This is the vector " + userList );
+		
+		baseFrame.getNetSkillList();
+	
 		Vector<Skill> skillList = baseFrame.data_skillList;
 		
 		
@@ -1120,7 +1123,9 @@ public class PanelSearch extends JPanel implements ActionListener
 		// Default code on any action
 		
 		//logger.info("Search panel action taking place");
+		logger.info("********************************************* search table starting");
 		this.updateSearchData();
+		logger.info("********************************************* search table ending");
 		model.setRowCount(0);
 		addRowToTable(rating1List);
 		addRowToTable(rating2List);

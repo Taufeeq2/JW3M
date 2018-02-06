@@ -385,9 +385,12 @@ public class DAO
 				{
 					
 					String userID = rs1.getString("userID");
+					
 					tempUser = this.getUser(userID);
-					userVect.add(tempUser);
-									
+					if (tempUser!=null)
+					{
+						userVect.add(tempUser);
+					}				
 				}
 							
 								

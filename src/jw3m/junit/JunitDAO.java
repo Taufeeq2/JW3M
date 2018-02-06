@@ -111,6 +111,7 @@ public class JunitDAO
 		 userList = dao.getUserList();
 		 listSize = userList.size();
 		 System.out.println("the userList has " + listSize + " entries");
+		 assertTrue(listSize == 5);
 		 
 		 System.out.println("Testing the method getUserSkills");
 		 user = dao.getUser("a126317");
@@ -118,6 +119,7 @@ public class JunitDAO
 		 int numberOfSkills = userSkillList.size();
 		 System.out.println("User a126317 has " + numberOfSkills + " skills");
 		 userSkill = new UserSkill();
+		 assertTrue(numberOfSkills == 3);
 		 for (int x=0; x<numberOfSkills; x++)
 		 {
 			 userSkill = userSkillList.get(x);

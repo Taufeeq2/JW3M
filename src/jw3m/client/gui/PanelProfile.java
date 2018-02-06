@@ -3,22 +3,10 @@ package jw3m.client.gui;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Collections;
-import java.util.Vector;
-
 import javax.swing.JTextField;
 import javax.swing.RowSorter;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -27,13 +15,22 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import jw3m.beans.Hobby;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+
+import java.util.Collections;
+import java.util.Vector;
+import java.util.Comparator;
+
 import jw3m.beans.Rating;
 import jw3m.beans.Skill;
 import jw3m.beans.User;
 import jw3m.beans.UserSkill;
 import jw3m.client.gui.SkillsClient;
-import jw3m.dao.DAO;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
@@ -42,12 +39,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ImageIcon;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 public class PanelProfile extends JPanel implements ActionListener
 {
@@ -65,16 +62,12 @@ public class PanelProfile extends JPanel implements ActionListener
 	private Vector<Skill> skillList = new Vector<Skill>();
 	private Vector<String> comboSkillNames = new Vector<String>();
 	private Vector<Skill> tempSkillNames = new Vector<Skill>();
-	private Vector<Skill> tempASkill = new Vector<Skill>();
 	private Vector<UserSkill> userSkills = new Vector<UserSkill>();
 	private Vector<UserSkill> tmpUserSkills = new Vector<UserSkill>();
-	private Vector<String> allSkillVect = new Vector<String>();
-	private Vector<String> prePopSkill = new Vector<String>();
 	private JScrollPane scrollPane;
 	private User tempUser = new User();
 	private int skill = 0;
-	private int ratingSkill = 0;
-	private int skillIDAdd = 0;
+	
 	private int knowledge = 0;
 	private int workStandard = 0;
 	private int autonomy = 0;
@@ -82,7 +75,6 @@ public class PanelProfile extends JPanel implements ActionListener
 	private int contextPerception = 0;
 	private int capabilityGrowing = 0;
 	private int collaboration = 0;
-	
 	private int know1 = 0;
 	private int work1 = 0;
 	private int auto1 = 0;
@@ -90,12 +82,12 @@ public class PanelProfile extends JPanel implements ActionListener
 	private int cont1 = 0;
 	private int capa1 = 0;
 	private int coll1 = 0;
-	
+
 	private int aveSelfRating = 0;
 	private double tmpAveSelfRating = 0;
 	private double tmpColleagueRating = 0;
 	private double tmpCollRat1 = 0;
-	
+
 	private int aveColleagueRating = 0;
 	private String skillName = null;
 	private Skill newSkill = null;
@@ -212,7 +204,9 @@ public class PanelProfile extends JPanel implements ActionListener
 
 		comboSkillNames.removeAllElements();
 
+		baseFrame.getNetSkillList();
 		tempSkillNames = baseFrame.data_skillList;
+		skillList.sort(SkillIDComparator);
 
 		tmpUserSkills = baseFrame.getNetUserSkills(tempUser);
 
@@ -358,8 +352,10 @@ public class PanelProfile extends JPanel implements ActionListener
 
 		baseFrame.getNetSkillList();
 		skillList = baseFrame.data_skillList;
+		skillList.sort(SkillIDComparator);
 
 		userSkills = baseFrame.getNetUserSkills(tempUser);
+		// userSkills.sort(UserSkillIDComparator);
 
 		for (int t = 0; t < userSkills.size(); t++)
 		{
@@ -419,7 +415,7 @@ public class PanelProfile extends JPanel implements ActionListener
 					tmpAveSelfRating = (knowledge + workStandard + autonomy + complexityCoping + contextPerception
 							+ capabilityGrowing + collaboration) / 7 + 0.5;
 					aveSelfRating = (int) (tmpAveSelfRating);
-					//aveColleagueRating = 0;
+					// aveColleagueRating = 0;
 					break;
 				} else
 				{
@@ -430,7 +426,7 @@ public class PanelProfile extends JPanel implements ActionListener
 			int noColRat = 0;
 			tmpColleagueRating = 0;
 			tmpCollRat1 = 0;
-						
+
 			for (int z = 0; z < ratingVect.size(); z++)
 			{
 				know1 = 0;
@@ -440,28 +436,27 @@ public class PanelProfile extends JPanel implements ActionListener
 				cont1 = 0;
 				capa1 = 0;
 				coll1 = 0;
-				
+
 				if (!ratingVect.get(z).getRaterID().equals(tmpUserId))
 				{
 					if (ratingVect.get(z).getSkillID() == skill && ratingVect.get(z).getUserID().equals(tmpUserId))
 					{
-					noColRat++;
-					know1 = ratingVect.get(z).getKnowledge();
-					work1 = ratingVect.get(z).getWorkStandard();
-					auto1 = ratingVect.get(z).getAutonomy();
-					comp1 = ratingVect.get(z).getComplexityCoping();
-					cont1 = ratingVect.get(z).getContextPerception();
-					capa1 = ratingVect.get(z).getCapabilityGrowing();
-					coll1 = ratingVect.get(z).getCollaboration();
-					tmpCollRat1 = (know1 + work1 + auto1 + comp1 + cont1 + capa1 + coll1) / 7;
-					tmpColleagueRating = (tmpColleagueRating + tmpCollRat1) / noColRat + 0.5;
-					aveColleagueRating = (int) (tmpColleagueRating);
+						noColRat++;
+						know1 = ratingVect.get(z).getKnowledge();
+						work1 = ratingVect.get(z).getWorkStandard();
+						auto1 = ratingVect.get(z).getAutonomy();
+						comp1 = ratingVect.get(z).getComplexityCoping();
+						cont1 = ratingVect.get(z).getContextPerception();
+						capa1 = ratingVect.get(z).getCapabilityGrowing();
+						coll1 = ratingVect.get(z).getCollaboration();
+						tmpCollRat1 = (know1 + work1 + auto1 + comp1 + cont1 + capa1 + coll1) / 7;
+						tmpColleagueRating = (tmpColleagueRating + tmpCollRat1) / noColRat + 0.5;
+						aveColleagueRating = (int) (tmpColleagueRating);
 					}
 				}
 			}
 			// *********************************************************************8
-			
-			
+
 			Object obj[] =
 			{ tempUser.getUserName(), skill, skillName, knowledge, workStandard, autonomy, complexityCoping,
 					contextPerception, capabilityGrowing, collaboration, aveSelfRating, aveColleagueRating, "Update",
@@ -472,7 +467,47 @@ public class PanelProfile extends JPanel implements ActionListener
 	}
 
 	// ************************************************************************************************************
-	// Method to repopulate the skill names combobox to only contain skills not
+	// Methods to sort Skill and UserSkill by SkillID
+	// ************************************************************************************************************
+
+	public static Comparator<Skill> SkillIDComparator = new Comparator<Skill>()
+	{
+
+		public int compare(Skill skill1, Skill skill2)
+		{
+
+			int skillID1 = skill1.getSkillID();
+			int skillID2 = skill2.getSkillID();
+
+			// ascending order
+			return new Integer(skillID1).compareTo(new Integer(skillID2));
+
+			// descending order
+			// return skillID2.compareTo(skillID1);
+		}
+
+	};
+
+	public static Comparator<UserSkill> UserSkillIDComparator = new Comparator<UserSkill>()
+	{
+
+		public int compare(UserSkill skill1, UserSkill skill2)
+		{
+
+			int skillID1 = skill1.getUserSkillID();
+			int skillID2 = skill2.getUserSkillID();
+
+			// ascending order
+			return new Integer(skillID1).compareTo(new Integer(skillID2));
+
+			// descending order
+			// return fruitName2.compareTo(fruitName1);
+		}
+
+	};
+
+	// ************************************************************************************************************
+	// Method to re-populate the skill names combobox to only contain skills not
 	// already added to the user profile
 	// ************************************************************************************************************
 	public void populateComboBox()
@@ -510,7 +545,7 @@ public class PanelProfile extends JPanel implements ActionListener
 	}
 
 	// **********************************************************
-	// method to redraw table and repopulate the skills combobox
+	// method to redraw table and re-populate the skills combobox
 	// **********************************************************
 
 	public void tableRedraw()
@@ -682,7 +717,7 @@ public class PanelProfile extends JPanel implements ActionListener
 						level = ((int) rating[3] + (int) rating[4] + (int) rating[5] + (int) rating[6] + (int) rating[7]
 								+ (int) rating[8] + (int) rating[9]) / 7;
 						ratee.setLevel(level);
-						
+
 						table.setValueAt(level, i, 10);
 
 						baseFrame.setNetAddRating(ratee);
@@ -764,16 +799,9 @@ public class PanelProfile extends JPanel implements ActionListener
 		{
 			if (isPushed2)
 			{
-				int skill, rating = 0;
-				String skillName = null, skillDesc = null;
 				User tempUser = new User();
-				String tmpUser = null;
-				tmpUser = baseFrame.authenticatedUser.getUserName();
 				tempUser = baseFrame.authenticatedUser;
 
-				int i = table.getSelectedRow(); // set index for selected row
-				int j = table.getSelectedColumn(); // set index for selected
-													// column
 				Skill tempSkill = new Skill();
 				Vector<Skill> removeUserSkill = new Vector<Skill>();
 
@@ -823,15 +851,6 @@ public class PanelProfile extends JPanel implements ActionListener
 	public void actionPerformed(ActionEvent ae)
 	{
 		Object source = ae.getSource();
-		int skill, rating = 0;
-		String skillName = null, skillDesc = null;
-		User tempUser = new User();
-		String tmpUser = null;
-		tmpUser = baseFrame.authenticatedUser.getUserName();
-		tempUser = baseFrame.authenticatedUser;
-
-		int i = table.getSelectedRow(); // set index for selected row
-		int j = table.getSelectedColumn(); // set index for selected column
 
 		// *********************************************************************************************************************************
 		// Action to take when the add selected skill from Combobox button is
@@ -841,6 +860,14 @@ public class PanelProfile extends JPanel implements ActionListener
 		{
 			Vector<Skill> skillAdd = new Vector<Skill>();
 			Vector<Skill> newSkill = new Vector<Skill>();
+
+			lblSkillName.setVisible(false);
+			lblVendor.setVisible(false);
+			lblSkillDescription.setVisible(false);
+			textFieldSkillName.setVisible(false);
+			textFieldSkillDesc.setVisible(false);
+			textFieldVendor.setVisible(false);
+			btnAddSkill.setVisible(false);
 
 			Skill tempSkill = new Skill();
 			skillAdd = baseFrame.data_skillList;

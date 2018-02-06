@@ -337,7 +337,7 @@ public class Server
 				case "send skillReturnUser" : 
 				{
 					logger.info(strPrefix + " send skillReturnUser");
-					oos.writeObject(new Comms("reply user", dao.getSkillReturnUser(    (Skill)comms.getObj()  )     )   );
+					oos.writeObject(new Comms("reply userList", dao.getSkillReturnUser(    (Skill)comms.getObj()  )     )   );
 					break;
 				}
 				
@@ -360,6 +360,7 @@ public class Server
 				case "send userRating" : 
 				{
 					logger.info(strPrefix + " send userRating");
+				//	logger.info("TRYING TO FIX RATING??? : " + comms.getText() + "OBJECT :  " +  comms.getObj()   );
 					oos.writeObject(new Comms("reply userRating", dao.getRatings( (User)comms.getObj()   )       )   );
 					break;
 				}

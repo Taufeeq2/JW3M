@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.Collections;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -15,11 +16,13 @@ import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
 
+import jw3m.beans.Hobby;
 import jw3m.beans.Rating;
 import jw3m.beans.Skill;
 import jw3m.beans.User;
 import jw3m.beans.UserHobby;
 import jw3m.beans.UserSkill;
+import jw3m.dao.DAO;
 import jw3m.widgets.BarChart;
 import jw3m.widgets.BarChart2;
 
@@ -68,6 +71,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	private int skillArrayEnd = 0;
 	private int skillArrayDisplay = 7;
 	private JLabel lblImgLabel;
+
 	
 
 	public PanelReporting(SkillsClient frame)
@@ -130,10 +134,21 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		
 		
 		comboBox = new JComboBox(baseFrame.data_skillList);
+		comboBox.setSelectedIndex(-1);
 		comboBox.setFont(primaryFont);
 		comboBox.addActionListener(this);
 		panel_1.add(comboBox);
+		
+
+		
+		
+		
+		
+		
 		panel.setLayout(new GridLayout(1, 1, 0, 0));
+		
+		
+		
 		
 		myModel = new MyTableModel();
 		table = new JTable(myModel);
@@ -573,6 +588,8 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 			panel.validate();
 			panel.repaint();
 		}
+		
+
 		
 		if (source == comboBox)
 		{
