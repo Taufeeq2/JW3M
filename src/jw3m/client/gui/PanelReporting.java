@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.util.Collections;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -22,7 +21,6 @@ import jw3m.beans.Skill;
 import jw3m.beans.User;
 import jw3m.beans.UserHobby;
 import jw3m.beans.UserSkill;
-import jw3m.dao.DAO;
 import jw3m.widgets.BarChart;
 import jw3m.widgets.BarChart2;
 
@@ -53,6 +51,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	MyTableModel a;
 	JTable table;
 	private JComboBox comboBox;
+	private JComboBox comboBoxHobbies;
 	private Skill skillSelected = null;
 	private Vector data = null;
 	private Vector<Rating> ratingsData = null;
@@ -71,7 +70,6 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	private int skillArrayEnd = 0;
 	private int skillArrayDisplay = 7;
 	private JLabel lblImgLabel;
-
 	
 
 	public PanelReporting(SkillsClient frame)
@@ -139,13 +137,13 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		comboBox.addActionListener(this);
 		panel_1.add(comboBox);
 		
-
+		comboBoxHobbies = new JComboBox(baseFrame.data_hobbyList);
+		comboBoxHobbies.setSelectedIndex(-1);
+		comboBoxHobbies.setFont(primaryFont);
+		comboBoxHobbies.addActionListener(this);
+		panel_1.add(comboBoxHobbies);
 		
-		
-		
-		
-		
-		panel.setLayout(new GridLayout(1, 1, 0, 0));
+		panel.setLayout(new GridLayout(2, 1, 0, 0));
 		
 		
 		
@@ -589,8 +587,6 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 			panel.repaint();
 		}
 		
-
-		
 		if (source == comboBox)
 		{
 			skillArrayEnd = 0;
@@ -768,6 +764,85 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 				}
 				
 			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		if (source == comboBoxHobbies)
+		{
+			skillArrayEnd = 0;
+			skillArrayStart = 0;
+			panel.removeAll();
+			panel.validate();
+			panel.repaint();
+			panel.add(scrollPane);
+			panel.validate();
+			panel.repaint();
+			int numberOfRowsInTable = table.getRowCount();
+			
+			for (int x=0; x<numberOfRowsInTable; x++)
+			{
+				a.removeRow(0);
+			}
+			
+			Hobby hobbySelected = (Hobby) comboBoxHobbies.getSelectedItem();
+			
+			System.out.println("On line 792 hobbySelected = " + hobbySelected);
+		  
+			try
+			{
+		  		
+		   		Vector<User> hobbiesData = baseFrame.getNetUserHobby(hobbySelected);
+				Vector<String> vectUserId = new Vector<String>();
+				Vector<Double> vectSum = new Vector<Double>();
+				Vector<Integer> vectCount = new Vector<Integer>();
+				Vector<Double> vectKnowledgeable = new Vector<Double>();
+				Vector<Double> vectStandard = new Vector<Double>();
+				Vector<Double> vectAutonomy = new Vector<Double>();
+				Vector<Double> vectComplexity = new Vector<Double>();
+				Vector<Double> vectContext = new Vector<Double>();
+				Vector<Double> vectCapability = new Vector<Double>();
+				Vector<Double> vectCollaboration = new Vector<Double>();
+				
+				System.out.println("On line 809 hobbiesData.size() = " + hobbiesData.size());
+				
+				for (int x=0; x<hobbiesData.size(); x++)
+				{
+					User thisUser = hobbiesData.get(x);	
+					String saveUserId = thisUser.getUserName();
+					
+	 			
+				
+				
+				
+					thisUser = baseFrame.getNetUser(saveUserId);
+					
+					Object[] data = new Object[13];
+						data[0] = thisUser.getUserName();
+						data[1] = thisUser.getSurname();
+						data[2] = thisUser.getFirstName();
+						data[3] = 0;
+						data[4] = 0;
+						data[5] = 0;
+						data[6] = 0;
+						data[7] = 0;
+						data[8] = 0;
+						data[9] = 0;
+						data[10] = 0;
+						data[11] = 0;
+						data[12] = 0;
+					
+					a = (MyTableModel) table.getModel();
+					a.insertData(data);
+					
+					System.out.println("added " + thisUser + " to the data array");
+					
+				}
+				
+			}
+			
 			catch (Exception e)
 			{
 				e.printStackTrace();
