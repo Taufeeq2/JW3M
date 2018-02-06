@@ -53,7 +53,7 @@ public class PanelHobbies extends JPanel implements ActionListener
 
         nPanel = new JPanel();
         
-        lblImgLabel = new JLabel(new ImageIcon("resources/MySkills_Full.jpg"));
+        lblImgLabel = new JLabel(new ImageIcon("resources/Hobbie_Interests_Finder_Full.jpg"));
 		nPanel.add(lblImgLabel);
         
 		setLayout(new BorderLayout(0, 0));
