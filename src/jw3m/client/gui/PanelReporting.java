@@ -50,14 +50,18 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 	private JPanel panel;
 	MyTableModel a;
 	JTable table;
+	//MyTableModelHobbies a_hobbies;
 	private JComboBox comboBox;
-	private JComboBox comboBoxHobbies;
+	//private JComboBox comboBoxHobbies;
 	private Skill skillSelected = null;
 	private Vector data = null;
 	private Vector<Rating> ratingsData = null;
 	private User thisUser = null;
 	private MyTableModel myModel;
+	//private MyTableModelHobbies myModelHobbies;
 	private JLabel titleLabel;
+	private JLabel skillsLabel;
+	private JLabel hobbyLabel;
 	private JButton buttonHobbies;
 	private Vector<User> userList = null;
 	private JScrollPane scrollPane = null;
@@ -92,7 +96,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		//centerP.add(panel);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setLayout(new GridLayout(2, 5, 0, 0));
+		panel_1.setLayout(new GridLayout(4, 1, 0, 0));
 		centerP.add(panel_1);
 		centerP.add(panel);
 		
@@ -129,7 +133,8 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 			e.printStackTrace();
 		}
 		
-		
+		skillsLabel = new JLabel("Skills");
+		panel_1.add(skillsLabel);
 		
 		comboBox = new JComboBox(baseFrame.data_skillList);
 		comboBox.setSelectedIndex(-1);
@@ -137,11 +142,14 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		comboBox.addActionListener(this);
 		panel_1.add(comboBox);
 		
-		comboBoxHobbies = new JComboBox(baseFrame.data_hobbyList);
-		comboBoxHobbies.setSelectedIndex(-1);
-		comboBoxHobbies.setFont(primaryFont);
-		comboBoxHobbies.addActionListener(this);
-		panel_1.add(comboBoxHobbies);
+		//hobbyLabel = new JLabel("Hobbies");
+		//panel_1.add(hobbyLabel);
+		
+		//comboBoxHobbies = new JComboBox(baseFrame.data_hobbyList);
+		//comboBoxHobbies.setSelectedIndex(-1);
+		//comboBoxHobbies.setFont(primaryFont);
+		//comboBoxHobbies.addActionListener(this);
+		//panel_1.add(comboBoxHobbies);
 		
 		panel.setLayout(new GridLayout(2, 1, 0, 0));
 		
@@ -149,6 +157,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 		
 		
 		myModel = new MyTableModel();
+		//myModelHobbies = new MyTableModelHobbies();
 		table = new JTable(myModel);
 		table.setFont(primaryFont);
 		table.setRowHeight(28);
@@ -244,6 +253,77 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 			fireTableDataChanged();
 		}
 	}
+	
+	//second Table Model for Hobbies
+	class MyTableModelHobbies extends AbstractTableModel
+	{
+		private String[] columnNames =
+		{ "User ID", "Surname" , "Name" , "", "" , "" , "" , 
+				"" , "" , "" , "" ,
+				"" , ""};
+
+	//	private Vector data = new Vector();
+	
+
+		public final Object[] longValues =
+		{ "", ""};
+
+		@Override
+		public int getColumnCount()
+		{
+			return columnNames.length;
+		}
+
+		@Override
+		public int getRowCount()
+		{
+			return data.size();
+		}
+
+		@Override
+		public Object getValueAt(int row, int col)
+		{
+			return ((Vector) data.get(row)).get(col);
+		}
+
+		public String getColumnName(int col)
+		{
+			return columnNames[col];
+		}
+
+		public Class getColumnClass(int c)
+		{
+			return getValueAt(0, c).getClass();
+		}
+
+		public void setValueAt(Object value, int row, int col)
+		{
+			((Vector) data.get(row)).setElementAt(value, col);
+			fireTableCellUpdated(row, col);
+		}
+
+		public boolean isCellEditable(int row, int col)
+		{
+			return false;
+		}
+
+		public void insertData(Object[] values)
+		{
+			data.add(new Vector());
+			for (int i = 0; i < values.length; i++)
+			{
+				((Vector) data.get(data.size() - 1)).add(values[i]);
+			}
+			fireTableDataChanged();
+		}
+
+		public void removeRow(int row)
+		{
+			data.removeElementAt(row);
+			fireTableDataChanged();
+		}
+	}
+
 
 	private static void createAndShowGUI()
 	{
@@ -758,6 +838,17 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 						data[11] = aveCapabilityRounded;
 						data[12] = aveCollaborationRounded;
 					
+				//testing this here
+				//		table = new JTable(myModel);
+				//		table.setFont(primaryFont);
+				//		table.setRowHeight(28);
+				//		table.getTableHeader().setFont(primaryFont);
+				//		table.setPreferredScrollableViewportSize(new Dimension(1200, 70));
+				//		table.setFillsViewportHeight(true);
+				//		scrollPane = new JScrollPane(table);
+				//		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+				//		panel.add(scrollPane);
+				//		
 					a = (MyTableModel) table.getModel();
 					a.insertData(data);
 					
@@ -770,83 +861,94 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 			}
 		}
 		
-		if (source == comboBoxHobbies)
-		{
-			skillArrayEnd = 0;
-			skillArrayStart = 0;
-			panel.removeAll();
-			panel.validate();
-			panel.repaint();
-			panel.add(scrollPane);
-			panel.validate();
-			panel.repaint();
-			int numberOfRowsInTable = table.getRowCount();
-			
-			for (int x=0; x<numberOfRowsInTable; x++)
-			{
-				a.removeRow(0);
-			}
-			
-			Hobby hobbySelected = (Hobby) comboBoxHobbies.getSelectedItem();
-			
+	//	if (source == comboBoxHobbies)
+	//	{
+	//		skillArrayEnd = 0;
+	//		skillArrayStart = 0;
+	//		panel.removeAll();
+	//		panel.validate();
+	//		panel.repaint();
+	//		panel.add(scrollPane);
+	//		panel.validate();
+	//		panel.repaint();
+	//		int numberOfRowsInTable = table.getRowCount();
+	//		
+	//		for (int x=0; x<numberOfRowsInTable; x++)
+	//		{
+	//			a.removeRow(0);
+	//		}
+	//		
+	//		Hobby hobbySelected = (Hobby) comboBoxHobbies.getSelectedItem();
+	//		
 		//	System.out.println("On line 792 hobbySelected = " + hobbySelected);
 		  
-			try
-			{
-		  		
-		   		Vector<User> hobbiesData = baseFrame.getNetUserHobby(hobbySelected);
-				Vector<String> vectUserId = new Vector<String>();
-				Vector<Double> vectSum = new Vector<Double>();
-				Vector<Integer> vectCount = new Vector<Integer>();
-				Vector<Double> vectKnowledgeable = new Vector<Double>();
-				Vector<Double> vectStandard = new Vector<Double>();
-				Vector<Double> vectAutonomy = new Vector<Double>();
-				Vector<Double> vectComplexity = new Vector<Double>();
-				Vector<Double> vectContext = new Vector<Double>();
-				Vector<Double> vectCapability = new Vector<Double>();
-				Vector<Double> vectCollaboration = new Vector<Double>();
-				
-			//	System.out.println("On line 809 hobbiesData.size() = " + hobbiesData.size());
-				
-				for (int x=0; x<hobbiesData.size(); x++)
-				{
-					User thisUser = hobbiesData.get(x);	
-					String saveUserId = thisUser.getUserName();
-					
-	 			
-				
-				
-				
-					thisUser = baseFrame.getNetUser(saveUserId);
-					
-					Object[] data = new Object[13];
-						data[0] = thisUser.getUserName();
-						data[1] = thisUser.getSurname();
-						data[2] = thisUser.getFirstName();
-						data[3] = 0;
-						data[4] = 0;
-						data[5] = 0;
-						data[6] = 0;
-						data[7] = 0;
-						data[8] = 0;
-						data[9] = 0;
-						data[10] = 0;
-						data[11] = 0;
-						data[12] = 0;
-					
-					a = (MyTableModel) table.getModel();
-					a.insertData(data);
+	//		try
+	//		{
+	//	  		
+	//	   		Vector<User> hobbiesData = baseFrame.getNetUserHobby(hobbySelected);
+	//			Vector<String> vectUserId = new Vector<String>();
+	//			Vector<Double> vectSum = new Vector<Double>();
+	//			Vector<Integer> vectCount = new Vector<Integer>();
+	//			Vector<Double> vectKnowledgeable = new Vector<Double>();
+	//			Vector<Double> vectStandard = new Vector<Double>();
+	//			Vector<Double> vectAutonomy = new Vector<Double>();
+	//			Vector<Double> vectComplexity = new Vector<Double>();
+	//			Vector<Double> vectContext = new Vector<Double>();
+	//			Vector<Double> vectCapability = new Vector<Double>();
+	//			Vector<Double> vectCollaboration = new Vector<Double>();
+	//			
+	//		//	System.out.println("On line 809 hobbiesData.size() = " + hobbiesData.size());
+	//			
+	//			for (int x=0; x<hobbiesData.size(); x++)
+	//			{
+	//				User thisUser = hobbiesData.get(x);	
+	//				String saveUserId = thisUser.getUserName();
+	//				
+	// 			
+	//			
+	//			
+	//			
+	//				thisUser = baseFrame.getNetUser(saveUserId);
+	//				
+	//				Object[] data = new Object[13];
+	//					data[0] = thisUser.getUserName();
+	//					data[1] = thisUser.getSurname();
+	//					data[2] = thisUser.getFirstName();
+	//					data[3] = 0;
+	//					data[4] = 0;
+	//					data[5] = 0;
+	//					data[6] = 0;
+	//					data[7] = 0;
+	//					data[8] = 0;
+	//					data[9] = 0;
+	//					data[10] = 0;
+	//					data[11] = 0;
+	//					data[12] = 0;
+	//				
+	//					//testing this here
+	//					table = new JTable(myModelHobbies);
+	//					table.setFont(primaryFont);
+	//					table.setRowHeight(28);
+	//					table.getTableHeader().setFont(primaryFont);
+	//					table.setPreferredScrollableViewportSize(new Dimension(1200, 70));
+	//					table.setFillsViewportHeight(true);
+	//					scrollPane = new JScrollPane(table);
+	//					scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	//					panel.add(scrollPane);
+	//					
+	//				a_hobbies = (MyTableModelHobbies) table.getModel();
+	//				a_hobbies.insertData(data);
 					
 				//	System.out.println("added " + thisUser + " to the data array");
 					
-				}
+	//			}
 				
-			}
+	//		}
 			
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
+	//		catch (Exception e)
+	//		{
+	//			e.printStackTrace();
+	//		}
+	//	}
 	}
 }
