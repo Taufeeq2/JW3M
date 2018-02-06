@@ -20,7 +20,10 @@ import jw3m.beans.User;
 import jw3m.beans.UserHobby;
 import jw3m.dao.DAO;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JScrollPane;
+import javax.swing.JLabel;
 
 public class PanelHobbies extends JPanel implements ActionListener
 {
@@ -32,6 +35,9 @@ public class PanelHobbies extends JPanel implements ActionListener
 	private JTable table;
 	private DefaultTableModel model = null;
 	Vector<Hobby> hobbyList = null;
+	private JScrollPane scrollPane;
+	private JLabel lblHobbyinterests;
+	private JLabel lblImgLabel;
 
 	/**
 	 * Create the panel.
@@ -46,24 +52,43 @@ public class PanelHobbies extends JPanel implements ActionListener
         
 
         nPanel = new JPanel();
+        
+        lblImgLabel = new JLabel(new ImageIcon("resources/MySkills_Full.jpg"));
+		nPanel.add(lblImgLabel);
+        
 		setLayout(new BorderLayout(0, 0));
 		cPanel = new JPanel();
 		
-		table = new JTable(model);
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		table.setFont(primaryFont);
-		JTableHeader header = table.getTableHeader();
-	    header.setFont(primaryFont);
-		cPanel.add(table);
+		setupHobbyTable();
+		cPanel.setLayout(null);
 		
 		hobbyList = new Vector<Hobby>();
 		hobbyList = baseFrame.data_hobbyList;
 		
 		this.add(cPanel, BorderLayout.CENTER);
 		
-		comboBox = new JComboBox();
+		comboBox = new JComboBox(hobbyList);
+		comboBox.setSelectedIndex(-1);
+		comboBox.setBounds(399, 53, 182, 36);
+		comboBox.setFont(primaryFont);
 		cPanel.add(comboBox);
+		
+		scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(12, 149, 869, 143);
+		scrollPane.setViewportView(table);
+		scrollPane.setFont(primaryFont);
+		cPanel.add(scrollPane);
+		
+		table = new JTable(model);
+		scrollPane.setViewportView(table);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		table.setFont(primaryFont);
+		JTableHeader header = table.getTableHeader();
 		this.add(nPanel, BorderLayout.NORTH);
+//		
+//		lblHobbyinterests = new JLabel("Hobby/Interests");
+//		lblHobbyinterests.setFont(secondaryFont);
+//		nPanel.add(lblHobbyinterests);
 		comboBox.addActionListener(this);
 	}
 	
@@ -161,12 +186,14 @@ public class PanelHobbies extends JPanel implements ActionListener
         {
                try
                {
-                      DAO dao = new DAO();
                       System.out.println("Hobby selected: " + comboBox.getSelectedItem());
                       Vector<UserHobby> userHob = new Vector<UserHobby>();
                       Vector<User> tempUser = new Vector<User>();
                       Hobby tempHobby = new Hobby();
                       User newUser = new User();
+                      
+                      model = (DefaultTableModel) table.getModel();
+          			  model.setRowCount(0);
                       
                       for (int i = 0; i < hobbyList.size(); i++)
                       {
@@ -180,7 +207,7 @@ public class PanelHobbies extends JPanel implements ActionListener
                             }
                       }
                       
-                      tempUser = dao.getUserHobby(tempHobby);
+                      tempUser = baseFrame.getNetUserHobby(tempHobby);
                       
                       for (int i = 0; i < tempUser.size(); i++)
                       {
@@ -209,5 +236,4 @@ public class PanelHobbies extends JPanel implements ActionListener
 
 		
 	}
-
 }
