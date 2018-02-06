@@ -349,6 +349,13 @@ public class Server
 					break;
 				}
 				
+				case "send userHobbyReturnUser" : 
+				{
+					logger.info(strPrefix + " send userHobbyReturnUser");
+					oos.writeObject(new Comms("reply user", dao.getUserHobby( (Hobby)comms.getObj()   )       )   );
+					break;
+				}
+				
 				
 				case "send userRating" : 
 				{

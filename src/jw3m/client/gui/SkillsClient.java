@@ -855,6 +855,21 @@ public class SkillsClient extends JFrame implements ActionListener
 
 	}
 	
+	public Vector<User> getNetUserHobby(Hobby hobbyIn)
+	{
+		Comms commsSend = new Comms();
+			commsSend.setText("send userHobbyReturnUser");
+			commsSend.setObj(hobbyIn);
+
+		Comms commsRec = getNetworkClient().networkTransaction( commsSend);
+			
+		return (Vector<User>)commsRec.getObj();
+		
+	//	logger.debug(" getNetUserList() call invoked");
+
+	}
+	
+	
 	public Vector<Rating> getNetSkillRating(Skill skillIn)
 	{
 		Comms commsSend = new Comms();
