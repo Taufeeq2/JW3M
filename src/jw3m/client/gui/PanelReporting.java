@@ -789,7 +789,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 			
 			Hobby hobbySelected = (Hobby) comboBoxHobbies.getSelectedItem();
 			
-			System.out.println("On line 792 hobbySelected = " + hobbySelected);
+		//	System.out.println("On line 792 hobbySelected = " + hobbySelected);
 		  
 			try
 			{
@@ -806,7 +806,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 				Vector<Double> vectCapability = new Vector<Double>();
 				Vector<Double> vectCollaboration = new Vector<Double>();
 				
-				System.out.println("On line 809 hobbiesData.size() = " + hobbiesData.size());
+			//	System.out.println("On line 809 hobbiesData.size() = " + hobbiesData.size());
 				
 				for (int x=0; x<hobbiesData.size(); x++)
 				{
@@ -837,7 +837,7 @@ public class PanelReporting extends JPanel implements ActionListener, ListSelect
 					a = (MyTableModel) table.getModel();
 					a.insertData(data);
 					
-					System.out.println("added " + thisUser + " to the data array");
+				//	System.out.println("added " + thisUser + " to the data array");
 					
 				}
 				
